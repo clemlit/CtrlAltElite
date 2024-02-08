@@ -29,7 +29,7 @@ public class Polygone implements IForme {
             for (int f = 0; f < i; f++) {
                 txt+=(" ");
             }
-            txt+=(liste.get(e).x + "," + liste.get(e).y);
+            txt+=(liste.get(e).x() + "," + liste.get(e).y());
         }
         return txt;
     }
@@ -50,7 +50,7 @@ public class Polygone implements IForme {
         svgBuilder.append("<svg width=\"1000\" height=\"1000\" xmlns=\"http://www.w3.org/2000/svg\">\n");
         svgBuilder.append("<polygon points=\"");
         for (int i =0;i<liste.size();i++){
-            svgBuilder.append(liste.get(i).getX()).append(",").append(liste.get(i).getY()).append(" ");
+            svgBuilder.append(liste.get(i).X()).append(",").append(liste.get(i).Y()).append(" ");
         }
         svgBuilder.append("\" stroke=\"black\" fill=\"white\" />\n");
         svgBuilder.append("</svg>");

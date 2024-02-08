@@ -16,14 +16,15 @@ public class Polygone implements IForme {
     }
 
     public double hauteur(){
-        return null;
+        return 0;
     }
     public Point centre(){
-        return null;
+        Point p = new Point(0, 0);
+        return p;
     }
 
     public double largeur(){
-        return null;
+        return 0;
     }
 
     public void redimensionner(double dx, double dy){

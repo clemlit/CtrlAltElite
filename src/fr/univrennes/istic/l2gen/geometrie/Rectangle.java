@@ -53,6 +53,6 @@ public class Rectangle implements IForme{
     public String enSVG() {
         return "<rect x=\"" + centre().x() + "\" y=\"" + centre().y() + "\" width=\"" + largeur() + "\" height=\""
                 + hauteur()
-                + "\"\n" + "\t" + "fill=\"none\" stroke=\"black\"/>";
+                + "\"\n" + "\t" + "fill=\"white\" stroke=\"black\"/>";
     }
 }

@@ -15,4 +15,6 @@ public interface IForme {
     public void deplacer(double dx, double dy);
 
     public IForme dupliquer();
+
+    public String enSVG();
 }

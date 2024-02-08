@@ -1,6 +1,5 @@
 package fr.univrennes.istic.l2gen.geometrie;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,7 @@ public class Polygone implements IForme {
     public double hauteur(){
         return 0;
     }
+
     public Point centre(){
         Point p = new Point(0, 0);
         return p;

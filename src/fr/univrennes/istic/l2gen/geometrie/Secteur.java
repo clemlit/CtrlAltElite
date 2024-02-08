@@ -1,4 +1,6 @@
-package fr.univrennes.istic.l2gen.geometrie; 
+package fr.univrennes.istic.l2gen.geometrie;
+
+import javafx.geometry.Point2D;
 
 public class Secteur implements IForme {
     private Point centre;
@@ -73,28 +75,40 @@ public class Secteur implements IForme {
    }
 
    // Implémentation de la méthode toSVG pour générer la représentation SVG
-   @Override
+   // Implémentation de la méthode toSVG pour générer la représentation SVG
+@Override
 public String enSVG() {
-    double x1 = centre.x() + rayon * Math.cos(Math.toRadians(angleDebut));
-    double y1 = centre.y() - rayon * Math.sin(Math.toRadians(angleDebut));
-    double x2 = centre.x() + rayon * Math.cos(Math.toRadians(angleFin));
-    double y2 = centre.y() - rayon * Math.sin(Math.toRadians(angleFin));
-    
-    // Arc flag
-    int arcFlag = (angleFin - angleDebut <= 180) ? 0 : 1;
+    // Calcul des coordonnées des points de début et de fin de l'arc
+    double xDebut = centre.x() + rayon * Math.cos(Math.toRadians(angleDebut));
+    double yDebut = centre.y() - rayon * Math.sin(Math.toRadians(angleDebut));
+    double xFin = centre.x() + rayon * Math.cos(Math.toRadians(angleFin));
+    double yFin = centre.y() - rayon * Math.sin(Math.toRadians(angleFin));
 
+    // Conversion des angles en degrés positifs entre 0 et 360
+    double angleStart = Math.min(angleDebut, angleFin);
+    double angleEnd = Math.max(angleDebut, angleFin);
+    double angleExtent = angleEnd - angleStart;
+    if (angleExtent < 0) {
+        angleExtent += 360; // Correction si l'angle de fin est inférieur à l'angle de début
+    }
+
+    // Création de la chaîne SVG représentant le secteur
     StringBuilder svgBuilder = new StringBuilder();
-    svgBuilder.append("<svg width=\"500\" height=\"500\" xmlns=\"http://www.w3.org/2000/svg\">\n");
     svgBuilder.append("<path d=\"");
-    svgBuilder.append("M").append(centre.x()).append(" ").append(centre.y());
-    svgBuilder.append(" L").append(x2).append(",").append(y2); 
-    svgBuilder.append(" A").append(rayon).append(",").append(rayon).append(" 0 ").append(arcFlag).append(",1 ").append(x1).append(",").append(y1); 
-    svgBuilder.append(" Z\" stroke=\"black\" fill=\"white\" />\n");
-    svgBuilder.append("</svg>");
+    svgBuilder.append("M").append(centre.x()).append(",").append(centre.y()); // Move to centre
+    svgBuilder.append("L").append(xDebut).append(",").append(yDebut); // Line to start point of arc
+    svgBuilder.append("A").append(rayon).append(",").append(rayon); // Arc with radius
+    svgBuilder.append(" 0 "); // x-axis-rotation
+    svgBuilder.append(angleExtent >= 180 ? "1" : "0").append(" "); // large-arc-flag
+    svgBuilder.append(angleDebut > angleFin ? "1" : "0").append(" "); // sweep-flag
+    svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
+    svgBuilder.append("Z"); // Close path
+    svgBuilder.append("\" fill=\"none\" stroke=\"black\"/>");
+
     return svgBuilder.toString();
 }
 
-
+   
     // Implémentation de la méthode dupliquer pour l'interface IForme
     @Override
     public IForme dupliquer() {

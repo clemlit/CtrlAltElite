@@ -1,5 +1,6 @@
 package fr.univrennes.istic.l2gen.geometrie;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,26 @@ public class Polygone implements IForme {
             liste.add(p);
         }
     }
+
+    public double hauteur(){
+        return null;
+    }
+    public Point centre(){
+        return null;
+    }
+
+    public double largeur(){
+        return null;
+    }
+
+    public void redimensionner(double dx, double dy){
+
+    }
+
+    public void deplacer(double dx, double dy){
+
+    }
+
     
     public ArrayList<Point> getSommets() {
         ArrayList<Point> list = new ArrayList<Point>();
@@ -29,7 +50,7 @@ public class Polygone implements IForme {
             for (int f = 0; f < i; f++) {
                 txt+=(" ");
             }
-            txt+=(liste.get(e).x + "," + liste.get(e).y);
+            txt+=(liste.get(e).x() + "," + liste.get(e).y());
         }
         return txt;
     }
@@ -50,12 +71,26 @@ public class Polygone implements IForme {
         svgBuilder.append("<svg width=\"1000\" height=\"1000\" xmlns=\"http://www.w3.org/2000/svg\">\n");
         svgBuilder.append("<polygon points=\"");
         for (int i =0;i<liste.size();i++){
-            svgBuilder.append(liste.get(i).getX()).append(",").append(liste.get(i).getY()).append(" ");
+            svgBuilder.append(liste.get(i).x()).append(",").append(liste.get(i).y()).append(" ");
         }
         svgBuilder.append("\" stroke=\"black\" fill=\"white\" />\n");
         svgBuilder.append("</svg>");
 
         return svgBuilder.toString();
+    }
+
+    public double[] getListe(){
+        double[] listeDouble = new double[liste.size()];
+        int e=0;
+        for(int i=0;i<liste.size();i++){
+            listeDouble[e]=liste.get(i).x();
+            listeDouble[e+1]=liste.get(i).y();
+            e=e+2;
+        }
+        return listeDouble;
+    }
+    public IForme dupliquer() {
+        return new Polygone(getListe());
     }
 
 }

@@ -1,5 +1,6 @@
 package fr.univrennes.istic.l2gen.geometrie;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class Polygone implements IForme {
         svgBuilder.append("<svg width=\"1000\" height=\"1000\" xmlns=\"http://www.w3.org/2000/svg\">\n");
         svgBuilder.append("<polygon points=\"");
         for (int i =0;i<liste.size();i++){
-            svgBuilder.append(liste.get(i).X()).append(",").append(liste.get(i).Y()).append(" ");
+            svgBuilder.append(liste.get(i).x()).append(",").append(liste.get(i).y()).append(" ");
         }
         svgBuilder.append("\" stroke=\"black\" fill=\"white\" />\n");
         svgBuilder.append("</svg>");
@@ -78,8 +79,18 @@ public class Polygone implements IForme {
         return svgBuilder.toString();
     }
 
+    public double[] getListe(){
+        double[] listeDouble = new double[liste.size()];
+        int e=0;
+        for(int i=0;i<liste.size();i++){
+            listeDouble[e]=liste.get(i).x();
+            listeDouble[e+1]=liste.get(i).y();
+            e=e+2;
+        }
+        return listeDouble;
+    }
     public IForme dupliquer() {
-        return new Polygone(l);
+        return new Polygone(getListe());
     }
 
 }

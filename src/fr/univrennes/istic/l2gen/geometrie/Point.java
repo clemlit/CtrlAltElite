@@ -2,9 +2,6 @@
  * La classe Point représente un point dans un espace bidimensionnel défini par ses coordonnées x et y.
  * Elle fournit des méthodes pour la comparaison, l'addition avec d'autres points ou des valeurs scalaires,
  * l'accès aux coordonnées, et la redimensionnement du point.
- *
- * @author Votre Nom
- * @version 1.0
  */
 package fr.univrennes.istic.l2gen.geometrie;
 

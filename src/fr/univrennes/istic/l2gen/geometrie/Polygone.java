@@ -33,12 +33,10 @@ public class Polygone implements IForme {
         }
         return txt;
     }
-    @Override
     public void ajouterSommet(Point p) {
         liste.add(p);
     }
     
-    @Override
     public void ajouterSommet(double x, double y) {
         Point p = new Point(x, y);
         liste.add(p);
@@ -58,21 +56,6 @@ public class Polygone implements IForme {
         svgBuilder.append("</svg>");
 
         return svgBuilder.toString();
-    }
-    @Override
-    public double hauteur() { //PAS UTILISE
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hauteur'");
-    }
-
-    @Override
-    public double largeur() { //PAS UTILISER
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'largeur'");
-    }
-
-    public Point centre() { //PAS UTILISE
-        return null;
     }
 
 }

@@ -161,10 +161,6 @@ public class Ligne implements IForme {
         svg.append("y1=\"" + sommets.get(0).y() + "\" ");
         svg.append("x2=\"" + sommets.get(1).x() + "\" ");
         svg.append("y2=\"" + sommets.get(1).y() + "\" ");
-        // ...
-        return svg.toString();
-    }
-}
         svg.append("stroke=\"black\" ");
         svg.append("/>");
         return svg.toString();

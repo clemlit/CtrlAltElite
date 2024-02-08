@@ -49,5 +49,10 @@ public class Rectangle implements IForme{
         largeur *= px;
         hauteur *= py;
     }
-    
+
+    public String enSVG() {
+        return "<rect x=\"" + centre().x() + "\" y=\"" + centre().y() + "\" width=\"" + largeur() + "\" height=\""
+                + hauteur()
+                + "\"\n" + "\t" + "fill=\"none\" stroke=\"black\"/>";
+    }
 }

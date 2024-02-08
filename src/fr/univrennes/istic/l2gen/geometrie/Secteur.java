@@ -64,7 +64,7 @@ public class Secteur implements IForme {
        for (int i = 0; i < indentation; i++) {
            sb.append(" ");
        }
-       sb.append("Secteur centre=").append(String.format("%.0f", centre.getX())).append(",").append(String.format("%.0f", centre.getY()));
+       sb.append("Secteur centre=").append(String.format("%.0f", centre.x())).append(",").append(String.format("%.0f", centre.y()));
        sb.append(" Angle=").append(angleDebut);
        double arc = angleFin - angleDebut;
        if (arc < 0) {
@@ -77,10 +77,10 @@ public class Secteur implements IForme {
    // Implémentation de la méthode toSVG pour générer la représentation SVG
    @Override
 public String enSVG() {
-    double x1 = centre.getX() + rayon * Math.cos(Math.toRadians(angleDebut));
-    double y1 = centre.getY() - rayon * Math.sin(Math.toRadians(angleDebut));
-    double x2 = centre.getX() + rayon * Math.cos(Math.toRadians(angleFin));
-    double y2 = centre.getY() - rayon * Math.sin(Math.toRadians(angleFin));
+    double x1 = centre.x() + rayon * Math.cos(Math.toRadians(angleDebut));
+    double y1 = centre.y() - rayon * Math.sin(Math.toRadians(angleDebut));
+    double x2 = centre.x() + rayon * Math.cos(Math.toRadians(angleFin));
+    double y2 = centre.y() - rayon * Math.sin(Math.toRadians(angleFin));
     
     // Arc flag
     int arcFlag = (angleFin - angleDebut <= 180) ? 0 : 1;
@@ -88,7 +88,7 @@ public String enSVG() {
     StringBuilder svgBuilder = new StringBuilder();
     svgBuilder.append("<svg width=\"500\" height=\"500\" xmlns=\"http://www.w3.org/2000/svg\">\n");
     svgBuilder.append("<path d=\"");
-    svgBuilder.append("M").append(centre.getX()).append(" ").append(centre.getY());
+    svgBuilder.append("M").append(centre.x()).append(" ").append(centre.y());
     svgBuilder.append(" L").append(x2).append(",").append(y2); 
     svgBuilder.append(" A").append(rayon).append(",").append(rayon).append(" 0 ").append(arcFlag).append(",1 ").append(x1).append(",").append(y1); 
     svgBuilder.append(" Z\" stroke=\"black\" fill=\"white\" />\n");
@@ -110,8 +110,8 @@ public String enSVG() {
     }
 
     @Override
-    public void deplacer(double deltaX, double deltaY) {
-        centre.deplacer(deltaX, deltaY);
+    public void deplacer(double dx, double dy) {
+        centre = centre.plus(dx, dy);
     }
 
     @Override

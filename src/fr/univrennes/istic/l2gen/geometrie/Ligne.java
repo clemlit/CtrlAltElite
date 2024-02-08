@@ -91,4 +91,16 @@ public class Ligne implements IForme {
             sommet.redimensionner(px, py);
         }
     }
+
+    public String enSVG() {
+        StringBuilder svg = new StringBuilder();
+        svg.append("<line ");
+        svg.append("x1=\"" + sommets.get(0).x() + "\" ");
+        svg.append("y1=\"" + sommets.get(0).y() + "\" ");
+        svg.append("x2=\"" + sommets.get(1).x() + "\" ");
+        svg.append("y2=\"" + sommets.get(1).y() + "\" ");
+        svg.append("stroke=\"black\" ");
+        svg.append("/>");
+        return svg.toString();
+    }
 }

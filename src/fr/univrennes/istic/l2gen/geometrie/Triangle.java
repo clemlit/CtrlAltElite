@@ -97,6 +97,14 @@ package fr.univrennes.istic.l2gen.geometrie;
     public IForme dupliquer() {
         return new Triangle(x1, x2, y1, y2, z1, z2);
     }
+    
+    public String enSVG() {
+        StringBuilder svg = new StringBuilder();
+        svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\">\n");
+        svg.append("<polygon points=\"" + x1 + "," + x2 + " " + y1 + "," + y2 + " " + z1 + "," + z2 + "\" />\n");
+        svg.append("</svg>");
+        return svg.toString();
+    }
         
 }
 

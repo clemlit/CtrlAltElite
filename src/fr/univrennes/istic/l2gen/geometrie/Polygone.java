@@ -13,6 +13,26 @@ public class Polygone implements IForme {
             liste.add(p);
         }
     }
+
+    public double hauteur(){
+        return null;
+    }
+    public Point centre(){
+        return null;
+    }
+
+    public double largeur(){
+        return null;
+    }
+
+    public void redimensionner(double dx, double dy){
+
+    }
+
+    public void deplacer(double dx, double dy){
+
+    }
+
     
     public ArrayList<Point> getSommets() {
         ArrayList<Point> list = new ArrayList<Point>();
@@ -56,6 +76,10 @@ public class Polygone implements IForme {
         svgBuilder.append("</svg>");
 
         return svgBuilder.toString();
+    }
+
+    public IForme dupliquer() {
+        return new Polygone(l);
     }
 
 }

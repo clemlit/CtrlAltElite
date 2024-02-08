@@ -60,5 +60,11 @@ public class Cercle implements IForme {
     public void redimensionner(double dx, double dy) {
         this.r = this.r * Math.max(dx, dy);
     }
-
+    
+    @Override
+    public String enSVG() {
+        Point centre = centre();
+        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + " \"fill=\"white\" stroke=\"black\" />";
+        return svg;
+    }
 }

@@ -109,4 +109,16 @@ public class Groupe implements IForme {
             formes.get(i).redimensionner(dx, dy);
         }
     }
+
+    public String enSVG() {
+        String svg = "<g>\n";
+
+        for (IForme forme : formes) {
+            svg += forme.enSVG();
+        }
+
+        svg += "</g>\n";
+        return svg;
+    }
+
 }

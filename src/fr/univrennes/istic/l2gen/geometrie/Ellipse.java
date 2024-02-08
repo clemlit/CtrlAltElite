@@ -58,5 +58,21 @@ public class Ellipse implements IForme {
         return copieEllipse;
     }
 
+    public String enSVG() {
+        // Construction de la chaîne SVG
+        String svg = "<ellipse";
+
+        // Ajout des attributs de l'ellipse
+        svg += " cx=\"" + x + "\"";
+        svg += " cy=\"" + y + "\"";
+        svg += " rx=\"" + demiGrandAxe + "\"";
+        svg += " ry=\"" + demiPetitAxe + "\"";
+        svg += " fill=\"white\"";
+        svg += " stroke=\"black\"";
+        svg += " />\n"; 
+
+        return svg;
+    }
+
 
 }

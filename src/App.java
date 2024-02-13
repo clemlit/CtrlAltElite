@@ -13,21 +13,24 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        IForme f = new Triangle(192, 128, 128, 256, 256, 256);
-        System.out.println(f.description(1));
-        
-        Triangle triangle = new Triangle(192, 128, 128, 256, 256, 256);
-        Groupe arbre = arbre(triangle);
-        System.out.println(arbre.enSVG());
+        Groupe tableau = new Groupe();
+        tableau.ajoutGroupe(new Cercle(256, 256, 128));
+        tableau.ajoutGroupe(new Ellipse(256, 256, 128, 64));
+        tableau.ajoutGroupe(new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
+        tableau.ajoutGroupe(new Polygone(128, 128, 128, 256, 256, 128, 256, 256));
+        tableau.ajoutGroupe(new Rectangle(256, 256, 256, 128));
+        tableau.ajoutGroupe(new Secteur(256, 256, 128, 0, 60));
+        tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256l));
 
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" +arbre.enSVG() +"</svg>";
+        System.out.println(tableau.enSVG());
 
-        // Sauvegarder dans un fichier
-        FileWriter writer = new FileWriter("Triangle.svg");
+        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + tableau.enSVG() + "</svg>";
+        FileWriter writer = new FileWriter("figure.svg");
+
         writer.write(svgContent);
         writer.close();
 
-        System.out.println("Le fichier Triangle.svg a été sauvegardé avec succès.");
+        System.out.println("Le fichier Cercle.svg a été créé avec succès.");
 
 
 

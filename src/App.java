@@ -12,19 +12,25 @@ import java.io.FileWriter;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Groupe tableau = new Groupe();
 
-        tableau.ajoutGroupe(new Triangle(192 , 128 , 256 , 128 , 256 , 256l));
+        IForme f = new Triangle(192, 128, 128, 256, 256, 256);
+        System.out.println(f.description(1));
+        
+        Triangle triangle = new Triangle(192, 128, 128, 256, 256, 256);
+        Groupe arbre = arbre(triangle);
+        System.out.println(arbre.enSVG());
 
-        System.out.println(tableau.enSVG());
+        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" +arbre.enSVG() +"</svg>";
 
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" +tableau.enSVG() +"</svg>";
-        FileWriter writer = new FileWriter("figure.svg");
-
+        // Sauvegarder dans un fichier
+        FileWriter writer = new FileWriter("Triangle.svg");
         writer.write(svgContent);
         writer.close();
 
-        System.out.println("Le fichier Cercle.svg a été créé avec succès.");
+        System.out.println("Le fichier Triangle.svg a été sauvegardé avec succès.");
+
+
+
     }
 
     // Méthode pour créer un arbre avec des groupes et des ellipses
@@ -36,10 +42,10 @@ public class App {
         mini.redimensionner(0.5, 0.5);
         groupe.ajoutGroupe(mini);
 
+
         IForme minigroupe = groupe.dupliquer();
         minigroupe.redimensionner(0.25, 0.25);
         groupe.ajoutGroupe(minigroupe);
-
         return groupe;
     }
 }

@@ -169,8 +169,17 @@ public class Ligne implements IForme {
      * @param py Facteur de redimensionnement pour l'axe des y.
      */
     public void redimensionner(double px, double py) {
+        Point centre = centre();
+
         for (Point sommet : sommets) {
-            sommet.redimensionner(px, py);
+            double distanceX = sommet.x() - centre.x();
+            double distanceY = sommet.y() - centre.y();
+
+            double nouvelleDistanceX = distanceX * px;
+            double nouvelleDistanceY = distanceY * py;
+
+            sommet.setX(centre.x() + nouvelleDistanceX);
+            sommet.setY(centre.y() + nouvelleDistanceY);
         }
     }
 
@@ -180,14 +189,17 @@ public class Ligne implements IForme {
      * @return Chaîne de caractères représentant la ligne en SVG.
      */
     public String enSVG() {
-        StringBuilder svg = new StringBuilder();
-        svg.append("<line ");
-        svg.append("x1=\"" + sommets.get(0).x() + "\" ");
-        svg.append("y1=\"" + sommets.get(0).y() + "\" ");
-        svg.append("x2=\"" + sommets.get(1).x() + "\" ");
-        svg.append("y2=\"" + sommets.get(1).y() + "\" ");
-        svg.append("stroke=\"black\" ");
-        svg.append("/>");
+        // Construction de la chaîne SVG
+        StringBuilder svg = new StringBuilder("<polyline points=\"");
+
+        // Ajout des attributs de la ligne
+        for (Point point : sommets) {
+            svg.append(point.x()).append(" ").append(point.y()).append(" ");
+        }
+
+        svg.append("\" fill=\"white\" stroke=\"black\" />\n");
+
         return svg.toString();
     }
+
 }

@@ -32,8 +32,6 @@ public class App {
 
         System.out.println("Le fichier Cercle.svg a été créé avec succès.");
 
-
-
     }
 
     // Méthode pour créer un arbre avec des groupes et des ellipses

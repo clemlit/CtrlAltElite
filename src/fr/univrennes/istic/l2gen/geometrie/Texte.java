@@ -4,6 +4,7 @@ public class Texte implements IForme{
     private double x, y;
     private int fontSize;
     private String text;
+    private String couleur;
 
     public Texte(double x, double y, int fontSize, String text) {
         this.x = x;
@@ -32,14 +33,16 @@ public class Texte implements IForme{
         return 0;
     }
 
-    public void redimensionner(double dx, double dy) {
+    public IForme redimensionner(double dx, double dy) {
         x *= dx;
         y *= dy;
+        return this;
     }
 
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         x += dx;
         y += dy;
+        return this;
     }
 
     public IForme dupliquer() {
@@ -49,6 +52,19 @@ public class Texte implements IForme{
     public String enSVG() {
         return "<text x=\"" + x + "\" y=\"" + y + "\" font-size=\"" + hauteur() + "\" text-anchor=\"middle\" fill=\"black\" stroke=\"black\">" + text + "</text>";
     }
+
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (couleurs.length > 0) {
+            // Ici, vous pouvez prendre la première couleur du tableau couleurs
+            String couleur = couleurs[0];
+            // Implémentation pour colorier un cercle avec la couleur spécifiée
+            this.couleur = couleur;
+        }
+        return this;
+    }
     
-    
+    public String getCouleur() {
+        return couleur;
+    }
 }

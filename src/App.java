@@ -36,6 +36,10 @@ public class App {
         ce.redimensionner(2, 2).deplacer(20, 20);
         System.out.println(ce.enSVG());
 
+        Rectangle r = new Rectangle(1, 1, 100, 100);
+        System.out.println(r.enSVG());
+        r.deplacer(1, 1).redimensionner(2, 2);
+        System.out.println(r.enSVG());
     }
 
     // Méthode pour créer un arbre avec des groupes et des ellipses

@@ -52,7 +52,8 @@ public class Point {
     }
 
     /**
-     * Ajoute les coordonnées d'un autre point à ce point et retourne un nouveau point résultant de l'addition.
+     * Ajoute les coordonnées d'un autre point à ce point et retourne un nouveau
+     * point résultant de l'addition.
      *
      * @param point Point à ajouter à ce point.
      * @return Nouveau point résultant de l'addition.
@@ -96,7 +97,8 @@ public class Point {
     }
 
     /**
-     * Redimensionne les coordonnées du point en fonction des facteurs spécifiés sur les axes x et y.
+     * Redimensionne les coordonnées du point en fonction des facteurs spécifiés sur
+     * les axes x et y.
      *
      * @param px Facteur de redimensionnement pour l'axe des x.
      * @param py Facteur de redimensionnement pour l'axe des y.

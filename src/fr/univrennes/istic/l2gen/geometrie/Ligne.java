@@ -10,6 +10,11 @@ package fr.univrennes.istic.l2gen.geometrie;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Cette classe représente une ligne dans un espace géométrique.
+ * Une ligne est définie par une liste de points qui la composent.
+ * Elle implémente l'interface IForme.
+ */
 public class Ligne implements IForme {
 
     // ATTRIBUTS
@@ -19,6 +24,11 @@ public class Ligne implements IForme {
      */
     private List<Point> sommets;
 
+    /**
+     * Constructeur de la classe Ligne.
+     * Crée une ligne à partir des coordonnées des sommets.
+     * @param l les coordonnées des sommets de la ligne
+     */
     // CONSTRUCTEURS
 
     /**
@@ -33,6 +43,11 @@ public class Ligne implements IForme {
         }
     }
 
+    /**
+     * Constructeur de la classe Ligne.
+     * Crée une ligne à partir d'une liste de points.
+     * @param sommets la liste des points qui composent la ligne
+     */
     /**
      * Constructeur de la classe Ligne à partir d'une liste de sommets (points).
      *

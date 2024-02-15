@@ -107,4 +107,22 @@ public class Point {
         this.x *= px;
         this.y *= py;
     }
+
+    /**
+     * Définit la coordonnée x du point.
+     *
+     * @param x Nouvelle coordonnée x du point.
+     */
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    /**
+     * Définit la coordonnée y du point.
+     *
+     * @param y Nouvelle coordonnée y du point.
+     */
+    public void setY(double y) {
+        this.y = y;
+    }
 }

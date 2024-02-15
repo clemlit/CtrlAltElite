@@ -25,6 +25,8 @@ public class Ligne implements IForme {
     private List<Point> sommets;
     private String couleur;
 
+
+
     /**
      * Constructeur de la classe Ligne.
      * Crée une ligne à partir des coordonnées des sommets.
@@ -220,8 +222,14 @@ public class Ligne implements IForme {
         return svg.toString();
     }
 
-    public IForme colorier(String couleur) {
-        this.couleur = couleur;
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (couleurs.length > 0) {
+            // Ici, vous pouvez prendre la première couleur du tableau couleurs
+            String couleur = couleurs[0];
+            // Implémentation pour colorier un cercle avec la couleur spécifiée
+            this.couleur = couleur;
+        }
         return this;
     }
     

@@ -191,10 +191,19 @@ public class Groupe implements IForme {
     }
     
     
-        public IForme colorier(String couleur) {
-            this.couleur = couleur;
-            return this;
+    
+    @Override
+    public IForme colorier(String... couleurs) {
+        for (int i = 0; i < formes.size(); i++) {
+            IForme forme = formes.get(i);
+            if (i < couleurs.length) {
+                forme.colorier(new String[]{couleurs[i]});
+            } else {
+                forme.colorier(new String[]{couleurs[i % couleurs.length]});
+            }
         }
+        return this;
+    }
         
         public String getCouleur() {
             return couleur;

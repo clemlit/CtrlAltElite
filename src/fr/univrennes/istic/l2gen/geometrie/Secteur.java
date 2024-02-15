@@ -34,6 +34,7 @@ public class Secteur implements IForme {
 
     private String couleur;
 
+
     // CONSTRUCTEUR
 
     /**
@@ -268,8 +269,14 @@ public class Secteur implements IForme {
         return 2 * rayon;
     }
 
-    public IForme colorier(String couleur) {
-        this.couleur = couleur;
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (couleurs.length > 0) {
+            // Ici, vous pouvez prendre la première couleur du tableau couleurs
+            String couleur = couleurs[0];
+            // Implémentation pour colorier un cercle avec la couleur spécifiée
+            this.couleur = couleur;
+        }
         return this;
     }
     

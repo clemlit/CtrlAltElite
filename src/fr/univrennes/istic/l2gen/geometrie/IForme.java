@@ -63,4 +63,12 @@ public interface IForme {
      * @return Chaîne de caractères représentant la forme géométrique en format SVG.
      */
     public String enSVG();
+
+    /**
+     * Colorie la forme géométrique avec les couleurs spécifiées.
+     *
+     * @param couleurs Tableau variable de chaînes de caractères représentant les couleurs.
+     */
+    public void coloriser(String ... couleurs);
+
 }

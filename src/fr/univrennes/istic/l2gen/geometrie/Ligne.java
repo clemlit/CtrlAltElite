@@ -25,8 +25,6 @@ public class Ligne implements IForme {
     private List<Point> sommets;
     private String couleur;
 
-
-
     /**
      * Constructeur de la classe Ligne.
      * Crée une ligne à partir des coordonnées des sommets.
@@ -200,7 +198,7 @@ public class Ligne implements IForme {
             sommet.setX(centre.x() + nouvelleDistanceX);
             sommet.setY(centre.y() + nouvelleDistanceY);
         }
-        return this;
+        return new Ligne(sommets);
     }
 
     /**
@@ -217,7 +215,7 @@ public class Ligne implements IForme {
             svg.append(point.x()).append(" ").append(point.y()).append(" ");
         }
 
-        svg.append("\" fill=\""+couleur +"\" stroke=\"black\" />\n");
+        svg.append("\" fill=\"white\" stroke=\"black\" />\n");
 
         return svg.toString();
     }
@@ -232,7 +230,7 @@ public class Ligne implements IForme {
         }
         return this;
     }
-    
+
     public String getCouleur() {
         return couleur;
     }

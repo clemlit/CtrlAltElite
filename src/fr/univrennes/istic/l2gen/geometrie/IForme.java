@@ -40,7 +40,8 @@ public interface IForme {
      * @param dx Facteur de redimensionnement pour l'axe des x.
      * @param dy Facteur de redimensionnement pour l'axe des y.
      */
-    public void redimensionner(double dx, double dy);
+    public IForme redimensionner(double dx, double dy);
+    
 
     /**
      * Déplace la forme géométrique selon les déplacements spécifiés sur les axes x et y.
@@ -48,7 +49,7 @@ public interface IForme {
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
      */
-    public void deplacer(double dx, double dy);
+    public IForme deplacer(double dx, double dy);
 
     /**
      * Duplique la forme géométrique en créant une nouvelle instance identique.
@@ -69,7 +70,7 @@ public interface IForme {
      *
      * @param couleurs Tableau variable de chaînes de caractères représentant les couleurs.
      */
-    IForme colorier(String couleur);
+    public IForme colorier(String... couleurs);
 
     public String getCouleur();
 

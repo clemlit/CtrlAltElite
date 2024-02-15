@@ -85,10 +85,11 @@ public class Groupe implements IForme {
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
      */
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         for (int i = 0; i < formes.size(); i++) {
             formes.get(i).deplacer(dx, dy);
         }
+        return this;
     }
 
     /**
@@ -169,10 +170,11 @@ public class Groupe implements IForme {
      * @param dx Facteur de redimensionnement pour l'axe des x.
      * @param dy Facteur de redimensionnement pour l'axe des y.
      */
-    public void redimensionner(double dx, double dy) {
+    public IForme redimensionner(double dx, double dy) {
         for (int i = 0; i < formes.size(); i++) {
             formes.get(i).redimensionner(dx, dy);
         }
+        return this;
     }
 
     public String enSVG() {
@@ -189,10 +191,19 @@ public class Groupe implements IForme {
     }
     
     
-        public IForme colorier(String couleur) {
-            this.couleur = couleur;
-            return this;
+    
+    @Override
+    public IForme colorier(String... couleurs) {
+        for (int i = 0; i < formes.size(); i++) {
+            IForme forme = formes.get(i);
+            if (i < couleurs.length) {
+                forme.colorier(new String[]{couleurs[i]});
+            } else {
+                forme.colorier(new String[]{couleurs[i % couleurs.length]});
+            }
         }
+        return this;
+    }
         
         public String getCouleur() {
             return couleur;

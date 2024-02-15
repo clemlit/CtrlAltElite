@@ -6,6 +6,7 @@ import fr.univrennes.istic.l2gen.geometrie.Ligne;
 import fr.univrennes.istic.l2gen.geometrie.Polygone;
 import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
+import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
 import java.io.FileWriter;
 
@@ -24,6 +25,11 @@ public class App {
         writer.close();
 
         System.out.println("Le fichier .svg a été créé avec succès.");
+
+        IForme f = new Texte (192,128,64," Istic L2GEN ");
+        System.out.println(f.enSVG());
+        f.deplacer(50, 50);
+        System.out.println(f.enSVG());
 
     }
 

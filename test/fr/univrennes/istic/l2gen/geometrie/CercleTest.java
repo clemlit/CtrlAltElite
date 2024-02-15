@@ -89,8 +89,8 @@ public class CercleTest {
     @Test
     public void testColorier() {
         IForme cercle = new Cercle(60.0, 70.0, 28.0);
-        String couleur = "blanc";
-        cercle.colorier("blanc");
+        String couleur = "White";
+        cercle.colorier("White");
         assertEquals(couleur, cercle.getCouleur());
     }
 }

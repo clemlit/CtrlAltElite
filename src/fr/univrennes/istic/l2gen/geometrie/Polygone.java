@@ -7,21 +7,34 @@ public class Polygone implements IForme {
     List<Point> liste;
     private String couleur;
 
-    public Polygone(double ... l) {
-        this.liste=new ArrayList<Point>();
-        for (int i=0;i<l.length;i=i+2){
-            Point p = new Point(l[i], l[i+1]);
+    public Polygone(double... l) {
+        this.liste = new ArrayList<Point>();
+        for (int i = 0; i < l.length; i = i + 2) {
+            Point p = new Point(l[i], l[i + 1]);
             liste.add(p);
         }
     }
+
     /**
-     * @return 0 car pas de hauteur que l'on peut définir pour un polygone quelconque
+     * @return hauteur du polygone
      */
-    public double hauteur(){
-        return 0;
+    public double hauteur() {
+        ArrayList<Point> liste = getSommets();
+        double minY = liste.get(0).y();
+        double maxY = liste.get(0).y();
+        for (int i = 0; i < liste.size(); i++) {
+            if (liste.get(i).y() < minY) {
+                minY = liste.get(i).y();
+            }
+            if (liste.get(i).y() > maxY) {
+                maxY = liste.get(i).y();
+            }
+        }
+        return maxY - minY;
     }
+
     /**
-     * @return le point 0,0 car pas de centre que l'on peut définir pour un polygone quelconque
+     * @return centre du polygone
      */
     public Point centre() {
         if (liste.isEmpty()) {
@@ -44,13 +57,28 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return 0 car pas de largeur que l'on peut définir pour un polygone quelconque
+     * @return largeur polygone
      */
-    public double largeur(){
-        return 0;
+    public double largeur() {
+        ArrayList<Point> liste = getSommets();
+        double minX = liste.get(0).x();
+        double maxX = liste.get(0).x();
+        for (int i = 0; i < liste.size(); i++) {
+            if (liste.get(i).x() < minX) {
+                minX = liste.get(i).x();
+            }
+            if (liste.get(i).x() > maxX) {
+                maxX = liste.get(i).x();
+            }
+        }
+        return maxX - minX;
     }
+
     /**
-     * @return rien car jsp comment redimensionner un polygone quelconque
+     * Redimensionne le rectangle selon les proportions spécifiées.
+     * 
+     * @param px Le facteur de redimensionnement en largeur.
+     * @param py Le facteur de redimensionnement en hauteur.
      */
     public IForme redimensionner(double dx, double dy) {
         Point centre = centre();
@@ -69,9 +97,13 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return rien car jsp comment déplacer un polygone quelconque
+     * Déplace le rectangle selon les valeurs spécifiées de déplacement en x et en
+     * y.
+     * 
+     * @param dx La valeur de déplacement en x.
+     * @param dy La valeur de déplacement en y.
      */
-    public IForme deplacer(double dx, double dy){
+    public IForme deplacer(double dx, double dy) {
         for (Point sommet : liste) {
             sommet.plus(dx, dy);
         }
@@ -88,6 +120,7 @@ public class Polygone implements IForme {
         }
         return list;
     }
+
     /**
      * @param i entre les points
      * @return un String décrivant les coordonnées de tous les points du polygone
@@ -114,7 +147,7 @@ public class Polygone implements IForme {
     public void ajouterSommet(Point p) {
         liste.add(p);
     }
-    
+
     /**
      * @param x coordonnée x du point que l'on veut ajouter
      * @param x coordonnée y du point que l'on veut ajouter
@@ -124,7 +157,7 @@ public class Polygone implements IForme {
         Point p = new Point(x, y);
         liste.add(p);
     }
-    
+
     /**
      * @return le fichier SVG créant le polygone
      */
@@ -136,7 +169,7 @@ public class Polygone implements IForme {
             svgBuilder.append(sommet.x()).append(" ").append(sommet.y()).append(" ");
         }
 
-        svgBuilder.append("\" fill=\""+couleur +"\" stroke=\"black\" />\n</g>\n");
+        svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\" />\n</g>\n");
 
         return svgBuilder.toString();
     }
@@ -167,7 +200,7 @@ public class Polygone implements IForme {
         }
         return this;
     }
-    
+
     public String getCouleur() {
         return couleur;
     }

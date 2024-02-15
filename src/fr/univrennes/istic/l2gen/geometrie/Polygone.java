@@ -16,8 +16,7 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return 0 car pas de hauteur que l'on peut définir pour un polygone
-     *         quelconque
+     * @return hauteur du polygone
      */
     public double hauteur() {
         ArrayList<Point> liste = getSommets();
@@ -35,8 +34,7 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return le point 0,0 car pas de centre que l'on peut définir pour un polygone
-     *         quelconque
+     * @return centre du polygone
      */
     public Point centre() {
         if (liste.isEmpty()) {
@@ -59,8 +57,7 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return 0 car pas de largeur que l'on peut définir pour un polygone
-     *         quelconque
+     * @return largeur polygone
      */
     public double largeur() {
         ArrayList<Point> liste = getSommets();
@@ -74,7 +71,7 @@ public class Polygone implements IForme {
                 maxX = liste.get(i).x();
             }
         }
-        return maxX - maxX;
+        return maxX - minX;
     }
 
     /**

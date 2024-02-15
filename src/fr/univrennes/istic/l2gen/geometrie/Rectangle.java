@@ -44,7 +44,7 @@ public class Rectangle implements IForme{
      * @return Le point représentant le centre du rectangle.
      */
     public Point centre() {
-        return p;
+        return new Point(p.x(), p.y());
     }
 
     /**
@@ -102,15 +102,13 @@ public class Rectangle implements IForme{
      */
     public IForme redimensionner(double px, double py) {
         // Calcul du nouveau centre après redimensionnement
-        double nouveauCentreX = p.x() + largeur / 2;
-        double nouveauCentreY = p.y() + hauteur / 2;
+
 
         // Redimensionnement
         largeur *= px;
         hauteur *= py;
 
         // Ajustement des coordonnées du coin supérieur gauche
-        p = new Point(nouveauCentreX - largeur / 2, nouveauCentreY - hauteur / 2);
         return this;
     }
 

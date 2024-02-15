@@ -14,23 +14,33 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        /*Groupe arbre = arbre(new Rectangle(256, 256, 256, 128));
-        arbre.coloriser("Red", "Green", "Orange", "Orange");
-        System.out.println(arbre.description(0));
+        IForme arbre = arbre ( new Polygone(128 , 128 , 128 , 256 , 256 , 128 , 256 , 256).redimensionner(0.5, 0.5));
+        System.out.println(arbre.enSVG());
 
+/* 
+        Groupe tableau = new Groupe();
+        tableau.ajoutGroupe(new Cercle(256, 256, 128));
+        tableau.ajoutGroupe(new Ellipse(256, 256, 128, 64));
+        tableau.ajoutGroupe(new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
+        tableau.ajoutGroupe(new Polygone(128, 128, 128, 256, 256, 128, 256, 256));
+        tableau.ajoutGroupe(new Rectangle(256, 256, 256, 128));
+        tableau.ajoutGroupe(new Secteur(256, 256, 128, 0, 60));
+        tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
+        System.out.println(tableau.enSVG());
+*/
         String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + arbre.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("rectangle.svg");
+        FileWriter writer = new FileWriter("figure.svg");
 
-        writer.write(svgContent);
+        //writer.write(svgContent);
         writer.close();
 
         System.out.println("Le fichier .svg a été créé avec succès.");
 
-        IForme f = new Texte (192,128,64," Istic L2GEN ");
+        IForme f = new Texte(192, 128, 64, " Istic L2GEN ");
         System.out.println(f.enSVG());
         f.deplacer(50, 50);
         System.out.println(f.enSVG());
-*/
+
         IForme ce = new Ligne(50, 50);
         System.out.println(ce.enSVG());
         ce.redimensionner(2, 2).deplacer(20, 20);

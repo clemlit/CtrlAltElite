@@ -198,7 +198,7 @@ public class Ligne implements IForme {
             sommet.setX(centre.x() + nouvelleDistanceX);
             sommet.setY(centre.y() + nouvelleDistanceY);
         }
-        return new Ligne(sommets);
+        return this;
     }
 
     /**

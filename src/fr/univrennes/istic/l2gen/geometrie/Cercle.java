@@ -22,6 +22,8 @@ public class Cercle implements IForme {
      */
     private double r;
 
+    private String couleur;
+
     /**
      * Constructeur de la classe Cercle.
      *
@@ -140,7 +142,16 @@ public class Cercle implements IForme {
     @Override
     public String enSVG() {
         Point centre = centre();
-        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\"white\" stroke=\"black\" />";
+        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\""+couleur+"\" stroke=\"black\" />";
         return svg;
+    }
+
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 }

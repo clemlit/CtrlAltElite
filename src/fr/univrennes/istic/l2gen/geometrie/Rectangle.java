@@ -134,11 +134,13 @@ public class Rectangle implements IForme{
         return svg;
     }
 
-    public void coloriser(String... couleurs) {
-        if (couleurs != null && couleurs.length > 0) {
-            this.couleur = couleurs[0];
-        }       
-
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 
 }

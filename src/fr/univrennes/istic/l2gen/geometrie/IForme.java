@@ -69,6 +69,9 @@ public interface IForme {
      *
      * @param couleurs Tableau variable de chaînes de caractères représentant les couleurs.
      */
-    public void coloriser(String ... couleurs);
+    IForme colorier(String couleur);
 
+    public String getCouleur();
+
+    
 }

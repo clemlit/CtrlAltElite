@@ -21,6 +21,7 @@ public class Triangle implements IForme {
     private double y1;
     private double y2;
     private double y3;
+    private String couleur;
 
     public Triangle(Point A, Point B, Point C){
         this.A = A;
@@ -179,9 +180,18 @@ public class Triangle implements IForme {
     public String enSVG() {
         String svg = "<polygon points=\"" + (int) x1 + " " + (int) y1 + " " + (int) x2 + " " + (int) y2 + " " + (int) x3
                 + " " + (int) y3 + "\"";
-        svg += " fill=\"white\"";
+        svg += " fill=\""+couleur +"\"";
         svg += " stroke=\"black\" />\n";
         return svg;
+    }
+
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 
 }

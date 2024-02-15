@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Polygone implements IForme {
     List<Point> liste;
+    private String couleur;
 
     public Polygone(double ... l) {
         this.liste=new ArrayList<Point>();
@@ -133,7 +134,7 @@ public class Polygone implements IForme {
             svgBuilder.append(sommet.x()).append(" ").append(sommet.y()).append(" ");
         }
 
-        svgBuilder.append("\" fill=\"white\" stroke=\"black\" />\n</g>\n");
+        svgBuilder.append("\" fill=\""+couleur +"\" stroke=\"black\" />\n</g>\n");
 
         return svgBuilder.toString();
     }
@@ -152,6 +153,15 @@ public class Polygone implements IForme {
     public IForme dupliquer() {
         Polygone copiePolygone = new Polygone(getListe());
         return copiePolygone;
+    }
+
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 
 }

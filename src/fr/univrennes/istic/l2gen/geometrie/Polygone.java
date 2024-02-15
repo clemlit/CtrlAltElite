@@ -50,7 +50,9 @@ public class Polygone implements IForme {
         return 0;
     }
     /**
-     * @return rien car jsp comment redimensionner un polygone quelconque
+     * Redimensionne le rectangle selon les proportions spécifiées.
+     * @param px Le facteur de redimensionnement en largeur.
+     * @param py Le facteur de redimensionnement en hauteur.
      */
     public IForme redimensionner(double dx, double dy) {
         Point centre = centre();
@@ -69,7 +71,9 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return rien car jsp comment déplacer un polygone quelconque
+     * Déplace le rectangle selon les valeurs spécifiées de déplacement en x et en y.
+     * @param dx La valeur de déplacement en x.
+     * @param dy La valeur de déplacement en y.
      */
     public IForme deplacer(double dx, double dy){
         for (Point sommet : liste) {

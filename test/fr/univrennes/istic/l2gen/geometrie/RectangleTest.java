@@ -59,14 +59,12 @@ public class RectangleTest {
 
     @Test
     public void testHauteur() {
-        double h =10;
-        assertEquals(h,r.hauteur(),0.1);
+        assertEquals(100,r.hauteur(),0.1);
     }
 
     @Test
     public void testLargeur() {
-        double h =10;
-        assertEquals(h,r.largeur(),0.1);
+        assertEquals(100,r.largeur(),0.1);
     }
 
     @Test

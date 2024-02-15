@@ -188,4 +188,13 @@ public class Groupe implements IForme {
         svg += "</g>\n";
         return svg;
     }
+
+    public void coloriser(String... couleurs) {
+
+        int indexCouleur = 0;
+        for (IForme forme : formes) {
+            forme.coloriser(couleurs[indexCouleur]);
+            indexCouleur += 1 % couleurs.length;
+        }
+    }
 }

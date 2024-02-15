@@ -92,9 +92,10 @@ public class Ellipse implements IForme {
      * @param dx Le facteur d'échelle pour le demi-grand axe.
      * @param dy Le facteur d'échelle pour le demi-petit axe.
      */
-    public void redimensionner(double dx, double dy) {
+    public IForme redimensionner(double dx, double dy) {
         this.demiGrandAxe = demiGrandAxe * dx;
         this.demiPetitAxe = demiPetitAxe * dy;
+        return this;
     }
 
     /**
@@ -103,9 +104,10 @@ public class Ellipse implements IForme {
      * @param dx La quantité à déplacer dans la direction x.
      * @param dy La quantité à déplacer dans la direction y.
      */
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         this.x += dx;
         this.y += dy;
+        return this;
     }
 
     /**

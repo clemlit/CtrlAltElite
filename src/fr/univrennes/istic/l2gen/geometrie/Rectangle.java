@@ -82,8 +82,9 @@ public class Rectangle implements IForme{
      * @param dx La valeur de déplacement en x.
      * @param dy La valeur de déplacement en y.
      */
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         p = p.plus(dx, dy);
+        return this;
     }
 
     /**
@@ -99,7 +100,7 @@ public class Rectangle implements IForme{
      * @param px Le facteur de redimensionnement en largeur.
      * @param py Le facteur de redimensionnement en hauteur.
      */
-    public void redimensionner(double px, double py) {
+    public IForme redimensionner(double px, double py) {
         // Calcul du nouveau centre après redimensionnement
         double nouveauCentreX = p.x() + largeur / 2;
         double nouveauCentreY = p.y() + hauteur / 2;
@@ -110,6 +111,7 @@ public class Rectangle implements IForme{
 
         // Ajustement des coordonnées du coin supérieur gauche
         p = new Point(nouveauCentreX - largeur / 2, nouveauCentreY - hauteur / 2);
+        return this;
     }
 
     /**

@@ -41,6 +41,7 @@ public interface IForme {
      * @param dy Facteur de redimensionnement pour l'axe des y.
      */
     public IForme redimensionner(double dx, double dy);
+    public IForme redimensionner(double dx, double dy);
 
     /**
      * Déplace la forme géométrique selon les déplacements spécifiés sur les axes x et y.
@@ -48,6 +49,7 @@ public interface IForme {
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
      */
+    public IForme deplacer(double dx, double dy);
     public IForme deplacer(double dx, double dy);
 
     /**
@@ -63,4 +65,15 @@ public interface IForme {
      * @return Chaîne de caractères représentant la forme géométrique en format SVG.
      */
     public String enSVG();
+
+    /**
+     * Colorie la forme géométrique avec les couleurs spécifiées.
+     *
+     * @param couleurs Tableau variable de chaînes de caractères représentant les couleurs.
+     */
+    public IForme colorier(String... couleurs);
+
+    public String getCouleur();
+
+    
 }

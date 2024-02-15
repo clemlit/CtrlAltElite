@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Polygone implements IForme {
     List<Point> liste;
+    private String couleur;
 
     public Polygone(double ... l) {
         this.liste=new ArrayList<Point>();
@@ -64,7 +65,7 @@ public class Polygone implements IForme {
             sommet.setX(centre.x() + nouvelleDistanceX);
             sommet.setY(centre.y() + nouvelleDistanceY);
         }
-        return ???;
+        return this;
     }
 
     /**
@@ -135,7 +136,7 @@ public class Polygone implements IForme {
             svgBuilder.append(sommet.x()).append(" ").append(sommet.y()).append(" ");
         }
 
-        svgBuilder.append("\" fill=\"white\" stroke=\"black\" />\n</g>\n");
+        svgBuilder.append("\" fill=\""+couleur +"\" stroke=\"black\" />\n</g>\n");
 
         return svgBuilder.toString();
     }
@@ -154,6 +155,21 @@ public class Polygone implements IForme {
     public IForme dupliquer() {
         Polygone copiePolygone = new Polygone(getListe());
         return copiePolygone;
+    }
+
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (couleurs.length > 0) {
+            // Ici, vous pouvez prendre la première couleur du tableau couleurs
+            String couleur = couleurs[0];
+            // Implémentation pour colorier un cercle avec la couleur spécifiée
+            this.couleur = couleur;
+        }
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 
 }

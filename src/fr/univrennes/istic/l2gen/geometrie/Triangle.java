@@ -21,6 +21,7 @@ public class Triangle implements IForme {
     private double y1;
     private double y2;
     private double y3;
+    private String couleur;
 
     public Triangle(Point A, Point B, Point C){
         this.A = A;
@@ -107,7 +108,7 @@ public class Triangle implements IForme {
      * @param dx Facteur de redimensionnement pour la coordonnée x.
      * @param dy Facteur de redimensionnement pour la coordonnée y.
      */
-    public void redimensionner(double dx, double dy) {
+    public IForme redimensionner(double dx, double dy) {
         Point centre = centre();
 
         // REDIMENSIONNEMENT DU POINT X1 ET Y2
@@ -138,7 +139,7 @@ public class Triangle implements IForme {
         double distanceY3 = y3 - centre.y();
         double newDistanceY3 = distanceY3 * dy;
         y3 = Math.ceil(centre.y() + newDistanceY3);
-
+        return this;
 
     }
 
@@ -149,7 +150,7 @@ public class Triangle implements IForme {
      * @param dx Valeur de déplacement pour la coordonnée x.
      * @param dy Valeur de déplacement pour la coordonnée y.
      */
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         // Déplacement des coordonnées des points du triangle
         x1 += dx;
         y1 += dy;
@@ -159,6 +160,7 @@ public class Triangle implements IForme {
 
         x3 += dx;
         y3 += dy;
+        return this;
     }
 
     /**
@@ -179,9 +181,24 @@ public class Triangle implements IForme {
     public String enSVG() {
         String svg = "<polygon points=\"" + (int) x1 + " " + (int) y1 + " " + (int) x2 + " " + (int) y2 + " " + (int) x3
                 + " " + (int) y3 + "\"";
-        svg += " fill=\"white\"";
+        svg += " fill=\""+couleur +"\"";
         svg += " stroke=\"black\" />\n";
         return svg;
+    }
+
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (couleurs.length > 0) {
+            // Ici, vous pouvez prendre la première couleur du tableau couleurs
+            String couleur = couleurs[0];
+            // Implémentation pour colorier un cercle avec la couleur spécifiée
+            this.couleur = couleur;
+        }
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 
 }

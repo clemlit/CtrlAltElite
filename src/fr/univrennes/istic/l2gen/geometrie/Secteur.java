@@ -32,6 +32,9 @@ public class Secteur implements IForme {
      */
     private double angleFin;
 
+    private String couleur;
+
+
     // CONSTRUCTEUR
 
     /**
@@ -197,7 +200,7 @@ public class Secteur implements IForme {
         svgBuilder.append(angleDebut > angleFin ? "1" : "0").append(" "); // sweep-flag
         svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
         svgBuilder.append("Z"); // Close path
-        svgBuilder.append("\" fill=\"none\" stroke=\"black\"/>");
+        svgBuilder.append("\" fill=\""+couleur +"\" stroke=\"black\"/>");
 
         return svgBuilder.toString();
     }
@@ -219,8 +222,9 @@ public class Secteur implements IForme {
      * @param facteurY Facteur de redimensionnement pour l'axe des y.
      */
     @Override
-    public void redimensionner(double facteurX, double facteurY) {
+    public IForme redimensionner(double facteurX, double facteurY) {
         rayon *= Math.max(facteurX, facteurY);
+        return this;
     }
 
     /**
@@ -230,8 +234,9 @@ public class Secteur implements IForme {
      * @param dy Déplacement sur l'axe des y.
      */
     @Override
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         centre = centre.plus(dx, dy);
+        return this;
     }
 
     /**
@@ -262,5 +267,20 @@ public class Secteur implements IForme {
     @Override
     public double largeur() {
         return 2 * rayon;
+    }
+
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (couleurs.length > 0) {
+            // Ici, vous pouvez prendre la première couleur du tableau couleurs
+            String couleur = couleurs[0];
+            // Implémentation pour colorier un cercle avec la couleur spécifiée
+            this.couleur = couleur;
+        }
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 }

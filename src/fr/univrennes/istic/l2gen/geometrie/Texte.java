@@ -50,4 +50,5 @@ public class Texte implements IForme{
         return "<text x=\"" + x + "\" y=\"" + y + "\" font-size=\"" + hauteur() + "\" text-anchor=\"middle\" fill=\"black\" stroke=\"black\">" + text + "</text>";
     }
     
+    
 }

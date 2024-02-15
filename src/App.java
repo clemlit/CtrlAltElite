@@ -14,7 +14,7 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        Groupe arbre = arbre(new Rectangle(256, 256, 256, 128));
+        /*Groupe arbre = arbre(new Rectangle(256, 256, 256, 128));
         arbre.coloriser("Red", "Green", "Orange", "Orange");
         System.out.println(arbre.description(0));
 
@@ -30,6 +30,11 @@ public class App {
         System.out.println(f.enSVG());
         f.deplacer(50, 50);
         System.out.println(f.enSVG());
+*/
+        IForme ce = new Ligne(50, 50);
+        System.out.println(ce.enSVG());
+        ce.redimensionner(2, 2).deplacer(20, 20);
+        System.out.println(ce.enSVG());
 
     }
 

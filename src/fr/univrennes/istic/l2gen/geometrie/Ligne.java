@@ -23,6 +23,9 @@ public class Ligne implements IForme {
      * Liste des sommets (points) de la ligne.
      */
     private List<Point> sommets;
+    private String couleur;
+
+
 
     /**
      * Constructeur de la classe Ligne.
@@ -214,9 +217,24 @@ public class Ligne implements IForme {
             svg.append(point.x()).append(" ").append(point.y()).append(" ");
         }
 
-        svg.append("\" fill=\"white\" stroke=\"black\" />\n");
+        svg.append("\" fill=\""+couleur +"\" stroke=\"black\" />\n");
 
         return svg.toString();
+    }
+
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (couleurs.length > 0) {
+            // Ici, vous pouvez prendre la première couleur du tableau couleurs
+            String couleur = couleurs[0];
+            // Implémentation pour colorier un cercle avec la couleur spécifiée
+            this.couleur = couleur;
+        }
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 
 }

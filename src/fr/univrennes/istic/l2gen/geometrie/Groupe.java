@@ -21,6 +21,8 @@ public class Groupe implements IForme {
      */
     private int index;
 
+    private String couleur;
+
     // CONSTRUCTEUR
 
     /**
@@ -83,10 +85,11 @@ public class Groupe implements IForme {
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
      */
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         for (int i = 0; i < formes.size(); i++) {
             formes.get(i).deplacer(dx, dy);
         }
+        return this;
     }
 
     /**
@@ -167,34 +170,43 @@ public class Groupe implements IForme {
      * @param dx Facteur de redimensionnement pour l'axe des x.
      * @param dy Facteur de redimensionnement pour l'axe des y.
      */
-    public void redimensionner(double dx, double dy) {
+    public IForme redimensionner(double dx, double dy) {
         for (int i = 0; i < formes.size(); i++) {
             formes.get(i).redimensionner(dx, dy);
         }
+        return this;
     }
 
-    /**
-     * Génère une représentation SVG du groupe et de ses formes incluses.
-     *
-     * @return Chaîne de caractères représentant le groupe en format SVG.
-     */
     public String enSVG() {
-        String svg = "<g>\n";
-
+        StringBuilder svgBuilder = new StringBuilder();
+        svgBuilder.append("<g>\n");
+    
         for (IForme forme : formes) {
-            svg += forme.enSVG();
+            // Générer le SVG pour chaque forme en lui appliquant sa couleur
+            svgBuilder.append(forme.colorier(forme.getCouleur()).enSVG());
         }
-
-        svg += "</g>\n";
-        return svg;
+    
+        svgBuilder.append("</g>\n");
+        return svgBuilder.toString();
     }
-
-    public void coloriser(String... couleurs) {
-
-        int indexCouleur = 0;
-        for (IForme forme : formes) {
-            forme.coloriser(couleurs[indexCouleur]);
-            indexCouleur += 1 % couleurs.length;
+    
+    
+    
+    @Override
+    public IForme colorier(String... couleurs) {
+        for (int i = 0; i < formes.size(); i++) {
+            IForme forme = formes.get(i);
+            if (i < couleurs.length) {
+                forme.colorier(new String[]{couleurs[i]});
+            } else {
+                forme.colorier(new String[]{couleurs[i % couleurs.length]});
+            }
         }
+        return this;
     }
+        
+        public String getCouleur() {
+            return couleur;
+        }
+   
 }

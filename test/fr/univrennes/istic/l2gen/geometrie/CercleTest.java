@@ -1,8 +1,9 @@
 package test.fr.univrennes.istic.l2gen.geometrie;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-import java.beans.Transient;
+//import java.beans.Transient;
 
 import org.junit.Test;
 
@@ -51,7 +52,17 @@ public class CercleTest {
 
     @Test
     public void testDescription() {
+        int indentation = 4;
+        IForme cercle = new Cercle(80.0, 66.0, 69.0);
+        Point centre = cercle.centre();
+        String ind = "";
+        for (int i = 0; i < indentation; i++) {
+            ind += "  ";
+        }
+        ind = ind + "Cercle centre = " + centre.x() + " , " + centre.y() + " r = " + cercle.hauteur();
 
+        assertEquals(ind, cercle.description(4));
+        assertNotEquals(ind, cercle.description(8));
     }
 
     @Test
@@ -67,7 +78,19 @@ public class CercleTest {
 
     @Test
     public void testEnSVG() {
-
+        IForme cercle = new Cercle(60.0, 80.0, 60.0);
+        Point centre = cercle.centre();
+        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + cercle.hauteur()
+                + "\" fill=\""
+                + cercle.getCouleur() + "\" stroke=\"black\" />";
+        assertEquals(svg, cercle.enSVG());
     }
 
+    @Test
+    public void testColorier() {
+        IForme cercle = new Cercle(60.0, 70.0, 28.0);
+        String couleur = "blanc";
+        cercle.colorier("blanc");
+        assertEquals(couleur, cercle.getCouleur());
+    }
 }

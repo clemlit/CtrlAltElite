@@ -158,10 +158,11 @@ public class Ligne implements IForme {
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
      */
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         for (Point sommet : sommets) {
             sommet.plus(dx, dy);
         }
+        return this;
     }
 
     /**
@@ -183,7 +184,7 @@ public class Ligne implements IForme {
      * @param px Facteur de redimensionnement pour l'axe des x.
      * @param py Facteur de redimensionnement pour l'axe des y.
      */
-    public void redimensionner(double px, double py) {
+    public IForme redimensionner(double px, double py) {
         Point centre = centre();
 
         for (Point sommet : sommets) {
@@ -196,6 +197,7 @@ public class Ligne implements IForme {
             sommet.setX(centre.x() + nouvelleDistanceX);
             sommet.setY(centre.y() + nouvelleDistanceY);
         }
+        return this;
     }
 
     /**

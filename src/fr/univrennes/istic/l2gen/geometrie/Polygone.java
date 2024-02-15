@@ -51,7 +51,7 @@ public class Polygone implements IForme {
     /**
      * @return rien car jsp comment redimensionner un polygone quelconque
      */
-    public void redimensionner(double dx, double dy) {
+    public IForme redimensionner(double dx, double dy) {
         Point centre = centre();
 
         for (Point sommet : liste) {
@@ -64,15 +64,17 @@ public class Polygone implements IForme {
             sommet.setX(centre.x() + nouvelleDistanceX);
             sommet.setY(centre.y() + nouvelleDistanceY);
         }
+        return ???;
     }
 
     /**
      * @return rien car jsp comment déplacer un polygone quelconque
      */
-    public void deplacer(double dx, double dy){
+    public IForme deplacer(double dx, double dy){
         for (Point sommet : liste) {
             sommet.plus(dx, dy);
         }
+        return this;
     }
 
     /**

@@ -105,9 +105,10 @@ public class Cercle implements IForme {
      * @param px Facteur de redimensionnement pour l'axe des x.
      * @param py Facteur de redimensionnement pour l'axe des y.
      */
-    public void redimmensionner(double px, double py) {
+    public IForme redimmensionner(double px, double py) {
         this.x = x * px;
         this.y = y * py;
+        return this;
     }
 
     /**
@@ -116,9 +117,10 @@ public class Cercle implements IForme {
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
      */
-    public void deplacer(double dx, double dy) {
+    public IForme deplacer(double dx, double dy) {
         this.x += dx;
         this.y += dy;
+        return this;
     }
 
     /**
@@ -128,8 +130,9 @@ public class Cercle implements IForme {
      * @param dy Facteur de redimensionnement pour l'axe des y.
      */
     @Override
-    public void redimensionner(double dx, double dy) {
+    public IForme redimensionner(double dx, double dy) {
         this.r = this.r * Math.max(dx, dy);
+        return this;
     }
 
     /**

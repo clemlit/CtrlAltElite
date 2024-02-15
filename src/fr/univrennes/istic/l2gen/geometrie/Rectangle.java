@@ -8,6 +8,7 @@ public class Rectangle implements IForme{
     private Point p;
     private double largeur;
     private double hauteur;
+    private String couleur; 
 
     /**
      * Constructeur de la classe Rectangle.
@@ -21,6 +22,7 @@ public class Rectangle implements IForme{
         this.p = new Point(x, y);
         this.largeur = largeur;
         this.hauteur = hauteur;
+        this.couleur = "white";
     }
 
     /**
@@ -34,6 +36,7 @@ public class Rectangle implements IForme{
         this.p = p;
         this.largeur = largeur;
         this.hauteur = hauteur;
+        this.couleur = "white";
     }
 
     /**
@@ -54,7 +57,8 @@ public class Rectangle implements IForme{
         for (int i = 0; i < indentation; i++) {
             indent += " ";
         }
-        return indent + "Rectangle " + "Centre=" + (int) centre().x() +"," + (int) centre().y() + " L=" + largeur + " H=" + hauteur;
+        return indent + "Rectangle " + "Centre=" + (int) centre().x() + "," + (int) centre().y() + " L=" + largeur
+                + " H=" + hauteur + " Couleur=" + couleur;
     }
 
     /**
@@ -121,7 +125,7 @@ public class Rectangle implements IForme{
         String yAttribute = " y=\"" + centre().y() + "\"";
         String widthAttribute = " width=\"" + largeur() + "\"";
         String heightAttribute = " height=\"" + hauteur() + "\"";
-        String fillAttribute = " fill=\"white\"";
+        String fillAttribute = " fill=\"" + couleur + "\""; 
         String strokeAttribute = " stroke=\"black\"";
 
         // Construction finale de la chaîne SVG
@@ -129,4 +133,14 @@ public class Rectangle implements IForme{
 
         return svg;
     }
+
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
+    }
+
 }

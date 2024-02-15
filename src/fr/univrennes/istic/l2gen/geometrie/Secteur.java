@@ -32,6 +32,8 @@ public class Secteur implements IForme {
      */
     private double angleFin;
 
+    private String couleur;
+
     // CONSTRUCTEUR
 
     /**
@@ -197,7 +199,7 @@ public class Secteur implements IForme {
         svgBuilder.append(angleDebut > angleFin ? "1" : "0").append(" "); // sweep-flag
         svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
         svgBuilder.append("Z"); // Close path
-        svgBuilder.append("\" fill=\"none\" stroke=\"black\"/>");
+        svgBuilder.append("\" fill=\""+couleur +"\" stroke=\"black\"/>");
 
         return svgBuilder.toString();
     }
@@ -262,5 +264,14 @@ public class Secteur implements IForme {
     @Override
     public double largeur() {
         return 2 * rayon;
+    }
+
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 }

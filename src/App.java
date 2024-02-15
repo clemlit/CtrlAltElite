@@ -6,6 +6,7 @@ import fr.univrennes.istic.l2gen.geometrie.Ligne;
 import fr.univrennes.istic.l2gen.geometrie.Polygone;
 import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
+import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
 import java.io.FileWriter;
 
@@ -13,24 +14,22 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        Groupe tableau = new Groupe ();
-        tableau.ajoutGroupe(new Cercle (256 , 256 , 128));
-        tableau.ajoutGroupe(new Ellipse (256 , 256 , 128 , 64));
-        tableau.ajoutGroupe(new Ligne (128 , 128 , 128 , 256 , 256 , 128 , 256 , 256));
-        tableau.ajoutGroupe(new Polygone (128 , 128 , 128 , 256 , 256 , 128 , 256 , 256));
-        tableau.ajoutGroupe(new Rectangle (256 , 256 , 256 , 128));
-        tableau.ajoutGroupe(new Secteur (256 , 256 , 128 , 0 , 60));
-        tableau.ajoutGroupe(new Triangle (192 , 128 , 256 , 128 , 256 , 256));
-        System.out.println (tableau.enSVG ());
+        Groupe arbre = arbre(new Rectangle(256, 256, 256, 128));
+        arbre.coloriser("Red", "Green", "Orange", "Orange");
+        System.out.println(arbre.description(0));
 
-
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + tableau.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("figure.svg");
+        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + arbre.enSVG() + "</svg>";
+        FileWriter writer = new FileWriter("rectangle.svg");
 
         writer.write(svgContent);
         writer.close();
 
         System.out.println("Le fichier .svg a été créé avec succès.");
+
+        IForme f = new Texte (192,128,64," Istic L2GEN ");
+        System.out.println(f.enSVG());
+        f.deplacer(50, 50);
+        System.out.println(f.enSVG());
 
     }
 

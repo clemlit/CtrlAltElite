@@ -23,6 +23,7 @@ public class Ligne implements IForme {
      * Liste des sommets (points) de la ligne.
      */
     private List<Point> sommets;
+    private String couleur;
 
     /**
      * Constructeur de la classe Ligne.
@@ -212,9 +213,18 @@ public class Ligne implements IForme {
             svg.append(point.x()).append(" ").append(point.y()).append(" ");
         }
 
-        svg.append("\" fill=\"white\" stroke=\"black\" />\n");
+        svg.append("\" fill=\""+couleur +"\" stroke=\"black\" />\n");
 
         return svg.toString();
+    }
+
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 
 }

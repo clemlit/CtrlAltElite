@@ -11,6 +11,7 @@ public class Ellipse implements IForme {
     private double y; // Coordonnée y du centre de l'ellipse
     private double demiGrandAxe; // Demi-grand axe
     private double demiPetitAxe; // Demi-petit axe
+    private String couleur;
 
     /**
      * Construit une Ellipse avec les paramètres spécifiés.
@@ -131,10 +132,19 @@ public class Ellipse implements IForme {
         svg += " cy=\"" + y + "\"";
         svg += " rx=\"" + demiGrandAxe + "\"";
         svg += " ry=\"" + demiPetitAxe + "\"";
-        svg += " fill=\"white\"";
+        svg += " fill=\""+couleur+"\"";
         svg += " stroke=\"black\"";
         svg += " />\n";
 
         return svg;
+    }
+
+    public IForme colorier(String couleur) {
+        this.couleur = couleur;
+        return this;
+    }
+    
+    public String getCouleur() {
+        return couleur;
     }
 }

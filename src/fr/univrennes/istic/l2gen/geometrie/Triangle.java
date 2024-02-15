@@ -11,51 +11,40 @@ package fr.univrennes.istic.l2gen.geometrie;
  */
 public class Triangle implements IForme {
 
-    private Point A;
-    private Point B;
-    private Point C;
+    private Point x;
+    private Point y;
+    private Point z;
 
     private double x1;
     private double x2;
-    private double x3;
     private double y1;
     private double y2;
-    private double y3;
+    private double z1;
+    private double z2;
     private String couleur;
 
-    public Triangle(Point A, Point B, Point C){
-        this.A = A;
-        this.B = B;
-        this.C = C;
+    public Triangle(Point x, Point y, Point z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    public Triangle(double val1, double val2, double val3, double val4, double val5, double val6){
-        x1 = (int)val1;
-        x2 = (int)val3;
-        x3 = (int)val5;
-        y1 = (int)val2;
-        y2 = (int)val4;
-        y3 = (int)val6;
+    public Triangle(double x1, double x2, double y1, double y2, double z1, double z2) {
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.z1 = z1;
+        this.z2 = z2;
     }
 
     public Point centre() {
-        Point centre = null;
+        double centreX = (this.x1 + this.y1 + this.z1) / 3.0;
+        double centreY = (this.x2 + this.y2 + this.z2) / 3.0;
 
-        if (A != null && B != null && C != null) {
-            // Utiliser les points A, B et C pour calculer le centre si disponibles
-            double centreX = (A.x() + B.x() + C.x()) / 3;
-            double centreY = (A.y() + B.y() + C.y()) / 3;
-            centre = new Point(centreX, centreY);
-        } else {
-            // Utiliser les coordonnées x et y si les points ne sont pas disponibles
-            double centreX = (x1 + x2 + x3) / 3;
-            double centreY = (y1 + y2 + y3) / 3;
-            centre = new Point(centreX, centreY);
-        }
-
+        Point centre = new Point(centreX, centreY);
         return centre;
     }
-
 
     /**
      * Calcule et retourne la hauteur du triangle.
@@ -63,9 +52,9 @@ public class Triangle implements IForme {
      * @return La hauteur du triangle.
      */
     public double hauteur() {
-        double numerateur = Math.abs((x2 - x1) * (y1 - y3) - (x1 - x3) * (y2 - y1));
+        double numerateur = Math.abs((y1 - x1) * (x2 - z2) - (x1 - z1) * (y2 - x2));
 
-        double denominateur = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        double denominateur = Math.sqrt(Math.pow(y1 - x1, 2) + Math.pow(y2 - x2, 2));
 
         double hauteur = numerateur / denominateur;
 
@@ -78,13 +67,15 @@ public class Triangle implements IForme {
      * @return La largeur du triangle.
      */
     public double largeur() {
-        double distance1 = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        double distance2 = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
-        double distance3 = Math.sqrt(Math.pow(x1 - x3, 2) + Math.pow(y1 - y3, 2));
+        double res = Math.sqrt(Math.pow(y1 - x1, 2) + Math.pow(y1 - x2, 2));
 
-        double largeur = Math.min(distance1, Math.min(distance2, distance3));
-
-        return largeur;
+        if (res > Math.sqrt(Math.pow(y1 - z1, 2) + Math.pow(y2 - z2, 2))) {
+            res = Math.sqrt(Math.pow(y1 - z1, 2) + Math.pow(y2 - z2, 2));
+        }
+        if (res > Math.sqrt(Math.pow(x1 - z1, 2) + Math.pow(x2 - z2, 2))) {
+            res = Math.sqrt(Math.pow(x1 - z1, 2) + Math.pow(x2 - z2, 2));
+        }
+        return res;
     }
 
     /**
@@ -98,7 +89,8 @@ public class Triangle implements IForme {
         for (int i = 0; i < indentation; i++) {
             spaces += " ";
         }
-        return spaces + "Triangle " + (int) x1 + "," + (int) y1 + "," + (int) x2 + "," + (int) y2 + "," + (int) x3 + ","+ (int) y3;
+        return spaces + "Triangle " + x1 + "," + y1 + "," + x2 + "," + y2 + "," + z1 + ","
+                + z2;
     }
 
     /**
@@ -109,36 +101,12 @@ public class Triangle implements IForme {
      * @param dy Facteur de redimensionnement pour la coordonnée y.
      */
     public IForme redimensionner(double dx, double dy) {
-        Point centre = centre();
-
-        // REDIMENSIONNEMENT DU POINT X1 ET Y2
-        double distanceX1 = x1 - centre.x();
-        double newDistanceX1 = distanceX1 * dx;
-        x1 = Math.ceil(centre.x()+newDistanceX1);
-
-        double distanceY1 = y1 -centre.y();
-        double newDistanceY1 = distanceY1 * dy;
-        y1 = Math.ceil(centre.y()+newDistanceY1);
-
-
-        //REDIMENSIONNEMENT DU POINT X2 ET Y2
-        double distanceX2 = x2 - centre.x();
-        double newDistanceX2 = distanceX2 * dx;
-        x2 = Math.ceil(centre.x() + newDistanceX2);
-        
-
-        double distanceY2 = y2 - centre.y();
-        double newDistanceY2 = distanceY2 * dy;
-        y2 = Math.ceil(centre.y() + newDistanceY2);
-
-        //REDIMENSIONNEMENT DE X3 ET Y3
-        double distanceX3 = x3 - centre.x();
-        double newDistanceX3 = distanceX3 * dx;
-        x3 = Math.ceil(centre.x() + newDistanceX3);
-
-        double distanceY3 = y3 - centre.y();
-        double newDistanceY3 = distanceY3 * dy;
-        y3 = Math.ceil(centre.y() + newDistanceY3);
+        this.x1 *= dx;
+        this.x2 *= dy;
+        this.y1 *= dx;
+        this.y2 *= dy;
+        this.z1 *= dx;
+        this.z2 *= dy;
         return this;
 
     }
@@ -158,8 +126,9 @@ public class Triangle implements IForme {
         x2 += dx;
         y2 += dy;
 
-        x3 += dx;
-        y3 += dy;
+        z1 += dx;
+        z2 += dy;
+
         return this;
     }
 
@@ -170,7 +139,7 @@ public class Triangle implements IForme {
      * @return Une nouvelle instance de Triangle avec les mêmes coordonnées.
      */
     public IForme dupliquer() {
-        return new Triangle(x1, y1, x2, y2, x3, y3);
+        return new Triangle(x1, y1, x2, y2, z1, z2);
     }
 
     /**
@@ -179,9 +148,9 @@ public class Triangle implements IForme {
      * @return Le code SVG du triangle sans remplissage.
      */
     public String enSVG() {
-        String svg = "<polygon points=\"" + (int) x1 + " " + (int) y1 + " " + (int) x2 + " " + (int) y2 + " " + (int) x3
-                + " " + (int) y3 + "\"";
-        svg += " fill=\""+couleur +"\"";
+        String svg = "<polygon points=\"" + x1 + " " + y1 + " " + x2 + " " + y2 + " " + z1
+                + " " + z2 + "\"";
+        svg += " fill=\"" + couleur + "\"";
         svg += " stroke=\"black\" />\n";
         return svg;
     }
@@ -196,7 +165,7 @@ public class Triangle implements IForme {
         }
         return this;
     }
-    
+
     public String getCouleur() {
         return couleur;
     }

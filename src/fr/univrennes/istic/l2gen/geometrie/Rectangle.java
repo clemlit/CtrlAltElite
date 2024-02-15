@@ -96,8 +96,16 @@ public class Rectangle implements IForme{
      * @param py Le facteur de redimensionnement en hauteur.
      */
     public void redimensionner(double px, double py) {
+        // Calcul du nouveau centre après redimensionnement
+        double nouveauCentreX = p.x() + largeur / 2;
+        double nouveauCentreY = p.y() + hauteur / 2;
+
+        // Redimensionnement
         largeur *= px;
         hauteur *= py;
+
+        // Ajustement des coordonnées du coin supérieur gauche
+        p = new Point(nouveauCentreX - largeur / 2, nouveauCentreY - hauteur / 2);
     }
 
     /**
@@ -105,8 +113,20 @@ public class Rectangle implements IForme{
      * @return La représentation SVG du rectangle.
      */
     public String enSVG() {
-        return "<rect x=\"" + centre().x() + "\" y=\"" + centre().y() + "\" width=\"" + largeur() + "\" height=\""
-                + hauteur()
-                + "\"\n" + "\t" + "fill=\"white\" stroke=\"black\"/>";
+        // Construction de la chaîne SVG
+        String svg = "<rect";
+
+        // Ajout des attributs du rectangle
+        String xAttribute = " x=\"" + centre().x() + "\"";
+        String yAttribute = " y=\"" + centre().y() + "\"";
+        String widthAttribute = " width=\"" + largeur() + "\"";
+        String heightAttribute = " height=\"" + hauteur() + "\"";
+        String fillAttribute = " fill=\"white\"";
+        String strokeAttribute = " stroke=\"black\"";
+
+        // Construction finale de la chaîne SVG
+        svg += xAttribute + yAttribute + widthAttribute + heightAttribute + fillAttribute + strokeAttribute + " />\n";
+
+        return svg;
     }
 }

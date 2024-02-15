@@ -1,3 +1,10 @@
+/**
+ * La classe Ligne représente une ligne définie par une liste de sommets (points) dans un espace bidimensionnel.
+ * Elle implémente l'interface IForme pour fournir des fonctionnalités liées à la manipulation de lignes.
+ *
+ * @author Votre Nom
+ * @version 1.0
+ */
 package fr.univrennes.istic.l2gen.geometrie;
 
 import java.util.ArrayList;
@@ -9,12 +16,25 @@ import java.util.List;
  * Elle implémente l'interface IForme.
  */
 public class Ligne implements IForme {
+
+    // ATTRIBUTS
+
+    /**
+     * Liste des sommets (points) de la ligne.
+     */
     private List<Point> sommets;
 
     /**
      * Constructeur de la classe Ligne.
      * Crée une ligne à partir des coordonnées des sommets.
      * @param l les coordonnées des sommets de la ligne
+     */
+    // CONSTRUCTEURS
+
+    /**
+     * Constructeur de la classe Ligne à partir d'un tableau de coordonnées.
+     *
+     * @param l Tableau de coordonnées alternant entre les valeurs x et y.
      */
     public Ligne(double... l) {
         this.sommets = new ArrayList<>();
@@ -28,30 +48,40 @@ public class Ligne implements IForme {
      * Crée une ligne à partir d'une liste de points.
      * @param sommets la liste des points qui composent la ligne
      */
+    /**
+     * Constructeur de la classe Ligne à partir d'une liste de sommets (points).
+     *
+     * @param sommets Liste des sommets de la ligne.
+     */
     public Ligne(List<Point> sommets) {
         this.sommets = new ArrayList<>(sommets);
     }
 
+    // METHODES
+
     /**
-     * Ajoute un sommet à la ligne.
-     * @param p le point à ajouter comme sommet
+     * Ajoute un sommet à la liste des sommets de la ligne.
+     *
+     * @param p Sommet (point) à ajouter.
      */
     public void ajouterSommet(Point p) {
         this.sommets.add(p);
     }
 
     /**
-     * Ajoute un sommet à la ligne à partir de ses coordonnées.
-     * @param x la coordonnée x du sommet
-     * @param y la coordonnée y du sommet
+     * Ajoute un sommet à la liste des sommets de la ligne à partir de coordonnées spécifiées.
+     *
+     * @param x Coordonnée x du sommet.
+     * @param y Coordonnée y du sommet.
      */
     public void ajouterSommet(double x, double y) {
         this.sommets.add(new Point(x, y));
     }
 
     /**
-     * Calcule le centre de la ligne.
-     * @return le point représentant le centre de la ligne
+     * Retourne le centre de la ligne, calculé comme la moyenne des coordonnées de tous les sommets.
+     *
+     * @return Centre de la ligne.
      */
     public Point centre() {
         double sommeX = 0;
@@ -64,9 +94,10 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Retourne une description de la ligne avec une indentation spécifiée.
-     * @param indentation le niveau d'indentation de la description
-     * @return la description de la ligne
+     * Génère une description textuelle de la ligne avec l'indentation spécifiée.
+     *
+     * @param indentation Niveau d'indentation pour la description.
+     * @return Chaîne de caractères décrivant la ligne.
      */
     public String description(int indentation) {
         String indent = "";
@@ -82,15 +113,18 @@ public class Ligne implements IForme {
 
     /**
      * Retourne la liste des sommets de la ligne.
-     * @return la liste des sommets de la ligne
+     *
+     * @return Liste des sommets de la ligne.
      */
     public List<Point> getSommets() {
         return new ArrayList<>(this.sommets);
     }
 
     /**
-     * Calcule la hauteur de la ligne.
-     * @return la hauteur de la ligne
+     * Calcule et retourne la hauteur de la ligne comme la différence entre la coordonnée y maximale
+     * et la coordonnée y minimale parmi tous les sommets.
+     *
+     * @return Hauteur de la ligne.
      */
     public double hauteur() {
         double min = Double.MAX_VALUE;
@@ -103,8 +137,10 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Calcule la largeur de la ligne.
-     * @return la largeur de la ligne
+     * Calcule et retourne la largeur de la ligne comme la différence entre la coordonnée x maximale
+     * et la coordonnée x minimale parmi tous les sommets.
+     *
+     * @return Largeur de la ligne.
      */
     public double largeur() {
         double min = Double.MAX_VALUE;
@@ -117,9 +153,10 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Déplace la ligne selon les valeurs spécifiées.
-     * @param dx la valeur de déplacement selon l'axe x
-     * @param dy la valeur de déplacement selon l'axe y
+     * Déplace tous les sommets de la ligne selon les déplacements spécifiés sur les axes x et y.
+     *
+     * @param dx Déplacement sur l'axe des x.
+     * @param dy Déplacement sur l'axe des y.
      */
     public void deplacer(double dx, double dy) {
         for (Point sommet : sommets) {
@@ -128,8 +165,9 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Duplique la ligne.
-     * @return une nouvelle instance de la ligne avec les mêmes sommets
+     * Duplique la ligne en créant une nouvelle instance avec des sommets identiques.
+     *
+     * @return Nouvelle instance de la ligne.
      */
     public IForme dupliquer() {
         List<Point> nouveauxSommets = new ArrayList<>();
@@ -140,29 +178,43 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Redimensionne la ligne selon les proportions spécifiées.
-     * @param px le facteur de redimensionnement selon l'axe x
-     * @param py le facteur de redimensionnement selon l'axe y
+     * Redimensionne tous les sommets de la ligne selon les facteurs spécifiés sur les axes x et y.
+     *
+     * @param px Facteur de redimensionnement pour l'axe des x.
+     * @param py Facteur de redimensionnement pour l'axe des y.
      */
     public void redimensionner(double px, double py) {
+        Point centre = centre();
+
         for (Point sommet : sommets) {
-            sommet.redimensionner(px, py);
+            double distanceX = sommet.x() - centre.x();
+            double distanceY = sommet.y() - centre.y();
+
+            double nouvelleDistanceX = distanceX * px;
+            double nouvelleDistanceY = distanceY * py;
+
+            sommet.setX(centre.x() + nouvelleDistanceX);
+            sommet.setY(centre.y() + nouvelleDistanceY);
         }
     }
 
     /**
      * Génère une représentation SVG de la ligne.
-     * @return la représentation SVG de la ligne
+     *
+     * @return Chaîne de caractères représentant la ligne en SVG.
      */
     public String enSVG() {
-        StringBuilder svg = new StringBuilder();
-        svg.append("<line ");
-        svg.append("x1=\"" + sommets.get(0).x() + "\" ");
-        svg.append("y1=\"" + sommets.get(0).y() + "\" ");
-        svg.append("x2=\"" + sommets.get(1).x() + "\" ");
-        svg.append("y2=\"" + sommets.get(1).y() + "\" ");
-        svg.append("stroke=\"black\" ");
-        svg.append("/>");
+        // Construction de la chaîne SVG
+        StringBuilder svg = new StringBuilder("<polyline points=\"");
+
+        // Ajout des attributs de la ligne
+        for (Point point : sommets) {
+            svg.append(point.x()).append(" ").append(point.y()).append(" ");
+        }
+
+        svg.append("\" fill=\"white\" stroke=\"black\" />\n");
+
         return svg.toString();
     }
+
 }

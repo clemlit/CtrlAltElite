@@ -22,9 +22,24 @@ public class Polygone implements IForme {
     /**
      * @return le point 0,0 car pas de centre que l'on peut définir pour un polygone quelconque
      */
-    public Point centre(){
-        Point p = new Point(0, 0);
-        return p;
+    public Point centre() {
+        if (liste.isEmpty()) {
+            // Si la liste des sommets est vide, retourner le point (0, 0) par défaut
+            return new Point(0, 0);
+        }
+
+        double sommeX = 0;
+        double sommeY = 0;
+
+        for (Point sommet : liste) {
+            sommeX += sommet.x();
+            sommeY += sommet.y();
+        }
+
+        double centreX = sommeX / liste.size();
+        double centreY = sommeY / liste.size();
+
+        return new Point(centreX, centreY);
     }
 
     /**
@@ -36,14 +51,28 @@ public class Polygone implements IForme {
     /**
      * @return rien car jsp comment redimensionner un polygone quelconque
      */
-    public void redimensionner(double dx, double dy){
+    public void redimensionner(double dx, double dy) {
+        Point centre = centre();
 
+        for (Point sommet : liste) {
+            double distanceX = sommet.x() - centre.x();
+            double distanceY = sommet.y() - centre.y();
+
+            double nouvelleDistanceX = distanceX * dx;
+            double nouvelleDistanceY = distanceY * dy;
+
+            sommet.setX(centre.x() + nouvelleDistanceX);
+            sommet.setY(centre.y() + nouvelleDistanceY);
+        }
     }
+
     /**
      * @return rien car jsp comment déplacer un polygone quelconque
      */
     public void deplacer(double dx, double dy){
-
+        for (Point sommet : liste) {
+            sommet.plus(dx, dy);
+        }
     }
 
     /**
@@ -62,14 +91,17 @@ public class Polygone implements IForme {
      */
     @Override
     public String description(int i) {
-        String txt = "Polygone";
-        for (int e = 0; e < liste.size();e ++) {
+        StringBuilder txt = new StringBuilder("Polygone");
+        for (int e = 0; e < liste.size(); e++) {
+            txt.append(" ");
             for (int f = 0; f < i; f++) {
-                txt+=(" ");
+                txt.append(" ");
             }
-            txt+=(liste.get(e).x() + "," + liste.get(e).y());
+            int x = (int) liste.get(e).x();
+            int y = (int) liste.get(e).y();
+            txt.append(x).append(",").append(y);
         }
-        return txt;
+        return txt.toString();
     }
 
     /**
@@ -95,32 +127,31 @@ public class Polygone implements IForme {
      */
     @Override
     public String enSVG() {
+        StringBuilder svgBuilder = new StringBuilder("<g>\n<polygon points=\"");
 
-        StringBuilder svgBuilder = new StringBuilder();
-
-        svgBuilder.append("<svg width=\"1000\" height=\"1000\" xmlns=\"http://www.w3.org/2000/svg\">\n");
-        svgBuilder.append("<polygon points=\"");
-        for (int i =0;i<liste.size();i++){
-            svgBuilder.append(liste.get(i).x()).append(",").append(liste.get(i).y()).append(" ");
+        for (Point sommet : liste) {
+            svgBuilder.append(sommet.x()).append(" ").append(sommet.y()).append(" ");
         }
-        svgBuilder.append("\" stroke=\"black\" fill=\"white\" />\n");
-        svgBuilder.append("</svg>");
+
+        svgBuilder.append("\" fill=\"white\" stroke=\"black\" />\n</g>\n");
 
         return svgBuilder.toString();
     }
 
-    public double[] getListe(){
-        double[] listeDouble = new double[liste.size()];
-        int e=0;
-        for(int i=0;i<liste.size();i++){
-            listeDouble[e]=liste.get(i).x();
-            listeDouble[e+1]=liste.get(i).y();
-            e=e+2;
+    public double[] getListe() {
+        double[] listeDouble = new double[liste.size() * 2];
+        int e = 0;
+        for (int i = 0; i < liste.size(); i++) {
+            listeDouble[e] = liste.get(i).x();
+            listeDouble[e + 1] = liste.get(i).y();
+            e = e + 2;
         }
         return listeDouble;
     }
+
     public IForme dupliquer() {
-        return new Polygone(getListe());
+        Polygone copiePolygone = new Polygone(getListe());
+        return copiePolygone;
     }
 
 }

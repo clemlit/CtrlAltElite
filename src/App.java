@@ -15,16 +15,25 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         Groupe tableau = new Groupe();
-tableau.ajoutGroupe(new Cercle(256, 256, 128).colorier("blue"));
-tableau.ajoutGroupe(new Ellipse(256, 256, 128, 64).colorier("black"));
-tableau.ajoutGroupe(new Ligne(128, 128, 128, 256, 256, 128, 256, 256).colorier("yellow"));
-tableau.ajoutGroupe(new Polygone(128, 128, 128, 256, 256, 128, 256, 256).colorier("green"));
-tableau.ajoutGroupe(new Rectangle(256, 256, 256, 128).colorier("white"));
-tableau.ajoutGroupe(new Secteur(256, 256, 128, 0, 60).colorier("red"));
-tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256).colorier("pink"));
+tableau.ajoutGroupe(new Cercle(256, 256, 128));
+tableau.ajoutGroupe(new Ellipse(256, 256, 128, 64));
+tableau.ajoutGroupe(new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
+tableau.ajoutGroupe(new Polygone(128, 128, 128, 256, 256, 128, 256, 256));
+tableau.ajoutGroupe(new Rectangle(256, 256, 256, 128));
+tableau.ajoutGroupe(new Secteur(256, 256, 128, 0, 60));
+tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
+tableau.colorier("blue","red","pink","green","yellow","black","white");
 System.out.println(tableau.enSVG());
 
-        
+String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + tableau.enSVG() + "</svg>";
+FileWriter writer = new FileWriter("figure.svg");
+
+writer.write(svgContent);
+writer.close();
+
+
+
+
     }
 
     // Méthode pour créer un arbre avec des groupes et des ellipses

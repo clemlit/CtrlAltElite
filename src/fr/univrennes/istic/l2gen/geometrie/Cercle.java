@@ -24,6 +24,8 @@ public class Cercle implements IForme {
 
     private String couleur;
 
+    private int angle;
+
     /**
      * Constructeur de la classe Cercle.
      *
@@ -35,6 +37,7 @@ public class Cercle implements IForme {
         this.x = x;
         this.y = y;
         this.r = r;
+        this.angle = 0;
     }
 
     /**
@@ -70,8 +73,9 @@ public class Cercle implements IForme {
         for (int i = 0; i < indentation; i++) {
             ind += "  ";
         }
-        return ind + "Cercle centre = " + centre.x() + " , " + centre.y() + " r = " + this.r;
+        return ind + "Cercle centre = " + centre.x() + " , " + centre.y() + " r = " + this.r + " Angle = " + this.angle;
     }
+    
 
     /**
      * Retourne la hauteur du cercle (équivalente au rayon).
@@ -98,8 +102,10 @@ public class Cercle implements IForme {
      */
     public IForme dupliquer() {
         Cercle copieCercle = new Cercle(this.x, this.y, this.r);
+        copieCercle.tourner(this.angle); // Assure que la copie a le même angle que l'original
         return copieCercle;
     }
+    
 
     /**
      * Redimensionne le cercle en multipliant les coordonnées x et y par les facteurs spécifiés.
@@ -145,9 +151,14 @@ public class Cercle implements IForme {
     @Override
     public String enSVG() {
         Point centre = centre();
-        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\""+couleur+"\" stroke=\"black\" />";
+        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\""+couleur+"\" stroke=\"black\" ";
+        if (angle != 0) {
+            svg += "transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\""; // Applique la rotation
+        }
+        svg += " />";
         return svg;
     }
+    
 
     @Override
     public IForme colorier(String... couleurs) {
@@ -165,8 +176,10 @@ public class Cercle implements IForme {
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+        this.angle += angle; // Changer l'angle ne change rien, c'est un cercle
+    }    
+
+    public int getAngle() {
+        return angle;
     }
-        
 }

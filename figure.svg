@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg">
 <g>
-<circle cx="256.0" cy="256.0" r="128.0" fill="null" stroke="black" /><ellipse cx="256.0" cy="256.0" rx="128.0" ry="64.0" fill="null" stroke="black" />
-<polyline points="128.0 128.0 128.0 256.0 256.0 128.0 256.0 256.0 " fill="white" stroke="black" />
+<circle cx="256.0" cy="256.0" r="128.0" fill="null" stroke="black"  /><ellipse cx="256.0" cy="256.0" rx="128.0" ry="64.0" fill="null" stroke="black" />
+<polyline points="128.0 128.0 128.0 256.0 256.0 128.0 256.0 256.0 " fill="white" stroke="black" transform="rotate(0 192.0 192.0)" />
 <g>
 <polygon points="128.0 128.0 128.0 256.0 256.0 128.0 256.0 256.0 " fill="null" stroke="black" />
 </g>
-<rect x="128.0" y="192.0" width="256.0" height="128.0" fill="White" stroke="black" />
+<rect x="128.0" y="192.0" width="256.0" height="128.0" fill="white" stroke="black" />
 <path d="M256.0,256.0L384.0,256.0A128.0,128.0 0 0 0 320.0,145.14874831559186Z" fill="null" stroke="black"/><polygon points="192.0 128.0 256.0 128.0 256.0 256.0" fill="null" stroke="black" />
 </g>
 </svg>

@@ -28,7 +28,7 @@ public class Ellipse implements IForme {
         this.y = y;
         this.demiGrandAxe = demiGrandAxe;
         this.demiPetitAxe = demiPetitAxe;
-        this.angle = 0; // Initialisez l'angle à zéro par défaut
+        this.angle = 0; // Initialise l'angle à zéro par défaut
     }
     
 

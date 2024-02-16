@@ -3,8 +3,6 @@ package test.fr.univrennes.istic.l2gen.geometrie;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-//import java.beans.Transient;
-
 import org.junit.Test;
 
 import fr.univrennes.istic.l2gen.geometrie.Cercle;
@@ -59,7 +57,7 @@ public class CercleTest {
         for (int i = 0; i < indentation; i++) {
             ind += "  ";
         }
-        ind = ind + "Cercle centre = " + centre.x() + " , " + centre.y() + " r = " + cercle.hauteur();
+        ind = ind + "Cercle centre = " + centre.x() + " , " + centre.y() + " r = " + cercle.hauteur() + " Angle = 0";
 
         assertEquals(ind, cercle.description(4));
         assertNotEquals(ind, cercle.description(8));
@@ -78,13 +76,15 @@ public class CercleTest {
 
     @Test
     public void testEnSVG() {
-        IForme cercle = new Cercle(60.0, 80.0, 60.0);
+        Cercle cercle = new Cercle(60.0, 80.0, 60.0);
         Point centre = cercle.centre();
+        cercle.tourner(90);
+        int angle = cercle.getAngle(); // Obtenir l'angle du cercle
         String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + cercle.hauteur()
-                + "\" fill=\""
-                + cercle.getCouleur() + "\" stroke=\"black\" />";
+                + "\" fill=\"" + cercle.getCouleur() + "\" stroke=\"black\" transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\" />";
         assertEquals(svg, cercle.enSVG());
     }
+
 
     @Test
     public void testColorier() {
@@ -98,7 +98,6 @@ public class CercleTest {
     public void testTourner() {
         Cercle cercle = new Cercle(0, 0, 5);
         cercle.tourner(90);
-        assertEquals("Cercle centre = 0.0 , 0.0 r = 5.0", cercle.description(0));
+        assertEquals("Cercle centre = 0.0 , 0.0 r = 5.0 Angle = 90", cercle.description(0));
     }
-
 }

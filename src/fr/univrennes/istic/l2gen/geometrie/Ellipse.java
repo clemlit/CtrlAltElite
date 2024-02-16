@@ -63,7 +63,7 @@ public class Ellipse implements IForme {
      * @return La description formatée de l'ellipse.
      */
     public String description(int indentation) {
-        String espaces = "";
+        String espaces = "  ";
         Point point = centre();
         for (int i = 0; i < indentation; i++) {
             espaces += "  ";

@@ -48,11 +48,12 @@ public class EllipseTest {
             ind += "  ";
         }
         ind = ind + "Ellipse  Centre=" + (int) centre.x() + "," + (int) centre.y() + "  rx=" + ellipse.largeur() + "  ry="
-                + ellipse.hauteur();
+                + ellipse.hauteur() + " Angle=" + ((Ellipse)ellipse).getAngle();
 
         assertEquals(ind, ellipse.description(4));
         assertNotEquals(ind, ellipse.description(8));
     }
+
 
     @Test
     public void testDeplacer() {
@@ -88,5 +89,12 @@ public class EllipseTest {
         String couleur = "White";
         ellipse.colorier("White");
         assertEquals(couleur, ellipse.getCouleur());
+    }
+
+    @Test
+    public void testTourner() {
+        Ellipse ellipse = new Ellipse(10, 10, 20, 20);
+        ellipse.tourner(90);
+        assertEquals(90, ellipse.getAngle());
     }
 }

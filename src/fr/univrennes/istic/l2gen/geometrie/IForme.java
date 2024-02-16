@@ -74,5 +74,7 @@ public interface IForme {
 
     public String getCouleur();
 
+    public void tourner(int angle);
+
     
 }

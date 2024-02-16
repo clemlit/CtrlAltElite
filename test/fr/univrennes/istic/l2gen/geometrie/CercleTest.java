@@ -93,4 +93,12 @@ public class CercleTest {
         cercle.colorier("White");
         assertEquals(couleur, cercle.getCouleur());
     }
+
+    @Test
+    public void testTourner() {
+        Cercle cercle = new Cercle(0, 0, 5);
+        cercle.tourner(90);
+        assertEquals("Cercle centre = 0.0 , 0.0 r = 5.0", cercle.description(0));
+    }
+
 }

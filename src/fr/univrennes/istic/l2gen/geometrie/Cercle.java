@@ -163,4 +163,10 @@ public class Cercle implements IForme {
     public String getCouleur() {
         return couleur;
     }
+
+    public void tourner(int angle) {
+        // TODO Faire tourner pour chaque forme, 
+        // modifier dupliquer, description, enSVG, et les test en conséquence
+    }
+        
 }

@@ -12,6 +12,8 @@ public class Ellipse implements IForme {
     private double demiGrandAxe; // Demi-grand axe
     private double demiPetitAxe; // Demi-petit axe
     private String couleur;
+    private int angle;
+
 
     /**
      * Construit une Ellipse avec les paramètres spécifiés.
@@ -26,7 +28,9 @@ public class Ellipse implements IForme {
         this.y = y;
         this.demiGrandAxe = demiGrandAxe;
         this.demiPetitAxe = demiPetitAxe;
+        this.angle = 0; // Initialisez l'angle à zéro par défaut
     }
+    
 
     /**
      * Construit une Ellipse avec l'objet Point spécifié et les longueurs des axes.
@@ -65,8 +69,9 @@ public class Ellipse implements IForme {
             espaces += "  ";
         }
         return espaces + "Ellipse  Centre=" + (int) point.x() + "," + (int) point.y() + "  rx=" + largeur() + "  ry="
-                + hauteur();
+                + hauteur() + " Angle=" + this.angle;
     }
+    
 
     /**
      * Retourne la longueur du demi-petit axe de l'ellipse.
@@ -117,8 +122,10 @@ public class Ellipse implements IForme {
      */
     public IForme dupliquer() {
         Ellipse copieEllipse = new Ellipse(this.x, this.y, this.demiGrandAxe, this.demiPetitAxe);
+        copieEllipse.tourner(this.angle); // Assure que la copie a le même angle que l'original
         return copieEllipse;
     }
+    
 
     /**
      * Génère une représentation SVG de l'ellipse.
@@ -126,20 +133,25 @@ public class Ellipse implements IForme {
      * @return La chaîne SVG représentant l'ellipse.
      */
     public String enSVG() {
-        // Construction de la chaîne SVG
         String svg = "<ellipse";
-
-        // Ajout des attributs de l'ellipse
+    
         svg += " cx=\"" + x + "\"";
         svg += " cy=\"" + y + "\"";
         svg += " rx=\"" + demiGrandAxe + "\"";
         svg += " ry=\"" + demiPetitAxe + "\"";
         svg += " fill=\""+couleur+"\"";
         svg += " stroke=\"black\"";
+        
+        if (angle != 0) {
+            Point centre = centre();
+            svg += " transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\"";
+        }
+        
         svg += " />\n";
-
+    
         return svg;
     }
+    
 
     @Override
     public IForme colorier(String... couleurs) {
@@ -155,4 +167,13 @@ public class Ellipse implements IForme {
     public String getCouleur() {
         return couleur;
     }
+
+    public void tourner(int angle) {
+        this.angle += angle; // Met à jour l'angle de l'ellipse
+    }
+    
+    public int getAngle() {
+        return this.angle;
+    }
+    
 }

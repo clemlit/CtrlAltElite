@@ -133,11 +133,24 @@ public class LigneTest {
 
     @Test
     public void testRedimensionner() {
-     
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+        double ancienneLargeur = ligne.largeur();
+        double ancienneHauteur = ligne.hauteur();
+        ligne.redimensionner(2, 0.5);
+        double nouvelleLargeur = ligne.largeur();
+        double nouvelleHauteur = ligne.hauteur();
+
+        // Vérification de la hauteur et largueur multiplié par 2
+        assertEquals(ancienneLargeur * 2, nouvelleLargeur, 0.001);
+
+        assertEquals(ancienneHauteur * 0.5, nouvelleHauteur, 0.001);
     }
+    
    
     @Test
     public void testTourner() {
-        
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+        ligne.tourner(90);
+        assertEquals(90, ligne.getAngle());
     }
 }

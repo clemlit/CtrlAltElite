@@ -202,17 +202,26 @@ public class Ligne implements IForme {
      */
     public String enSVG() {
         // Construction de la chaîne SVG
-        StringBuilder svg = new StringBuilder("<polyline points=\"");
+        String svg = "<polyline points=\"";
 
         // Ajout des attributs de la ligne
         for (Point point : sommets) {
-            svg.append(point.x()).append(" ").append(point.y()).append(" ");
+            svg += point.x() + " " + point.y() + " ";
         }
 
-        svg.append("\" fill=\"white\" stroke=\"black\" />\n");
+        svg += "\" fill=\"" + couleur + "\" stroke=\"black\"";
 
-        return svg.toString();
+        // Ajout de la transformation de rotation
+        if (angle != 0) {
+            Point centre = centre();
+            svg += " transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\"";
+        }
+
+        svg += " />\n";
+
+        return svg;
     }
+
 
     @Override
     public IForme colorier(String... couleurs) {
@@ -230,7 +239,6 @@ public class Ligne implements IForme {
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+        this.angle += angle;
     }
 }

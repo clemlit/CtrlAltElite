@@ -11,9 +11,9 @@ package fr.univrennes.istic.l2gen.geometrie;
  */
 public class Triangle implements IForme {
 
-    private Point x;
-    private Point y;
-    private Point z;
+    private Point X;
+    private Point Y;
+    private Point Z;
 
     private double x1;
     private double x2;
@@ -23,24 +23,21 @@ public class Triangle implements IForme {
     private double z2;
     private String couleur;
 
-    public Triangle(Point x, Point y, Point z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public Triangle(Point X, Point Y, Point Z) {
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
     }
 
     public Triangle(double x1, double x2, double y1, double y2, double z1, double z2) {
-        this.x1 = x1;
-        this.x2 = x2;
-        this.y1 = y1;
-        this.y2 = y2;
-        this.z1 = z1;
-        this.z2 = z2;
+        this.X = new Point(x1, x2);
+        this.Y = new Point(y1, y2);
+        this.Z = new Point(z1, z2);
     }
 
     public Point centre() {
-        double centreX = (this.x1 + this.y1 + this.z1) / 3.0;
-        double centreY = (this.x2 + this.y2 + this.z2) / 3.0;
+        double centreX = (this.X.x() + this.Y.x() + this.Z.x()) / 3.0;
+        double centreY = (this.X.y() + this.Y.y() + this.Z.y()) / 3.0;
 
         Point centre = new Point(centreX, centreY);
         return centre;
@@ -52,9 +49,10 @@ public class Triangle implements IForme {
      * @return La hauteur du triangle.
      */
     public double hauteur() {
-        double numerateur = Math.abs((y1 - x1) * (x2 - z2) - (x1 - z1) * (y2 - x2));
+        double numerateur = Math.abs((this.Y.x() - this.X.x()) * (this.X.y() - this.Z.y())
+                - (this.X.x() - this.Z.x()) * (this.Y.y() - this.X.y()));
 
-        double denominateur = Math.sqrt(Math.pow(y1 - x1, 2) + Math.pow(y2 - x2, 2));
+        double denominateur = Math.sqrt(Math.pow(this.Y.x() - this.X.x(), 2) + Math.pow(this.Y.y() - this.X.y(), 2));
 
         double hauteur = numerateur / denominateur;
 
@@ -67,13 +65,13 @@ public class Triangle implements IForme {
      * @return La largeur du triangle.
      */
     public double largeur() {
-        double res = Math.sqrt(Math.pow(y1 - x1, 2) + Math.pow(y1 - x2, 2));
+        double res = Math.sqrt(Math.pow(this.Y.x() - this.X.x(), 2) + Math.pow(this.Y.x() - this.X.y(), 2));
 
-        if (res > Math.sqrt(Math.pow(y1 - z1, 2) + Math.pow(y2 - z2, 2))) {
-            res = Math.sqrt(Math.pow(y1 - z1, 2) + Math.pow(y2 - z2, 2));
+        if (res > Math.sqrt(Math.pow(this.Y.x() - this.Z.x(), 2) + Math.pow(this.Y.y() - this.Z.y(), 2))) {
+            res = Math.sqrt(Math.pow(this.Y.x() - this.Z.x(), 2) + Math.pow(this.Y.y() - this.Z.y(), 2));
         }
-        if (res > Math.sqrt(Math.pow(x1 - z1, 2) + Math.pow(x2 - z2, 2))) {
-            res = Math.sqrt(Math.pow(x1 - z1, 2) + Math.pow(x2 - z2, 2));
+        if (res > Math.sqrt(Math.pow(this.X.x() - this.Z.x(), 2) + Math.pow(this.X.y() - this.Z.y(), 2))) {
+            res = Math.sqrt(Math.pow(this.X.x() - this.Z.x(), 2) + Math.pow(this.X.y() - this.Z.y(), 2));
         }
         return res;
     }
@@ -89,8 +87,9 @@ public class Triangle implements IForme {
         for (int i = 0; i < indentation; i++) {
             spaces += " ";
         }
-        return spaces + "Triangle " + x1 + "," + y1 + "," + x2 + "," + y2 + "," + z1 + ","
-                + z2;
+        return spaces + "Triangle " + this.X.x() + "," + this.X.y() + "," + this.Y.x() + "," + this.Y.y() + ","
+                + this.Z.x() + ","
+                + this.Z.y();
     }
 
     /**
@@ -101,12 +100,9 @@ public class Triangle implements IForme {
      * @param dy Facteur de redimensionnement pour la coordonnée y.
      */
     public IForme redimensionner(double dx, double dy) {
-        this.x1 *= dx;
-        this.x2 *= dy;
-        this.y1 *= dx;
-        this.y2 *= dy;
-        this.z1 *= dx;
-        this.z2 *= dy;
+        this.X = new Point(x1 * dx, x2 * dy);
+        this.Y = new Point(y1 * dx, y2 * dy);
+        this.Z = new Point(z1 * dx, z2 * dy);
         return this;
 
     }
@@ -120,15 +116,9 @@ public class Triangle implements IForme {
      */
     public IForme deplacer(double dx, double dy) {
         // Déplacement des coordonnées des points du triangle
-        x1 += dx;
-        y1 += dy;
-
-        x2 += dx;
-        y2 += dy;
-
-        z1 += dx;
-        z2 += dy;
-
+        this.X = new Point(x1 + dx, x2 + dy);
+        this.Y = new Point(y1 + dx, y2 + dy);
+        this.Z = new Point(z1 + dx, z2 + dy);
         return this;
     }
 
@@ -148,8 +138,9 @@ public class Triangle implements IForme {
      * @return Le code SVG du triangle sans remplissage.
      */
     public String enSVG() {
-        String svg = "<polygon points=\"" + x1 + " " + y1 + " " + x2 + " " + y2 + " " + z1
-                + " " + z2 + "\"";
+        String svg = "<polygon points=\"" + this.X.x() + " " + this.X.y() + " " + this.Y.x() + " " + this.Y.y() + " "
+                + this.Z.x()
+                + " " + this.Z.y() + "\"";
         svg += " fill=\"" + couleur + "\"";
         svg += " stroke=\"black\" />\n";
         return svg;

@@ -44,7 +44,7 @@ public class Rectangle implements IForme{
      * @return Le point représentant le centre du rectangle.
      */
     public Point centre() {
-        return new Point(p.x(), p.y());
+        return p;
     }
 
     /**
@@ -53,12 +53,16 @@ public class Rectangle implements IForme{
      * @return La description textuelle du rectangle.
      */
     public String description(int indentation) {
-        String indent = "";
+        String indent = "  ";
         for (int i = 0; i < indentation; i++) {
-            indent += " ";
+            indent += "  "; // Deux espaces pour chaque niveau d'indentation
         }
-        return indent + "Rectangle " + "Centre=" + (int) centre().x() + "," + (int) centre().y() + " L=" + largeur
-                + " H=" + hauteur + " Couleur=" + couleur;
+
+        // Construction de la description
+        String description = indent + "Rectangle " + "Centre=" + (int) centre().x() + "," + (int) centre().y() +
+                " L=" + largeur + " H=" + hauteur + " Couleur=" + couleur;
+
+        return description;
     }
 
     /**
@@ -101,14 +105,8 @@ public class Rectangle implements IForme{
      * @param py Le facteur de redimensionnement en hauteur.
      */
     public IForme redimensionner(double px, double py) {
-        // Calcul du nouveau centre après redimensionnement
-
-
-        // Redimensionnement
         largeur *= px;
         hauteur *= py;
-
-        // Ajustement des coordonnées du coin supérieur gauche
         return this;
     }
 
@@ -119,13 +117,19 @@ public class Rectangle implements IForme{
     public String enSVG() {
         // Construction de la chaîne SVG
         String svg = "<rect";
+        double coin_gauche_rectangleX = centre().x() - largeur()/2;
+        double coin_gauche_rectangleY = centre().y() - hauteur() / 2;
+
+
+        // Calcul des coordonnées du coin supérieur gauche du rectangle SVG en fonction
+        // du centre
 
         // Ajout des attributs du rectangle
-        String xAttribute = " x=\"" + centre().x() + "\"";
-        String yAttribute = " y=\"" + centre().y() + "\"";
+        String xAttribute = " x=\"" + coin_gauche_rectangleX + "\"";
+        String yAttribute = " y=\"" + coin_gauche_rectangleY + "\"";
         String widthAttribute = " width=\"" + largeur() + "\"";
         String heightAttribute = " height=\"" + hauteur() + "\"";
-        String fillAttribute = " fill=\"" + couleur + "\""; 
+        String fillAttribute = " fill=\"" + couleur + "\"";
         String strokeAttribute = " stroke=\"black\"";
 
         // Construction finale de la chaîne SVG

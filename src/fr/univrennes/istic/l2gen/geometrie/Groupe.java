@@ -99,17 +99,20 @@ public class Groupe implements IForme {
      * @return Chaîne de caractères décrivant le groupe et ses formes incluses.
      */
     public String description(int indentation) {
-        String result = "Groupe\n";
-
-        for (IForme sousForme : formes) {
-            if (sousForme instanceof Groupe) {
-                result += sousForme.description(0);
-            } else {
-                result += sousForme.description(0) + "\n";
-            }
+        String indent = "  ";
+        for (int i = 0; i < indentation; i++) {
+            indent += "  "; // Deux espaces pour chaque niveau d'indentation
         }
 
-        return result;
+        // Construction de la description du groupe
+        String description = indent + "Groupe";
+
+        // Appel récursif à la méthode description pour chaque forme dans le groupe
+        for (IForme forme : formes) {
+            description += "\n" + forme.description(indentation + 1);
+        }
+
+        return description;
     }
 
     /**

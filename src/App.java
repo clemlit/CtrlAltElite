@@ -14,10 +14,13 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        IForme arbre = arbre ( new Polygone(128 , 128 , 128 , 256 , 256 , 128 , 256 , 256).redimensionner(0.5, 0.5));
+        Groupe arbre = arbre(new Rectangle (256 , 256 , 256 , 128));
         System.out.println(arbre.enSVG());
+        System.out.println(arbre.description(0));
 
-/* 
+        System.out.println("-------------------------------------");
+
+
         Groupe tableau = new Groupe();
         tableau.ajoutGroupe(new Cercle(256, 256, 128));
         tableau.ajoutGroupe(new Ellipse(256, 256, 128, 64));
@@ -27,11 +30,11 @@ public class App {
         tableau.ajoutGroupe(new Secteur(256, 256, 128, 0, 60));
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
-*/
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + arbre.enSVG() + "</svg>";
+
+        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + tableau.enSVG() + "</svg>";
         FileWriter writer = new FileWriter("figure.svg");
 
-        //writer.write(svgContent);
+        writer.write(svgContent);
         writer.close();
 
         System.out.println("Le fichier .svg a été créé avec succès.");

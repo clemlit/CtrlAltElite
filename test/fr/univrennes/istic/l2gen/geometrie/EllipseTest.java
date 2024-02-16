@@ -43,7 +43,7 @@ public class EllipseTest {
         int indentation = 4;
         IForme ellipse = new Ellipse(80.0, 66.0, 69.0, 50.0);
         Point centre = ellipse.centre();
-        String ind = "";
+        String ind = "  ";
         for (int i = 0; i < indentation; i++) {
             ind += "  ";
         }

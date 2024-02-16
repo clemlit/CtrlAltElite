@@ -15,8 +15,9 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         Groupe arbre = arbre(new Rectangle (256 , 256 , 256 , 128));
+        arbre.tourner(-45);
         System.out.println(arbre.enSVG());
-        System.out.println(arbre.description(0));
+
 
         System.out.println("-------------------------------------");
 
@@ -31,8 +32,8 @@ public class App {
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
 
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + tableau.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("figure.svg");
+        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + arbre.enSVG() + "</svg>";
+        FileWriter writer = new FileWriter("rectangle.svg");
 
         writer.write(svgContent);
         writer.close();
@@ -53,6 +54,15 @@ public class App {
         System.out.println(r.enSVG());
         r.deplacer(1, 1).redimensionner(2, 2);
         System.out.println(r.enSVG());
+
+        System.out.println("--------------------------");
+
+        Rectangle rec = new Rectangle(100, 100, 200, 100);
+        System.out.println("Rectangle avant rotation :\n" + rec.enSVG());
+
+        // Rotation du rectangle de 45 degrés
+        rec.tourner(45);
+        System.out.println("Rectangle après rotation de 45 degrés :\n" + rec.enSVG());
     }
 
     // Méthode pour créer un arbre avec des groupes et des ellipses

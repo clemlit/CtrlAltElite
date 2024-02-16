@@ -27,6 +27,7 @@ public class Groupe implements IForme {
 
     // CONSTRUCTEUR
 
+
     /**
      * Constructeur de la classe Groupe.
      *
@@ -125,12 +126,11 @@ public class Groupe implements IForme {
      */
     public IForme dupliquer() {
         Groupe groupeDuplique = new Groupe();
-
-        for (int i = 0; i < formes.size(); i++) {
-            IForme formeDupliquee = formes.get(i).dupliquer();
+        for (IForme forme : formes) {
+            IForme formeDupliquee = forme.dupliquer();
             groupeDuplique.ajoutGroupe(formeDupliquee);
         }
-
+        groupeDuplique.angle = this.angle; // Ajoutez cette ligne pour mettre à jour l'angle.
         return groupeDuplique;
     }
 
@@ -214,9 +214,15 @@ public class Groupe implements IForme {
         public String getCouleur() {
             return couleur;
         }
+
+        public int getAngle() {
+            return angle;
+        }
    
         public void tourner(int angle) {
-            // TODO Faire tourner pour chaque forme, 
-            // modifier dupliquer, description, enSVG, et les test en conséquence
+            this.angle = angle;
+            for (IForme forme : formes) {
+                forme.tourner(angle);
+            }
         }
 }

@@ -9,22 +9,17 @@ import fr.univrennes.istic.l2gen.geometrie.*;
 public class LigneTest {
     @Test
     public void testAjouterSommet() {
-        // Création d'une ligne avec quelques sommets
+
         Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
 
-        // Enregistrement du nombre de sommets avant l'ajout
         int nombreSommetsAvant = ligne.getSommets().size();
       
-        // Ajout d'un nouveau sommet à la ligne
         ligne.ajouterSommet(new Point(3, 3));
       
-         // Obtention du nombre de sommets après l'ajout
         int nombreSommetsApres = ligne.getSommets().size();
       
-        // Vérification si le nombre de sommets a augmenté de 1 après l'ajout
         assertEquals(nombreSommetsAvant + 1, nombreSommetsApres);
       
-         // Vérification si le dernier sommet ajouté a les bonnes coordonnées
         Point dernierSommet = ligne.getSommets().get(nombreSommetsApres - 1);
         assertEquals(3, dernierSommet.x(), 0.001);
         assertEquals(3, dernierSommet.y(), 0.001);
@@ -124,11 +119,15 @@ public class LigneTest {
 
     @Test
     public void testHauteur() {
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+        assertEquals(1, ligne.hauteur(), 0.001);
 
     }
 
     @Test
     public void testLargeur() {
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+        assertEquals(2, ligne.largeur(), 0.001);
 
     }
 

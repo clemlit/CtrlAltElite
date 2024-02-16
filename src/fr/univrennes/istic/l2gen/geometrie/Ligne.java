@@ -75,7 +75,7 @@ public class Ligne implements IForme {
      * @param x Coordonnée x du sommet.
      * @param y Coordonnée y du sommet.
      */
-    public void ajouterSommet(double x, double y) {
+    public void ajouterSommetCor(double x, double y) {
         this.sommets.add(new Point(x, y));
     }
 

@@ -9,11 +9,35 @@ import fr.univrennes.istic.l2gen.geometrie.*;
 public class LigneTest {
     @Test
     public void testAjouterSommet() {
-    
+        // Création d'une ligne avec quelques sommets
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+
+        // Enregistrement du nombre de sommets avant l'ajout
+        int nombreSommetsAvant = ligne.getSommets().size();
+      
+        // Ajout d'un nouveau sommet à la ligne
+        ligne.ajouterSommet(new Point(3, 3));
+      
+         // Obtention du nombre de sommets après l'ajout
+        int nombreSommetsApres = ligne.getSommets().size();
+      
+        // Vérification si le nombre de sommets a augmenté de 1 après l'ajout
+        assertEquals(nombreSommetsAvant + 1, nombreSommetsApres);
+      
+         // Vérification si le dernier sommet ajouté a les bonnes coordonnées
+        Point dernierSommet = ligne.getSommets().get(nombreSommetsApres - 1);
+        assertEquals(3, dernierSommet.x(), 0.001);
+        assertEquals(3, dernierSommet.y(), 0.001);
     }
+      
 
     @Test
     public void testAjouterSommetCor() {
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+        ligne.ajouterSommetCor(3, 1);
+        assertEquals(4, ligne.getSommets().size());
+        assertEquals(3, ligne.getSommets().get(3).x(), 0.001);
+        assertEquals(1, ligne.getSommets().get(3).y(), 0.001);
        
     }
 
@@ -47,28 +71,22 @@ public class LigneTest {
 
     @Test
     public void testDescription() {
-         // Création d'une ligne avec quelques sommets
          Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
 
-         // Enregistrement des sommets d'origine
          Point sommet1 = ligne.getSommets().get(0);
          Point sommet2 = ligne.getSommets().get(1);
          Point sommet3 = ligne.getSommets().get(2);
  
-         // Définir le niveau d'indentation
          int indentation = 4;
  
-         // Appel de la méthode description
          String description = ligne.description(indentation);
  
-         // Création de la chaîne de caractères attendue
          StringBuilder expected = new StringBuilder();
          expected.append("    Ligne ");
          expected.append(sommet1.x()).append(",").append(sommet1.y()).append(" ");
          expected.append(sommet2.x()).append(",").append(sommet2.y()).append(" ");
          expected.append(sommet3.x()).append(",").append(sommet3.y()).append(" ");
  
-         // Vérification si la description générée correspond à la chaîne attendue
          assertEquals(expected.toString(), description);
     }
  

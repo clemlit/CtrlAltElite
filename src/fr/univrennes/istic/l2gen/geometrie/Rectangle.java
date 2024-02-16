@@ -23,7 +23,7 @@ public class Rectangle implements IForme{
         this.p = new Point(x, y);
         this.largeur = largeur;
         this.hauteur = hauteur;
-        this.couleur = "white";
+        this.couleur = "White";
         this.angle = 0;
     }
 
@@ -38,7 +38,8 @@ public class Rectangle implements IForme{
         this.p = p;
         this.largeur = largeur;
         this.hauteur = hauteur;
-        this.couleur = "white";
+        this.couleur = "White";
+        this.angle = 0;
     }
 
     /**
@@ -62,7 +63,7 @@ public class Rectangle implements IForme{
 
         // Construction de la description
         String description = indent + "Rectangle " + "Centre=" + (int) centre().x() + "," + (int) centre().y() +
-                " L=" + largeur + " H=" + hauteur + " Couleur=" + couleur;
+                " L=" + largeur + " H=" + hauteur + " Angle=" + angle + " Couleur=" + couleur;
 
         return description;
     }
@@ -98,7 +99,10 @@ public class Rectangle implements IForme{
      * @return Une nouvelle instance de Rectangle identique à celle actuelle.
      */
     public IForme dupliquer() {
-        return new Rectangle(p, largeur, hauteur);
+        Rectangle rectangleDuplique = new Rectangle(p, largeur, hauteur);
+        rectangleDuplique.couleur = this.couleur;
+        rectangleDuplique.angle = this.angle;
+        return rectangleDuplique;
     }
 
     /**
@@ -134,8 +138,10 @@ public class Rectangle implements IForme{
         String fillAttribute = " fill=\"" + couleur + "\"";
         String strokeAttribute = " stroke=\"black\"";
 
+        String transformAttribute = " transform=\"rotate(" + angle + " " + centre().x() + " " + centre().y() + ")\"";
+
         // Construction finale de la chaîne SVG
-        svg += xAttribute + yAttribute + widthAttribute + heightAttribute + fillAttribute + strokeAttribute + " />\n";
+        svg += xAttribute + yAttribute + widthAttribute + heightAttribute + fillAttribute + strokeAttribute + transformAttribute+" />\n";
 
         return svg;
     }
@@ -155,7 +161,6 @@ public class Rectangle implements IForme{
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+        this.angle += angle;
     }
 }

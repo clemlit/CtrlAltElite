@@ -95,9 +95,9 @@ public class Ligne implements IForme {
      * @return Chaîne de caractères décrivant la ligne.
      */
     public String description(int indentation) {
-        String indent = "";
+        String indent = "  ";
         for (int i = 0; i < indentation; i++) {
-            indent += " ";
+            indent += "  ";
         }
         String sommet = "";
         for (int i = 0; i < sommets.size(); i++) {
@@ -240,5 +240,8 @@ public class Ligne implements IForme {
 
     public void tourner(int angle) {
         this.angle += angle;
+    }
+    public int getAngle() {
+        return angle;
     }
 }

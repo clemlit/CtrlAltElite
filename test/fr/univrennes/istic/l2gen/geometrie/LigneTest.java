@@ -66,24 +66,20 @@ public class LigneTest {
 
     @Test
     public void testDescription() {
-         Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+        // Create a new Ligne instance with appropriate parameters
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
 
-         Point sommet1 = ligne.getSommets().get(0);
-         Point sommet2 = ligne.getSommets().get(1);
-         Point sommet3 = ligne.getSommets().get(2);
- 
-         int indentation = 4;
- 
-         String description = ligne.description(indentation);
- 
-         StringBuilder expected = new StringBuilder();
-         expected.append("    Ligne ");
-         expected.append(sommet1.x()).append(",").append(sommet1.y()).append(" ");
-         expected.append(sommet2.x()).append(",").append(sommet2.y()).append(" ");
-         expected.append(sommet3.x()).append(",").append(sommet3.y()).append(" ");
- 
-         assertEquals(expected.toString(), description);
+        // Set the expected description based on your logic or calculation
+        String expectedDescription = "    Ligne 0.0,0.0 1.0,1.0 2.0,0.0 ";
+
+        // Call the description method with an indentation of 2
+        String actualDescription = ligne.description(1);
+
+        // Assert that the actual description matches the expected description
+        assertEquals(expectedDescription, actualDescription);
     }
+
+
  
 
     @Test

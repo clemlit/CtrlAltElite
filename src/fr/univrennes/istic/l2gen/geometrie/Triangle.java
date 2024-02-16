@@ -11,16 +11,30 @@ package fr.univrennes.istic.l2gen.geometrie;
  */
 public class Triangle implements IForme {
 
+    /*
+     * Les coordonnées du point X
+     */
     private Point X;
-    private Point Y;
-    private Point Z;
-
     private double x1;
     private double x2;
+
+    /*
+     * Les coordonnées du point Y
+     */
+    private Point Y;
     private double y1;
     private double y2;
+
+    /*
+     * Les coordonnées du point Z
+     */
+    private Point Z;
     private double z1;
     private double z2;
+
+    /*
+     * La couleur du triangle
+     */
     private String couleur;
 
     public Triangle(Point X, Point Y, Point Z) {
@@ -35,6 +49,11 @@ public class Triangle implements IForme {
         this.Z = new Point(z1, z2);
     }
 
+    /*
+     * Calcule et retourne les coordonnées du centre du Triangle
+     * 
+     * @return les coordonnées du centre du Triangle
+     */
     public Point centre() {
         double centreX = (this.X.x() + this.Y.x() + this.Z.x()) / 3.0;
         double centreY = (this.X.y() + this.Y.y() + this.Z.y()) / 3.0;
@@ -146,6 +165,12 @@ public class Triangle implements IForme {
         return svg;
     }
 
+    /**
+     * Colorie la forme géométrique avec les couleurs spécifiées.
+     *
+     * @param couleurs Tableau variable de chaînes de caractères représentant les
+     *                 couleurs.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {

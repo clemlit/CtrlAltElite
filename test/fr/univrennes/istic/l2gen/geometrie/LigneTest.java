@@ -47,12 +47,31 @@ public class LigneTest {
 
     @Test
     public void testDescription() {
-        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
-        String description = "Ligne : \n" + "  - sommet 1 : (0.0, 0.0)\n" + "  - sommet 2 : (1.0, 1.0)\n"
-                + "  - sommet 3 : (2.0, 0.0)\n";
-        assertEquals(description, ligne.description());
+         // Création d'une ligne avec quelques sommets
+         Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
 
+         // Enregistrement des sommets d'origine
+         Point sommet1 = ligne.getSommets().get(0);
+         Point sommet2 = ligne.getSommets().get(1);
+         Point sommet3 = ligne.getSommets().get(2);
+ 
+         // Définir le niveau d'indentation
+         int indentation = 4;
+ 
+         // Appel de la méthode description
+         String description = ligne.description(indentation);
+ 
+         // Création de la chaîne de caractères attendue
+         StringBuilder expected = new StringBuilder();
+         expected.append("    Ligne ");
+         expected.append(sommet1.x()).append(",").append(sommet1.y()).append(" ");
+         expected.append(sommet2.x()).append(",").append(sommet2.y()).append(" ");
+         expected.append(sommet3.x()).append(",").append(sommet3.y()).append(" ");
+ 
+         // Vérification si la description générée correspond à la chaîne attendue
+         assertEquals(expected.toString(), description);
     }
+ 
 
     @Test
     public void testDupliquer() {

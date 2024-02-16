@@ -37,10 +37,13 @@ public class Triangle implements IForme {
      */
     private String couleur;
 
+    private int angle;
+
     public Triangle(Point X, Point Y, Point Z) {
         this.X = X;
         this.Y = Y;
         this.Z = Z;
+        this.angle = 0;
     }
 
     public Triangle(double x1, double x2, double y1, double y2, double z1, double z2) {

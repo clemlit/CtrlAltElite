@@ -6,6 +6,7 @@ import java.util.List;
 public class Polygone implements IForme {
     List<Point> liste;
     private String couleur;
+    private int angle;
 
     public Polygone(double... l) {
         this.liste = new ArrayList<Point>();
@@ -13,6 +14,7 @@ public class Polygone implements IForme {
             Point p = new Point(l[i], l[i + 1]);
             liste.add(p);
         }
+        this.angle = 0;
     }
 
     /**

@@ -9,6 +9,7 @@ public class Rectangle implements IForme{
     private double largeur;
     private double hauteur;
     private String couleur; 
+    private int angle;
 
     /**
      * Constructeur de la classe Rectangle.
@@ -23,6 +24,7 @@ public class Rectangle implements IForme{
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.couleur = "white";
+        this.angle = 0;
     }
 
     /**

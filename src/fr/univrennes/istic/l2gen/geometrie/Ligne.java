@@ -1,9 +1,6 @@
 /**
  * La classe Ligne représente une ligne définie par une liste de sommets (points) dans un espace bidimensionnel.
  * Elle implémente l'interface IForme pour fournir des fonctionnalités liées à la manipulation de lignes.
- *
- * @author Votre Nom
- * @version 1.0
  */
 package fr.univrennes.istic.l2gen.geometrie;
 
@@ -24,12 +21,8 @@ public class Ligne implements IForme {
      */
     private List<Point> sommets;
     private String couleur;
+    private int angle;
 
-    /**
-     * Constructeur de la classe Ligne.
-     * Crée une ligne à partir des coordonnées des sommets.
-     * @param l les coordonnées des sommets de la ligne
-     */
     // CONSTRUCTEURS
 
     /**
@@ -42,6 +35,7 @@ public class Ligne implements IForme {
         for (int i = 0; i < l.length; i += 2) {
             this.sommets.add(new Point(l[i], l[i + 1]));
         }
+        this.angle = 0;
     }
 
     /**

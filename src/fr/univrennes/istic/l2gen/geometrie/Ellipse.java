@@ -156,9 +156,7 @@ public class Ellipse implements IForme {
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {
-            // Ici, vous pouvez prendre la première couleur du tableau couleurs
             String couleur = couleurs[0];
-            // Implémentation pour colorier un cercle avec la couleur spécifiée
             this.couleur = couleur;
         }
         return this;

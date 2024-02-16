@@ -5,12 +5,14 @@ public class Texte implements IForme{
     private int fontSize;
     private String text;
     private String couleur;
+    private int angle;
 
     public Texte(double x, double y, int fontSize, String text) {
         this.x = x;
         this.y = y;
         this.fontSize = fontSize;
         this.text = text;
+        this.angle = 0;
     }
 
     public Point centre() {

@@ -23,6 +23,8 @@ public class Groupe implements IForme {
 
     private String couleur;
 
+    private int angle;
+
     // CONSTRUCTEUR
 
     /**
@@ -32,6 +34,7 @@ public class Groupe implements IForme {
      */
     public Groupe(IForme... formes) {
         this.formes = new ArrayList<>();
+        this.angle = 0;
     }
 
     // METHODES

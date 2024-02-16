@@ -34,6 +34,8 @@ public class Secteur implements IForme {
 
     private String couleur;
 
+    private int angle;
+
 
     // CONSTRUCTEUR
 
@@ -50,6 +52,7 @@ public class Secteur implements IForme {
         this.rayon = rayon;
         this.angleDebut = angleDebut;
         this.angleFin = angleFin;
+        this.angle = 0;
     }
 
     /**

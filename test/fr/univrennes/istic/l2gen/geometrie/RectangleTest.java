@@ -2,7 +2,6 @@ package test.fr.univrennes.istic.l2gen.geometrie;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +33,7 @@ public class RectangleTest {
 
     @Test
     public void testDescription() {
-        String verif = " Rectangle Centre="+10+","+10+ " L="+100.0+" H="+100.0+" Couleur="+"white";
+        String verif = "    Rectangle Centre="+10+","+10+ " L="+100.0+" H="+100.0+" Couleur="+"white";
         assertEquals(verif,r.description(1));
     }
 
@@ -79,5 +78,18 @@ public class RectangleTest {
     @Test
     public void testColorier(){
         assertEquals("white",r.getCouleur());
+    }
+
+    @Test
+    public void testTourner() {
+        Rectangle rectangle = new Rectangle(0, 0, 10, 5);
+
+        // méthode pour tourner avec un angle de 45 degrés
+        rectangle.tourner(45);
+
+        String descriptionApresRotation = rectangle.description(0);
+        String descriptionAttendue = rectangle.description(0);
+
+        assertEquals(descriptionAttendue, descriptionApresRotation);
     }
 }

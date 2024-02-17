@@ -14,7 +14,7 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        Groupe arbre = arbre(new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
+        Groupe arbre = arbre(new Triangle(192, 128, 256, 128, 256, 256));
         arbre.tourner(45);
         System.out.println(arbre.enSVG());
 
@@ -33,7 +33,7 @@ public class App {
         System.out.println(tableau.enSVG());
 
         String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + arbre.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("Ligne.svg");
+        FileWriter writer = new FileWriter("Triangle.svg");
 
         writer.write(svgContent);
         writer.close();

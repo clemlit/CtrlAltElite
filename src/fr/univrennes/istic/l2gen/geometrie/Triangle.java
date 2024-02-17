@@ -107,7 +107,7 @@ public class Triangle implements IForme {
      * @return La description du triangle.
      */
     public String description(int indentation) {
-        String spaces = "";
+        String spaces = "  ";
         for (int i = 0; i < indentation; i++) {
             spaces += "  ";
         }
@@ -139,10 +139,18 @@ public class Triangle implements IForme {
      * @param dy Valeur de déplacement pour la coordonnée y.
      */
     public IForme deplacer(double dx, double dy) {
-        // Déplacement des coordonnées des points du triangle
-        this.X = new Point(x1 + dx, x2 + dy);
-        this.Y = new Point(y1 + dx, y2 + dy);
-        this.Z = new Point(z1 + dx, z2 + dy);
+        // Déplacement des coordonnées du point X
+        this.X.setX(this.X.x() + dx);
+        this.X.setY(this.X.y() + dy);
+
+        // Déplacement des coordonnées du point Y
+        this.Y.setX(this.Y.x() + dx);
+        this.Y.setY(this.Y.y() + dy);
+
+        // Déplacement des coordonnées du point Z
+        this.Z.setX(this.Z.x() + dx);
+        this.Z.setY(this.Z.y() + dy);
+
         return this;
     }
 
@@ -153,7 +161,11 @@ public class Triangle implements IForme {
      * @return Une nouvelle instance de Triangle avec les mêmes coordonnées.
      */
     public IForme dupliquer() {
-        return new Triangle(x1, y1, x2, y2, z1, z2);
+        Point nouveauX = new Point(this.X.x(), this.X.y());
+        Point nouveauY = new Point(this.Y.x(), this.Y.y());
+        Point nouveauZ = new Point(this.Z.x(), this.Z.y());
+
+        return new Triangle(nouveauX, nouveauY, nouveauZ);
     }
 
     /**
@@ -163,10 +175,14 @@ public class Triangle implements IForme {
      */
     public String enSVG() {
         String svg = "<polygon points=\"" + this.X.x() + " " + this.X.y() + " " + this.Y.x() + " " + this.Y.y() + " "
-                + this.Z.x()
-                + " " + this.Z.y() + "\"";
+                + this.Z.x() + " " + this.Z.y() + "\"";
         svg += " fill=\"" + couleur + "\"";
-        svg += " stroke=\"black\" />\n";
+        svg += " stroke=\"black\"";
+        if (angle != 0) {
+            Point centre = centre();
+            svg += " transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\"";
+        }
+        svg += " />\n";
         return svg;
     }
 
@@ -192,8 +208,11 @@ public class Triangle implements IForme {
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+        this.angle += angle;
+    }
+
+    public double getAngle() {
+        return angle;
     }
 
 }

@@ -33,8 +33,8 @@ public class RectangleTest {
 
     @Test
     public void testDescription() {
-        String verif = "    Rectangle Centre="+10+","+10+ " L="+100.0+" H="+100.0+" Couleur="+"white";
-        assertEquals(verif,r.description(1));
+        String verif = "  Rectangle Centre="+10+","+10+ " L="+100.0+" H="+100.0+" Angle=" + 0 + " Couleur="+"White";
+        assertEquals(verif,r.description(0));
     }
 
     @Test

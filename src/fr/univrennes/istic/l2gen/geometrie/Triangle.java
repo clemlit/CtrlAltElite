@@ -14,23 +14,23 @@ public class Triangle implements IForme {
     /*
      * Les coordonnées du point X
      */
-    private Point X;
-    private double x1;
-    private double x2;
+    public Point X;
+    public double x1;
+    public double x2;
 
     /*
      * Les coordonnées du point Y
      */
-    private Point Y;
-    private double y1;
-    private double y2;
+    public Point Y;
+    public double y1;
+    public double y2;
 
     /*
      * Les coordonnées du point Z
      */
-    private Point Z;
-    private double z1;
-    private double z2;
+    public Point Z;
+    public double z1;
+    public double z2;
 
     /*
      * La couleur du triangle
@@ -38,6 +38,7 @@ public class Triangle implements IForme {
     private String couleur;
 
     private int angle;
+
 
     public Triangle(Point X, Point Y, Point Z) {
         this.X = X;
@@ -51,6 +52,7 @@ public class Triangle implements IForme {
         this.Y = new Point(y1, y2);
         this.Z = new Point(z1, z2);
     }
+
 
     /*
      * Calcule et retourne les coordonnées du centre du Triangle
@@ -107,7 +109,7 @@ public class Triangle implements IForme {
     public String description(int indentation) {
         String spaces = "";
         for (int i = 0; i < indentation; i++) {
-            spaces += " ";
+            spaces += "  ";
         }
         return spaces + "Triangle " + this.X.x() + "," + this.X.y() + "," + this.Y.x() + "," + this.Y.y() + ","
                 + this.Z.x() + ","

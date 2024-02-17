@@ -69,13 +69,10 @@ public class LigneTest {
         // Create a new Ligne instance with appropriate parameters
         Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
 
-        // Set the expected description based on your logic or calculation
-        String expectedDescription = "    Ligne 0.0,0.0 1.0,1.0 2.0,0.0 ";
+        String expectedDescription = "  Ligne 0.0,0.0 1.0,1.0 2.0,0.0 ";
 
-        // Call the description method with an indentation of 2
-        String actualDescription = ligne.description(1);
+        String actualDescription = ligne.description(0);
 
-        // Assert that the actual description matches the expected description
         assertEquals(expectedDescription, actualDescription);
     }
 

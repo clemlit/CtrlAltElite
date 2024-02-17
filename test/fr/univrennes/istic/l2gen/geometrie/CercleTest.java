@@ -53,7 +53,7 @@ public class CercleTest {
         int indentation = 4;
         IForme cercle = new Cercle(80.0, 66.0, 69.0);
         Point centre = cercle.centre();
-        String ind = "  ";
+        String ind = "";
         for (int i = 0; i < indentation; i++) {
             ind += "  ";
         }

@@ -69,7 +69,7 @@ public class Cercle implements IForme {
      */
     public String description(int indentation) {
         Point centre = centre();
-        String ind = "  ";
+        String ind = "";
         for (int i = 0; i < indentation; i++) {
             ind += "  ";
         }

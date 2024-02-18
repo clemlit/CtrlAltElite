@@ -146,7 +146,7 @@ public class Polygone implements IForme {
      * @param p point quelconque avec coordonnées quelconques
      * @return ajoute un point au polygone
      */
-    public void ajouterSommet(Point p) {
+    public void ajouterSommetPoint(Point p) {
         liste.add(p);
     }
 

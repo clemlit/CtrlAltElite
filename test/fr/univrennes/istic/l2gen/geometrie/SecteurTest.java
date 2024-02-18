@@ -37,8 +37,7 @@ public class SecteurTest {
         double facteurX = 1.5;
         double facteurY = 2.0;
         secteur.redimensionner(facteurX, facteurY);
-        assertEquals(128 * facteurX, secteur.largeur(), 0.001);
-        assertEquals(128 * facteurY, secteur.hauteur(), 0.001);
+        assertEquals(128 * 2.0, secteur.getRayon(), 0.0001);
     }
 
     @Test

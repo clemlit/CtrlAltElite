@@ -14,6 +14,8 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
+        IForme tri = new Triangle(192, 128, 256, 128, 256, 256);
+        System.out.println(tri.description(0));
         Groupe arbre = arbre(new Triangle(192, 128, 256, 128, 256, 256));
         arbre.tourner(45);
         System.out.println(arbre.enSVG());

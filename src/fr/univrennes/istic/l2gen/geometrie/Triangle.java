@@ -49,7 +49,7 @@ public class Triangle implements IForme {
 
     public Triangle(double x1, double x2, double y1, double y2, double z1, double z2) {
         this.X = new Point(x1, x2);
-        this.Y = new Point(y1, y2);
+        this.Y = new Point(y2, y1);
         this.Z = new Point(z1, z2);
     }
 
@@ -80,7 +80,7 @@ public class Triangle implements IForme {
 
         double hauteur = numerateur / denominateur;
 
-        return hauteur;
+        return (int)hauteur;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Triangle implements IForme {
         if (res > Math.sqrt(Math.pow(this.X.x() - this.Z.x(), 2) + Math.pow(this.X.y() - this.Z.y(), 2))) {
             res = Math.sqrt(Math.pow(this.X.x() - this.Z.x(), 2) + Math.pow(this.X.y() - this.Z.y(), 2));
         }
-        return res;
+        return (int)res;
     }
 
     /**
@@ -111,7 +111,7 @@ public class Triangle implements IForme {
         for (int i = 0; i < indentation; i++) {
             spaces += "  ";
         }
-        return spaces + "Triangle " + this.X.x() + "," + this.X.y() + "," + this.Y.x() + "," + this.Y.y() + ","
+        return spaces + "Triangle " + this.X.x() + "," + this.X.y() + "," + this.Y.y() + "," + this.Y.x() + ","
                 + this.Z.x() + ","
                 + this.Z.y();
     }
@@ -124,9 +124,36 @@ public class Triangle implements IForme {
      * @param dy Facteur de redimensionnement pour la coordonnée y.
      */
     public IForme redimensionner(double dx, double dy) {
-        this.X = new Point(x1 * dx, x2 * dy);
-        this.Y = new Point(y1 * dx, y2 * dy);
-        this.Z = new Point(z1 * dx, z2 * dy);
+        // ON REDIMENSIONNE A PARTIR DU CENTRE DE LA FIGURE ET NON DES POINTS DE CETTE DERNIERE
+        Point centre = centre();
+
+        // REDIMENSIONNEMENT DU POINT X
+        double distanceX1 = X.x() - centre.x();
+        double nouvelleDistanceX1 = distanceX1 * dx;
+        X.setX(Math.ceil(centre.x() + nouvelleDistanceX1)); // ON ARRONDI AU SUP
+
+        double distanceX2 = X.y() - centre.y();
+        double nouvelleDistanceX2 = distanceX2 * dx;
+        X.setY(Math.ceil(centre.y() + nouvelleDistanceX2)); // ON ARRONDI AU SUP
+
+        // REDIMENSIONNEMENT DU POINT Y
+        double distanceY1 = Y.x() - centre.x();
+        double nouvelleDistanceY1 = distanceY1 * dx;
+        Y.setX(Math.ceil(centre.x() + nouvelleDistanceY1)); // ON ARRONDI AU SUP
+
+        double distanceY2 = Y.y() - centre.y();
+        double nouvelleDistanceY2 = distanceY2 * dy;
+        Y.setY(Math.ceil(centre.y() + nouvelleDistanceY2)); // ON ARRONDI AU SUP
+
+        // REDIMENSIONNEMENT DU POINT Z
+        double distanceZ1 = Z.x() - centre.x();
+        double nouvelleDistanceZ1 = distanceZ1 * dx;
+        Z.setX(Math.ceil(centre.x() + nouvelleDistanceZ1)); // ON ARRONDI AU SUP
+
+        double distanceZ2 = Z.y() - centre.y();
+        double nouvelleDistanceZ2 = distanceZ2 * dy;
+        Z.setY(Math.ceil(centre.y() + nouvelleDistanceZ2)); // ON ARRONDI AU SUP
+
         return this;
 
     }

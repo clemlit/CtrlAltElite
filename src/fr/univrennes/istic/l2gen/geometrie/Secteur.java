@@ -3,8 +3,6 @@
  * et un angle de fin. Elle implémente l'interface IForme pour fournir des fonctionnalités liées à la manipulation
  * de secteurs dans un espace bidimensionnel.
  *
- * @author Votre Nom
- * @version 1.0
  */
 package fr.univrennes.istic.l2gen.geometrie;
 
@@ -179,10 +177,10 @@ public class Secteur implements IForme {
     @Override
     public String enSVG() {
         // Calcul des coordonnées des points de début et de fin de l'arc
-        double xDebut = centre.x() + rayon * Math.cos(Math.toRadians(angleDebut));
-        double yDebut = centre.y() - rayon * Math.sin(Math.toRadians(angleDebut));
-        double xFin = centre.x() + rayon * Math.cos(Math.toRadians(angleFin));
-        double yFin = centre.y() - rayon * Math.sin(Math.toRadians(angleFin));
+        int xDebut = (int) Math.round(centre.x() + rayon * Math.cos(Math.toRadians(angleDebut)));
+        int yDebut = (int) Math.round(centre.y() - rayon * Math.sin(Math.toRadians(angleDebut)));
+        int xFin = (int) Math.round(centre.x() + rayon * Math.cos(Math.toRadians(angleFin)));
+        int yFin = (int) Math.round(centre.y() - rayon * Math.sin(Math.toRadians(angleFin)));
 
         // Conversion des angles en degrés positifs entre 0 et 360
         double angleStart = Math.min(angleDebut, angleFin);
@@ -202,8 +200,8 @@ public class Secteur implements IForme {
         svgBuilder.append(angleExtent >= 180 ? "1" : "0").append(" "); // large-arc-flag
         svgBuilder.append(angleDebut > angleFin ? "1" : "0").append(" "); // sweep-flag
         svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
-        svgBuilder.append("Z"); // Close path
-        svgBuilder.append("\" fill=\""+couleur +"\" stroke=\"black\"/>");
+        svgBuilder.append("Z"); 
+        svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\"/>");
 
         return svgBuilder.toString();
     }
@@ -288,7 +286,7 @@ public class Secteur implements IForme {
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+        angleDebut = (angleDebut + angle) % 360;
+        angleFin = (angleFin + angle) % 360;
     }
 }

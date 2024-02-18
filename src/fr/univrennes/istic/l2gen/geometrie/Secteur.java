@@ -37,6 +37,14 @@ public class Secteur implements IForme {
 
     // CONSTRUCTEUR
 
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
     /**
      * Constructeur de la classe Secteur.
      *
@@ -193,7 +201,7 @@ public class Secteur implements IForme {
         // Création de la chaîne SVG représentant le secteur
         StringBuilder svgBuilder = new StringBuilder();
         svgBuilder.append("<path d=\"");
-        svgBuilder.append("M").append(centre.x()).append(",").append(centre.y()); // Move to centre
+        svgBuilder.append("M").append(centre.x()).append(" ").append(centre.y()); // Move to centre
         svgBuilder.append("L").append(xDebut).append(",").append(yDebut); // Line to start point of arc
         svgBuilder.append("A").append(rayon).append(",").append(rayon); // Arc with radius
         svgBuilder.append(" 0 "); // x-axis-rotation
@@ -257,7 +265,7 @@ public class Secteur implements IForme {
      */
     @Override
     public double hauteur() {
-        return 2 * rayon;
+        return rayon;
     }
 
     /**
@@ -289,4 +297,6 @@ public class Secteur implements IForme {
         angleDebut = (angleDebut + angle) % 360;
         angleFin = (angleFin + angle) % 360;
     }
+
+    
 }

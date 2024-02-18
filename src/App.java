@@ -14,7 +14,7 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        IForme f1 = new Texte(192, 128, 64, " Istic L2GEN ");
+        Groupe f1 =arbre( new Secteur(256 , 256 , 128 , 0 , 60));
         f1.tourner(45);
         System.out.println(f1.enSVG());
 
@@ -33,7 +33,7 @@ public class App {
         System.out.println(tableau.enSVG());
 
         String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + f1.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("Texte.svg");
+        FileWriter writer = new FileWriter("Secteur.svg");
 
         writer.write(svgContent);
         writer.close();
@@ -54,6 +54,30 @@ public class App {
         System.out.println(r.enSVG());
         r.deplacer(1, 1).redimensionner(2, 2);
         System.out.println(r.enSVG());
+
+        Cercle c = new Cercle(1,1, 2);
+        System.out.println(c.enSVG());
+        c.deplacer(1,1).redimensionner(2, 2);
+        System.out.println(c.enSVG());
+        System.out.println();
+
+        Ellipse e = new Ellipse(1, 1 , 4, 2);
+        System.out.println(e.enSVG());
+        e.deplacer(1, 1).redimensionner(2, 2);
+        System.out.println(e.enSVG());
+
+        Secteur sec = new Secteur(0, 0,1,2,2);
+        System.out.println(sec.enSVG());
+        sec.deplacer(1, 1).redimensionner(2, 2);
+        System.out.println(sec.enSVG());
+
+        Triangle t = new Triangle(2,1,1,2,3,1);
+        System.out.println(t.enSVG());
+        t.deplacer(1, 1).redimensionner(2, 2);
+        System.out.println(t.enSVG());
+
+
+
 
         System.out.println("--------------------------");
 

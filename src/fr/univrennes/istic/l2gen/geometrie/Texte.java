@@ -28,7 +28,7 @@ public class Texte implements IForme{
     }
 
     public double hauteur() {
-        return 0;
+        return fontSize;
     }
 
     public double largeur() {
@@ -52,7 +52,9 @@ public class Texte implements IForme{
     }
 
     public String enSVG() {
-        return "<text x=\"" + x + "\" y=\"" + y + "\" font-size=\"" + hauteur() + "\" text-anchor=\"middle\" fill=\"black\" stroke=\"black\">" + text + "</text>";
+        return "<text x=\"" + x + "\" y=\"" + y + "\" font-size=\"" + hauteur()
+                + "\" text-anchor=\"middle\" fill=\"black\" stroke=\"black\" transform=\"rotate(" + angle + " " + x
+                + " " + y + ")\">" + text + "</text>";
     }
 
     @Override
@@ -71,7 +73,6 @@ public class Texte implements IForme{
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+         this.angle = angle;
     }
 }

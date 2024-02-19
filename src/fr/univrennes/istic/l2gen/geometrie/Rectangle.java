@@ -121,14 +121,9 @@ public class Rectangle implements IForme{
      * @return La représentation SVG du rectangle.
      */
     public String enSVG() {
-        // Construction de la chaîne SVG
         String svg = "<rect";
-        double coin_gauche_rectangleX = centre().x() - largeur()/2;
+        double coin_gauche_rectangleX = centre().x() - largeur() / 2;
         double coin_gauche_rectangleY = centre().y() - hauteur() / 2;
-
-
-        // Calcul des coordonnées du coin supérieur gauche du rectangle SVG en fonction
-        // du centre
 
         // Ajout des attributs du rectangle
         String xAttribute = " x=\"" + coin_gauche_rectangleX + "\"";
@@ -138,12 +133,15 @@ public class Rectangle implements IForme{
         String fillAttribute = " fill=\"" + couleur + "\"";
         String strokeAttribute = " stroke=\"black\"";
 
-        String transformAttribute = " transform=\"rotate(" + angle + " " + centre().x() + " " + centre().y() + ")\"";
+        String transformAttribute = (angle != 0)
+                ? " transform=\"rotate(" + angle + " " + centre().x() + " " + centre().y() + ")\""
+                : "";
 
-        // Construction finale de la chaîne SVG
-        svg += xAttribute + yAttribute + widthAttribute + heightAttribute + fillAttribute + strokeAttribute + transformAttribute+" />\n";
+        svg += xAttribute + yAttribute + widthAttribute + heightAttribute + fillAttribute + strokeAttribute
+                + transformAttribute + " />\n";
 
         return svg;
+    
     }
 
     @Override

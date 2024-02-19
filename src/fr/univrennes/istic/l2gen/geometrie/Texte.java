@@ -13,6 +13,7 @@ public class Texte implements IForme{
         this.fontSize = fontSize;
         this.text = text;
         this.angle = 0;
+        this.couleur = "Black";
     }
 
     public Point centre() {
@@ -28,7 +29,7 @@ public class Texte implements IForme{
     }
 
     public double hauteur() {
-        return 0;
+        return fontSize;
     }
 
     public double largeur() {
@@ -52,7 +53,26 @@ public class Texte implements IForme{
     }
 
     public String enSVG() {
-        return "<text x=\"" + x + "\" y=\"" + y + "\" font-size=\"" + hauteur() + "\" text-anchor=\"middle\" fill=\"black\" stroke=\"black\">" + text + "</text>";
+        // Construction de la chaîne SVG
+        String svg = "<text";
+
+        // Ajout des attributs du texte
+        String xAttribute = " x=\"" + x + "\"";
+        String yAttribute = " y=\"" + y + "\"";
+        String fontSizeAttribute = " font-size=\"" + hauteur() + "\"";
+        String textAnchorAttribute = " text-anchor=\"middle\"";
+        String fillAttribute = " fill=\"" + couleur + "\"";
+        String strokeAttribute = " stroke=\"" + couleur + "\"";
+
+        // Condition pour ajouter l'attribut transform seulement si l'angle est
+        // différent de zéro
+        String transformAttribute = (angle != 0) ? " transform=\"rotate(" + angle + " " + x + " " + y + ")\"" : "";
+
+        // Construction finale de la chaîne SVG
+        svg += xAttribute + yAttribute + fontSizeAttribute + textAnchorAttribute + fillAttribute + strokeAttribute
+                + transformAttribute + ">" + text + "</text>";
+
+        return svg;
     }
 
     @Override
@@ -71,7 +91,6 @@ public class Texte implements IForme{
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+         this.angle = angle;
     }
 }

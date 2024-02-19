@@ -1,6 +1,2 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-<g>
-<path d="M256.0,256.0L384.0,256.0A128.0,128.0 0 0 0 320.0,145.14874831559186Z" fill="none" stroke="black"/><path d="M256.0,256.0L320.0,256.0A64.0,64.0 0 0 0 288.0,200.57437415779594Z" fill="none" stroke="black"/><g>
-<path d="M256.0,256.0L288.0,256.0A32.0,32.0 0 0 0 272.0,228.28718707889797Z" fill="none" stroke="black"/><path d="M256.0,256.0L272.0,256.0A16.0,16.0 0 0 0 264.0,242.14359353944897Z" fill="none" stroke="black"/></g>
-</g>
-</svg>
+<path d="M256.0 256.0L256,128A128.0,128.0 0 1 1 234,130Z" fill="White" stroke="black"/></svg>

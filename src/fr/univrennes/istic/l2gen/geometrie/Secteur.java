@@ -3,8 +3,6 @@
  * et un angle de fin. Elle implémente l'interface IForme pour fournir des fonctionnalités liées à la manipulation
  * de secteurs dans un espace bidimensionnel.
  *
- * @author Votre Nom
- * @version 1.0
  */
 package fr.univrennes.istic.l2gen.geometrie;
 
@@ -39,6 +37,14 @@ public class Secteur implements IForme {
 
     // CONSTRUCTEUR
 
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
     /**
      * Constructeur de la classe Secteur.
      *
@@ -53,6 +59,7 @@ public class Secteur implements IForme {
         this.angleDebut = angleDebut;
         this.angleFin = angleFin;
         this.angle = 0;
+        this.couleur = "White";
     }
 
     /**
@@ -69,6 +76,9 @@ public class Secteur implements IForme {
         this.rayon = rayon;
         this.angleDebut = angleDebut;
         this.angleFin = angleFin;
+        this.angle = 0;
+        this.couleur = "White";
+
     }
 
     // ACCESSEURS
@@ -179,10 +189,10 @@ public class Secteur implements IForme {
     @Override
     public String enSVG() {
         // Calcul des coordonnées des points de début et de fin de l'arc
-        double xDebut = centre.x() + rayon * Math.cos(Math.toRadians(angleDebut));
-        double yDebut = centre.y() - rayon * Math.sin(Math.toRadians(angleDebut));
-        double xFin = centre.x() + rayon * Math.cos(Math.toRadians(angleFin));
-        double yFin = centre.y() - rayon * Math.sin(Math.toRadians(angleFin));
+        int xDebut = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleDebut)));
+        int yDebut = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleDebut)));
+        int xFin = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleFin)));
+        int yFin = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleFin)));
 
         // Conversion des angles en degrés positifs entre 0 et 360
         double angleStart = Math.min(angleDebut, angleFin);
@@ -195,15 +205,15 @@ public class Secteur implements IForme {
         // Création de la chaîne SVG représentant le secteur
         StringBuilder svgBuilder = new StringBuilder();
         svgBuilder.append("<path d=\"");
-        svgBuilder.append("M").append(centre.x()).append(",").append(centre.y()); // Move to centre
+        svgBuilder.append("M").append(centre.x()).append(" ").append(centre.y()); // Move to centre
         svgBuilder.append("L").append(xDebut).append(",").append(yDebut); // Line to start point of arc
         svgBuilder.append("A").append(rayon).append(",").append(rayon); // Arc with radius
         svgBuilder.append(" 0 "); // x-axis-rotation
         svgBuilder.append(angleExtent >= 180 ? "1" : "0").append(" "); // large-arc-flag
-        svgBuilder.append(angleDebut > angleFin ? "1" : "0").append(" "); // sweep-flag
+        svgBuilder.append(angleDebut > angleFin ? "0" : "1").append(" "); // sweep-flag
         svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
-        svgBuilder.append("Z"); // Close path
-        svgBuilder.append("\" fill=\""+couleur +"\" stroke=\"black\"/>");
+        svgBuilder.append("Z"); 
+        svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\"/>");
 
         return svgBuilder.toString();
     }
@@ -259,7 +269,7 @@ public class Secteur implements IForme {
      */
     @Override
     public double hauteur() {
-        return 2 * rayon;
+        return rayon;
     }
 
     /**
@@ -288,7 +298,9 @@ public class Secteur implements IForme {
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+        angleDebut = (angleDebut + angle) % 360;
+        angleFin = (angleFin + angle) % 360;
     }
+
+    
 }

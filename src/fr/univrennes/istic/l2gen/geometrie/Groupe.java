@@ -189,7 +189,8 @@ public class Groupe implements IForme {
     
         for (IForme forme : formes) {
             // Générer le SVG pour chaque forme en lui appliquant sa couleur
-            svgBuilder.append(forme.colorier(forme.getCouleur()).enSVG());
+            String couleurForme = (forme.getCouleur() != null) ? forme.getCouleur() : "White";
+            svgBuilder.append(forme.colorier(couleurForme).enSVG());
         }
     
         svgBuilder.append("</g>\n");

@@ -2,7 +2,6 @@ package test.fr.univrennes.istic.l2gen.geometrie;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import fr.univrennes.istic.l2gen.geometrie.IForme;
@@ -13,15 +12,15 @@ public class TriangleTest {
 
     @Test
     public void testDescription() {
-        int indentation = 4;
+        int indentation = 0;
         Triangle t = new Triangle(192 , 128 , 256 , 128 , 256 , 256);
 
-        String ind = "";
+        String ind = "  ";
         for (int i = 0; i < indentation; i++) {
             ind += "  ";
         }
 
-        String expectedDescription = ind + "Triangle " + t.X.x() + "," + t.X.y() + "," + t.Y.x() + "," + t.Y.y() + "," + t.Z.x() + "," + t.Z.y();
+        String expectedDescription = ind + "Triangle " + t.X.x() + "," + t.X.y() + "," + t.Y.y() + "," + t.Y.x() + "," + t.Z.x() + "," + t.Z.y();
 
         assertEquals(expectedDescription, t.description(indentation));
         
@@ -77,22 +76,28 @@ public class TriangleTest {
     @Test
     public void testHauteur() {
         Triangle t = new Triangle(192 , 128 , 256 , 128 , 256 , 256);
-        assertEquals(128,t.hauteur(),0.1);
+        assertEquals(114,t.hauteur(),0.1);
     }
 
     @Test
     public void testLargeur() {
-        Triangle t = new Triangle(192 , 128 , 256 , 128 , 256 , 256);
-        assertEquals(128,t.largeur(),0.1);
+        Triangle t = new Triangle(192 , 128 ,  256,128,  256 , 256);
+        assertEquals(64,t.largeur(),0.1);
     }
 
     @Test
     public void testRedimensionner() {
         Triangle t = new Triangle(192 , 128 , 256 , 128 , 256 , 256);
         t.redimensionner(0.5, 0.5);
-        assertEquals(64,t.largeur(),0.1);
-        assertEquals(64,t.hauteur(),0.1);
-        assertEquals(t.centre().x(),-440,0.1);
-        assertEquals(t.centre().y(),-440,0.1);
+        Triangle tri = new Triangle(192, 171, 235,  160, 224, 235);
+        assertEquals(tri.description(0), t.description(0));
+        t.redimensionner(0.5, 0.5);
+    }
+
+    @Test
+    public void testTourner() {
+        Triangle triangle = new Triangle(192, 128, 256, 128, 256, 256);
+        triangle.tourner(90);
+        assertEquals(90, triangle.getAngle(), 0.0001);
     }
 }

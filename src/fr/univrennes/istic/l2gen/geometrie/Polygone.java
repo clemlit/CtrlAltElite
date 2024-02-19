@@ -146,7 +146,7 @@ public class Polygone implements IForme {
      * @param p point quelconque avec coordonnées quelconques
      * @return ajoute un point au polygone
      */
-    public void ajouterSommet(Point p) {
+    public void ajouterSommetPoint(Point p) {
         liste.add(p);
     }
 
@@ -171,7 +171,15 @@ public class Polygone implements IForme {
             svgBuilder.append(sommet.x()).append(" ").append(sommet.y()).append(" ");
         }
 
-        svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\" />\n</g>\n");
+        svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\"");
+
+        // Ajouter la transformation de rotation ici
+        if (angle != 0) {
+            svgBuilder.append(" transform=\"rotate(").append(angle).append(" ").append(centre().x()).append(" ")
+                    .append(centre().y()).append(")\"");
+        }
+
+        svgBuilder.append(" />\n</g>\n");
 
         return svgBuilder.toString();
     }
@@ -208,7 +216,10 @@ public class Polygone implements IForme {
     }
 
     public void tourner(int angle) {
-        // TODO Faire tourner pour chaque forme, 
-        // modifier dupliquer, description, enSVG, et les test en conséquence
+        this.angle += angle;
+    }
+
+    public int getAngle() {
+        return angle;
     }
 }

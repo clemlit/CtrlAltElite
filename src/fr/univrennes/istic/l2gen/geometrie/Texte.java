@@ -53,10 +53,26 @@ public class Texte implements IForme{
     }
 
     public String enSVG() {
-        return "<text x=\"" + x + "\" y=\"" + y + "\" font-size=\"" + hauteur()
-                + "\" text-anchor=\"middle\" fill=\"" + couleur + "\" stroke=\"" + couleur + "\" transform=\"rotate("
-                + angle + " " + x
-                + " " + y + ")\">" + text + "</text>";
+        // Construction de la chaîne SVG
+        String svg = "<text";
+
+        // Ajout des attributs du texte
+        String xAttribute = " x=\"" + x + "\"";
+        String yAttribute = " y=\"" + y + "\"";
+        String fontSizeAttribute = " font-size=\"" + hauteur() + "\"";
+        String textAnchorAttribute = " text-anchor=\"middle\"";
+        String fillAttribute = " fill=\"" + couleur + "\"";
+        String strokeAttribute = " stroke=\"" + couleur + "\"";
+
+        // Condition pour ajouter l'attribut transform seulement si l'angle est
+        // différent de zéro
+        String transformAttribute = (angle != 0) ? " transform=\"rotate(" + angle + " " + x + " " + y + ")\"" : "";
+
+        // Construction finale de la chaîne SVG
+        svg += xAttribute + yAttribute + fontSizeAttribute + textAnchorAttribute + fillAttribute + strokeAttribute
+                + transformAttribute + ">" + text + "</text>";
+
+        return svg;
     }
 
     @Override

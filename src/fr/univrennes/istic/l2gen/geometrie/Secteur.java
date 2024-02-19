@@ -59,6 +59,7 @@ public class Secteur implements IForme {
         this.angleDebut = angleDebut;
         this.angleFin = angleFin;
         this.angle = 0;
+        this.couleur = "White";
     }
 
     /**
@@ -75,6 +76,9 @@ public class Secteur implements IForme {
         this.rayon = rayon;
         this.angleDebut = angleDebut;
         this.angleFin = angleFin;
+        this.angle = 0;
+        this.couleur = "White";
+
     }
 
     // ACCESSEURS

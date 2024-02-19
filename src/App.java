@@ -14,8 +14,9 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        IForme f1 =new Secteur(256, 256, 128, 0, 90);
-        System.out.println(f1.description(0));
+        IForme f1 = new Texte(192, 128, 64, " Istic L2GEN ");   
+        f1.colorier("Red").tourner(45);;
+
         System.out.println(f1.enSVG());
 
 
@@ -32,8 +33,8 @@ public class App {
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
 
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + tableau.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("figure.svg");
+        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + f1.enSVG() + "</svg>";
+        FileWriter writer = new FileWriter("texte.svg");
 
         writer.write(svgContent);
         writer.close();

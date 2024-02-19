@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         IForme f1 = new Texte(192, 128, 64, " Istic L2GEN ");   
-        f1.colorier("Red").tourner(45);;
+        f1.colorier("Red").tourner(10);;
 
         System.out.println(f1.enSVG());
 

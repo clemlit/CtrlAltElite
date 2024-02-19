@@ -14,8 +14,10 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        IForme f1 = new Texte(192, 128, 64, " Istic L2GEN ");   
-        f1.colorier("Red").tourner(10);;
+        IForme f1 = new Cercle(256, 256, 128); 
+        System.out.println(f1.enSVG());
+
+        f1.redimensionner(0.5,0.5);  
 
         System.out.println(f1.enSVG());
 
@@ -34,7 +36,7 @@ public class App {
         System.out.println(tableau.enSVG());
 
         String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + f1.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("texte.svg");
+        FileWriter writer = new FileWriter("Cercle.svg");
 
         writer.write(svgContent);
         writer.close();

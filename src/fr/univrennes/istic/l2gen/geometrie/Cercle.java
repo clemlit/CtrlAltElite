@@ -38,6 +38,7 @@ public class Cercle implements IForme {
         this.y = y;
         this.r = r;
         this.angle = 0;
+        this.couleur = "White";
     }
 
     /**
@@ -50,6 +51,7 @@ public class Cercle implements IForme {
         this.x = p.x();
         this.y = p.y();
         this.r = r;
+        this.couleur = "White";
     }
 
     /**
@@ -106,18 +108,6 @@ public class Cercle implements IForme {
         return copieCercle;
     }
     
-
-    /**
-     * Redimensionne le cercle en multipliant les coordonnées x et y par les facteurs spécifiés.
-     *
-     * @param px Facteur de redimensionnement pour l'axe des x.
-     * @param py Facteur de redimensionnement pour l'axe des y.
-     */
-    public IForme redimmensionner(double px, double py) {
-        this.x = x * px;
-        this.y = y * py;
-        return this;
-    }
 
     /**
      * Déplace le cercle en ajoutant les valeurs spécifiées aux coordonnées x et y.

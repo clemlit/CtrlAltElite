@@ -185,10 +185,10 @@ public class Secteur implements IForme {
     @Override
     public String enSVG() {
         // Calcul des coordonnées des points de début et de fin de l'arc
-        int xDebut = (int) Math.round(centre.x() + rayon * Math.cos(Math.toRadians(angleDebut)));
-        int yDebut = (int) Math.round(centre.y() - rayon * Math.sin(Math.toRadians(angleDebut)));
-        int xFin = (int) Math.round(centre.x() + rayon * Math.cos(Math.toRadians(angleFin)));
-        int yFin = (int) Math.round(centre.y() - rayon * Math.sin(Math.toRadians(angleFin)));
+        int xDebut = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleDebut)));
+        int yDebut = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleDebut)));
+        int xFin = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleFin)));
+        int yFin = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleFin)));
 
         // Conversion des angles en degrés positifs entre 0 et 360
         double angleStart = Math.min(angleDebut, angleFin);
@@ -206,7 +206,7 @@ public class Secteur implements IForme {
         svgBuilder.append("A").append(rayon).append(",").append(rayon); // Arc with radius
         svgBuilder.append(" 0 "); // x-axis-rotation
         svgBuilder.append(angleExtent >= 180 ? "1" : "0").append(" "); // large-arc-flag
-        svgBuilder.append(angleDebut > angleFin ? "1" : "0").append(" "); // sweep-flag
+        svgBuilder.append(angleDebut > angleFin ? "0" : "1").append(" "); // sweep-flag
         svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
         svgBuilder.append("Z"); 
         svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\"/>");

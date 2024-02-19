@@ -72,9 +72,31 @@ public interface IForme {
      */
     public IForme colorier(String... couleurs);
 
+    /**
+     * Effectue une rotation de la forme géométrique selon l'angle spécifié.
+     *
+     * @param angle Angle de rotation en degrés.
+     */
     public String getCouleur();
 
+    /**
+     * Effectue une rotation de la forme géométrique selon l'angle spécifié.
+     *
+     * @param angle Angle de rotation en degrés.
+     */
     public void tourner(int angle);
+
+    /**
+     * Aligne la forme géométrique en fonction de l'alignement spécifié et de la
+     * cible donnée.
+     *
+     * @param alignment Alignement souhaité (HAUT, BAS, GAUCHE, DROITE).
+     * @param cible     Coordonnée cible pour l'alignement.
+     * @return Instance de la forme géométrique alignée.
+     */
+    default IForme aligner(Alignement alignment, double cible){
+        return this;
+    }
 
     
 }

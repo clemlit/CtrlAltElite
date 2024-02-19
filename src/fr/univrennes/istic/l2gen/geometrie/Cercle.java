@@ -182,4 +182,32 @@ public class Cercle implements IForme {
     public int getAngle() {
         return angle;
     }
+
+    /**
+     * Aligne le cercle en fonction de l'alignement spécifié et de la cible donnée.
+     *
+     * @param alignment Alignement souhaité (HAUT, BAS, GAUCHE, DROITE).
+     * @param cible     Coordonnée cible pour l'alignement.
+     * @return Instance de la forme géométrique alignée.
+     */
+    @Override
+    public IForme aligner(Alignement alignment, double cible) {
+        switch (alignment) {
+            case HAUT:
+                this.y = cible + this.r;
+                break;
+            case BAS:
+                this.y = cible - this.r;
+                break;
+            case GAUCHE:
+                this.x = cible + this.r;
+                break;
+            case DROITE:
+                this.x = cible - this.r;
+                break;
+        }
+        return this;
+        
+    }
+
 }

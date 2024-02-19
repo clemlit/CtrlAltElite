@@ -13,6 +13,7 @@ public class Texte implements IForme{
         this.fontSize = fontSize;
         this.text = text;
         this.angle = 0;
+        this.couleur = "Black";
     }
 
     public Point centre() {
@@ -53,7 +54,8 @@ public class Texte implements IForme{
 
     public String enSVG() {
         return "<text x=\"" + x + "\" y=\"" + y + "\" font-size=\"" + hauteur()
-                + "\" text-anchor=\"middle\" fill=\"black\" stroke=\"black\" transform=\"rotate(" + angle + " " + x
+                + "\" text-anchor=\"middle\" fill=\"" + couleur + "\" stroke=\"" + couleur + "\" transform=\"rotate("
+                + angle + " " + x
                 + " " + y + ")\">" + text + "</text>";
     }
 

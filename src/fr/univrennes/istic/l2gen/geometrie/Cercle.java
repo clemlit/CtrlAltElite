@@ -165,8 +165,9 @@ public class Cercle implements IForme {
         return couleur;
     }
 
-    public void tourner(int angle) {
+    public IForme tourner(int angle) {
         this.angle += angle; // Changer l'angle ne change rien, c'est un cercle
+        return this;
     }    
 
     public int getAngle() {

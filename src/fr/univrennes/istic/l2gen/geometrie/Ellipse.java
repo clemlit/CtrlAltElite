@@ -166,8 +166,9 @@ public class Ellipse implements IForme {
         return couleur;
     }
 
-    public void tourner(int angle) {
+    public IForme tourner(int angle) {
         this.angle += angle; // Met à jour l'angle de l'ellipse
+        return this;
     }
     
     public int getAngle() {

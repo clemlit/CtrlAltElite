@@ -215,8 +215,9 @@ public class Polygone implements IForme {
         return couleur;
     }
 
-    public void tourner(int angle) {
+    public IForme tourner(int angle) {
         this.angle += angle;
+        return this;
     }
 
     public int getAngle() {

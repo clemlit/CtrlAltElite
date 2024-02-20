@@ -234,8 +234,9 @@ public class Triangle implements IForme {
         return couleur;
     }
 
-    public void tourner(int angle) {
+    public IForme tourner(int angle) {
         this.angle += angle;
+        return this;
     }
 
     public double getAngle() {

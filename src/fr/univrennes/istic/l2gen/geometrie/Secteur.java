@@ -297,9 +297,10 @@ public class Secteur implements IForme {
         return couleur;
     }
 
-    public void tourner(int angle) {
+    public IForme tourner(int angle) {
         angleDebut = (angleDebut + angle) % 360;
         angleFin = (angleFin + angle) % 360;
+        return this;
     }
 
     

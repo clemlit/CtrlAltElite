@@ -8,16 +8,23 @@ import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
+import fr.univrennes.istic.l2gen.geometrie.visustats.Camembert;
+
 import java.io.FileWriter;
 
 
 public class App {
     public static void main(String[] args) throws Exception {
+        Camembert ca = new Camembert(210, 210, 100);
+        ca.ajouterSecteur("red", 0.15); 
+        ca.ajouterSecteur("blue", 0.40); 
+        ca.ajouterSecteur("green", 0.45);
+        ca.redimensionner(2, 2);
+        ca.deplacer(100, 100);
 
-        IForme f1 = new Cercle(256, 256, 128); 
-        System.out.println(f1.enSVG());
 
-        f1.redimensionner(0.5,0.5);  
+        IForme f1 = new Texte(192, 128, 64, " Istic L2GEN ");   
+        f1.colorier("Red").tourner(10);
 
         System.out.println(f1.enSVG());
 
@@ -35,8 +42,8 @@ public class App {
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
 
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + f1.enSVG() + "</svg>";
-        FileWriter writer = new FileWriter("Cercle.svg");
+        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + ca.enSVG() + "</svg>";
+        FileWriter writer = new FileWriter("Camembert.svg");
 
         writer.write(svgContent);
         writer.close();

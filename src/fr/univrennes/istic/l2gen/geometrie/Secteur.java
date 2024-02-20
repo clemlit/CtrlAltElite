@@ -189,10 +189,12 @@ public class Secteur implements IForme {
     @Override
     public String enSVG() {
         // Calcul des coordonnées des points de début et de fin de l'arc
-        int xDebut = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleDebut)));
-        int yDebut = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleDebut)));
-        int xFin = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleFin)));
-        int yFin = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleFin)));
+        double angleDebutVertical  = angleDebut + 90; // decalage de 90 degres pour commencer a partir de la verticale
+        double angleFinVertical = - angleFin + 90 ;
+        int xDebut = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleDebutVertical)));
+        int yDebut = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleDebutVertical)));
+        int xFin = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleFinVertical)));
+        int yFin = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleFinVertical)));
 
         // Conversion des angles en degrés positifs entre 0 et 360
         double angleStart = Math.min(angleDebut, angleFin);

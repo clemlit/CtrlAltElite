@@ -197,6 +197,7 @@ public class Polygone implements IForme {
 
     public IForme dupliquer() {
         Polygone copiePolygone = new Polygone(getListe());
+        copiePolygone.angle=angle;
         return copiePolygone;
     }
 

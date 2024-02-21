@@ -111,10 +111,25 @@ public class Rectangle implements IForme{
      * @param py Le facteur de redimensionnement en hauteur.
      */
     public IForme redimensionner(double px, double py) {
-        largeur *= px;
-        hauteur *= py;
+        // Calcul des nouvelles dimensions du rectangle
+        double nouvelleLargeur = largeur * px;
+        double nouvelleHauteur = hauteur * py;
+    
+        // Calcul des nouvelles coordonnées du coin supérieur gauche
+        double nouveauX = p.x() - (nouvelleLargeur - largeur) / 2;
+        double nouveauY = p.y() - (nouvelleHauteur - hauteur) / 2;
+    
+        // Mise à jour du point représentant le coin supérieur gauche
+        p = new Point(nouveauX, nouveauY);
+    
+        // Mise à jour de la largeur et de la hauteur
+        largeur = nouvelleLargeur;
+        hauteur = nouvelleHauteur;
+    
         return this;
     }
+    
+    
 
     /**
      * Retourne une représentation SVG du rectangle.
@@ -122,9 +137,11 @@ public class Rectangle implements IForme{
      */
     public String enSVG() {
         String svg = "<rect";
-        double coin_gauche_rectangleX = centre().x() - largeur() / 2;
-        double coin_gauche_rectangleY = centre().y() - hauteur() / 2;
-
+    
+        // Calcul des coordonnées du coin supérieur gauche du rectangle
+        double coin_gauche_rectangleX = p.x();
+        double coin_gauche_rectangleY = p.y();
+    
         // Ajout des attributs du rectangle
         String xAttribute = " x=\"" + coin_gauche_rectangleX + "\"";
         String yAttribute = " y=\"" + coin_gauche_rectangleY + "\"";
@@ -132,17 +149,17 @@ public class Rectangle implements IForme{
         String heightAttribute = " height=\"" + hauteur() + "\"";
         String fillAttribute = " fill=\"" + couleur + "\"";
         String strokeAttribute = " stroke=\"black\"";
-
+    
         String transformAttribute = (angle != 0)
                 ? " transform=\"rotate(" + angle + " " + centre().x() + " " + centre().y() + ")\""
                 : "";
-
+    
         svg += xAttribute + yAttribute + widthAttribute + heightAttribute + fillAttribute + strokeAttribute
                 + transformAttribute + " />\n";
-
-        return svg;
     
+        return svg;
     }
+    
 
     /**
      * Change la couleur du rectangle en utilisant la première couleur spécifiée dans le tableau.

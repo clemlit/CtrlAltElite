@@ -39,7 +39,13 @@ public class Triangle implements IForme {
 
     private int angle;
 
-
+    /**
+     * Constructeur qui prend trois points pour définir le triangle.
+     *
+     * @param X Premier point du triangle.
+     * @param Y Deuxième point du triangle.
+     * @param Z Troisième point du triangle.
+     */
     public Triangle(Point X, Point Y, Point Z) {
         this.X = X;
         this.Y = Y;
@@ -47,17 +53,27 @@ public class Triangle implements IForme {
         this.angle = 0;
     }
 
+    /**
+     * Constructeur qui prend les coordonnées de six points pour définir le
+     * triangle.
+     *
+     * @param x1 Coordonnée x du premier point.
+     * @param x2 Coordonnée y du premier point.
+     * @param y1 Coordonnée x du deuxième point.
+     * @param y2 Coordonnée y du deuxième point.
+     * @param z1 Coordonnée x du troisième point.
+     * @param z2 Coordonnée y du troisième point.
+     */
     public Triangle(double x1, double x2, double y1, double y2, double z1, double z2) {
         this.X = new Point(x1, x2);
         this.Y = new Point(y2, y1);
         this.Z = new Point(z1, z2);
     }
 
-
-    /*
-     * Calcule et retourne les coordonnées du centre du Triangle
-     * 
-     * @return les coordonnées du centre du Triangle
+    /**
+     * Calcule et retourne les coordonnées du centre du Triangle.
+     *
+     * @return les coordonnées du centre du Triangle.
      */
     public Point centre() {
         double centreX = (this.X.x() + this.Y.x() + this.Z.x()) / 3.0;
@@ -80,7 +96,7 @@ public class Triangle implements IForme {
 
         double hauteur = numerateur / denominateur;
 
-        return (int)hauteur;
+        return (int) hauteur;
     }
 
     /**
@@ -97,7 +113,7 @@ public class Triangle implements IForme {
         if (res > Math.sqrt(Math.pow(this.X.x() - this.Z.x(), 2) + Math.pow(this.X.y() - this.Z.y(), 2))) {
             res = Math.sqrt(Math.pow(this.X.x() - this.Z.x(), 2) + Math.pow(this.X.y() - this.Z.y(), 2));
         }
-        return (int)res;
+        return (int) res;
     }
 
     /**
@@ -124,7 +140,8 @@ public class Triangle implements IForme {
      * @param dy Facteur de redimensionnement pour la coordonnée y.
      */
     public IForme redimensionner(double dx, double dy) {
-        // ON REDIMENSIONNE A PARTIR DU CENTRE DE LA FIGURE ET NON DES POINTS DE CETTE DERNIERE
+        // ON REDIMENSIONNE A PARTIR DU CENTRE DE LA FIGURE ET NON DES POINTS DE CETTE
+        // DERNIERE
         Point centre = centre();
 
         // REDIMENSIONNEMENT DU POINT X
@@ -201,7 +218,8 @@ public class Triangle implements IForme {
      * @return Le code SVG du triangle sans remplissage.
      */
     public String enSVG() {
-        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"" + this.X.x() + " " + this.X.y() + " " + this.Y.x() + " " + this.Y.y() + " "
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"" + this.X.x() + " " + this.X.y()
+                + " " + this.Y.x() + " " + this.Y.y() + " "
                 + this.Z.x() + " " + this.Z.y() + "\"";
         svg += " fill=\"" + couleur + "\"";
         svg += " stroke=\"black\"";
@@ -230,15 +248,31 @@ public class Triangle implements IForme {
         return this;
     }
 
+    /**
+     * Obtient la couleur actuelle du triangle.
+     *
+     * @return La couleur actuelle du triangle.
+     */
     public String getCouleur() {
         return couleur;
     }
 
+    /**
+     * Tourne le triangle d'un certain angle.
+     *
+     * @param angle Angle de rotation en degrés.
+     * @return Une référence à la forme tournée.
+     */
     public IForme tourner(int angle) {
         this.angle += angle;
         return this;
     }
 
+    /**
+     * Obtient l'angle actuel de rotation du triangle.
+     *
+     * @return L'angle actuel de rotation du triangle.
+     */
     public double getAngle() {
         return angle;
     }

@@ -152,7 +152,12 @@ public class Ellipse implements IForme {
         return svg;
     }
     
-
+    /**
+     * Change la couleur du ellipse en utilisant la première couleur spécifiée dans le tableau.
+     *
+     * @param couleurs Tableau de couleurs à appliquer.
+     * @return L'objet Ellipse avec la nouvelle couleur.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {
@@ -162,15 +167,31 @@ public class Ellipse implements IForme {
         return this;
     }
     
+    /**
+     * Renvoie la couleur actuelle du ellipse.
+     *
+     * @return La couleur de l'ellipse.
+     */
     public String getCouleur() {
         return couleur;
     }
 
+    /**
+     * Fait tourner le ellipse en spécifiant un angle.
+     *
+     * @param angle L'angle de rotation à appliquer au ellipse.
+     * @return L'objet Ellipse tourné.
+     */
     public IForme tourner(int angle) {
         this.angle += angle; // Met à jour l'angle de l'ellipse
         return this;
     }
     
+    /**
+     * Renvoie l'angle actuel de l'ellipse.
+     *
+     * @return L'angle de l'ellipse.
+     */
     public int getAngle() {
         return this.angle;
     }

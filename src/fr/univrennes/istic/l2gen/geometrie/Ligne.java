@@ -41,6 +41,7 @@ public class Ligne implements IForme {
     /**
      * Constructeur de la classe Ligne.
      * Crée une ligne à partir d'une liste de points.
+     * 
      * @param sommets la liste des points qui composent la ligne
      */
     /**
@@ -64,7 +65,8 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Ajoute un sommet à la liste des sommets de la ligne à partir de coordonnées spécifiées.
+     * Ajoute un sommet à la liste des sommets de la ligne à partir de coordonnées
+     * spécifiées.
      *
      * @param x Coordonnée x du sommet.
      * @param y Coordonnée y du sommet.
@@ -74,7 +76,8 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Retourne le centre de la ligne, calculé comme la moyenne des coordonnées de tous les sommets.
+     * Retourne le centre de la ligne, calculé comme la moyenne des coordonnées de
+     * tous les sommets.
      *
      * @return Centre de la ligne.
      */
@@ -116,7 +119,8 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Calcule et retourne la hauteur de la ligne comme la différence entre la coordonnée y maximale
+     * Calcule et retourne la hauteur de la ligne comme la différence entre la
+     * coordonnée y maximale
      * et la coordonnée y minimale parmi tous les sommets.
      *
      * @return Hauteur de la ligne.
@@ -132,7 +136,8 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Calcule et retourne la largeur de la ligne comme la différence entre la coordonnée x maximale
+     * Calcule et retourne la largeur de la ligne comme la différence entre la
+     * coordonnée x maximale
      * et la coordonnée x minimale parmi tous les sommets.
      *
      * @return Largeur de la ligne.
@@ -148,7 +153,8 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Déplace tous les sommets de la ligne selon les déplacements spécifiés sur les axes x et y.
+     * Déplace tous les sommets de la ligne selon les déplacements spécifiés sur les
+     * axes x et y.
      *
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
@@ -161,7 +167,8 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Duplique la ligne en créant une nouvelle instance avec des sommets identiques.
+     * Duplique la ligne en créant une nouvelle instance avec des sommets
+     * identiques.
      *
      * @return Nouvelle instance de la ligne.
      */
@@ -174,7 +181,8 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Redimensionne tous les sommets de la ligne selon les facteurs spécifiés sur les axes x et y.
+     * Redimensionne tous les sommets de la ligne selon les facteurs spécifiés sur
+     * les axes x et y.
      *
      * @param px Facteur de redimensionnement pour l'axe des x.
      * @param py Facteur de redimensionnement pour l'axe des y.
@@ -222,7 +230,12 @@ public class Ligne implements IForme {
         return svg;
     }
 
-
+    /**
+     * Change la couleur de la ligne en utilisant la première couleur spécifiée dans le tableau.
+     *
+     * @param couleurs Tableau de couleurs à appliquer.
+     * @return L'objet Ligne avec la nouvelle couleur.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {
@@ -234,14 +247,31 @@ public class Ligne implements IForme {
         return this;
     }
 
+    /**
+     * Renvoie la couleur actuelle de la ligne.
+     *
+     * @return La couleur de la ligne.
+     */
     public String getCouleur() {
         return couleur;
     }
 
+    /**
+     * Fait tourner la ligne en spécifiant un angle.
+     *
+     * @param angle L'angle de rotation à appliquer a la ligne.
+     * @return L'objet Ligne tourné.
+     */
     public IForme tourner(int angle) {
         this.angle += angle;
         return this;
     }
+
+    /**
+     * Renvoie l'angle actuel de la ligne.
+     *
+     * @return L'angle de la ligne.
+     */
     public int getAngle() {
         return angle;
     }

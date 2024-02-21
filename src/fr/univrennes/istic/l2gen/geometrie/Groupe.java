@@ -88,6 +88,7 @@ public class Groupe implements IForme {
      *
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
+     * @return Le groupe déplacé.
      */
     public IForme deplacer(double dx, double dy) {
         for (int i = 0; i < formes.size(); i++) {
@@ -175,6 +176,7 @@ public class Groupe implements IForme {
      *
      * @param dx Facteur de redimensionnement pour l'axe des x.
      * @param dy Facteur de redimensionnement pour l'axe des y.
+     * @return Le groupe redimensionné.
      */
     public IForme redimensionner(double dx, double dy) {
         for (int i = 0; i < formes.size(); i++) {
@@ -183,22 +185,31 @@ public class Groupe implements IForme {
         return this;
     }
 
+    /**
+     * Génère une représentation SVG du groupe avec ses formes incluses.
+     *
+     * @return Une chaîne de caractères représentant le groupe en format SVG.
+     */
     public String enSVG() {
         StringBuilder svgBuilder = new StringBuilder();
         svgBuilder.append("<g>\n");
-    
+
         for (IForme forme : formes) {
             // Générer le SVG pour chaque forme en lui appliquant sa couleur
             String couleurForme = (forme.getCouleur() != null) ? forme.getCouleur() : "White";
             svgBuilder.append(forme.colorier(couleurForme).enSVG());
         }
-    
+
         svgBuilder.append("</g>\n");
         return svgBuilder.toString();
     }
-    
-    
-    
+
+    /**
+     * Change la couleur de chaque forme du groupe en utilisant les couleurs spécifiées.
+     *
+     * @param couleurs Tableau de couleurs à appliquer.
+     * @return Le groupe avec les nouvelles couleurs appliquées.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         for (int i = 0; i < formes.size(); i++) {
@@ -211,20 +222,36 @@ public class Groupe implements IForme {
         }
         return this;
     }
-        
-        public String getCouleur() {
-            return couleur;
-        }
 
-        public int getAngle() {
-            return angle;
+    /**
+     * Renvoie la couleur du groupe (utilisée lors de la génération SVG).
+     *
+     * @return La couleur du groupe.
+     */
+    public String getCouleur() {
+        return couleur;
+    }
+
+    /**
+     * Renvoie l'angle actuel de rotation du groupe.
+     *
+     * @return L'angle de rotation du groupe.
+     */
+    public int getAngle() {
+        return angle;
+    }
+
+    /**
+     * Fait tourner chaque forme du groupe en spécifiant un angle.
+     *
+     * @param angle L'angle de rotation à appliquer aux formes du groupe.
+     * @return Le groupe avec les formes tournées.
+     */
+    public IForme tourner(int angle) {
+        this.angle = angle;
+        for (IForme forme : formes) {
+            forme.tourner(angle);
         }
-   
-        public IForme tourner(int angle) {
-            this.angle = angle;
-            for (IForme forme : formes) {
-                forme.tourner(angle);
-            }
-            return this;
-        }
+        return this;
+    }
 }

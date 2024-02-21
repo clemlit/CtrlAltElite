@@ -8,6 +8,11 @@ public class Polygone implements IForme {
     private String couleur;
     private int angle;
 
+    /**
+     * Constructeur pour créer un polygone à partir des coordonnées spécifiées.
+     *
+     * @param l Les coordonnées x, y du polygone. Doit contenir un nombre pair de valeurs.
+     */
     public Polygone(double... l) {
         this.liste = new ArrayList<Point>();
         for (int i = 0; i < l.length; i = i + 2) {
@@ -18,7 +23,9 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return hauteur du polygone
+     * Calcule la hauteur du polygone.
+     *
+     * @return La hauteur du polygone.
      */
     public double hauteur() {
         ArrayList<Point> liste = getSommets();
@@ -36,7 +43,9 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return centre du polygone
+     * Calcule le centre du polygone.
+     *
+     * @return Le point représentant le centre du polygone.
      */
     public Point centre() {
         if (liste.isEmpty()) {
@@ -59,7 +68,9 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return largeur polygone
+     * Calcule la largeur du polygone.
+     *
+     * @return La largeur du polygone.
      */
     public double largeur() {
         ArrayList<Point> liste = getSommets();
@@ -77,10 +88,11 @@ public class Polygone implements IForme {
     }
 
     /**
-     * Redimensionne le rectangle selon les proportions spécifiées.
-     * 
-     * @param px Le facteur de redimensionnement en largeur.
-     * @param py Le facteur de redimensionnement en hauteur.
+     * Redimensionne le polygone selon les proportions spécifiées.
+     *
+     * @param dx Le facteur de redimensionnement en largeur.
+     * @param dy Le facteur de redimensionnement en hauteur.
+     * @return La forme redimensionnée.
      */
     public IForme redimensionner(double dx, double dy) {
         Point centre = centre();
@@ -99,11 +111,11 @@ public class Polygone implements IForme {
     }
 
     /**
-     * Déplace le rectangle selon les valeurs spécifiées de déplacement en x et en
-     * y.
-     * 
+     * Déplace le polygone selon les valeurs spécifiées de déplacement en x et en y.
+     *
      * @param dx La valeur de déplacement en x.
      * @param dy La valeur de déplacement en y.
+     * @return La forme déplacée.
      */
     public IForme deplacer(double dx, double dy) {
         for (Point sommet : liste) {
@@ -113,7 +125,9 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return Une liste de tous les sommets
+     * Obtiene une liste de tous les sommets.
+     *
+     * @return Une liste de tous les sommets.
      */
     public ArrayList<Point> getSommets() {
         ArrayList<Point> list = new ArrayList<Point>();
@@ -124,8 +138,10 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @param i entre les points
-     * @return un String décrivant les coordonnées de tous les points du polygone
+     * Génère une description des coordonnées du polygone.
+     *
+     * @param i L'espacement entre les points dans la description.
+     * @return Une chaîne décrivant les coordonnées de tous les points du polygone.
      */
     @Override
     public String description(int i) {
@@ -143,17 +159,19 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @param p point quelconque avec coordonnées quelconques
-     * @return ajoute un point au polygone
+     * Ajoute un point au polygone.
+     *
+     * @param p Le point à ajouter.
      */
     public void ajouterSommetPoint(Point p) {
         liste.add(p);
     }
 
     /**
-     * @param x coordonnée x du point que l'on veut ajouter
-     * @param x coordonnée y du point que l'on veut ajouter
-     * @return ajoute le point avec les coordonnées correspondantes au polygone
+     * Ajoute un point avec les coordonnées spécifiées au polygone.
+     *
+     * @param x La coordonnée x du point.
+     * @param y La coordonnée y du point.
      */
     public void ajouterSommet(double x, double y) {
         Point p = new Point(x, y);
@@ -161,7 +179,9 @@ public class Polygone implements IForme {
     }
 
     /**
-     * @return le fichier SVG créant le polygone
+     * Génère le fichier SVG représentant le polygone.
+     *
+     * @return Une chaîne représentant le fichier SVG du polygone.
      */
     @Override
     public String enSVG() {
@@ -184,6 +204,11 @@ public class Polygone implements IForme {
         return svgBuilder.toString();
     }
 
+    /**
+     * Obtient la liste des coordonnées du polygone.
+     *
+     * @return Un tableau de doubles représentant les coordonnées du polygone.
+     */
     public double[] getListe() {
         double[] listeDouble = new double[liste.size() * 2];
         int e = 0;
@@ -195,12 +220,23 @@ public class Polygone implements IForme {
         return listeDouble;
     }
 
+    /**
+     * Duplique le polygone.
+     *
+     * @return Une copie du polygone.
+     */
     public IForme dupliquer() {
         Polygone copiePolygone = new Polygone(getListe());
         copiePolygone.angle=angle;
         return copiePolygone;
     }
 
+    /**
+     * Colore le polygone avec la couleur spécifiée.
+     *
+     * @param couleurs Les couleurs à appliquer.
+     * @return La forme coloriée.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {
@@ -212,15 +248,31 @@ public class Polygone implements IForme {
         return this;
     }
 
+    /**
+     * Obtient la couleur du polygone.
+     *
+     * @return La couleur du polygone.
+     */
     public String getCouleur() {
         return couleur;
     }
 
+    /**
+     * Tourne le polygone selon l'angle spécifié.
+     *
+     * @param angle L'angle de rotation.
+     * @return La forme tournée.
+     */
     public IForme tourner(int angle) {
         this.angle += angle;
         return this;
     }
 
+    /**
+     * Obtient l'angle de rotation du polygone.
+     *
+     * @return L'angle de rotation du polygone.
+     */
     public int getAngle() {
         return angle;
     }

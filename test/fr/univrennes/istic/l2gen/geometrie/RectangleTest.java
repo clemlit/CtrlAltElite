@@ -52,7 +52,7 @@ public class RectangleTest {
 
     @Test
     public void testEnSVG() {
-        String test = "<rect"+" x=\"" + r.centre().x() + "\""+" y=\"" + r.centre().y() + "\""+" width=\"" + r.largeur() + "\""+" height=\"" + r.hauteur() + "\""+" fill=\"" + "white" + "\""+" stroke=\"black\""+" />\n";
+        String test = "<rect"+" x=\"" + r.centre().x() + "\""+" y=\"" + r.centre().y() + "\""+" width=\"" + r.largeur() + "\""+" height=\"" + r.hauteur() + "\""+" fill=\"" + "White" + "\""+" stroke=\"black\""+" />\n";
         assertEquals(test, r.enSVG());
     }
 
@@ -77,7 +77,7 @@ public class RectangleTest {
 
     @Test
     public void testColorier(){
-        assertEquals("white",r.getCouleur());
+        assertEquals("White",r.getCouleur());
     }
 
     @Test

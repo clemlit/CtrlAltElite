@@ -37,10 +37,20 @@ public class Secteur implements IForme {
 
     // CONSTRUCTEUR
 
+    /**
+     * Retourne l'angle du secteur.
+     *
+     * @return Angle du secteur.
+     */
     public int getAngle() {
         return angle;
     }
 
+    /**
+     * Définit l'angle du secteur.
+     *
+     * @param angle Nouvel angle du secteur.
+     */
     public void setAngle(int angle) {
         this.angle = angle;
     }
@@ -281,6 +291,12 @@ public class Secteur implements IForme {
         return 2 * rayon;
     }
 
+     /**
+     * Colorie le secteur avec la couleur spécifiée.
+     *
+     * @param couleurs Tableau de couleurs (seule la première couleur sera utilisée).
+     * @return Instance du secteur colorié.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {
@@ -292,10 +308,21 @@ public class Secteur implements IForme {
         return this;
     }
     
+    /**
+     * Retourne la couleur du secteur.
+     *
+     * @return Couleur du secteur.
+     */
     public String getCouleur() {
         return couleur;
     }
 
+    /**
+     * Tourne le secteur selon l'angle spécifié.
+     *
+     * @param angle Angle de rotation.
+     * @return Instance du secteur après rotation.
+     */
     public IForme tourner(int angle) {
         angleDebut = (angleDebut + angle) % 360;
         angleFin = (angleFin + angle) % 360;

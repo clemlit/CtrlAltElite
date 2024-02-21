@@ -144,6 +144,12 @@ public class Rectangle implements IForme{
     
     }
 
+    /**
+     * Change la couleur du rectangle en utilisant la première couleur spécifiée dans le tableau.
+     *
+     * @param couleurs Tableau de couleurs à appliquer.
+     * @return L'objet Rectangle avec la nouvelle couleur.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {
@@ -154,10 +160,22 @@ public class Rectangle implements IForme{
         }
         return this;
     }
+
+    /**
+     * Retourne la couleur du rectangle.
+     *
+     * @return La couleur du rectangle.
+     */
     public String getCouleur() {
         return couleur;
     }
 
+    /**
+     * Tourne le rectangle d'un certain angle.
+     *
+     * @param angle L'angle de rotation.
+     * @return La même instance de rectangle après rotation.
+     */
     public IForme tourner(int angle) {
         this.angle += angle;
         return this;

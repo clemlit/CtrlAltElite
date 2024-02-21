@@ -77,7 +77,6 @@ public class Cercle implements IForme {
         }
         return ind + "Cercle centre = " + centre.x() + " , " + centre.y() + " r = " + this.r + " Angle = " + this.angle;
     }
-    
 
     /**
      * Retourne la hauteur du cercle (équivalente au rayon).
@@ -107,13 +106,13 @@ public class Cercle implements IForme {
         copieCercle.tourner(this.angle); // Assure que la copie a le même angle que l'original
         return copieCercle;
     }
-    
 
     /**
      * Déplace le cercle en ajoutant les valeurs spécifiées aux coordonnées x et y.
      *
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
+     * @return L'objet Cercle déplacé.
      */
     public IForme deplacer(double dx, double dy) {
         this.x += dx;
@@ -126,6 +125,7 @@ public class Cercle implements IForme {
      *
      * @param dx Facteur de redimensionnement pour l'axe des x.
      * @param dy Facteur de redimensionnement pour l'axe des y.
+     * @return L'objet Cercle redimensionné.
      */
     @Override
     public IForme redimensionner(double dx, double dy) {
@@ -148,8 +148,13 @@ public class Cercle implements IForme {
         svg += " /></svg>";
         return svg;
     }
-    
 
+    /**
+     * Change la couleur du cercle en utilisant la première couleur spécifiée dans le tableau.
+     *
+     * @param couleurs Tableau de couleurs à appliquer.
+     * @return L'objet Cercle avec la nouvelle couleur.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length > 0) {
@@ -160,16 +165,32 @@ public class Cercle implements IForme {
         }
         return this;
     }
-    
+
+    /**
+     * Renvoie la couleur actuelle du cercle.
+     *
+     * @return La couleur du cercle.
+     */
     public String getCouleur() {
         return couleur;
     }
 
+    /**
+     * Fait tourner le cercle en spécifiant un angle.
+     *
+     * @param angle L'angle de rotation à appliquer au cercle.
+     * @return L'objet Cercle tourné.
+     */
     public IForme tourner(int angle) {
         this.angle += angle; // Changer l'angle ne change rien, c'est un cercle
         return this;
-    }    
+    }
 
+    /**
+     * Renvoie l'angle actuel du cercle.
+     *
+     * @return L'angle du cercle.
+     */
     public int getAngle() {
         return angle;
     }
@@ -198,7 +219,5 @@ public class Cercle implements IForme {
                 break;
         }
         return this;
-        
     }
-
 }

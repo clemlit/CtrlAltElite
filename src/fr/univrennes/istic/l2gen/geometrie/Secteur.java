@@ -189,36 +189,33 @@ public class Secteur implements IForme {
     @Override
     public String enSVG() {
         // Calcul des coordonnées des points de début et de fin de l'arc
-        double angleDebutVertical  = angleDebut + 90; // decalage de 90 degres pour commencer a partir de la verticale
-        double angleFinVertical = - angleFin + 90 ;
-        int xDebut = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleDebutVertical)));
-        int yDebut = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleDebutVertical)));
-        int xFin = (int) Math.round(centre.x() + rayon * Math.sin(Math.toRadians(angleFinVertical)));
-        int yFin = (int) Math.round(centre.y() - rayon * Math.cos(Math.toRadians(angleFinVertical)));
-
-        // Conversion des angles en degrés positifs entre 0 et 360
+        int xFin = (int) Math.round(centre.x() + rayon * Math.cos(Math.toRadians(-angleFin+90)));
+        int yFin = (int) Math.round(centre.y() + rayon * Math.sin(Math.toRadians(angleFin-90)));
+    
+        // Correction des angles pour être compris entre 0 et 360 degrés
         double angleStart = Math.min(angleDebut, angleFin);
         double angleEnd = Math.max(angleDebut, angleFin);
         double angleExtent = angleEnd - angleStart;
         if (angleExtent < 0) {
             angleExtent += 360; // Correction si l'angle de fin est inférieur à l'angle de début
         }
-
-        // Création de la chaîne SVG représentant le secteur
-        StringBuilder svgBuilder = new StringBuilder();
-        svgBuilder.append("<path d=\"");
-        svgBuilder.append("M").append(centre.x()).append(" ").append(centre.y()); // Move to centre
-        svgBuilder.append("L").append(xDebut).append(",").append(yDebut); // Line to start point of arc
-        svgBuilder.append("A").append(rayon).append(",").append(rayon); // Arc with radius
-        svgBuilder.append(" 0 "); // x-axis-rotation
-        svgBuilder.append(angleExtent >= 180 ? "1" : "0").append(" "); // large-arc-flag
-        svgBuilder.append(angleDebut > angleFin ? "0" : "1").append(" "); // sweep-flag
-        svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
-        svgBuilder.append("Z"); 
-        svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\"/>");
-
-        return svgBuilder.toString();
+    
+        StringBuilder svg = new StringBuilder();
+        svg.append("<path d=\"");
+        svg.append("M").append(this.centre.x()).append(" ").append(this.centre.y()).append(" "); // Déplacement initial au centre du cercle
+        svg.append("l0,-").append(this.getRayon()).append(" "); // Ligne verticale vers le bord du cercle
+        svg.append("A").append(this.getRayon()).append(" ").append(this.getRayon()).append(" "); // Arc de cercle
+        svg.append("0 "); // Rotation de l'ellipse par rapport à l'axe X
+        svg.append(angleExtent > 180 ? "1 " : "0 "); // Grand angle ou petit angle de l'ellipse
+        svg.append("1 "); // Arc de cercle de 60 degrés
+        svg.append(xFin).append(",").append(yFin).append(" "); // Point final de l'arc
+        svg.append("Z\" "); // Fermeture du chemin
+        svg.append("fill=\""+couleur + "\" stroke=\"black\"/>"); // Couleur de remplissage et de contour
+        return svg.toString();
     }
+    
+
+
 
     /**
      * Duplique le secteur en créant une nouvelle instance identique.

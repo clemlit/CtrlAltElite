@@ -162,16 +162,17 @@ public class Camembert implements IForme {
      *
      * @return Chaîne de caractères représentant le camembert en format SVG.
      */
-    public String enSVG(){
-        StringBuilder svgBuilder = new StringBuilder();
-        svgBuilder.append("<g>\n");
+    public String enSVG() {
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\">";
+        svg += "<g>\n";
 
         for (Secteur secteur : secteurs) {
-            svgBuilder.append(secteur.enSVG());
+            svg += secteur.enSVG();
         }
 
-        svgBuilder.append("</g>\n");
-        return svgBuilder.toString();
+        svg += "</g>\n";
+        svg += " />\n</svg>";
+        return svg;
     }
 
     /**

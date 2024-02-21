@@ -86,4 +86,15 @@ public class PolygoneTest {
         po.tourner(angleRotation);
         assertEquals(angleAttendu, po.getAngle());
     }
+    
+    @Test
+    public void testDescription() {
+        String verif = "Polygone 1,2 3,1 2,3";
+        assertEquals(verif,po.description(0));
+    }
+    
+    @Test
+    public void testAligner(){
+
+    }
 }

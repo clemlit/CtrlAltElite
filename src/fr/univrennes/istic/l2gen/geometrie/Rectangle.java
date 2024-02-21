@@ -18,6 +18,7 @@ public class Rectangle implements IForme{
      * @param y La coordonnée y du coin supérieur gauche du rectangle.
      * @param largeur La largeur du rectangle.
      * @param hauteur La hauteur du rectangle.
+     * @requires Les valeurs de (x,y,largeur,hauteur) doivent être strictement positives.
      */
     public Rectangle(double x, double y, double largeur, double hauteur) {
         this.p = new Point(x, y);
@@ -33,6 +34,8 @@ public class Rectangle implements IForme{
      * @param p Le point du coin supérieur gauche du rectangle.
      * @param largeur La largeur du rectangle.
      * @param hauteur La hauteur du rectangle.
+     * @requires Le point p ne doit pas être nul.
+     * @requires Les valeurs largeur et hauteur doivent être strictement positives.
      */
     public Rectangle(Point p, double largeur, double hauteur) {
         this.p = p;
@@ -71,6 +74,7 @@ public class Rectangle implements IForme{
     /**
      * Retourne la hauteur du rectangle.
      * @return La hauteur du rectangle.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double hauteur() {
         return hauteur;
@@ -79,6 +83,7 @@ public class Rectangle implements IForme{
     /**
      * Retourne la largeur du rectangle.
      * @return La largeur du rectangle.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double largeur() {
         return largeur;
@@ -88,6 +93,7 @@ public class Rectangle implements IForme{
      * Déplace le rectangle selon les valeurs spécifiées de déplacement en x et en y.
      * @param dx La valeur de déplacement en x.
      * @param dy La valeur de déplacement en y.
+     * @ensures Le rectangle ne doit pas dépasser les limites d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
         p = p.plus(dx, dy);
@@ -109,6 +115,8 @@ public class Rectangle implements IForme{
      * Redimensionne le rectangle selon les proportions spécifiées.
      * @param px Le facteur de redimensionnement en largeur.
      * @param py Le facteur de redimensionnement en hauteur.
+     * @requires Les valeurs de px et py doivent être strictement positives.
+     * @ensures Le rectangle ne doit pas dépasser les limites d'affichage.
      */
     public IForme redimensionner(double px, double py) {
         // Calcul des nouvelles dimensions du rectangle

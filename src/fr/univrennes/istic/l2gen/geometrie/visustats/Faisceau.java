@@ -23,6 +23,11 @@ public class Faisceau implements IForme {
         barres.add(new Rectangle(new Point(0, 0), 1, h3));
     }
 
+    public Faisceau(String nom){
+        this.nom = nom;
+        this.barres = new ArrayList<>();
+    }
+
     public void ajouterBarre(Rectangle rectangle) {
         barres.add(rectangle);
     }

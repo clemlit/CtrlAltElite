@@ -141,11 +141,11 @@ public class Cercle implements IForme {
     @Override
     public String enSVG() {
         Point centre = centre();
-        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\""+couleur+"\" stroke=\"black\" ";
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\""+couleur+"\" stroke=\"black\" ";
         if (angle != 0) {
             svg += "transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\""; // Applique la rotation
         }
-        svg += " />";
+        svg += " /></svg>";
         return svg;
     }
     

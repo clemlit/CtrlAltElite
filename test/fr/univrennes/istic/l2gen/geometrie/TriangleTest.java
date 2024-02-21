@@ -40,11 +40,11 @@ public class TriangleTest {
     @Test
     public void testEnSVG() {
         Triangle t = new Triangle(192 , 128 , 256 , 128 , 256 , 256);
-        String svg = "<polygon points=\"" + t.X.x() + " " + t.X.y() + " " + t.Y.x() + " " + t.Y.y() + " "
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"" + t.X.x() + " " + t.X.y() + " " + t.Y.x() + " " + t.Y.y() + " "
         + t.Z.x()
         + " " + t.Z.y() + "\"";
         svg += " fill=\"" + t.getCouleur() + "\"";
-        svg += " stroke=\"black\" />\n";        
+        svg += " stroke=\"black\" />\n</svg>";        
         assertEquals(svg, t.enSVG());
     }
 

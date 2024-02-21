@@ -54,7 +54,7 @@ public class Texte implements IForme{
 
     public String enSVG() {
         // Construction de la chaîne SVG
-        String svg = "<text";
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><text";
 
         // Ajout des attributs du texte
         String xAttribute = " x=\"" + x + "\"";
@@ -70,7 +70,7 @@ public class Texte implements IForme{
 
         // Construction finale de la chaîne SVG
         svg += xAttribute + yAttribute + fontSizeAttribute + textAnchorAttribute + fillAttribute + strokeAttribute
-                + transformAttribute + ">" + text + "</text>";
+                + transformAttribute + ">" + text + "</text></svg>";
 
         return svg;
     }

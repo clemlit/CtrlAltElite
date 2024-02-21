@@ -133,7 +133,7 @@ public class Ellipse implements IForme {
      * @return La chaîne SVG représentant l'ellipse.
      */
     public String enSVG() {
-        String svg = "<ellipse";
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><ellipse";
     
         svg += " cx=\"" + x + "\"";
         svg += " cy=\"" + y + "\"";
@@ -147,7 +147,7 @@ public class Ellipse implements IForme {
             svg += " transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\"";
         }
         
-        svg += " />\n";
+        svg += " />\n</svg>";
     
         return svg;
     }
@@ -166,8 +166,9 @@ public class Ellipse implements IForme {
         return couleur;
     }
 
-    public void tourner(int angle) {
+    public IForme tourner(int angle) {
         this.angle += angle; // Met à jour l'angle de l'ellipse
+        return this;
     }
     
     public int getAngle() {

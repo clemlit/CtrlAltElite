@@ -84,7 +84,7 @@ public interface IForme {
      *
      * @param angle Angle de rotation en degrés.
      */
-    public void tourner(int angle);
+    public IForme tourner(int angle);
 
     /**
      * Aligne la forme géométrique en fonction de l'alignement spécifié et de la

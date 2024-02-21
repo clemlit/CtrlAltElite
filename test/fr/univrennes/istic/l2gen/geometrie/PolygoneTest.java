@@ -48,7 +48,7 @@ public class PolygoneTest {
 
     @Test
     public void enSVG(){
-        String svgExpected = "<g>\n<polygon points=\"1.0 2.0 3.0 1.0 2.0 3.0 \" fill=\"null\" stroke=\"black\" />\n</g>\n";
+        String svgExpected = "<svg xmlns=\"http://www.w3.org/2000/svg\"> <g>\n<polygon points=\"1.0 2.0 3.0 1.0 2.0 3.0 \" fill=\"null\" stroke=\"black\" />\n</g>\n</svg>";
         assertEquals(svgExpected, po.enSVG());
     }
 

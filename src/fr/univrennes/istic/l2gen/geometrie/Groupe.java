@@ -220,10 +220,11 @@ public class Groupe implements IForme {
             return angle;
         }
    
-        public void tourner(int angle) {
+        public IForme tourner(int angle) {
             this.angle = angle;
             for (IForme forme : formes) {
                 forme.tourner(angle);
             }
+            return this;
         }
 }

@@ -201,7 +201,7 @@ public class Secteur implements IForme {
         }
     
         StringBuilder svg = new StringBuilder();
-        svg.append("<path d=\"");
+        svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\"><path d=\"");
         svg.append("M").append(this.centre.x()).append(" ").append(this.centre.y()).append(" "); // Déplacement initial au centre du cercle
         svg.append("l0,-").append(this.getRayon()).append(" "); // Ligne verticale vers le bord du cercle
         svg.append("A").append(this.getRayon()).append(" ").append(this.getRayon()).append(" "); // Arc de cercle
@@ -210,7 +210,7 @@ public class Secteur implements IForme {
         svg.append("1 "); // Arc de cercle de 60 degrés
         svg.append(xFin).append(",").append(yFin).append(" "); // Point final de l'arc
         svg.append("Z\" "); // Fermeture du chemin
-        svg.append("fill=\""+couleur + "\" stroke=\"black\"/>"); // Couleur de remplissage et de contour
+        svg.append("fill=\""+couleur + "\" stroke=\"black\"/></svg>"); // Couleur de remplissage et de contour
         return svg.toString();
     }
     
@@ -296,9 +296,10 @@ public class Secteur implements IForme {
         return couleur;
     }
 
-    public void tourner(int angle) {
+    public IForme tourner(int angle) {
         angleDebut = (angleDebut + angle) % 360;
         angleFin = (angleFin + angle) % 360;
+        return this;
     }
 
     

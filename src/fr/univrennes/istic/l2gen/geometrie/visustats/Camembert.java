@@ -21,10 +21,21 @@ public class Camembert implements IForme {
     }
 
     //CONSTRUCTEURS
+    /**
+     *
+     * @param valeur1 Coordonnée x du centre du camembert.
+     * @param valeur2 Coordonnée y du centre du camembert.
+     * @param rayon   Rayon du camembert.
+     */
     public Camembert(double valeur1, double valeur2, double rayon){
         this(new Point(valeur1, valeur2), rayon);
     }
-
+    
+    /**
+     *
+     * @param point Coordonnées du centre du camembert.
+     * @param rayon Rayon du camembert.
+     */
     public Camembert(Point point, Double rayon){
         this.rayon = rayon;
         this.centre = point;
@@ -32,6 +43,14 @@ public class Camembert implements IForme {
         this.couleur = "White";
     }
 
+    /**
+     * Ajoute un secteur au camembert avec la couleur spécifiée et le pourcentage de
+     * l'angle qu'il doit occuper.
+     *
+     * @param chaine Couleur du secteur.
+     * @param valeur Pourcentage de l'angle occupé par le secteur.
+     * @return L'instance actuelle de Camembert après l'ajout du secteur.
+     */
     public Camembert ajouterSecteur(String chaine, double valeur){
         double angleDebut = angle;
         double angleFin = angleDebut + (360.0 * valeur);
@@ -49,10 +68,21 @@ public class Camembert implements IForme {
         return this;
     }
 
+    /**
+     * Retourne le centre du camembert.
+     *
+     * @return Coordonnées du centre du camembert.
+     */
     public Point centre(){
         return centre;
     }
 
+    /**
+     * Colorie le camembert en utilisant les couleurs spécifiées.
+     *
+     * @param couleurs Couleurs à appliquer au camembert.
+     * @return L'instance actuelle de Camembert après la coloration.
+     */
     public IForme colorier(String ... couleurs){
         for (Secteur secteur : secteurs) {
             secteur.colorier(couleurs);
@@ -60,6 +90,13 @@ public class Camembert implements IForme {
         return this;
     }
 
+    /**
+     * Déplace le camembert selon les déplacements spécifiés sur les axes x et y.
+     *
+     * @param dx Déplacement sur l'axe des x.
+     * @param dy Déplacement sur l'axe des y.
+     * @return L'instance actuelle de Camembert après le déplacement.
+     */
     public IForme deplacer(double dx, double dy){
         this.centre = this.centre.plus(dx, dy);
         return this;
@@ -69,11 +106,21 @@ public class Camembert implements IForme {
         return null;
     }
 
+    /**
+     * Duplique le camembert en créant une nouvelle instance identique.
+     *
+     * @return Nouvelle instance de Camembert.
+     */
     public IForme dupliquer(){
         Camembert copieCamembert = new Camembert(centre, rayon);
         return copieCamembert;
     }
 
+    /**
+     * Génère une représentation SVG du camembert.
+     *
+     * @return Chaîne de caractères représentant le camembert en format SVG.
+     */
     public String enSVG(){
         StringBuilder svgBuilder = new StringBuilder();
         svgBuilder.append("<g>\n");
@@ -86,14 +133,32 @@ public class Camembert implements IForme {
         return svgBuilder.toString();
     }
 
+    /**
+     * Retourne la hauteur du camembert.
+     *
+     * @return Hauteur du camembert.
+     */
     public double hauteur(){
         return 2 * rayon;
     }
 
+    /**
+     * Retourne la largeur du camembert.
+     *
+     * @return largeur du camembert.
+     */
     public double largeur(){
         return 2 * rayon;
     }
 
+    /**
+     * Redimensionne le camembert en fonction des facteurs spécifiés sur les axes x
+     * et y.
+     *
+     * @param dx Facteur de redimensionnement pour l'axe des x.
+     * @param dy Facteur de redimensionnement pour l'axe des y.
+     * @return L'instance actuelle de Camembert après la redimensionnement.
+     */
     public IForme redimensionner(double dx, double dy) {
         // Redimensionner le camembert lui-même
         rayon *= Math.max(dx, dy);
@@ -106,6 +171,12 @@ public class Camembert implements IForme {
         return this;
     }
 
+    /**
+     * Tourne le camembert selon l'angle spécifié.
+     *
+     * @param angle Angle de rotation.
+     * @return L'instance actuelle de Camembert après la rotation.
+     */
     public IForme tourner(int angle){
         this.angle = angle;
         return this;

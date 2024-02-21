@@ -187,6 +187,11 @@ public class Ellipse implements IForme {
         return this;
     }
     
+    /**
+     * Renvoie l'angle actuel de l'ellipse.
+     *
+     * @return L'angle de l'ellipse.
+     */
     public int getAngle() {
         return this.angle;
     }

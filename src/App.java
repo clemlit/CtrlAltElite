@@ -8,7 +8,7 @@ import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
-import fr.univrennes.istic.l2gen.geometrie.visustats.Camembert;
+import fr.univrennes.istic.l2gen.visustats.Camembert;
 
 import java.io.FileWriter;
 

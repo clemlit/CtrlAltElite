@@ -64,7 +64,8 @@ public class Triangle implements IForme {
      * @param y2 Coordonnée y du deuxième point.
      * @param z1 Coordonnée x du troisième point.
      * @param z2 Coordonnée y du troisième point.
-     * @requires Les valeurs de (x1,x2,y1,y2,z1,z2) doivent être strictement positives.
+     * @requires Les valeurs de (x1,x2,y1,y2,z1,z2) doivent être strictement
+     *           positives.
      */
     public Triangle(double x1, double x2, double y1, double y2, double z1, double z2) {
         this.X = new Point(x1, x2);
@@ -74,7 +75,7 @@ public class Triangle implements IForme {
 
     /**
      * Calcule et retourne les coordonnées du centre du Triangle.
-     *
+     * 
      * @return les coordonnées du centre du Triangle.
      */
     public Point centre() {
@@ -122,11 +123,13 @@ public class Triangle implements IForme {
 
     /**
      * Génère une description textuelle du triangle avec une indentation spécifiée.
-     *
+     * 
+     * @require indentation >= 0.
      * @param indentation L'indentation pour la description.
      * @return La description du triangle.
      */
     public String description(int indentation) {
+
         String spaces = "  ";
         for (int i = 0; i < indentation; i++) {
             spaces += "  ";
@@ -243,6 +246,10 @@ public class Triangle implements IForme {
      *
      * @param couleurs Tableau variable de chaînes de caractères représentant les
      *                 couleurs.
+     * @require couleur n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
+     * @require couleurs est une couleur existante dans la bibliothèque SVG.
      */
     @Override
     public IForme colorier(String... couleurs) {

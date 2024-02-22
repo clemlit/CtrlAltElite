@@ -8,7 +8,8 @@ import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
-import fr.univrennes.istic.l2gen.geometrie.visustats.Camembert;
+import fr.univrennes.istic.l2gen.visustats.Camembert;
+import fr.univrennes.istic.l2gen.visustats.Faisceau;
 
 import java.io.FileWriter;
 
@@ -42,6 +43,17 @@ public class App {
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
         tableau.createEnSVG();
+
+        Faisceau fh = new Faisceau(" Exemple de Faisceau horizontal ", 100, 200, 500, 50);
+        fh.colorier(" blue ", " red ", " green ", "grey");
+        fh.agencer(20, 250, 100, 0.2, false);
+
+        String svgFaisceau = fh.createEnSVG();
+        FileWriter write = new FileWriter("Faisceau.svg");
+
+        write.write(svgFaisceau);
+        write.close();
+
 
         String tableauSVG = tableau.createEnSVG(); // Use createEnSVG() method for the group
 

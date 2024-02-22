@@ -276,4 +276,6 @@ public class Polygone implements IForme {
     public int getAngle() {
         return angle;
     }
+
+    
 }

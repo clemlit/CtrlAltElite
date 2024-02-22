@@ -23,6 +23,12 @@ public class PolygoneTest {
     }
 
     @Test
+    public void testLargeur(){
+        double largeurExpected = 2.0;
+        assertEquals(largeurExpected, po.largeur(), 0.001);
+    }
+
+    @Test
     public void testHauteur(){
         double hauteurExpected = 2.0;
         assertEquals(hauteurExpected, po.hauteur(), 0.001);

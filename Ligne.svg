@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg"><g>
-<polyline points="128.0 128.0 128.0 256.0 256.0 128.0 256.0 256.0 " fill="White" stroke="black" transform="rotate(10 192.0 192.0)" />
-<polyline points="160.0 160.0 160.0 224.0 224.0 160.0 224.0 224.0 " fill="White" stroke="black" transform="rotate(10 192.0 192.0)" />
+<polyline points="128.0 128.0 128.0 256.0 256.0 128.0 256.0 256.0 " fill="Blue" stroke="black" transform="rotate(10 192.0 192.0)" />
+<polyline points="160.0 160.0 160.0 224.0 224.0 160.0 224.0 224.0 " fill="Red" stroke="black" transform="rotate(10 192.0 192.0)" />
 <g>
-<polyline points="176.0 176.0 176.0 208.0 208.0 176.0 208.0 208.0 " fill="White" stroke="black" transform="rotate(10 192.0 192.0)" />
-<polyline points="184.0 184.0 184.0 200.0 200.0 184.0 200.0 200.0 " fill="White" stroke="black" transform="rotate(10 192.0 192.0)" />
+<polyline points="176.0 176.0 176.0 208.0 208.0 176.0 208.0 208.0 " fill="Green" stroke="black" transform="rotate(10 192.0 192.0)" />
+<polyline points="184.0 184.0 184.0 200.0 200.0 184.0 200.0 200.0 " fill="Blue" stroke="black" transform="rotate(10 192.0 192.0)" />
 </g>
 </g>
 </svg>

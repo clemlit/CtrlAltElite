@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg"><g>
-<ellipse cx="256.0" cy="256.0" rx="128.0" ry="64.0" fill="White" stroke="black" transform="rotate(10 256.0 256.0)" />
-<ellipse cx="256.0" cy="256.0" rx="64.0" ry="32.0" fill="White" stroke="black" transform="rotate(10 256.0 256.0)" />
+<ellipse cx="256.0" cy="256.0" rx="128.0" ry="64.0" fill="Orange" stroke="black" transform="rotate(10 256.0 256.0)" />
+<ellipse cx="256.0" cy="256.0" rx="64.0" ry="32.0" fill="Red" stroke="black" transform="rotate(10 256.0 256.0)" />
 <g>
-<ellipse cx="256.0" cy="256.0" rx="32.0" ry="16.0" fill="White" stroke="black" transform="rotate(10 256.0 256.0)" />
-<ellipse cx="256.0" cy="256.0" rx="16.0" ry="8.0" fill="White" stroke="black" transform="rotate(10 256.0 256.0)" />
+<ellipse cx="256.0" cy="256.0" rx="32.0" ry="16.0" fill="Green" stroke="black" transform="rotate(10 256.0 256.0)" />
+<ellipse cx="256.0" cy="256.0" rx="16.0" ry="8.0" fill="Brown" stroke="black" transform="rotate(10 256.0 256.0)" />
 </g>
 </g>
 </svg>

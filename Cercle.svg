@@ -2,8 +2,8 @@
 <circle cx="256.0" cy="256.0" r="128.0" fill="Blue" stroke="black" transform="rotate(10 256.0 256.0)" />
 <circle cx="256.0" cy="256.0" r="64.0" fill="Red" stroke="black" transform="rotate(10 256.0 256.0)" />
 <g>
-<circle cx="256.0" cy="256.0" r="32.0" fill="Orange" stroke="black" transform="rotate(10 256.0 256.0)" />
-<circle cx="256.0" cy="256.0" r="16.0" fill="Orange" stroke="black" transform="rotate(10 256.0 256.0)" />
+<circle cx="256.0" cy="256.0" r="32.0" fill="Blue" stroke="black" transform="rotate(10 256.0 256.0)" />
+<circle cx="256.0" cy="256.0" r="16.0" fill="Red" stroke="black" transform="rotate(10 256.0 256.0)" />
 </g>
 </g>
 </svg>

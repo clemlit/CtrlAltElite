@@ -64,7 +64,9 @@ public class Rectangle implements IForme {
      * @return Le point représentant le centre du rectangle.
      */
     public Point centre() {
-        return p;
+        double centre_x = (p.x() - largeur / 2);
+        double centre_y = (p.y() - hauteur /2);
+        return new Point(centre_x, centre_y);
     }
 
     /**
@@ -184,13 +186,9 @@ public class Rectangle implements IForme {
     public String enSVG() {
         String svg = "<rect";
 
-        // Calcul des coordonnées du coin supérieur gauche du rectangle
-        double coin_gauche_rectangleX = p.x();
-        double coin_gauche_rectangleY = p.y();
-
         // Ajout des attributs du rectangle
-        String xAttribute = " x=\"" + coin_gauche_rectangleX + "\"";
-        String yAttribute = " y=\"" + coin_gauche_rectangleY + "\"";
+        String xAttribute = " x=\"" + centre().x() + "\"";
+        String yAttribute = " y=\"" + centre().y() + "\"";
         String widthAttribute = " width=\"" + largeur() + "\"";
         String heightAttribute = " height=\"" + hauteur() + "\"";
         String fillAttribute = " fill=\"" + couleur + "\"";

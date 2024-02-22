@@ -8,7 +8,7 @@ import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
-import fr.univrennes.istic.l2gen.visustats.Camembert;
+import fr.univrennes.istic.l2gen.geometrie.visustats.Camembert;
 
 import java.io.FileWriter;
 
@@ -23,10 +23,10 @@ public class App {
         ca.deplacer(100, 100);
 
 
-        IForme f1 = new Texte(192, 128, 64, " Istic L2GEN ");   
+        IForme f1 = new Cercle(256, 256, 128);   
         f1.colorier("Red").tourner(10);
+        
 
-        System.out.println(f1.enSVG());
 
 
         System.out.println("-------------------------------------");
@@ -41,14 +41,15 @@ public class App {
         tableau.ajoutGroupe(new Secteur(256, 256, 128, 0, 60));
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
+        tableau.createEnSVG();
 
-        String svgContent =  ca.enSVG();
-        FileWriter writer = new FileWriter("Camembert.svg");
+        String tableauSVG = tableau.createEnSVG(); // Use createEnSVG() method for the group
 
-        writer.write(svgContent);
+        FileWriter writer = new FileWriter("figure.svg");
+        writer.write(tableauSVG);
         writer.close();
 
-        System.out.println("Le fichier .svg a été créé avec succès.");
+        System.out.println("Les fichiers .svg ont été créés avec succès.");
 
         IForme f = new Texte(192, 128, 64, " Istic L2GEN ");
         System.out.println(f.enSVG());

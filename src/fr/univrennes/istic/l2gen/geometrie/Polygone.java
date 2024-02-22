@@ -11,7 +11,7 @@ public class Polygone implements IForme {
     /**
      * Constructeur pour créer un polygone à partir des coordonnées spécifiées.
      *
-     * @param l Les coordonnées x, y du polygone. 
+     * @param l Les coordonnées x, y du polygone.
      * @requires le tableau l doit contenir un nombre pair de valeurs.
      */
     public Polygone(double... l) {
@@ -55,26 +55,27 @@ public class Polygone implements IForme {
             // Si la liste des sommets est vide, retourner le point (0, 0) par défaut
             return new Point(0, 0);
         }
-        double minX=liste.get(0).x();
-        double minY=liste.get(0).y();
-        for (int i =0;i<liste.size();i++){
-            if (liste.get(i).x()<minX){
-                minX=liste.get(i).x();
-            } if (liste.get(i).y()<minY){
-                minY=liste.get(i).y();
-            } 
+        double minX = liste.get(0).x();
+        double minY = liste.get(0).y();
+        for (int i = 0; i < liste.size(); i++) {
+            if (liste.get(i).x() < minX) {
+                minX = liste.get(i).x();
+            }
+            if (liste.get(i).y() < minY) {
+                minY = liste.get(i).y();
+            }
         }
-        double centreX=largeur()/2;
-        double centreY=hauteur()/2;
+        double centreX = largeur() / 2;
+        double centreY = hauteur() / 2;
 
-        return new Point(centreX+minX, centreY+minY);
+        return new Point(centreX + minX, centreY + minY);
     }
 
     /**
      * Calcule la largeur du polygone.
      *
      * @return La largeur du polygone.
-     * @requires La liste de point ne doit pas être nul.
+     * @ensures La liste de point ne doit pas être nul.
      */
     public double largeur() {
         ArrayList<Point> liste = getSommets();
@@ -147,6 +148,7 @@ public class Polygone implements IForme {
      * Génère une description des coordonnées du polygone.
      *
      * @param i L'espacement entre les points dans la description.
+     * @require i >= 0.
      * @return Une chaîne décrivant les coordonnées de tous les points du polygone.
      */
     @Override
@@ -168,6 +170,7 @@ public class Polygone implements IForme {
      * Ajoute un point au polygone.
      *
      * @param p Le point à ajouter.
+     * @require p est dans la limite de l'affichage.
      */
     public void ajouterSommetPoint(Point p) {
         liste.add(p);
@@ -178,6 +181,7 @@ public class Polygone implements IForme {
      *
      * @param x La coordonnée x du point.
      * @param y La coordonnée y du point.
+     * @require x et y dans la limite de l'affichage.
      */
     public void ajouterSommet(double x, double y) {
         Point p = new Point(x, y);
@@ -233,7 +237,7 @@ public class Polygone implements IForme {
      */
     public IForme dupliquer() {
         Polygone copiePolygone = new Polygone(getListe());
-        copiePolygone.angle=angle;
+        copiePolygone.angle = angle;
         return copiePolygone;
     }
 
@@ -241,6 +245,9 @@ public class Polygone implements IForme {
      * Colore le polygone avec la couleur spécifiée.
      *
      * @param couleurs Les couleurs à appliquer.
+     * @require couleurs n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
      * @return La forme coloriée.
      */
     @Override
@@ -283,5 +290,4 @@ public class Polygone implements IForme {
         return angle;
     }
 
-    
 }

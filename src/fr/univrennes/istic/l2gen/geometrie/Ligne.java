@@ -92,6 +92,7 @@ public class Ligne implements IForme {
      * Génère une description textuelle de la ligne avec l'indentation spécifiée.
      *
      * @param indentation Niveau d'indentation pour la description.
+     * @require indentation >= 0.
      * @return Chaîne de caractères décrivant la ligne.
      */
     public String description(int indentation) {
@@ -187,6 +188,7 @@ public class Ligne implements IForme {
      * @param px Facteur de redimensionnement pour l'axe des x.
      * @param py Facteur de redimensionnement pour l'axe des y.
      * @requires les valeurs de px et py doivent être strictement positives.
+     * @ensures la IForme ne dépasse pas les limites de l'affichage.
      */
     public IForme redimensionner(double px, double py) {
         Point centre = centre();
@@ -232,9 +234,13 @@ public class Ligne implements IForme {
     }
 
     /**
-     * Change la couleur de la ligne en utilisant la première couleur spécifiée dans le tableau.
+     * Change la couleur de la ligne en utilisant la première couleur spécifiée dans
+     * le tableau.
      *
      * @param couleurs Tableau de couleurs à appliquer.
+     * @require couleurs n'est pas vide.
+     * @require couleurs est un tableau de couleurs existantes dans la bibliothèque
+     *          SVG.
      * @return L'objet Ligne avec la nouvelle couleur.
      */
     @Override

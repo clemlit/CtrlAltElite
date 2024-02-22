@@ -78,8 +78,8 @@ public class EllipseTest {
     public void testEnSVG() {
         IForme ellipse = new Ellipse(10, 10, 20, 20);
         Point centre = ellipse.centre();
-        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><ellipse cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" rx=\"" + ellipse.largeur() + "\" ry=\"" + ellipse.hauteur() + "\"" 
-                    + " fill=\""+ellipse.getCouleur()+"\" stroke=\"black\" />\n</svg>";
+        String svg = "<ellipse cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" rx=\"" + ellipse.largeur() + "\" ry=\"" + ellipse.hauteur() + "\"" 
+                    + " fill=\""+ellipse.getCouleur()+"\" stroke=\"black\" />\n";
         assertEquals(svg, ellipse.enSVG());
     }
 

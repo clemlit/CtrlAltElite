@@ -70,6 +70,7 @@ public class Cercle implements IForme {
      * Retourne une description du cercle avec une indentation spécifiée.
      *
      * @param indentation Niveau d'indentation pour la description.
+     * @require indentation >= 0.
      * @return Chaîne de caractères décrivant le cercle.
      */
     public String description(int indentation) {
@@ -127,7 +128,8 @@ public class Cercle implements IForme {
     }
 
     /**
-     * Redimensionne le cercle en multipliant le rayon par le facteur maximum entre dx et dy.
+     * Redimensionne le cercle en multipliant le rayon par le facteur maximum entre
+     * dx et dy.
      *
      * @param dx Facteur de redimensionnement pour l'axe des x.
      * @param dy Facteur de redimensionnement pour l'axe des y.
@@ -150,7 +152,8 @@ public class Cercle implements IForme {
     @Override
     public String enSVG() {
         Point centre = centre();
-        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\""+couleur+"\" stroke=\"black\" ";
+        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + this.r + "\" fill=\""
+                + couleur + "\" stroke=\"black\" ";
         if (angle != 0) {
             svg += "transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\""; // Applique la rotation
         }
@@ -159,9 +162,12 @@ public class Cercle implements IForme {
     }
 
     /**
-     * Change la couleur du cercle en utilisant la première couleur spécifiée dans le tableau.
+     * Change la couleur du cercle en utilisant la première couleur spécifiée dans
+     * le tableau.
      *
      * @param couleurs Tableau de couleurs à appliquer.
+     * @require couleurs n'est pas null.
+     * @require couleurs est une couleur existante dans la bibliothèque SVG.
      * @return L'objet Cercle avec la nouvelle couleur.
      */
     @Override
@@ -209,6 +215,7 @@ public class Cercle implements IForme {
      *
      * @param alignment Alignement souhaité (HAUT, BAS, GAUCHE, DROITE).
      * @param cible     Coordonnée cible pour l'alignement.
+     * @require cible < aux limites de l'affichage.
      * @return Instance de la forme géométrique alignée.
      * @ensures Le cercle ne doit pas dépasser les limtes d'affichage.
      */

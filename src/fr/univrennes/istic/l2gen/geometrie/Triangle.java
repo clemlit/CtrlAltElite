@@ -15,22 +15,16 @@ public class Triangle implements IForme {
      * Les coordonnées du point X
      */
     public Point X;
-    public double x1;
-    public double x2;
 
     /*
      * Les coordonnées du point Y
      */
     public Point Y;
-    public double y1;
-    public double y2;
 
     /*
      * Les coordonnées du point Z
      */
     public Point Z;
-    public double z1;
-    public double z2;
 
     /*
      * La couleur du triangle

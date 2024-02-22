@@ -32,7 +32,7 @@ public class App {
 
         // AFFICHAGE CERCLE
         Groupe cerclGroupe = arbre(new Cercle(256, 256, 128));   
-        cerclGroupe.tourner(10).colorier("Blue", "Red", "Orange", "Orange");
+        cerclGroupe.tourner(10).colorier("Blue", "Red");
         String cercleSVG = cerclGroupe.createEnSVG();
         FileWriter writer2 = new FileWriter("Cercle.svg");
         writer2.write(cercleSVG);
@@ -41,7 +41,7 @@ public class App {
 
         // AFFICHAGE Ligne
         Groupe ligneGroupe = arbre(new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
-        ligneGroupe.tourner(10);
+        ligneGroupe.tourner(10).colorier("Blue", "Red", "Green");;
         String ligneSVG = ligneGroupe.createEnSVG();
         FileWriter writer3 = new FileWriter("Ligne.svg");
         writer3.write(ligneSVG);
@@ -49,7 +49,7 @@ public class App {
 
         // AFFICHAGE Rectangle
         Groupe rectangleGroup = arbre(new Rectangle(256, 256, 256, 128));
-        ligneGroupe.tourner(10);
+        rectangleGroup.tourner(10).colorier("Blue", "Red", "Pink", "Yellow");;
         String rectangleSVG = rectangleGroup.createEnSVG();
         FileWriter writer4 = new FileWriter("Rectangle.svg");
         writer4.write(rectangleSVG);
@@ -57,7 +57,7 @@ public class App {
 
         // AFFICHAGE Triangle
         Groupe triangleGroupe = arbre(new Triangle(192, 128, 256, 128, 256, 256));
-        triangleGroupe.tourner(10);
+        triangleGroupe.tourner(10).colorier("Pink", "Green");;
         String triangleSVG = triangleGroupe.createEnSVG();
         FileWriter writer5 = new FileWriter("Triangle.svg");
         writer5.write(triangleSVG);
@@ -65,7 +65,7 @@ public class App {
 
         // AFFICHAGE Rectangle
         Groupe ellipseGroupe = arbre(new Ellipse(256, 256, 128, 64));
-        ellipseGroupe.tourner(10);
+        ellipseGroupe.tourner(10).colorier("Orange", "Red", "Green", "Brown");;
         String ellipseSVG = ellipseGroupe.createEnSVG();
         FileWriter writer6 = new FileWriter("Ellipse.svg");
         writer6.write(ellipseSVG);
@@ -73,7 +73,7 @@ public class App {
 
         // AFFICHAGE Rectangle
         Groupe polygoneGroupe = arbre(new Polygone(128, 128, 128, 256, 256, 128, 256, 256));
-        polygoneGroupe.tourner(10);
+        polygoneGroupe.tourner(10).colorier("Green", "Red", "Purple", "Orange");;
         String polygoneSVG = polygoneGroupe.createEnSVG();
         FileWriter writer7 = new FileWriter("Polygone.svg");
         writer7.write(polygoneSVG);
@@ -81,7 +81,7 @@ public class App {
 
         // AFFICHAGE Rectangle
         Groupe secteurGroup = arbre(new Secteur(256, 256, 128, 0, 60));
-        secteurGroup.tourner(10);
+        secteurGroup.tourner(10).colorier("Green", "Red", "Orange");;
         String secteurSVG = secteurGroup.createEnSVG();
         FileWriter writer8 = new FileWriter("Secteur.svg");
         writer8.write(secteurSVG);

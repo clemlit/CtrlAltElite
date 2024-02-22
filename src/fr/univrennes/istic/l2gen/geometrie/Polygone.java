@@ -191,7 +191,7 @@ public class Polygone implements IForme {
      */
     @Override
     public String enSVG() {
-        StringBuilder svgBuilder = new StringBuilder("<svg xmlns=\"http://www.w3.org/2000/svg\"> <g>\n<polygon points=\"");
+        StringBuilder svgBuilder = new StringBuilder("<g>\n<polygon points=\"");
 
         for (Point sommet : liste) {
             svgBuilder.append(sommet.x()).append(" ").append(sommet.y()).append(" ");
@@ -205,7 +205,7 @@ public class Polygone implements IForme {
                     .append(centre().y()).append(")\"");
         }
 
-        svgBuilder.append(" />\n</g>\n</svg>");
+        svgBuilder.append(" />\n</g>\n");
 
         return svgBuilder.toString();
     }

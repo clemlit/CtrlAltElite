@@ -225,7 +225,7 @@ public class Triangle implements IForme {
      * @return Le code SVG du triangle sans remplissage.
      */
     public String enSVG() {
-        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"" + this.X.x() + " " + this.X.y()
+        String svg = "<polygon points=\"" + this.X.x() + " " + this.X.y()
                 + " " + this.Y.x() + " " + this.Y.y() + " "
                 + this.Z.x() + " " + this.Z.y() + "\"";
         svg += " fill=\"" + couleur + "\"";
@@ -234,7 +234,7 @@ public class Triangle implements IForme {
             Point centre = centre();
             svg += " transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\"";
         }
-        svg += " />\n</svg>";
+        svg += " />\n";
         return svg;
     }
 

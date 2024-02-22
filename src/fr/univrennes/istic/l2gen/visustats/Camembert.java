@@ -213,6 +213,12 @@ public class Camembert implements IForme {
         return this;
     }
 
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
+    }
+    
     /**
      * Tourne le camembert selon l'angle spécifié.
      *

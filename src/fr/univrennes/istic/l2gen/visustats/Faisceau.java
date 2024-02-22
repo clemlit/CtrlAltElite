@@ -158,6 +158,11 @@ public void agencer(double axeX, double axeY, double largeur, double echelle, bo
     }
 
     @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
+    }
+
+    @Override
     public String getCouleur() {
         return null; // Aucune couleur spécifique pour le faisceau lui-même
     }

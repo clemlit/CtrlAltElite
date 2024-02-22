@@ -51,7 +51,7 @@ public class SecteurTest {
 
     @Test
     public void enSVG(){
-        String svgExpected = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M256.0 256.0L256,128A128.0,128.0 0 0 1 367,192Z\" fill=\"White\" stroke=\"black\"/></svg>";
+        String svgExpected = "\n<path d=\"M256.0 256.0L256,128A128.0,128.0 0 0 1 367,192Z\" fill=\"White\" stroke=\"black\"/>";
         assertEquals(svgExpected, secteur.enSVG());
     }
 

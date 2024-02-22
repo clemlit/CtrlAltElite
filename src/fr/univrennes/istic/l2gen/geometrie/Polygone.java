@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Polygone implements IForme {
     List<Point> liste;
-    private String couleur;
+    private String couleur = "White";
     private int angle;
 
     /**
@@ -283,5 +283,8 @@ public class Polygone implements IForme {
         return angle;
     }
 
-    
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
+    }
 }

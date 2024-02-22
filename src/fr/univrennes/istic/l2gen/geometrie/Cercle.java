@@ -22,7 +22,7 @@ public class Cercle implements IForme {
      */
     private double r;
 
-    private String couleur;
+    private String couleur = "White";
 
     private int angle;
 
@@ -157,6 +157,15 @@ public class Cercle implements IForme {
         svg += " />";
         return svg;
     }
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
+    }
+
+
+
+
 
     /**
      * Change la couleur du cercle en utilisant la première couleur spécifiée dans le tableau.

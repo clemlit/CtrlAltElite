@@ -20,7 +20,7 @@ public class Ligne implements IForme {
      * Liste des sommets (points) de la ligne.
      */
     private List<Point> sommets;
-    private String couleur;
+    private String couleur = "White";
     private int angle;
 
     // CONSTRUCTEURS
@@ -275,5 +275,10 @@ public class Ligne implements IForme {
      */
     public int getAngle() {
         return angle;
+    }
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
 }

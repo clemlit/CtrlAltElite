@@ -234,6 +234,11 @@ public class Camembert implements IForme {
         return couleur;
     }
 
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
+    }
+
 
 
 

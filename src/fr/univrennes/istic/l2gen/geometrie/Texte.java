@@ -9,7 +9,7 @@ public class Texte implements IForme {
     private double x, y;
     private int fontSize;
     private String text;
-    private String couleur;
+    private String couleur = "White";
     private int angle;
 
     /**
@@ -173,5 +173,10 @@ public class Texte implements IForme {
     public IForme tourner(int angle) {
         this.angle = angle;
         return this;
+    }
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
 }

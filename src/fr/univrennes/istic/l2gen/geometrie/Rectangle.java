@@ -8,7 +8,7 @@ public class Rectangle implements IForme{
     private Point p;
     private double largeur;
     private double hauteur;
-    private String couleur; 
+    private String couleur = "White";
     private int angle;
 
     /**
@@ -212,5 +212,10 @@ public class Rectangle implements IForme{
     public IForme tourner(int angle) {
         this.angle += angle;
         return this;
+    }
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
 }

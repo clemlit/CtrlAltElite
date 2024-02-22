@@ -98,5 +98,6 @@ public interface IForme {
         return this;
     }
 
+    public String createEnSVG();
     
 }

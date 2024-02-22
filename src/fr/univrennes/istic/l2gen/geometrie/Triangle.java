@@ -35,8 +35,8 @@ public class Triangle implements IForme {
     /*
      * La couleur du triangle
      */
-    private String couleur;
-
+    private String couleur = "White";
+    
     private int angle;
 
     /**
@@ -282,6 +282,11 @@ public class Triangle implements IForme {
      */
     public double getAngle() {
         return angle;
+    }
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
 
 }

@@ -94,6 +94,11 @@ public void agencer(double axeX, double axeY, double largeur, double echelle, bo
     }
 
     @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
+    }
+
+    @Override
     public double hauteur() {
         double minY = Double.MAX_VALUE;
         double maxY = Double.MIN_VALUE;

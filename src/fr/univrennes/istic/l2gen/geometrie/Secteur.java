@@ -30,8 +30,7 @@ public class Secteur implements IForme {
      */
     private double angleFin;
 
-    private String couleur;
-
+    private String couleur = "White";
     private int angle;
 
 
@@ -340,6 +339,11 @@ public class Secteur implements IForme {
         angleDebut = (angleDebut + angle) % 360;
         angleFin = (angleFin + angle) % 360;
         return this;
+    }
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
 
     

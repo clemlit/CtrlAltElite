@@ -11,7 +11,7 @@ public class Ellipse implements IForme {
     private double y; // Coordonnée y du centre de l'ellipse
     private double demiGrandAxe; // Demi-grand axe
     private double demiPetitAxe; // Demi-petit axe
-    private String couleur;
+    private String couleur = "White";
     private int angle;
 
 
@@ -229,6 +229,11 @@ public class Ellipse implements IForme {
                 break;
         }
         return this;
+    }
+
+    @Override
+    public String createEnSVG() {
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
     
 }

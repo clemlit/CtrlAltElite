@@ -164,13 +164,6 @@ public class Rectangle implements IForme {
         double nouvelleLargeur = largeur * px;
         double nouvelleHauteur = hauteur * py;
 
-        // Calcul des nouvelles coordonnées du coin supérieur gauche
-        double nouveauX = p.x() - (nouvelleLargeur - largeur) / 2;
-        double nouveauY = p.y() - (nouvelleHauteur - hauteur) / 2;
-
-        // Mise à jour du point représentant le coin supérieur gauche
-        p = new Point(nouveauX, nouveauY);
-
         // Mise à jour de la largeur et de la hauteur
         largeur = nouvelleLargeur;
         hauteur = nouvelleHauteur;

@@ -171,7 +171,7 @@ public class Camembert implements IForme {
         }
 
         svg += "</g>\n";
-        svg += " />\n</svg>";
+        svg += "</svg>";
         return svg;
     }
 

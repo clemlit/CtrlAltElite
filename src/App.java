@@ -42,7 +42,7 @@ public class App {
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
 
-        String svgContent = "<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + ca.enSVG() + "</svg>";
+        String svgContent =  ca.enSVG();
         FileWriter writer = new FileWriter("Camembert.svg");
 
         writer.write(svgContent);

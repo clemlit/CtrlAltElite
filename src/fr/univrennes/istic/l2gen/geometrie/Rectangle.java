@@ -64,10 +64,17 @@ public class Rectangle implements IForme {
      * d'indentation.
      * 
      * @param indentation Le niveau d'indentation de la description.
+     *                    <<<<<<< HEAD
      * @require indentation >= 0.
+     *          =======
+     * @requires
+     *           indentation<0
+     *           >>>>>>> 016084087eefdb40dd20c942ab0a918dd9e39e0d
      * @return La description textuelle du rectangle.
      */
     public String description(int indentation) {
+        if (indentation < 0)
+            throw new IllegalArgumentException("indentation<0");
         String indent = "  ";
         for (int i = 0; i < indentation; i++) {
             indent += "  "; // Deux espaces pour chaque niveau d'indentation
@@ -84,9 +91,11 @@ public class Rectangle implements IForme {
      * Retourne la hauteur du rectangle.
      * 
      * @return La hauteur du rectangle.
-     * @ensures La valeur rendu doit être strictement positives.
+     * @requires La valeur rendu doit être strictement positives.
      */
     public double hauteur() {
+        if (hauteur <= 0)
+            throw new IllegalArgumentException("hauteur<=0");
         return hauteur;
     }
 
@@ -97,6 +106,8 @@ public class Rectangle implements IForme {
      * @ensures La valeur rendu doit être strictement positives.
      */
     public double largeur() {
+        if (largeur <= 0)
+            throw new IllegalArgumentException("largeur<=0");
         return largeur;
     }
 
@@ -115,10 +126,17 @@ public class Rectangle implements IForme {
 
     /**
      * Duplique le rectangle.
+     * <<<<<<< HEAD
      * 
+     * =======
+     * 
+     * @requires la forme de base est un rectangle
+     *           >>>>>>> 016084087eefdb40dd20c942ab0a918dd9e39e0d
      * @return Une nouvelle instance de Rectangle identique à celle actuelle.
      */
     public IForme dupliquer() {
+        if (!this.getClass().getSimpleName().equals("Rectangle"))
+            throw new IllegalArgumentException("Mauvaise classe");
         Rectangle rectangleDuplique = new Rectangle(p, largeur, hauteur);
         rectangleDuplique.couleur = this.couleur;
         rectangleDuplique.angle = this.angle;
@@ -134,6 +152,8 @@ public class Rectangle implements IForme {
      * @ensures Le rectangle ne doit pas dépasser les limites d'affichage.
      */
     public IForme redimensionner(double px, double py) {
+        if (!(px > 0 && py > 0))
+            throw new IllegalArgumentException("Valeurs nulles ou négatives");
         // Calcul des nouvelles dimensions du rectangle
         double nouvelleLargeur = largeur * px;
         double nouvelleHauteur = hauteur * py;
@@ -194,12 +214,13 @@ public class Rectangle implements IForme {
      */
     @Override
     public IForme colorier(String... couleurs) {
-        if (couleurs.length > 0) {
-            // Ici, vous pouvez prendre la première couleur du tableau couleurs
-            String couleur = couleurs[0];
-            // Implémentation pour colorier un cercle avec la couleur spécifiée
-            this.couleur = couleur;
-        }
+        if (couleurs.length <= 0)
+            throw new IllegalArgumentException("Tableau vide");
+        // Ici, vous pouvez prendre la première couleur du tableau couleurs
+        String couleur = couleurs[0];
+        // Implémentation pour colorier un cercle avec la couleur spécifiée
+        this.couleur = couleur;
+
         return this;
     }
 
@@ -214,7 +235,7 @@ public class Rectangle implements IForme {
 
     /**
      * Tourne le rectangle d'un certain angle.
-     *
+     * 
      * @param angle L'angle de rotation.
      * @return La même instance de rectangle après rotation.
      */

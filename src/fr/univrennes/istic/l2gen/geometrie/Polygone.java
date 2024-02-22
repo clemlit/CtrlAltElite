@@ -11,7 +11,8 @@ public class Polygone implements IForme {
     /**
      * Constructeur pour créer un polygone à partir des coordonnées spécifiées.
      *
-     * @param l Les coordonnées x, y du polygone. Doit contenir un nombre pair de valeurs.
+     * @param l Les coordonnées x, y du polygone. 
+     * @requires le tableau l doit contenir un nombre pair de valeurs.
      */
     public Polygone(double... l) {
         this.liste = new ArrayList<Point>();
@@ -26,6 +27,7 @@ public class Polygone implements IForme {
      * Calcule la hauteur du polygone.
      *
      * @return La hauteur du polygone.
+     * @requires La liste de point ne doit pas être nul.
      */
     public double hauteur() {
         ArrayList<Point> liste = getSommets();
@@ -46,6 +48,7 @@ public class Polygone implements IForme {
      * Calcule le centre du polygone.
      *
      * @return Le point représentant le centre du polygone.
+     * @requires La liste de point ne doit pas être nul.
      */
     public Point centre() {
         if (liste.isEmpty()) {
@@ -71,6 +74,7 @@ public class Polygone implements IForme {
      * Calcule la largeur du polygone.
      *
      * @return La largeur du polygone.
+     * @requires La liste de point ne doit pas être nul.
      */
     public double largeur() {
         ArrayList<Point> liste = getSommets();
@@ -93,6 +97,7 @@ public class Polygone implements IForme {
      * @param dx Le facteur de redimensionnement en largeur.
      * @param dy Le facteur de redimensionnement en hauteur.
      * @return La forme redimensionnée.
+     * @requires Les valeurs de dx et dy doivent être strictement positives.
      */
     public IForme redimensionner(double dx, double dy) {
         Point centre = centre();
@@ -116,6 +121,7 @@ public class Polygone implements IForme {
      * @param dx La valeur de déplacement en x.
      * @param dy La valeur de déplacement en y.
      * @return La forme déplacée.
+     * @ensures Le polygone ne doit pas dépasser les limites d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
         for (Point sommet : liste) {

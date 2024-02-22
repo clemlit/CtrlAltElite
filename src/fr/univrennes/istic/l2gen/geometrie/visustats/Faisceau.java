@@ -9,23 +9,15 @@ import fr.univrennes.istic.l2gen.geometrie.Point;
 
 public class Faisceau implements IForme {
     private String nom;
-    private double h1;
-    private double h2;
-    private double h3;
     private List<Rectangle> barres;
 
-    public Faisceau(String nom, double h1, double h2, double h3) {
+    public Faisceau(String nom, double ...h) {
         this.nom = nom;
-        this.barres = new ArrayList<>();
-        // Ajouter des rectangles avec des hauteurs différentes à la liste
-        barres.add(new Rectangle(new Point(0, 0), 1, h1));
-        barres.add(new Rectangle(new Point(0, 0), 1, h2));
-        barres.add(new Rectangle(new Point(0, 0), 1, h3));
-    }
-
-    public Faisceau(String nom){
-        this.nom = nom;
-        this.barres = new ArrayList<>();
+        this.barres = new ArrayList<Rectangle>();
+        for (int i = 0; i < h.length; i ++) {
+            Rectangle r = new Rectangle(0,0,1,h[i]);
+            barres.add(r);
+        }
     }
 
     public void ajouterBarre(Rectangle rectangle) {
@@ -49,8 +41,8 @@ public class Faisceau implements IForme {
     /**
  * Agence les barres selon l'orientation spécifiée.
  * 
- * @param axeX Axe sur lequel aligner la gauche (si verticalement) ou le bas (si horizontalement) du faisceau
- * @param axeY Axe sur lequel aligner la bas (si verticalement) ou la gauche (si horizontalement) du faisceau
+ * @param axeX Axe sur lequel aligner 
+ * @param axeY Axe sur lequel aligner
  * @param largeur Largeur totale du faisceau
  * @param echelle Facteur d'échelle vertical pour les différentes barres
  * @param verticalement Vrai si les barres sont empilées verticalement, faux si horizontalement
@@ -58,28 +50,30 @@ public class Faisceau implements IForme {
 public void agencer(double axeX, double axeY, double largeur, double echelle, boolean verticalement) {
     Double totalx = axeX;
     double totaly = axeY;
+    double totalHeight = 0;
+    for (Rectangle barre : barres) {
+        totalHeight += barre.hauteur() * echelle; // Utilisation de l'échelle
+    }
     if (verticalement){
-            for (Rectangle barre : barres) {
-                barre.deplacer(axeX, totaly); // Déplacement de la barre
-               
-                // Redimensionnement de la barre
-                barre.redimensionner(largeur, echelle);
-                
-                // Mise à jour des coordonnées pour la prochaine barre en fonction de l'orientation
-                
-                totaly -= 2*barre.hauteur()-10;
-            }
+        double startY = totaly - totalHeight / 2; // Ajustement du point de départ
+        for (Rectangle barre : barres) {
+            // Déplacer la barre au bon emplacement en utilisant la position de départ startY
+            barre.deplacer(axeX, startY);
+            
+            // Redimensionner la barre
+            barre.redimensionner(largeur, echelle);
+            
+            // Mettre à jour la position de départ pour la prochaine barre
+            startY += barre.hauteur(); // Utilisation de l'échelle
+        }
         } else {
-        double l = (largeur-10)/3;
+        double l = (largeur-10)/barres.size();
         for (Rectangle barre : barres) {
             barre.deplacer(axeX, axeY); // Déplacement de la barre
            
             // Redimensionnement de la barre
             barre.redimensionner(l, echelle);
-            
-        
-            
-                barre.deplacer(totalx, axeY- barre.hauteur() / 2); // Déplacement horizontal
+                barre.deplacer(totalx, axeY - barre.hauteur()*3); // Déplacement horizontal
                 totalx += (barre.largeur()+ 5 );
             }
         }
@@ -178,7 +172,7 @@ public void agencer(double axeX, double axeY, double largeur, double echelle, bo
 
     @Override
     public IForme dupliquer() {
-        Faisceau copieFaisceau = new Faisceau(nom, h1, h2, h3);
+        Faisceau copieFaisceau = new Faisceau(nom);
         for (Rectangle barre : barres) {
             copieFaisceau.ajouterBarre(new Rectangle(barre.centre(), barre.largeur(), barre.hauteur()));
         }

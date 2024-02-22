@@ -45,6 +45,7 @@ public class Triangle implements IForme {
      * @param X Premier point du triangle.
      * @param Y Deuxième point du triangle.
      * @param Z Troisième point du triangle.
+     * @requires Les trois points ne doivent pas être nul.
      */
     public Triangle(Point X, Point Y, Point Z) {
         this.X = X;
@@ -63,6 +64,7 @@ public class Triangle implements IForme {
      * @param y2 Coordonnée y du deuxième point.
      * @param z1 Coordonnée x du troisième point.
      * @param z2 Coordonnée y du troisième point.
+     * @requires Les valeurs de (x1,x2,y1,y2,z1,z2) doivent être strictement positives.
      */
     public Triangle(double x1, double x2, double y1, double y2, double z1, double z2) {
         this.X = new Point(x1, x2);
@@ -87,6 +89,7 @@ public class Triangle implements IForme {
      * Calcule et retourne la hauteur du triangle.
      *
      * @return La hauteur du triangle.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double hauteur() {
         double numerateur = Math.abs((this.Y.x() - this.X.x()) * (this.X.y() - this.Z.y())
@@ -103,6 +106,7 @@ public class Triangle implements IForme {
      * Détermine le côté le plus petit du triangle pour déterminer la largeur.
      *
      * @return La largeur du triangle.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double largeur() {
         double res = Math.sqrt(Math.pow(this.Y.x() - this.X.x(), 2) + Math.pow(this.Y.x() - this.X.y(), 2));
@@ -138,6 +142,8 @@ public class Triangle implements IForme {
      *
      * @param dx Facteur de redimensionnement pour la coordonnée x.
      * @param dy Facteur de redimensionnement pour la coordonnée y.
+     * @requires Les valeurs de dx et dy doivent être strictement positives.
+     * @ensures Le triangle ne doit pas dépasser les limites d'affichage.
      */
     public IForme redimensionner(double dx, double dy) {
         // ON REDIMENSIONNE A PARTIR DU CENTRE DE LA FIGURE ET NON DES POINTS DE CETTE
@@ -181,6 +187,7 @@ public class Triangle implements IForme {
      *
      * @param dx Valeur de déplacement pour la coordonnée x.
      * @param dy Valeur de déplacement pour la coordonnée y.
+     * @ensures Le triangle ne doit pas dépasser les limites d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
         // Déplacement des coordonnées du point X

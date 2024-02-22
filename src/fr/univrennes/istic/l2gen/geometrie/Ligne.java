@@ -29,6 +29,7 @@ public class Ligne implements IForme {
      * Constructeur de la classe Ligne à partir d'un tableau de coordonnées.
      *
      * @param l Tableau de coordonnées alternant entre les valeurs x et y.
+     * @requires Le tableau l doit avoir un nombre pair d'élément.
      */
     public Ligne(double... l) {
         this.sommets = new ArrayList<>();
@@ -43,11 +44,7 @@ public class Ligne implements IForme {
      * Crée une ligne à partir d'une liste de points.
      * 
      * @param sommets la liste des points qui composent la ligne
-     */
-    /**
-     * Constructeur de la classe Ligne à partir d'une liste de sommets (points).
-     *
-     * @param sommets Liste des sommets de la ligne.
+     * @requires La liste de sommet ne doit pas être nul.
      */
     public Ligne(List<Point> sommets) {
         this.sommets = new ArrayList<>(sommets);
@@ -124,6 +121,7 @@ public class Ligne implements IForme {
      * et la coordonnée y minimale parmi tous les sommets.
      *
      * @return Hauteur de la ligne.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double hauteur() {
         double min = Double.MAX_VALUE;
@@ -141,6 +139,7 @@ public class Ligne implements IForme {
      * et la coordonnée x minimale parmi tous les sommets.
      *
      * @return Largeur de la ligne.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double largeur() {
         double min = Double.MAX_VALUE;
@@ -158,6 +157,7 @@ public class Ligne implements IForme {
      *
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
+     * @ensures La ligne ne doit pas dépasser les limites d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
         for (Point sommet : sommets) {
@@ -186,6 +186,7 @@ public class Ligne implements IForme {
      *
      * @param px Facteur de redimensionnement pour l'axe des x.
      * @param py Facteur de redimensionnement pour l'axe des y.
+     * @requires les valeurs de px et py doivent être strictement positives.
      */
     public IForme redimensionner(double px, double py) {
         Point centre = centre();

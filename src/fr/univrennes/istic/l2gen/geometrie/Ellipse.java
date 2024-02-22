@@ -22,6 +22,7 @@ public class Ellipse implements IForme {
      * @param y            La coordonnée y du centre de l'ellipse.
      * @param demiGrandAxe La longueur du demi-grand axe.
      * @param demiPetitAxe La longueur du demi-petit axe.
+     * @requires Les valeurs (x,y,demiGrandAxe,demiPetitAxe) doivent être strictement positives.
      */
     public Ellipse(double x, double y, double demiGrandAxe, double demiPetitAxe) {
         this.x = x;
@@ -38,6 +39,8 @@ public class Ellipse implements IForme {
      * @param point        Le Point représentant le centre de l'ellipse.
      * @param demiGrandAxe La longueur du demi-grand axe.
      * @param demiPetitAxe La longueur du demi-petit axe.
+     * @requires  Le point ne doit pas être nul
+     * @requires Les valeurs demiGrandAxe et demiPetitAxe doivent être strictement positives.
      */
     public Ellipse(Point point, double demiGrandAxe, double demiPetitAxe) {
         this.x = point.x();
@@ -77,6 +80,7 @@ public class Ellipse implements IForme {
      * Retourne la longueur du demi-petit axe de l'ellipse.
      *
      * @return La longueur du demi-petit axe.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double hauteur() {
         return demiPetitAxe;
@@ -86,6 +90,7 @@ public class Ellipse implements IForme {
      * Retourne la longueur du demi-grand axe de l'ellipse.
      *
      * @return La longueur du demi-grand axe.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double largeur() {
         return demiGrandAxe;
@@ -96,6 +101,8 @@ public class Ellipse implements IForme {
      *
      * @param dx Le facteur d'échelle pour le demi-grand axe.
      * @param dy Le facteur d'échelle pour le demi-petit axe.
+     * @requires les valeurs de dx et dy doivent être strictement positives.
+     * @ensures l'ellipse ne doit pas dépasser les limites d'affichages.
      */
     public IForme redimensionner(double dx, double dy) {
         this.demiGrandAxe = demiGrandAxe * dx;
@@ -108,6 +115,7 @@ public class Ellipse implements IForme {
      *
      * @param dx La quantité à déplacer dans la direction x.
      * @param dy La quantité à déplacer dans la direction y.
+     * @ensures L'ellipse ne doit pas dépasser les limtes d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
         this.x += dx;
@@ -202,6 +210,7 @@ public class Ellipse implements IForme {
      * @param alignment Alignement souhaité (HAUT, BAS, GAUCHE, DROITE).
      * @param cible     Coordonnée cible pour l'alignement.
      * @return Instance de la forme géométrique alignée.
+     * @ensures L'ellipse ne doit pas dépasser les limtes d'affichage.
      */
     @Override
     public IForme aligner(Alignement alignment, double cible) {

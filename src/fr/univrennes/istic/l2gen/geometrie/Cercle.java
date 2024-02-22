@@ -32,6 +32,7 @@ public class Cercle implements IForme {
      * @param x Coordonnée x du centre du cercle.
      * @param y Coordonnée y du centre du cercle.
      * @param r Rayon du cercle.
+     * @requires Les valeurs (x,y,r) doivent être strictement positives.
      */
     public Cercle(double x, double y, double r) {
         this.x = x;
@@ -46,6 +47,8 @@ public class Cercle implements IForme {
      *
      * @param p Point représentant les coordonnées du centre du cercle.
      * @param r Rayon du cercle.
+     * @requires Le point p ne doit pas être nul
+     * @requires La valeur de r doit être strictement positives.
      */
     public Cercle(Point p, double r) {
         this.x = p.x();
@@ -82,6 +85,7 @@ public class Cercle implements IForme {
      * Retourne la hauteur du cercle (équivalente au rayon).
      *
      * @return Hauteur du cercle.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double hauteur() {
         return r;
@@ -91,6 +95,7 @@ public class Cercle implements IForme {
      * Retourne la largeur du cercle (équivalente à deux fois le rayon).
      *
      * @return Largeur du cercle.
+     * @ensures La valeur rendu doit être strictement positives.
      */
     public double largeur() {
         return r * 2;
@@ -113,6 +118,7 @@ public class Cercle implements IForme {
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
      * @return L'objet Cercle déplacé.
+     * @ensures Le cercle ne doit pas dépasser les limtes d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
         this.x += dx;
@@ -126,6 +132,9 @@ public class Cercle implements IForme {
      * @param dx Facteur de redimensionnement pour l'axe des x.
      * @param dy Facteur de redimensionnement pour l'axe des y.
      * @return L'objet Cercle redimensionné.
+     * @requires les valeurs de dx et dy doivent être strictement positives.
+     * @requires la valeur de dx doit être la même valeur que dy.
+     * @ensures le Cercle ne doit pas dépasser les limites d'affichage.
      */
     @Override
     public IForme redimensionner(double dx, double dy) {
@@ -201,6 +210,7 @@ public class Cercle implements IForme {
      * @param alignment Alignement souhaité (HAUT, BAS, GAUCHE, DROITE).
      * @param cible     Coordonnée cible pour l'alignement.
      * @return Instance de la forme géométrique alignée.
+     * @ensures Le cercle ne doit pas dépasser les limtes d'affichage.
      */
     @Override
     public IForme aligner(Alignement alignment, double cible) {

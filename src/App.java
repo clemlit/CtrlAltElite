@@ -87,12 +87,8 @@ public class App {
         writer8.write(secteurSVG);
         writer8.close();
 
-        
 
-
-
-        System.out.println("-------------------------------------");
-
+        // AFFICHAGE Figure
 
         Groupe tableau = new Groupe();
         tableau.ajoutGroupe(new Cercle(256, 256, 128));
@@ -106,16 +102,17 @@ public class App {
         tableau.colorier("Red", "Yellow", "Blue", "Pink", "Purple", "Green", "Orange");
         tableau.createEnSVG();
 
+        // AFFICHAGE Faisceau
+
         Faisceau fh = new Faisceau(" Exemple de Faisceau horizontal ", 100, 200, 500, 50);
         fh.colorier(" blue ", " red ", " green ", "grey");
         fh.agencer(20, 250, 100, 0.2, false);
-
         String svgFaisceau = fh.createEnSVG();
         FileWriter write = new FileWriter("Faisceau.svg");
-
         write.write(svgFaisceau);
         write.close();
 
+        System.out.println("---------------------------------------");
 
         String tableauSVG = tableau.createEnSVG(); // Use createEnSVG() method for the group
 

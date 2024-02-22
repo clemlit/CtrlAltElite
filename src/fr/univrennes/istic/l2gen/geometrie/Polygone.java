@@ -55,19 +55,20 @@ public class Polygone implements IForme {
             // Si la liste des sommets est vide, retourner le point (0, 0) par défaut
             return new Point(0, 0);
         }
-        double minX=liste.get(0).x();
-        double minY=liste.get(0).y();
-        for (int i =0;i<liste.size();i++){
-            if (liste.get(i).x()<minX){
-                minX=liste.get(i).x();
-            } if (liste.get(i).y()<minY){
-                minY=liste.get(i).y();
-            } 
+        double minX = liste.get(0).x();
+        double minY = liste.get(0).y();
+        for (int i = 0; i < liste.size(); i++) {
+            if (liste.get(i).x() < minX) {
+                minX = liste.get(i).x();
+            }
+            if (liste.get(i).y() < minY) {
+                minY = liste.get(i).y();
+            }
         }
-        double centreX=largeur()/2;
-        double centreY=hauteur()/2;
+        double centreX = largeur() / 2;
+        double centreY = hauteur() / 2;
 
-        return new Point(centreX+minX, centreY+minY);
+        return new Point(centreX + minX, centreY + minY);
     }
 
     /**
@@ -194,8 +195,7 @@ public class Polygone implements IForme {
      */
     @Override
     public String enSVG() {
-        StringBuilder svgBuilder = new StringBuilder(
-                "<svg xmlns=\"http://www.w3.org/2000/svg\"> <g>\n<polygon points=\"");
+        StringBuilder svgBuilder = new StringBuilder("<g>\n<polygon points=\"");
 
         for (Point sommet : liste) {
             svgBuilder.append(sommet.x()).append(" ").append(sommet.y()).append(" ");
@@ -209,7 +209,7 @@ public class Polygone implements IForme {
                     .append(centre().y()).append(")\"");
         }
 
-        svgBuilder.append(" />\n</g>\n</svg>");
+        svgBuilder.append(" />\n</g>\n");
 
         return svgBuilder.toString();
     }

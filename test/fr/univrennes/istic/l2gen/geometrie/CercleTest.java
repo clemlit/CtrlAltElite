@@ -80,8 +80,8 @@ public class CercleTest {
         Point centre = cercle.centre();
         cercle.tourner(90);
         int angle = cercle.getAngle(); // Obtenir l'angle du cercle
-        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + cercle.hauteur()
-                + "\" fill=\"" + cercle.getCouleur() + "\" stroke=\"black\" transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\" /></svg>";
+        String svg = "<circle cx=\"" + centre.x() + "\" cy=\"" + centre.y() + "\" r=\"" + cercle.hauteur()
+                + "\" fill=\"" + cercle.getCouleur() + "\" stroke=\"black\" transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\" />";
         assertEquals(svg, cercle.enSVG());
     }
 

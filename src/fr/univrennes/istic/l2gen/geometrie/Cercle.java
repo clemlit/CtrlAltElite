@@ -157,7 +157,7 @@ public class Cercle implements IForme {
         if (angle != 0) {
             svg += "transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\""; // Applique la rotation
         }
-        svg += " />";
+        svg += " />\n";
         return svg;
     }
 

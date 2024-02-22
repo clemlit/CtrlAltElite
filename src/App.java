@@ -15,8 +15,7 @@ import java.io.FileWriter;
 
 
 public class App {
-    public static void main(String[] args) throws Exception {
-
+    public static void main(String[] args) throws Exception {   
         //AFFICHAGE DANS LE SVG
         //AFFICHAGE CAMEMBERT
         Camembert ca = new Camembert(210, 210, 100);
@@ -33,11 +32,12 @@ public class App {
 
         // AFFICHAGE CERCLE
         Groupe cerclGroupe = arbre(new Cercle(256, 256, 128));   
-        cerclGroupe.tourner(10);
+        cerclGroupe.tourner(10).colorier("Blue", "Red", "Orange", "Orange");
         String cercleSVG = cerclGroupe.createEnSVG();
         FileWriter writer2 = new FileWriter("Cercle.svg");
         writer2.write(cercleSVG);
         writer2.close();
+        
 
         // AFFICHAGE Ligne
         Groupe ligneGroupe = arbre(new Ligne(128, 128, 128, 256, 256, 128, 256, 256));

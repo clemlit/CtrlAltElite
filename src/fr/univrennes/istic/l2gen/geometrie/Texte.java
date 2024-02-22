@@ -133,7 +133,7 @@ public class Texte implements IForme {
 
         // Construction finale de la chaîne SVG
         svg += xAttribute + yAttribute + fontSizeAttribute + textAnchorAttribute + fillAttribute + strokeAttribute
-                + transformAttribute + ">" + text + "</text>";
+                + transformAttribute + ">" + text + "</text>\n";
 
         return svg;
     }

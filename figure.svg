@@ -1,9 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg"><g>
-<circle cx="256.0" cy="256.0" r="128.0" fill="Red" stroke="black"  /><ellipse cx="256.0" cy="256.0" rx="128.0" ry="64.0" fill="Yellow" stroke="black" />
+<circle cx="256.0" cy="256.0" r="128.0" fill="Red" stroke="black"  />
+<ellipse cx="256.0" cy="256.0" rx="128.0" ry="64.0" fill="Yellow" stroke="black" />
 <polyline points="128.0 128.0 128.0 256.0 256.0 128.0 256.0 256.0 " fill="Blue" stroke="black" />
-<g>
 <polygon points="128.0 128.0 128.0 256.0 256.0 128.0 256.0 256.0 " fill="Pink" stroke="black" />
-</g>
 <rect x="128.0" y="192.0" width="256.0" height="128.0" fill="Purple" stroke="black" />
 <path d="M256.0 256.0L256,128A128.0,128.0 0 0 1 367,192Z" fill="Green" stroke="black"/>
 <polygon points="192.0 128.0 128.0 256.0 256.0 256.0" fill="Orange" stroke="black" />

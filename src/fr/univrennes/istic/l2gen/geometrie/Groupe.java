@@ -25,6 +25,8 @@ public class Groupe implements IForme {
 
     private int angle;
 
+    private boolean dupliquerAppelee;
+
     // CONSTRUCTEUR
 
 
@@ -131,7 +133,8 @@ public class Groupe implements IForme {
             IForme formeDupliquee = forme.dupliquer();
             groupeDuplique.ajoutGroupe(formeDupliquee);
         }
-        groupeDuplique.angle = this.angle; // Ajoutez cette ligne pour mettre à jour l'angle.
+        groupeDuplique.angle = this.angle;
+        groupeDuplique.dupliquerAppelee = true;
         return groupeDuplique;
     }
 
@@ -189,20 +192,38 @@ public class Groupe implements IForme {
      * Génère une représentation SVG du groupe avec ses formes incluses.
      *
      * @return Une chaîne de caractères représentant le groupe en format SVG.
-     */
+     */        
     public String enSVG() {
         StringBuilder svgBuilder = new StringBuilder();
+
         svgBuilder.append("<g>\n");
 
         for (IForme forme : formes) {
-            // Générer le SVG pour chaque forme en lui appliquant sa couleur
-            String couleurForme = (forme.getCouleur() != null) ? forme.getCouleur() : "White";
-            svgBuilder.append(forme.colorier(couleurForme).enSVG());
+            if (forme instanceof Groupe) {
+                svgBuilder.append(((Groupe) forme).enSVG());
+            } else if (forme instanceof Cercle) {
+                svgBuilder.append(((Cercle) forme).enSVG());
+            } else if (forme instanceof Ellipse) {
+                svgBuilder.append(((Ellipse) forme).enSVG());
+            } else if (forme instanceof Ligne) {
+                svgBuilder.append(((Ligne) forme).enSVG());
+            } else if (forme instanceof Polygone) {
+                svgBuilder.append(((Polygone) forme).enSVG());
+            } else if (forme instanceof Secteur) {
+                svgBuilder.append(((Secteur) forme).enSVG());
+            } else if (forme instanceof Texte) {
+                svgBuilder.append(((Texte) forme).enSVG());
+            } else if (forme instanceof Rectangle) {
+                svgBuilder.append(((Rectangle) forme).enSVG());
+            } else if (forme instanceof Triangle) {
+                svgBuilder.append(((Triangle) forme).enSVG());
+            }
         }
 
         svgBuilder.append("</g>\n");
         return svgBuilder.toString();
     }
+
 
     /**
      * Change la couleur de chaque forme du groupe en utilisant les couleurs spécifiées.
@@ -212,12 +233,16 @@ public class Groupe implements IForme {
      */
     @Override
     public IForme colorier(String... couleurs) {
-        for (int i = 0; i < formes.size(); i++) {
-            IForme forme = formes.get(i);
-            if (i < couleurs.length) {
-                forme.colorier(new String[]{couleurs[i]});
+        int index = 0; // Keep track of the current color index
+        for (IForme forme : formes) {
+            if (index < couleurs.length) {
+                // Apply the color to each form
+                forme.colorier(couleurs[index]);
+                index++;
             } else {
-                forme.colorier(new String[]{couleurs[i % couleurs.length]});
+                // If we run out of colors, wrap around to the beginning
+                forme.colorier(couleurs[index % couleurs.length]);
+                index++;
             }
         }
         return this;
@@ -239,6 +264,15 @@ public class Groupe implements IForme {
      */
     public int getAngle() {
         return angle;
+    }
+
+    /**
+     * Indique si la méthode dupliquer a été appelée pour ce groupe.
+     *
+     * @return true si la méthode dupliquer a été appelée, sinon false.
+     */
+    public boolean dupliquerAppelee() {
+        return dupliquerAppelee;
     }
 
     /**

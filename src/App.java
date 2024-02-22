@@ -8,23 +8,84 @@ import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
-import fr.univrennes.istic.l2gen.geometrie.visustats.Camembert;
+import fr.univrennes.istic.l2gen.visustats.Camembert;
 
 import java.io.FileWriter;
 
 
 public class App {
     public static void main(String[] args) throws Exception {
+
+        //AFFICHAGE DANS LE SVG
+        //AFFICHAGE CAMEMBERT
         Camembert ca = new Camembert(210, 210, 100);
         ca.ajouterSecteur("red", 0.15); 
         ca.ajouterSecteur("blue", 0.40); 
         ca.ajouterSecteur("green", 0.45);
         ca.redimensionner(2, 2);
         ca.deplacer(100, 100);
+        String camembertSVG = ca.createEnSVG(); 
+        FileWriter writer1 = new FileWriter("camembert.svg");
+        writer1.write(camembertSVG);
+        writer1.close();
 
 
-        IForme f1 = new Cercle(256, 256, 128);   
-        f1.colorier("Red").tourner(10);
+        // AFFICHAGE CERCLE
+        Groupe cerclGroupe = arbre(new Cercle(256, 256, 128));   
+        cerclGroupe.tourner(10);
+        String cercleSVG = cerclGroupe.createEnSVG();
+        FileWriter writer2 = new FileWriter("Cercle.svg");
+        writer2.write(cercleSVG);
+        writer2.close();
+
+        // AFFICHAGE Ligne
+        Groupe ligneGroupe = arbre(new Ligne(128, 128, 128, 256, 256, 128, 256, 256));
+        ligneGroupe.tourner(10);
+        String ligneSVG = ligneGroupe.createEnSVG();
+        FileWriter writer3 = new FileWriter("Ligne.svg");
+        writer3.write(ligneSVG);
+        writer3.close();
+
+        // AFFICHAGE Rectangle
+        Groupe rectangleGroup = arbre(new Rectangle(256, 256, 256, 128));
+        ligneGroupe.tourner(10);
+        String rectangleSVG = rectangleGroup.createEnSVG();
+        FileWriter writer4 = new FileWriter("Rectangle.svg");
+        writer4.write(rectangleSVG);
+        writer4.close();
+
+        // AFFICHAGE Triangle
+        Groupe triangleGroupe = arbre(new Triangle(192, 128, 256, 128, 256, 256));
+        triangleGroupe.tourner(10);
+        String triangleSVG = triangleGroupe.createEnSVG();
+        FileWriter writer5 = new FileWriter("Triangle.svg");
+        writer5.write(triangleSVG);
+        writer5.close();
+
+        // AFFICHAGE Rectangle
+        Groupe ellipseGroupe = arbre(new Ellipse(256, 256, 128, 64));
+        ellipseGroupe.tourner(10);
+        String ellipseSVG = ellipseGroupe.createEnSVG();
+        FileWriter writer6 = new FileWriter("Ellipse.svg");
+        writer6.write(ellipseSVG);
+        writer6.close();
+
+        // AFFICHAGE Rectangle
+        Groupe polygoneGroupe = arbre(new Polygone(128, 128, 128, 256, 256, 128, 256, 256));
+        polygoneGroupe.tourner(10);
+        String polygoneSVG = polygoneGroupe.createEnSVG();
+        FileWriter writer7 = new FileWriter("Polygone.svg");
+        writer7.write(polygoneSVG);
+        writer7.close();
+
+        // AFFICHAGE Rectangle
+        Groupe secteurGroup = arbre(new Secteur(256, 256, 128, 0, 60));
+        secteurGroup.tourner(10);
+        String secteurSVG = secteurGroup.createEnSVG();
+        FileWriter writer8 = new FileWriter("Secteur.svg");
+        writer8.write(secteurSVG);
+        writer8.close();
+
         
 
 
@@ -41,9 +102,10 @@ public class App {
         tableau.ajoutGroupe(new Secteur(256, 256, 128, 0, 60));
         tableau.ajoutGroupe(new Triangle(192, 128, 256, 128, 256, 256));
         System.out.println(tableau.enSVG());
+        tableau.colorier("Red", "Yellow", "Blue", "Pink", "Purple", "Green", "Orange");
         tableau.createEnSVG();
 
-        String tableauSVG = tableau.createEnSVG(); // Use createEnSVG() method for the group
+        String tableauSVG = tableau.createEnSVG(); 
 
         FileWriter writer = new FileWriter("figure.svg");
         writer.write(tableauSVG);
@@ -61,10 +123,6 @@ public class App {
         ce.redimensionner(2, 2).deplacer(20, 20);
         System.out.println(ce.enSVG());
 
-        Rectangle r = new Rectangle(1, 1, 100, 100);
-        System.out.println(r.enSVG());
-        r.deplacer(1, 1).redimensionner(2, 2);
-        System.out.println(r.enSVG());
 
         Cercle c = new Cercle(1,1, 2);
         System.out.println(c.enSVG());

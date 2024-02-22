@@ -19,6 +19,9 @@ public class Texte implements IForme {
      * @param y        La coordonnée y du centre du texte.
      * @param fontSize La taille de la police du texte.
      * @param text     Le contenu textuel du texte.
+     * @requires Les valeurs de x et y doivent être strictement positives.
+     * @requires fontSize ne doit pas être nul.
+     * @requires text ne doit pas être nul.
      */
     public Texte(double x, double y, int fontSize, String text) {
         this.x = x;
@@ -76,6 +79,7 @@ public class Texte implements IForme {
      * @param dx Le facteur de redimensionnement horizontal.
      * @param dy Le facteur de redimensionnement vertical.
      * @return L'objet Texte redimensionné.
+     * @ensures Le texte ne doit pas dépasser les limites d'affichage.
      */
     public IForme redimensionner(double dx, double dy) {
         x *= dx;
@@ -89,6 +93,7 @@ public class Texte implements IForme {
      * @param dx Le déplacement horizontal.
      * @param dy Le déplacement vertical.
      * @return L'objet Texte déplacé.
+     * @ensures Le texte ne doit pas dépasser les limites d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
         x += dx;

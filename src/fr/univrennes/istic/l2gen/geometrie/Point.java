@@ -25,6 +25,7 @@ public class Point {
      *
      * @param x Coordonnée x du point.
      * @param y Coordonnée y du point.
+     * @requires Les valeurs de x et y doivent être positive.
      */
     public Point(double x, double y) {
         this.x = x;
@@ -82,6 +83,7 @@ public class Point {
      * Retourne la coordonnée x du point.
      *
      * @return Coordonnée x du point.
+     * @ensures La valeur de x doit être positive.
      */
     public double x() {
         return x;
@@ -91,6 +93,7 @@ public class Point {
      * Retourne la coordonnée y du point.
      *
      * @return Coordonnée y du point.
+     * @ensures La valeur de y doit être positive.
      */
     public double y() {
         return y;
@@ -102,6 +105,7 @@ public class Point {
      *
      * @param px Facteur de redimensionnement pour l'axe des x.
      * @param py Facteur de redimensionnement pour l'axe des y.
+     * @requires les valeurs de px et py doivent être strictement positives.
      */
     public void redimensionner(double px, double py) {
         this.x *= px;

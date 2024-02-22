@@ -13,8 +13,34 @@ public class Camembert implements IForme {
     private Point centre;
     private double angle;
     private String couleur;
+
+
+    public double getRayon() {
+        return rayon;
+    }
+
+    public void setRayon(double rayon) {
+        this.rayon = rayon;
+    }
+
+    public Point getCentre() {
+        return centre;
+    }
+
+    public void setCentre(Point centre) {
+        this.centre = centre;
+    }
+
     private List<Secteur> secteurs;
 
+
+    public List<Secteur> getSecteurs() {
+        return secteurs;
+    }
+
+    public void setSecteurs(List<Secteur> secteurs) {
+        this.secteurs = secteurs;
+    }
 
     public double getAngle() {
         return angle;
@@ -83,10 +109,12 @@ public class Camembert implements IForme {
      * @param couleurs Couleurs à appliquer au camembert.
      * @return L'instance actuelle de Camembert après la coloration.
      */
-    public IForme colorier(String ... couleurs){
-        for (Secteur secteur : secteurs) {
-            secteur.colorier(couleurs);
+    public IForme colorier(String... couleurs) {
+        for (int i = 0; i < secteurs.size() && i < couleurs.length; i++) {
+            secteurs.get(i).colorier(couleurs[i]);
+            this.couleur = couleurs[i];
         }
+
         return this;
     }
 
@@ -102,8 +130,21 @@ public class Camembert implements IForme {
         return this;
     }
 
-    public String description(int valeur){
-        return null;
+    public String description(int indentation) {
+        String result = "  ";
+
+        for (int i = 0; i < indentation; i++) {
+            result += "  ";
+        }
+
+        for (Secteur secteur : secteurs) {
+            double pourcentage = (secteur.getAngleFin() - secteur.getAngleDebut()) / 360.0;
+            String description = "Secteur de couleur " + secteur.getCouleur() + " avec un pourcentage de "
+                    + pourcentage * 100 + "%\n";
+            result += description;
+        }
+
+        return result;
     }
 
     /**
@@ -121,16 +162,17 @@ public class Camembert implements IForme {
      *
      * @return Chaîne de caractères représentant le camembert en format SVG.
      */
-    public String enSVG(){
-        StringBuilder svgBuilder = new StringBuilder();
-        svgBuilder.append("<g>\n");
+    public String enSVG() {
+        String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\">";
+        svg += "<g>\n";
 
         for (Secteur secteur : secteurs) {
-            svgBuilder.append(secteur.enSVG());
+            svg += secteur.enSVG();
         }
 
-        svgBuilder.append("</g>\n");
-        return svgBuilder.toString();
+        svg += "</g>\n";
+        svg += " />\n</svg>";
+        return svg;
     }
 
     /**
@@ -182,13 +224,17 @@ public class Camembert implements IForme {
         return this;
     }
 
-
-
-
+    /**
+     * Retourne la couleur actuelle du camembert.
+     *
+     * @return Couleur actuelle du camembert.
+     */
     @Override
     public String getCouleur() {
         return couleur;
     }
+
+
 
 
 

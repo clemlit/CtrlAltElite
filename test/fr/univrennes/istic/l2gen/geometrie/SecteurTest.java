@@ -79,4 +79,10 @@ public class SecteurTest {
         assertEquals(angleDebutAttendu, secteur.getAngleDebut(), 0.001);
         assertEquals(angleFinAttendu, secteur.getAngleFin(), 0.001);
     }
+
+    @Test
+    public void testDescription() {
+        String verif = "Secteur centre="+(int)secteur.centre().x()+","+(int)secteur.centre().y()+" Angle="+(double)secteur.getAngle()+" Arc="+(secteur.getAngleFin()-secteur.getAngleDebut());
+        assertEquals(verif,secteur.description(0));
+    }
 }

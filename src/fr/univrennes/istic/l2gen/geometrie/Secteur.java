@@ -62,6 +62,8 @@ public class Secteur implements IForme {
      * @param rayon      Rayon du secteur.
      * @param angleDebut Angle de début du secteur en degrés.
      * @param angleFin   Angle de fin du secteur en degrés.
+     * @requires Le point ne doit pas être nul.
+     * @requires Les valeurs de (rayon,angleDebut,angleFin) doivent être strictement positives.
      */
     public Secteur(Point centre, double rayon, double angleDebut, double angleFin) {
         this.centre = centre;
@@ -80,6 +82,7 @@ public class Secteur implements IForme {
      * @param rayon      Rayon du secteur.
      * @param angleDebut Angle de début du secteur en degrés.
      * @param angleFin   Angle de fin du secteur en degrés.
+     * Les valeurs de (p1,p2,rayon,angleDebut,angleFin) doivent être strictement positives.
      */
     public Secteur(double p1, double p2, double rayon, double angleDebut, double angleFin) {
         this.centre = new Point(p1, p2);
@@ -242,6 +245,8 @@ public class Secteur implements IForme {
      *
      * @param facteurX Facteur de redimensionnement pour l'axe des x.
      * @param facteurY Facteur de redimensionnement pour l'axe des y.
+     * @requires Les valeurs de x et y doivent être strictement positives.
+     * @ensures Le secteur ne doit pas dépasser les limites d'affichage.
      */
     @Override
     public IForme redimensionner(double facteurX, double facteurY) {
@@ -254,6 +259,7 @@ public class Secteur implements IForme {
      *
      * @param dx Déplacement sur l'axe des x.
      * @param dy Déplacement sur l'axe des y.
+     * @ensures Le secteur ne doit pas dépasser les limites d'affichage.
      */
     @Override
     public IForme deplacer(double dx, double dy) {
@@ -275,6 +281,7 @@ public class Secteur implements IForme {
      * Retourne la hauteur du secteur (le double du rayon).
      *
      * @return Hauteur du secteur.
+     * @ensures La hauteur doit être strictement positive.
      */
     @Override
     public double hauteur() {
@@ -285,6 +292,7 @@ public class Secteur implements IForme {
      * Retourne la largeur du secteur (le double du rayon).
      *
      * @return Largeur du secteur.
+     * @ensures La largeur doit être strictement positive.
      */
     @Override
     public double largeur() {

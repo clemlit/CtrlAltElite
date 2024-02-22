@@ -16,20 +16,20 @@ public class PolygoneTest {
     }
 
     @Test
-    public void centre() {
+    public void testCentre() {
         setUp();
         po.centre();
         assertEquals(p, po.centre());
     }
 
     @Test
-    public void hauteur(){
+    public void testHauteur(){
         double hauteurExpected = 2.0;
         assertEquals(hauteurExpected, po.hauteur(), 0.001);
     }
 
     @Test
-    public void redimensionner(){
+    public void testRedimensionner(){
         double nouvelleLargeur = 3.0;
         double nouvelleHauteur = 4.0;
         po.redimensionner(nouvelleLargeur / po.largeur(), nouvelleHauteur / po.hauteur());
@@ -38,7 +38,7 @@ public class PolygoneTest {
     }
 
     @Test
-    public void deplacer(){
+    public void testDeplacer(){
         double deplacementX = 1.0;
         double deplacementY = -1.0;
         po.deplacer(deplacementX, deplacementY);
@@ -47,7 +47,7 @@ public class PolygoneTest {
     }
 
     @Test
-    public void enSVG(){
+    public void testEnSVG(){
         String svgExpected = "<svg xmlns=\"http://www.w3.org/2000/svg\"> <g>\n<polygon points=\"1.0 2.0 3.0 1.0 2.0 3.0 \" fill=\"null\" stroke=\"black\" />\n</g>\n</svg>";
         assertEquals(svgExpected, po.enSVG());
     }
@@ -60,13 +60,13 @@ public class PolygoneTest {
     }
 
     @Test
-    public void ajouterSommet(){
+    public void testAjouterSommet(){
         po.ajouterSommet(5.0, 5.0);
         assertEquals(new Point(5.0, 5.0), po.getSommets().get(po.getSommets().size() - 1));
     }
 
     @Test
-    public void dupliquer(){
+    public void testDupliquer(){
         Polygone copiePolygone = (Polygone) po.dupliquer();
         assertEquals(po.getSommets(), copiePolygone.getSommets());
         assertEquals(po.getCouleur(), copiePolygone.getCouleur());
@@ -74,16 +74,27 @@ public class PolygoneTest {
     }
 
     @Test
-    public void coloriser(){
+    public void testColoriser(){
         po.colorier("Red");
         assertEquals("Red", po.getCouleur());
     }
 
     @Test
-    public void tourner(){
+    public void testTourner(){
         int angleRotation = 45;
         int angleAttendu = 45;
         po.tourner(angleRotation);
         assertEquals(angleAttendu, po.getAngle());
+    }
+    
+    @Test
+    public void testDescription() {
+        String verif = "Polygone 1,2 3,1 2,3";
+        assertEquals(verif,po.description(0));
+    }
+    
+    @Test
+    public void testAligner(){
+
     }
 }

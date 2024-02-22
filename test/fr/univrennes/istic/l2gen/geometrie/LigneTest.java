@@ -94,8 +94,11 @@ public class LigneTest {
 
     @Test
     public void testEnSVG() {
-        
+        Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
+        String expectedSVG = "<polyline points=\"0.0 0.0 1.0 1.0 2.0 0.0 \" fill=\"null\" stroke=\"black\" />";
+        assertEquals(expectedSVG.trim(), ligne.enSVG().trim());
     }
+        
 
     @Test
     public void testGetSommets() {

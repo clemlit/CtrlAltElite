@@ -1,6 +1,7 @@
 package test.fr.univrennes.istic.l2gen.geometrie;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 import org.junit.Test;
 
@@ -83,6 +84,7 @@ public class LigneTest {
     public void testDupliquer() {
         Ligne ligne = new Ligne(0, 0, 1, 1, 2, 0);
         Ligne ligne2 = (Ligne) ligne.dupliquer();
+        assertNotSame(ligne, ligne2);
         assertEquals(ligne.getSommets().get(0).x(), ligne2.getSommets().get(0).x(), 0.001);
         assertEquals(ligne.getSommets().get(0).y(), ligne2.getSommets().get(0).y(), 0.001);
         assertEquals(ligne.getSommets().get(1).x(), ligne2.getSommets().get(1).x(), 0.001);

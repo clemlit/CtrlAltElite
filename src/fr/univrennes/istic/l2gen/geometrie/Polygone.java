@@ -45,7 +45,7 @@ public class Polygone implements IForme {
     }
 
     /**
-     * Calcule le centre du polygone.
+     * Calcule le centre du polygone. FAIRE CENTRE AVEC la
      *
      * @return Le point représentant le centre du polygone.
      * @requires La liste de point ne doit pas être nul.
@@ -55,19 +55,19 @@ public class Polygone implements IForme {
             // Si la liste des sommets est vide, retourner le point (0, 0) par défaut
             return new Point(0, 0);
         }
-
-        double sommeX = 0;
-        double sommeY = 0;
-
-        for (Point sommet : liste) {
-            sommeX += sommet.x();
-            sommeY += sommet.y();
+        double minX=liste.get(0).x();
+        double minY=liste.get(0).y();
+        for (int i =0;i<liste.size();i++){
+            if (liste.get(i).x()<minX){
+                minX=liste.get(i).x();
+            } if (liste.get(i).y()<minY){
+                minY=liste.get(i).y();
+            } 
         }
+        double centreX=largeur()/2;
+        double centreY=hauteur()/2;
 
-        double centreX = sommeX / liste.size();
-        double centreY = sommeY / liste.size();
-
-        return new Point(centreX, centreY);
+        return new Point(centreX+minX, centreY+minY);
     }
 
     /**

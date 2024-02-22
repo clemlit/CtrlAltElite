@@ -19,8 +19,9 @@ public class PolygoneTest {
     public void testCentre() {
         setUp();
         po.centre();
-        assertEquals(p, po.centre());
-    }
+        assertEquals(p.x(), po.centre().x(),0.001);
+        assertEquals(p.y(), po.centre().y(),0.001);
+ }
 
     @Test
     public void testLargeur(){

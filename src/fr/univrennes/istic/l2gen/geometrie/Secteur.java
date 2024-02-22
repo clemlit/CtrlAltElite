@@ -218,7 +218,7 @@ public class Secteur implements IForme {
     
          // Création de la chaîne SVG représentant le secteur
          StringBuilder svgBuilder = new StringBuilder();
-         svgBuilder.append("<svg xmlns=\"http://www.w3.org/2000/svg\">\n" + "<path d=\"");
+         svgBuilder.append("<path d=\"");
          svgBuilder.append("M").append(centre.x()).append(" ").append(centre.y()); // Move to centre
          svgBuilder.append("L").append(xDebut).append(",").append(yDebut); // Line to start point of arc
          svgBuilder.append("A").append(rayon).append(",").append(rayon); // Arc with radius
@@ -227,7 +227,7 @@ public class Secteur implements IForme {
          svgBuilder.append(angleDebut > angleFin ? "0" : "1").append(" "); // sweep-flag
          svgBuilder.append(xFin).append(",").append(yFin); // End point of arc
          svgBuilder.append("Z"); 
-         svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\"/></svg>");
+         svgBuilder.append("\" fill=\"" + couleur + "\" stroke=\"black\"/>\n");
  
          return svgBuilder.toString();
     } 

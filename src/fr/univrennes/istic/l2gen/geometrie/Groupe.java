@@ -233,19 +233,36 @@ public class Groupe implements IForme {
      */
     @Override
     public IForme colorier(String... couleurs) {
-        int index = 0; // Keep track of the current color index
-        for (IForme forme : formes) {
+        int index = 0;
+        couleursRecursive(this, couleurs, index);
+        return this;
+    }
+
+    /**
+     * Méthode auxiliaire pour appliquer les couleurs de manière récursive.
+     *
+     * @param forme    Forme actuelle à colorier.
+     * @param couleurs Tableau de couleurs à appliquer.
+     * @param index    Indice pour suivre la couleur actuelle.
+     * @return Nouvel indice de couleur.
+     */
+    private static int couleursRecursive(IForme forme, String[] couleurs, int index) {
+        if (forme instanceof Groupe) {
+            Groupe groupe = (Groupe) forme;
+            for (IForme formeInterne : groupe.formes) {
+                index = couleursRecursive(formeInterne, couleurs, index);
+            }
+        } 
+        else {
             if (index < couleurs.length) {
-                // Apply the color to each form
                 forme.colorier(couleurs[index]);
                 index++;
             } else {
-                // If we run out of colors, wrap around to the beginning
                 forme.colorier(couleurs[index % couleurs.length]);
                 index++;
             }
         }
-        return this;
+        return index;
     }
 
     /**

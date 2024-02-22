@@ -1,2 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-<path d="M256.0 256.0L256,128A128.0,128.0 0 1 1 234,130Z" fill="White" stroke="black"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg"><g>
+<path d="M256.0 256.0L278,130A128.0,128.0 0 0 1 376,212Z" fill="White" stroke="black"/>
+<path d="M256.0 256.0L267,193A64.0,64.0 0 0 1 316,234Z" fill="White" stroke="black"/>
+<g>
+<path d="M256.0 256.0L262,224A32.0,32.0 0 0 1 286,245Z" fill="White" stroke="black"/>
+<path d="M256.0 256.0L259,240A16.0,16.0 0 0 1 271,251Z" fill="White" stroke="black"/>
+</g>
+</g>
+</svg>

@@ -24,6 +24,10 @@ public class Rectangle implements IForme {
      *           positives.
      */
     public Rectangle(double x, double y, double largeur, double hauteur) {
+        if (hauteur <= 0)
+        throw new IllegalArgumentException("hauteur<=0");
+        if (largeur <= 0)
+        throw new IllegalArgumentException("largeur<=0");
         this.p = new Point(x, y);
         this.largeur = largeur;
         this.hauteur = hauteur;
@@ -43,6 +47,10 @@ public class Rectangle implements IForme {
      * @requires Les valeurs largeur et hauteur doivent être strictement positives.
      */
     public Rectangle(Point p, double largeur, double hauteur) {
+        if (hauteur <= 0)
+        throw new IllegalArgumentException("hauteur<=0");
+        if (largeur <= 0)
+        throw new IllegalArgumentException("largeur<=0");
         this.p = p;
         this.largeur = largeur;
         this.hauteur = hauteur;
@@ -94,8 +102,6 @@ public class Rectangle implements IForme {
      * @requires La valeur rendu doit être strictement positives.
      */
     public double hauteur() {
-        if (hauteur <= 0)
-            throw new IllegalArgumentException("hauteur<=0");
         return hauteur;
     }
 
@@ -106,8 +112,6 @@ public class Rectangle implements IForme {
      * @ensures La valeur rendu doit être strictement positives.
      */
     public double largeur() {
-        if (largeur <= 0)
-            throw new IllegalArgumentException("largeur<=0");
         return largeur;
     }
 

@@ -4,21 +4,24 @@ package fr.univrennes.istic.l2gen.geometrie;
  * Cette classe représente un rectangle dans un plan cartésien.
  * Elle implémente l'interface IForme.
  */
-public class Rectangle implements IForme{
+public class Rectangle implements IForme {
     private Point p;
     private double largeur;
     private double hauteur;
-    private String couleur; 
+    private String couleur;
     private int angle;
 
     /**
      * Constructeur de la classe Rectangle.
-     * Crée un rectangle avec les coordonnées du coin supérieur gauche, la largeur et la hauteur spécifiées.
-     * @param x La coordonnée x du coin supérieur gauche du rectangle.
-     * @param y La coordonnée y du coin supérieur gauche du rectangle.
+     * Crée un rectangle avec les coordonnées du coin supérieur gauche, la largeur
+     * et la hauteur spécifiées.
+     * 
+     * @param x       La coordonnée x du coin supérieur gauche du rectangle.
+     * @param y       La coordonnée y du coin supérieur gauche du rectangle.
      * @param largeur La largeur du rectangle.
      * @param hauteur La hauteur du rectangle.
-     * @requires Les valeurs de (x,y,largeur,hauteur) doivent être strictement positives.
+     * @requires Les valeurs de (x,y,largeur,hauteur) doivent être strictement
+     *           positives.
      */
     public Rectangle(double x, double y, double largeur, double hauteur) {
         this.p = new Point(x, y);
@@ -30,8 +33,10 @@ public class Rectangle implements IForme{
 
     /**
      * Constructeur de la classe Rectangle.
-     * Crée un rectangle avec le point du coin supérieur gauche, la largeur et la hauteur spécifiées.
-     * @param p Le point du coin supérieur gauche du rectangle.
+     * Crée un rectangle avec le point du coin supérieur gauche, la largeur et la
+     * hauteur spécifiées.
+     * 
+     * @param p       Le point du coin supérieur gauche du rectangle.
      * @param largeur La largeur du rectangle.
      * @param hauteur La hauteur du rectangle.
      * @requires Le point p ne doit pas être nul.
@@ -47,6 +52,7 @@ public class Rectangle implements IForme{
 
     /**
      * Retourne le centre du rectangle.
+     * 
      * @return Le point représentant le centre du rectangle.
      */
     public Point centre() {
@@ -54,8 +60,11 @@ public class Rectangle implements IForme{
     }
 
     /**
-     * Retourne une description textuelle du rectangle avec un certain niveau d'indentation.
+     * Retourne une description textuelle du rectangle avec un certain niveau
+     * d'indentation.
+     * 
      * @param indentation Le niveau d'indentation de la description.
+     * @require indentation >= 0.
      * @return La description textuelle du rectangle.
      */
     public String description(int indentation) {
@@ -73,6 +82,7 @@ public class Rectangle implements IForme{
 
     /**
      * Retourne la hauteur du rectangle.
+     * 
      * @return La hauteur du rectangle.
      * @ensures La valeur rendu doit être strictement positives.
      */
@@ -82,6 +92,7 @@ public class Rectangle implements IForme{
 
     /**
      * Retourne la largeur du rectangle.
+     * 
      * @return La largeur du rectangle.
      * @ensures La valeur rendu doit être strictement positives.
      */
@@ -90,7 +101,9 @@ public class Rectangle implements IForme{
     }
 
     /**
-     * Déplace le rectangle selon les valeurs spécifiées de déplacement en x et en y.
+     * Déplace le rectangle selon les valeurs spécifiées de déplacement en x et en
+     * y.
+     * 
      * @param dx La valeur de déplacement en x.
      * @param dy La valeur de déplacement en y.
      * @ensures Le rectangle ne doit pas dépasser les limites d'affichage.
@@ -102,6 +115,7 @@ public class Rectangle implements IForme{
 
     /**
      * Duplique le rectangle.
+     * 
      * @return Une nouvelle instance de Rectangle identique à celle actuelle.
      */
     public IForme dupliquer() {
@@ -113,6 +127,7 @@ public class Rectangle implements IForme{
 
     /**
      * Redimensionne le rectangle selon les proportions spécifiées.
+     * 
      * @param px Le facteur de redimensionnement en largeur.
      * @param py Le facteur de redimensionnement en hauteur.
      * @requires Les valeurs de px et py doivent être strictement positives.
@@ -122,34 +137,33 @@ public class Rectangle implements IForme{
         // Calcul des nouvelles dimensions du rectangle
         double nouvelleLargeur = largeur * px;
         double nouvelleHauteur = hauteur * py;
-    
+
         // Calcul des nouvelles coordonnées du coin supérieur gauche
         double nouveauX = p.x() - (nouvelleLargeur - largeur) / 2;
         double nouveauY = p.y() - (nouvelleHauteur - hauteur) / 2;
-    
+
         // Mise à jour du point représentant le coin supérieur gauche
         p = new Point(nouveauX, nouveauY);
-    
+
         // Mise à jour de la largeur et de la hauteur
         largeur = nouvelleLargeur;
         hauteur = nouvelleHauteur;
-    
+
         return this;
     }
-    
-    
 
     /**
      * Retourne une représentation SVG du rectangle.
+     * 
      * @return La représentation SVG du rectangle.
      */
     public String enSVG() {
         String svg = "<rect";
-    
+
         // Calcul des coordonnées du coin supérieur gauche du rectangle
         double coin_gauche_rectangleX = p.x();
         double coin_gauche_rectangleY = p.y();
-    
+
         // Ajout des attributs du rectangle
         String xAttribute = " x=\"" + coin_gauche_rectangleX + "\"";
         String yAttribute = " y=\"" + coin_gauche_rectangleY + "\"";
@@ -157,22 +171,25 @@ public class Rectangle implements IForme{
         String heightAttribute = " height=\"" + hauteur() + "\"";
         String fillAttribute = " fill=\"" + couleur + "\"";
         String strokeAttribute = " stroke=\"black\"";
-    
+
         String transformAttribute = (angle != 0)
                 ? " transform=\"rotate(" + angle + " " + centre().x() + " " + centre().y() + ")\""
                 : "";
-    
+
         svg += xAttribute + yAttribute + widthAttribute + heightAttribute + fillAttribute + strokeAttribute
                 + transformAttribute + " />\n";
-    
+
         return svg;
     }
-    
 
     /**
-     * Change la couleur du rectangle en utilisant la première couleur spécifiée dans le tableau.
+     * Change la couleur du rectangle en utilisant la première couleur spécifiée
+     * dans le tableau.
      *
      * @param couleurs Tableau de couleurs à appliquer.
+     * @require couleurs n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
      * @return L'objet Rectangle avec la nouvelle couleur.
      */
     @Override

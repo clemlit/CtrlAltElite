@@ -34,7 +34,6 @@ public class Secteur implements IForme {
 
     private int angle;
 
-
     // CONSTRUCTEUR
 
     /**
@@ -63,7 +62,8 @@ public class Secteur implements IForme {
      * @param angleDebut Angle de début du secteur en degrés.
      * @param angleFin   Angle de fin du secteur en degrés.
      * @requires Le point ne doit pas être nul.
-     * @requires Les valeurs de (rayon,angleDebut,angleFin) doivent être strictement positives.
+     * @requires Les valeurs de (rayon,angleDebut,angleFin) doivent être strictement
+     *           positives.
      */
     public Secteur(Point centre, double rayon, double angleDebut, double angleFin) {
         this.centre = centre;
@@ -82,7 +82,8 @@ public class Secteur implements IForme {
      * @param rayon      Rayon du secteur.
      * @param angleDebut Angle de début du secteur en degrés.
      * @param angleFin   Angle de fin du secteur en degrés.
-     * Les valeurs de (p1,p2,rayon,angleDebut,angleFin) doivent être strictement positives.
+     * @require Les valeurs de (p1,p2,rayon,angleDebut,angleFin) doivent être
+     *          strictement positives.
      */
     public Secteur(double p1, double p2, double rayon, double angleDebut, double angleFin) {
         this.centre = new Point(p1, p2);
@@ -174,8 +175,9 @@ public class Secteur implements IForme {
 
     /**
      * Génère une description textuelle du secteur avec l'indentation spécifiée.
-     *
+     * 
      * @param indentation Niveau d'indentation pour la description.
+     * @require indentation >= 0.
      * @return Chaîne de caractères décrivant le secteur.
      */
     @Override
@@ -184,7 +186,8 @@ public class Secteur implements IForme {
         for (int i = 0; i < indentation; i++) {
             sb.append(" ");
         }
-        sb.append("Secteur centre=").append(String.format("%.0f", centre.x())).append(",").append(String.format("%.0f", centre.y()));
+        sb.append("Secteur centre=").append(String.format("%.0f", centre.x())).append(",")
+                .append(String.format("%.0f", centre.y()));
         sb.append(" Angle=").append(angleDebut);
         double arc = angleFin - angleDebut;
         if (arc < 0) {
@@ -202,9 +205,9 @@ public class Secteur implements IForme {
     @Override
     public String enSVG() {
         // Calcul des coordonnées des points de début et de fin de l'arc
-        int xFin = (int) Math.round(centre.x() + rayon * Math.cos(Math.toRadians(-angleFin+90)));
-        int yFin = (int) Math.round(centre.y() + rayon * Math.sin(Math.toRadians(angleFin-90)));
-    
+        int xFin = (int) Math.round(centre.x() + rayon * Math.cos(Math.toRadians(-angleFin + 90)));
+        int yFin = (int) Math.round(centre.y() + rayon * Math.sin(Math.toRadians(angleFin - 90)));
+
         // Correction des angles pour être compris entre 0 et 360 degrés
         double angleStart = Math.min(angleDebut, angleFin);
         double angleEnd = Math.max(angleDebut, angleFin);
@@ -212,10 +215,11 @@ public class Secteur implements IForme {
         if (angleExtent < 0) {
             angleExtent += 360; // Correction si l'angle de fin est inférieur à l'angle de début
         }
-    
+
         StringBuilder svg = new StringBuilder();
         svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\"><path d=\"");
-        svg.append("M").append(this.centre.x()).append(" ").append(this.centre.y()).append(" "); // Déplacement initial au centre du cercle
+        svg.append("M").append(this.centre.x()).append(" ").append(this.centre.y()).append(" "); // Déplacement initial
+                                                                                                 // au centre du cercle
         svg.append("l0,-").append(this.getRayon()).append(" "); // Ligne verticale vers le bord du cercle
         svg.append("A").append(this.getRayon()).append(" ").append(this.getRayon()).append(" "); // Arc de cercle
         svg.append("0 "); // Rotation de l'ellipse par rapport à l'axe X
@@ -223,12 +227,9 @@ public class Secteur implements IForme {
         svg.append("1 "); // Arc de cercle de 60 degrés
         svg.append(xFin).append(",").append(yFin).append(" "); // Point final de l'arc
         svg.append("Z\" "); // Fermeture du chemin
-        svg.append("fill=\""+couleur + "\" stroke=\"black\"/></svg>"); // Couleur de remplissage et de contour
+        svg.append("fill=\"" + couleur + "\" stroke=\"black\"/></svg>"); // Couleur de remplissage et de contour
         return svg.toString();
     }
-    
-
-
 
     /**
      * Duplique le secteur en créant une nouvelle instance identique.
@@ -241,7 +242,8 @@ public class Secteur implements IForme {
     }
 
     /**
-     * Redimensionne le secteur en fonction des facteurs spécifiés sur les axes x et y.
+     * Redimensionne le secteur en fonction des facteurs spécifiés sur les axes x et
+     * y.
      *
      * @param facteurX Facteur de redimensionnement pour l'axe des x.
      * @param facteurY Facteur de redimensionnement pour l'axe des y.
@@ -299,10 +301,14 @@ public class Secteur implements IForme {
         return 2 * rayon;
     }
 
-     /**
+    /**
      * Colorie le secteur avec la couleur spécifiée.
      *
-     * @param couleurs Tableau de couleurs (seule la première couleur sera utilisée).
+     * @param couleurs Tableau de couleurs (seule la première couleur sera
+     *                 utilisée).
+     * @require couleurs n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
      * @return Instance du secteur colorié.
      */
     @Override
@@ -315,7 +321,7 @@ public class Secteur implements IForme {
         }
         return this;
     }
-    
+
     /**
      * Retourne la couleur du secteur.
      *
@@ -337,5 +343,4 @@ public class Secteur implements IForme {
         return this;
     }
 
-    
 }

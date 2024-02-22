@@ -14,7 +14,6 @@ public class Ellipse implements IForme {
     private String couleur;
     private int angle;
 
-
     /**
      * Construit une Ellipse avec les paramètres spécifiés.
      *
@@ -22,7 +21,8 @@ public class Ellipse implements IForme {
      * @param y            La coordonnée y du centre de l'ellipse.
      * @param demiGrandAxe La longueur du demi-grand axe.
      * @param demiPetitAxe La longueur du demi-petit axe.
-     * @requires Les valeurs (x,y,demiGrandAxe,demiPetitAxe) doivent être strictement positives.
+     * @requires Les valeurs (x,y,demiGrandAxe,demiPetitAxe) doivent être
+     *           strictement positives.
      */
     public Ellipse(double x, double y, double demiGrandAxe, double demiPetitAxe) {
         this.x = x;
@@ -31,7 +31,6 @@ public class Ellipse implements IForme {
         this.demiPetitAxe = demiPetitAxe;
         this.angle = 0; // Initialise l'angle à zéro par défaut
     }
-    
 
     /**
      * Construit une Ellipse avec l'objet Point spécifié et les longueurs des axes.
@@ -39,8 +38,9 @@ public class Ellipse implements IForme {
      * @param point        Le Point représentant le centre de l'ellipse.
      * @param demiGrandAxe La longueur du demi-grand axe.
      * @param demiPetitAxe La longueur du demi-petit axe.
-     * @requires  Le point ne doit pas être nul
-     * @requires Les valeurs demiGrandAxe et demiPetitAxe doivent être strictement positives.
+     * @requires Le point ne doit pas être nul
+     * @requires Les valeurs demiGrandAxe et demiPetitAxe doivent être strictement
+     *           positives.
      */
     public Ellipse(Point point, double demiGrandAxe, double demiPetitAxe) {
         this.x = point.x();
@@ -63,6 +63,7 @@ public class Ellipse implements IForme {
      * une indentation.
      *
      * @param indentation Le nombre d'espaces pour l'indentation.
+     * @require indentation >= 0.
      * @return La description formatée de l'ellipse.
      */
     public String description(int indentation) {
@@ -74,7 +75,6 @@ public class Ellipse implements IForme {
         return espaces + "Ellipse  Centre=" + (int) point.x() + "," + (int) point.y() + "  rx=" + largeur() + "  ry="
                 + hauteur() + " Angle=" + this.angle;
     }
-    
 
     /**
      * Retourne la longueur du demi-petit axe de l'ellipse.
@@ -133,7 +133,6 @@ public class Ellipse implements IForme {
         copieEllipse.tourner(this.angle); // Assure que la copie a le même angle que l'original
         return copieEllipse;
     }
-    
 
     /**
      * Génère une représentation SVG de l'ellipse.
@@ -142,28 +141,32 @@ public class Ellipse implements IForme {
      */
     public String enSVG() {
         String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\"><ellipse";
-    
+
         svg += " cx=\"" + x + "\"";
         svg += " cy=\"" + y + "\"";
         svg += " rx=\"" + demiGrandAxe + "\"";
         svg += " ry=\"" + demiPetitAxe + "\"";
-        svg += " fill=\""+couleur+"\"";
+        svg += " fill=\"" + couleur + "\"";
         svg += " stroke=\"black\"";
-        
+
         if (angle != 0) {
             Point centre = centre();
             svg += " transform=\"rotate(" + angle + " " + centre.x() + " " + centre.y() + ")\"";
         }
-        
+
         svg += " />\n</svg>";
-    
+
         return svg;
     }
-    
+
     /**
-     * Change la couleur du ellipse en utilisant la première couleur spécifiée dans le tableau.
+     * Change la couleur du ellipse en utilisant la première couleur spécifiée dans
+     * le tableau.
      *
      * @param couleurs Tableau de couleurs à appliquer.
+     * @require couleurs n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
      * @return L'objet Ellipse avec la nouvelle couleur.
      */
     @Override
@@ -174,7 +177,7 @@ public class Ellipse implements IForme {
         }
         return this;
     }
-    
+
     /**
      * Renvoie la couleur actuelle du ellipse.
      *
@@ -194,7 +197,7 @@ public class Ellipse implements IForme {
         this.angle += angle; // Met à jour l'angle de l'ellipse
         return this;
     }
-    
+
     /**
      * Renvoie l'angle actuel de l'ellipse.
      *
@@ -208,7 +211,9 @@ public class Ellipse implements IForme {
      * Aligne le cercle en fonction de l'alignement spécifié et de la cible donnée.
      *
      * @param alignment Alignement souhaité (HAUT, BAS, GAUCHE, DROITE).
-     * @param cible     Coordonnée cible pour l'alignement.
+     * @require alignement = "HAUT" ou alignement = "BAS" ou alignement = "GAUCHE"
+     *          ou alignement = "DROITE".
+     * @param cible Coordonnée cible pour l'alignement.
      * @return Instance de la forme géométrique alignée.
      * @ensures L'ellipse ne doit pas dépasser les limtes d'affichage.
      */
@@ -230,5 +235,5 @@ public class Ellipse implements IForme {
         }
         return this;
     }
-    
+
 }

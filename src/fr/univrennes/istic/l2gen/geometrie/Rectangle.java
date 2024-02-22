@@ -64,9 +64,7 @@ public class Rectangle implements IForme {
      * @return Le point représentant le centre du rectangle.
      */
     public Point centre() {
-        double centre_x = (p.x() - largeur / 2);
-        double centre_y = (p.y() - hauteur /2);
-        return new Point(centre_x, centre_y);
+        return p;
     }
 
     /**
@@ -180,8 +178,8 @@ public class Rectangle implements IForme {
         String svg = "<rect";
 
         // Ajout des attributs du rectangle
-        String xAttribute = " x=\"" + centre().x() + "\"";
-        String yAttribute = " y=\"" + centre().y() + "\"";
+        String xAttribute = " x=\"" + (centre().x() - largeur() / 2) + "\"";
+        String yAttribute = " y=\"" + (centre().y() - hauteur() / 2) + "\"";
         String widthAttribute = " width=\"" + largeur() + "\"";
         String heightAttribute = " height=\"" + hauteur() + "\"";
         String fillAttribute = " fill=\"" + couleur + "\"";
@@ -211,9 +209,7 @@ public class Rectangle implements IForme {
     public IForme colorier(String... couleurs) {
         if (couleurs.length <= 0)
             throw new IllegalArgumentException("Tableau vide");
-        // Ici, vous pouvez prendre la première couleur du tableau couleurs
         String couleur = couleurs[0];
-        // Implémentation pour colorier un cercle avec la couleur spécifiée
         this.couleur = couleur;
 
         return this;

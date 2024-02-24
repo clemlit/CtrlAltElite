@@ -3,6 +3,8 @@ package fr.univrennes.istic.l2gen.visustats;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.univrennes.istic.l2gen.geometrie.Alignement;
+import fr.univrennes.istic.l2gen.geometrie.Groupe;
 import fr.univrennes.istic.l2gen.geometrie.IForme;
 import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Point;
@@ -11,11 +13,11 @@ public class Faisceau implements IForme {
     private String nom;
     private List<Rectangle> barres;
 
-    public Faisceau(String nom, double ...h) {
+    public Faisceau(String nom, double... h) {
         this.nom = nom;
         this.barres = new ArrayList<Rectangle>();
-        for (int i = 0; i < h.length; i ++) {
-            Rectangle r = new Rectangle(0,0,1,h[i]);
+        for (int i = 0; i < h.length; i++) {
+            Rectangle r = new Rectangle(0, 0, 1, h[i]);
             barres.add(r);
         }
     }
@@ -39,46 +41,40 @@ public class Faisceau implements IForme {
     }
 
     /**
- * Agence les barres selon l'orientation spécifiée.
- * 
- * @param axeX Axe sur lequel aligner 
- * @param axeY Axe sur lequel aligner
- * @param largeur Largeur totale du faisceau
- * @param echelle Facteur d'échelle vertical pour les différentes barres
- * @param verticalement Vrai si les barres sont empilées verticalement, faux si horizontalement
- */
-public void agencer(double axeX, double axeY, double largeur, double echelle, boolean verticalement) {
-    Double totalx = axeX;
-    double totaly = axeY;
-    double totalHeight = 0;
-    for (Rectangle barre : barres) {
-        totalHeight += barre.hauteur() * echelle; // Utilisation de l'échelle
-    }
-    if (verticalement){
-        double startY = totaly - totalHeight / 2; // Ajustement du point de départ
+     * Agence les barres selon l'orientation spécifiée.
+     * 
+     * @param axeX          Axe sur lequel aligner
+     * @param axeY          Axe sur lequel aligner
+     * @param largeur       Largeur totale du faisceau
+     * @param echelle       Facteur d'échelle vertical pour les différentes barres
+     * @param verticalement Vrai si les barres sont empilées verticalement, faux si
+     *                      horizontalement
+     */
+    public void agencer(double axeX, double axeY, double largeur, double echelle, boolean verticalement) {
+        Groupe groupe = new Groupe();
         for (Rectangle barre : barres) {
-            // Déplacer la barre au bon emplacement en utilisant la position de départ startY
-            barre.deplacer(axeX, startY);
-            
-            // Redimensionner la barre
-            barre.redimensionner(largeur, echelle);
-            
-            // Mettre à jour la position de départ pour la prochaine barre
-            startY += barre.hauteur(); // Utilisation de l'échelle
+            groupe.ajoutGroupe(barre);
         }
+       
+        if (verticalement) {
+            groupe.redimensionner(largeur, echelle);
+            groupe.alignerElements(Alignement.HAUT, axeY);
+            groupe.alignerElements(Alignement.DROITE, axeX); 
+            groupe.empilerElements(Alignement.HAUT, axeX, 0); // Aligner les barres vers le haut
+
+            
         } else {
-        double l = (largeur-10)/barres.size();
-        for (Rectangle barre : barres) {
-            barre.deplacer(axeX, axeY); // Déplacement de la barre
-           
-            // Redimensionnement de la barre
-            barre.redimensionner(l, echelle);
-                barre.deplacer(totalx, axeY - barre.hauteur()*3); // Déplacement horizontal
-                totalx += (barre.largeur()+ 5 );
-            }
+            double lbarre = (largeur - (5 * (barres.size() - 1))) / barres.size();
+            groupe.redimensionner(lbarre, echelle);
+            groupe.alignerElements(Alignement.HAUT, axeY);
+            groupe.alignerElements(Alignement.DROITE, axeX); 
+            groupe.empilerElements(Alignement.DROITE, axeX, 5); // Aligner les barres vers la droite
+
+            
+            
         }
+
     }
-    
 
     @Override
     public Point centre() {
@@ -194,4 +190,6 @@ public void agencer(double axeX, double axeY, double largeur, double echelle, bo
         svgBuilder.append("</g>\n");
         return svgBuilder.toString();
     }
+
+
 }

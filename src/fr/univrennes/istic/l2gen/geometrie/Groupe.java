@@ -310,4 +310,83 @@ public class Groupe implements IForme {
     public String createEnSVG() {
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
+
+
+ /**
+ * Aligne les éléments du groupe selon un alignement spécifié sur une cible donnée.
+ *
+ * @param alignement Direction d'alignement (HAUT, BAS, DROITE, GAUCHE).
+ * @param axe        Ligne horizontale ou verticale sur laquelle doivent s'aligner les éléments du groupe.
+ * @return Le groupe avec les éléments alignés.
+ */
+public IForme alignerElements(Alignement alignement, double axe) {
+    for(IForme forme : formes) {
+        switch (alignement) {
+            case HAUT:
+                forme.deplacer(0, axe - forme.centre().y());
+                forme.deplacer(0, -forme.hauteur()/2);
+                break;
+        
+            case BAS:
+                forme.deplacer(0, axe + forme.centre().y());
+                forme.deplacer(0, +forme.hauteur()/2);
+                break;
+            
+            case DROITE:
+                forme.deplacer(axe +  forme.centre().x() + forme.largeur()/2, 0);
+                break;  
+
+            case GAUCHE: 
+                forme.deplacer(axe + forme.centre().x()+ forme.largeur()/2, 0);
+                break;
+        }
+    }
+
+    return this;
+}
+
+ 
+/**
+ * Empile les éléments du groupe selon un alignement spécifié sur une cible donnée avec une distance de séparation.
+ *
+ * @param alignement Direction d'alignement (HAUT, BAS, DROITE, GAUCHE).
+ * @param cible      Ligne horizontale ou verticale sur laquelle doivent s'aligner les éléments du groupe.
+ * @param separation Distance entre chaque élément empilé.
+ * @return Le groupe avec les éléments empilés.
+ */
+public IForme empilerElements(Alignement alignement, double cible, double separation) {
+    double position = 0; // Position de départ pour l'empilement
+
+    for(IForme forme : formes) {
+        switch (alignement) {
+            case HAUT:
+                forme.deplacer(0, position ); // Déplace la forme pour qu'elle soit alignée sur la cible
+                position -= forme.hauteur() + separation; // Met à jour la position pour la prochaine forme
+                break;
+        
+            case BAS:
+                forme.deplacer(0, position ); // Déplace la forme pour qu'elle soit alignée sur la cible
+                position += forme.hauteur() + separation; // Met à jour la position pour la prochaine forme
+                break;
+            
+            case DROITE:
+                forme.deplacer(position, 0); // Déplace la forme pour qu'elle soit alignée sur la cible
+                position += forme.largeur() + separation; // Met à jour la position pour la prochaine forme
+                break;  
+
+            case GAUCHE: 
+                forme.deplacer(position, 0); // Déplace la forme pour qu'elle soit alignée sur la cible
+                position -= forme.largeur() + separation; // Met à jour la position pour la prochaine forme
+                break;
+        }
+    }
+
+    return this;
+}
+
+
+
+
+
+
 }

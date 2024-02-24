@@ -21,7 +21,7 @@ public class App {
         Camembert ca = new Camembert(210, 210, 100);
         ca.ajouterSecteur("red", 0.15); 
         ca.ajouterSecteur("blue", 0.40); 
-        ca.ajouterSecteur("green", 0.45);
+        ca.ajouterSecteur("Yellow", 0.45);
         ca.redimensionner(2, 2);
         ca.deplacer(100, 100);
         String camembertSVG = ca.createEnSVG(); 
@@ -104,13 +104,23 @@ public class App {
 
         // AFFICHAGE Faisceau
 
-        Faisceau fh = new Faisceau(" Exemple de Faisceau horizontal ", 100, 200, 500, 50);
-        fh.colorier(" blue ", " red ", " green ", "grey");
+        Faisceau fh = new Faisceau(" Exemple de Faisceau horizontal ", 100, 200, 500);
+        fh.colorier(" blue ", " red ", " green ");
         fh.agencer(20, 250, 100, 0.2, false);
         String svgFaisceau = fh.createEnSVG();
         FileWriter write = new FileWriter("Faisceau.svg");
         write.write(svgFaisceau);
         write.close();
+
+        System.out.println("---------------------------------------");
+
+        Faisceau fg = new Faisceau ( " Exemple de Faisceau vertical " , 100 , 200 , 500);
+        fg . colorier ( " cyan " ," purple " ," yellow " );
+        fg . agencer (20 , 250 , 100 , 0.2 , true );
+        String svgFaisceau2 = fg.createEnSVG();
+        FileWriter write2 = new FileWriter("Faisceau2.svg");
+        write2.write(svgFaisceau2);
+        write2.close();
 
         System.out.println("---------------------------------------");
 

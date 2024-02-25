@@ -6,7 +6,6 @@ import java.util.List;
 
 import fr.univrennes.istic.l2gen.geometrie.IForme;
 import fr.univrennes.istic.l2gen.geometrie.Point;
-import fr.univrennes.istic.l2gen.geometrie.Secteur;
 
 
 
@@ -15,8 +14,10 @@ public class DiagCamemberts implements IDataVisualiseur {
     private Camembert camembert;
     private String couleur; 
     private String legence;
+    private String legendeGeneral;
     private int nbreDePart;
     private List<Camembert> camemberts;
+    private StringBuilder legendeSVG = new StringBuilder();
 
     public String getLegence() {
         return legence;
@@ -57,28 +58,24 @@ public class DiagCamemberts implements IDataVisualiseur {
 
 
     @Override
-    public IDataVisualiseur ajouterDonnees(String donnees, double... valeurs) {
-
-        // Vérification si le nombre de valeurs est au moins 1
+    public IDataVisualiseur ajouterDonnees(String legende, double... valeurs) {
+        this.legendeGeneral = legende;
         if (valeurs.length > 0) {
             double total = 0;
 
-            // Calculer la somme totale des valeurs
             for (double valeur : valeurs) {
                 total += valeur;
             }
+            
 
-            // Ajouter les secteurs au camembert en utilisant les valeurs absolues
             for (int i = 0; i < valeurs.length; i++) {
                 String couleur = "Couleur" + i;
                 double pourcentage = valeurs[i] / total;
                 camembert.ajouterSecteur(couleur, pourcentage);
             }
-        } else {
-            throw new IllegalArgumentException("Erreur");
         }
 
-        return this; // Ajoutez cette ligne pour respecter la signature de la méthode
+        return this; 
     }
 
     @Override
@@ -88,8 +85,35 @@ public class DiagCamemberts implements IDataVisualiseur {
 
     @Override
     public IForme colorier(String... couleurs) {
-        return camembert.colorier(couleurs);
+        if (camembert == null) {
+            camembert = new Camembert(250, 250, 100);
+        }
+
+        if (couleurs.length > 0) {
+            camembert.colorier(couleurs);
+
+            int xOffset = 78;
+            int yOffset = (int) camembert.centre().y() + (int) camembert.hauteur() + 15;
+
+            legendeSVG.append("<text x=\"").append(camembert.centre().x()-20).append("\" y=\"")
+                    .append(camembert.largeur() + 175)
+                    .append("\" fill=\"black\">").append(legendeGeneral)
+                    .append("</text>\n");
+
+            for (int i = 0; i < couleurs.length; i++) {
+                String couleur = couleurs[i];
+
+                legendeSVG.append("<rect x=\"").append(xOffset).append("\" y=\"").append(yOffset)
+                        .append("\" width=\"10\" height=\"10\" fill=\"")
+                        .append(couleur).append("\" />\n");
+
+                xOffset += 85;
+            }
+        }
+
+        return this;
     }
+
 
     @Override
     public IForme deplacer(double x, double y) {
@@ -107,18 +131,15 @@ public class DiagCamemberts implements IDataVisualiseur {
     }
 
     @Override
-    public String enSVG() {
+    public String createEnSVG() {
         if (camembert == null) {
             camembert = new Camembert(250, 250, 100); // Création d'un camembert avec un rayon de 100 à la position 0
         }
 
-        // Mettre à jour la légende du camembert
         String updatedCamembertSVG = camembert.createEnSVG();
 
-        // Concaténer la légende avec le contenu du camembert
         String resultSVG = updatedCamembertSVG + camembert.getLegende();
 
-        // Retourner le résultat
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + resultSVG + "</svg>";
     }
     
@@ -140,26 +161,21 @@ public class DiagCamemberts implements IDataVisualiseur {
         }
 
         // Générer une représentation de la légende
-        StringBuilder legendeSVG = new StringBuilder();
+        StringBuilder legendeTexteSVG = new StringBuilder();
 
-        int xOffset = ((int)camembert.centre().x()) / 2; // Ajuster l'espacement horizontal entre les légendes
-        int yOffset = (int)camembert.centre().y() + (int)camembert.hauteur() + 20; // Offset vertical en dessous du camembert
-
-        List<Secteur> secteurs = camembert.getSecteurs();
-        
-
+        int xOffset = 100;
+        int yOffset = (int)camembert.centre().y() + (int)camembert.hauteur() + 10; 
 
         for (int i = 0; i < legendes.length; i++) {
             String legende = legendes[i];
             int nbreChar = legende.length();
 
-            legendeSVG.append("<text x=\"").append(xOffset + 20).append("\" y=\"").append(yOffset + 15).append("\" fill=\"black\">").append(legende)
+            legendeTexteSVG.append("<text x=\"").append(xOffset + 2).append("\" y=\"").append(yOffset + 15).append("\" fill=\"black\">").append(legende)
                     .append("</text>\n");
 
-            xOffset += nbreChar + 85; // Ajouter un espace supplémentaire entre les légendes
+            xOffset += nbreChar + 75; // Ajouter un espace supplémentaire entre les légendes
         }
-        camembert.ajouterLegende(legendeSVG.toString());
-
+        legendeSVG.append(legendeTexteSVG.toString());
         return this;
     }
 
@@ -184,8 +200,13 @@ public class DiagCamemberts implements IDataVisualiseur {
     }
 
     @Override
-    public String createEnSVG() {
-        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
+    public String enSVG() {
+
+        String updatedCamembertSVG = camembert.createEnSVG();
+        String resultSVG = updatedCamembertSVG + legendeSVG.toString();
+
+        return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + resultSVG + "</svg>";
+    
     }
     
 }

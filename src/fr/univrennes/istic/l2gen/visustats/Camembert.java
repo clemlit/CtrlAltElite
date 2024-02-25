@@ -224,7 +224,7 @@ public class Camembert implements IForme {
      * @return L'instance actuelle de Camembert après la rotation.
      */
     public IForme tourner(int angle){
-        this.angle = angle;
+        this.angle += angle;
         return this;
     }
 

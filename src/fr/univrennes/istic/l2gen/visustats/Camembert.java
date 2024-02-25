@@ -13,6 +13,7 @@ public class Camembert implements IForme {
     private Point centre;
     private double angle;
     private String couleur;
+    private String legende;
 
 
     public double getRayon() {
@@ -173,6 +174,7 @@ public class Camembert implements IForme {
         return svg;
     }
 
+
     /**
      * Retourne la hauteur du camembert.
      *
@@ -236,6 +238,19 @@ public class Camembert implements IForme {
     @Override
     public String getCouleur() {
         return couleur;
+    }
+
+    public String getLegende() {
+        return legende;
+    }
+
+    public void setLegende(String legende) {
+        this.legende = legende;
+    }
+
+    // Ajouter une légende au camembert
+    public void ajouterLegende(String legende) {
+        this.legende = legende;
     }
 
 

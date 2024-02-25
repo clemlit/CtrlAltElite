@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg"><svg xmlns="http://www.w3.org/2000/svg"><g>
+<path d="M250.0 250.0L250,150A100.0,100.0 0 0 1 265,151Z" fill="Blue" stroke="black"/>
+<path d="M250.0 250.0L265,151A100.0,100.0 0 0 1 320,179Z" fill="Green" stroke="black"/>
+<path d="M250.0 250.0L320,179A100.0,100.0 0 0 1 327,314Z" fill="Red" stroke="black"/>
+<path d="M250.0 250.0L327,314A100.0,100.0 0 1 1 247,150Z" fill="Yellow" stroke="black"/>
+<path d="M250.0 250.0L247,150A100.0,100.0 0 0 1 250,150Z" fill="Maroon" stroke="black"/>
+</g>
+</svg><rect x="125" y="470" width="15" height="15" fill="null" />
+<text x="145" y="485" fill="black">Afrique</text>
+<rect x="217" y="470" width="15" height="15" fill="null" />
+<text x="237" y="485" fill="black">Amerique</text>
+<rect x="310" y="470" width="15" height="15" fill="null" />
+<text x="330" y="485" fill="black">Asie</text>
+<rect x="399" y="470" width="15" height="15" fill="null" />
+<text x="419" y="485" fill="black">Europe</text>
+<rect x="490" y="470" width="15" height="15" fill="null" />
+<text x="510" y="485" fill="black">Oceanie</text>
+</svg>

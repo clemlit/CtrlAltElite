@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg"><g>
 <path d="M310.0 310.0L310,110A200.0,200.0 0 0 1 472,192Z" fill="red" stroke="black"/>
 <path d="M310.0 310.0L472,192A200.0,200.0 0 0 1 248,500Z" fill="blue" stroke="black"/>
-<path d="M310.0 310.0L248,500A200.0,200.0 0 0 1 310,110Z" fill="green" stroke="black"/>
+<path d="M310.0 310.0L248,500A200.0,200.0 0 0 1 310,110Z" fill="Yellow" stroke="black"/>
 </g>
 </svg>

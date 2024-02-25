@@ -44,17 +44,15 @@ public class DiagCamemberts implements IDataVisualiseur {
 
     @Override
     public IDataVisualiseur agencer() {
-    if (camemberts != null) {
-        int xOffset = 100; // Ajustez le décalage horizontal
-
-        for (Camembert currentCamembert : camemberts) {
-            currentCamembert.deplacer(xOffset, 0);
-            xOffset += currentCamembert.largeur() + 20; // Ajustez l'espacement horizontal entre les camemberts
+        if (camemberts != null) {
+            int xOffset = 100; 
+            for (Camembert currentCamembert : camemberts) {
+                currentCamembert.deplacer(xOffset, 0);
+                xOffset += currentCamembert.largeur() + 20; 
+            }
         }
+        return this;
     }
-
-    return this;
-}
 
 
     @Override
@@ -62,12 +60,10 @@ public class DiagCamemberts implements IDataVisualiseur {
         this.legendeGeneral = legende;
         if (valeurs.length > 0) {
             double total = 0;
-
             for (double valeur : valeurs) {
                 total += valeur;
             }
-            
-
+        
             for (int i = 0; i < valeurs.length; i++) {
                 String couleur = "Couleur" + i;
                 double pourcentage = valeurs[i] / total;
@@ -133,7 +129,7 @@ public class DiagCamemberts implements IDataVisualiseur {
     @Override
     public String createEnSVG() {
         if (camembert == null) {
-            camembert = new Camembert(250, 250, 100); // Création d'un camembert avec un rayon de 100 à la position 0
+            camembert = new Camembert(250, 250, 100); 
         }
 
         String updatedCamembertSVG = camembert.createEnSVG();
@@ -157,23 +153,19 @@ public class DiagCamemberts implements IDataVisualiseur {
     @Override
     public IDataVisualiseur legender(String... legendes) {
         if (camembert == null) {
-            camembert = new Camembert(250, 250, 100); // Création d'un camembert avec un rayon de 100 à la position 0
+            camembert = new Camembert(250, 250, 100); 
         }
-
-        // Générer une représentation de la légende
         StringBuilder legendeTexteSVG = new StringBuilder();
-
         int xOffset = 100;
         int yOffset = (int)camembert.centre().y() + (int)camembert.hauteur() + 10; 
 
         for (int i = 0; i < legendes.length; i++) {
             String legende = legendes[i];
             int nbreChar = legende.length();
-
             legendeTexteSVG.append("<text x=\"").append(xOffset + 2).append("\" y=\"").append(yOffset + 15).append("\" fill=\"black\">").append(legende)
                     .append("</text>\n");
 
-            xOffset += nbreChar + 75; // Ajouter un espace supplémentaire entre les légendes
+            xOffset += nbreChar + 75; 
         }
         legendeSVG.append(legendeTexteSVG.toString());
         return this;

@@ -9,6 +9,7 @@ import fr.univrennes.istic.l2gen.geometrie.Secteur;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
 import fr.univrennes.istic.l2gen.visustats.Camembert;
+import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
 import fr.univrennes.istic.l2gen.visustats.Faisceau;
 
 import java.io.FileWriter;
@@ -16,6 +17,15 @@ import java.io.FileWriter;
 
 public class App {
     public static void main(String[] args) throws Exception {   
+        DiagCamemberts visualiseur = new DiagCamemberts("Emissions de CO2 (en Mt)", 5);
+        visualiseur.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
+        visualiseur.ajouterDonnees("2010", 1600, 6800, 16000, 43000, 300);
+        visualiseur.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
+        FileWriter writer0 = new FileWriter("DiagrammeCammenbert.svg");
+        writer0.write(visualiseur.agencer().agencer().enSVG());
+        writer0.close();              
+
+
         //AFFICHAGE DANS LE SVG
         //AFFICHAGE CAMEMBERT
         Camembert ca = new Camembert(210, 210, 100);

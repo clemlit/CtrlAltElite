@@ -62,27 +62,23 @@ public class Groupe implements IForme {
         if (formes.isEmpty()) {
             return null;
         }
-
-        double centreX = 0.0;
-        double centreY = 0.0;
-        int nombreDeFormes = 0;
-
-        for (IForme forme : formes) {
-            Point centreForme = forme.centre();
-            if (centreForme != null) {
-                centreX += centreForme.x();
-                centreY += centreForme.y();
-                nombreDeFormes++;
+        double maxX = formes.get(0).centre().x()+formes.get(0).hauteur()/2;
+        double minX = formes.get(0).centre().x()-formes.get(0).hauteur()/2;
+        double maxY = formes.get(0).centre().y()+formes.get(0).largeur()/2;
+        double minY = formes.get(0).centre().y()-formes.get(0).largeur()/2;
+        
+        for (int i =0;i<formes.size();i++){
+            if (maxX<formes.get(i).centre().x()+formes.get(i).hauteur()/2){
+                maxX=formes.get(i).centre().x()+formes.get(i).hauteur()/2;
+            } else if (minX>formes.get(i).centre().x()-formes.get(i).hauteur()/2){
+                minX=formes.get(i).centre().x()-formes.get(i).hauteur()/2;
+            } if (maxY<formes.get(i).centre().y()+formes.get(i).largeur()/2){
+                maxY=formes.get(i).centre().y()+formes.get(i).largeur()/2;
+            } else if (minY>formes.get(i).centre().y()-formes.get(i).largeur()/2){
+                minY=formes.get(i).centre().y()-formes.get(i).largeur()/2;
             }
         }
-
-        // Moyenne du centre de toutes les formes
-        if (nombreDeFormes > 0) {
-            centreX /= nombreDeFormes;
-            centreY /= nombreDeFormes;
-        }
-
-        return new Point(centreX, centreY);
+        return new Point((maxX-minX)/2, (maxY-minY)/2);
     }
 
     /**
@@ -199,25 +195,7 @@ public class Groupe implements IForme {
         svgBuilder.append("<g>\n");
 
         for (IForme forme : formes) {
-            if (forme instanceof Groupe) {
-                svgBuilder.append(((Groupe) forme).enSVG());
-            } else if (forme instanceof Cercle) {
-                svgBuilder.append(((Cercle) forme).enSVG());
-            } else if (forme instanceof Ellipse) {
-                svgBuilder.append(((Ellipse) forme).enSVG());
-            } else if (forme instanceof Ligne) {
-                svgBuilder.append(((Ligne) forme).enSVG());
-            } else if (forme instanceof Polygone) {
-                svgBuilder.append(((Polygone) forme).enSVG());
-            } else if (forme instanceof Secteur) {
-                svgBuilder.append(((Secteur) forme).enSVG());
-            } else if (forme instanceof Texte) {
-                svgBuilder.append(((Texte) forme).enSVG());
-            } else if (forme instanceof Rectangle) {
-                svgBuilder.append(((Rectangle) forme).enSVG());
-            } else if (forme instanceof Triangle) {
-                svgBuilder.append(((Triangle) forme).enSVG());
-            }
+                svgBuilder.append(forme.enSVG());
         }
 
         svgBuilder.append("</g>\n");

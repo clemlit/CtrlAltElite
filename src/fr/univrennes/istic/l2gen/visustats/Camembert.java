@@ -8,13 +8,17 @@ import fr.univrennes.istic.l2gen.geometrie.Point;
 import fr.univrennes.istic.l2gen.geometrie.Secteur;
 
 public class Camembert implements IForme {
-    //ATTRIBUTS 
+    // ATTRIBUTS
     private double rayon;
     private Point centre;
     private double angle;
     private String couleur;
     private String legende;
+    private List<Secteur> secteurs;
 
+    public List<Secteur> getSecteurs() {
+        return secteurs;
+    }
 
     public double getRayon() {
         return rayon;
@@ -31,14 +35,6 @@ public class Camembert implements IForme {
     public void setCentre(Point centre) {
         this.centre = centre;
     }
-
-    private List<Secteur> secteurs;
-
-
-    public List<Secteur> getSecteurs() {
-        return secteurs;
-    }
-
     public void setSecteurs(List<Secteur> secteurs) {
         this.secteurs = secteurs;
     }
@@ -47,23 +43,23 @@ public class Camembert implements IForme {
         return angle;
     }
 
-    //CONSTRUCTEURS
+    // CONSTRUCTEURS
     /**
      *
      * @param valeur1 Coordonnée x du centre du camembert.
      * @param valeur2 Coordonnée y du centre du camembert.
      * @param rayon   Rayon du camembert.
      */
-    public Camembert(double valeur1, double valeur2, double rayon){
+    public Camembert(double valeur1, double valeur2, double rayon) {
         this(new Point(valeur1, valeur2), rayon);
     }
-    
+
     /**
      *
      * @param point Coordonnées du centre du camembert.
      * @param rayon Rayon du camembert.
      */
-    public Camembert(Point point, Double rayon){
+    public Camembert(Point point, Double rayon) {
         this.rayon = rayon;
         this.centre = point;
         this.secteurs = new ArrayList<>();
@@ -78,7 +74,7 @@ public class Camembert implements IForme {
      * @param valeur Pourcentage de l'angle occupé par le secteur.
      * @return L'instance actuelle de Camembert après l'ajout du secteur.
      */
-    public Camembert ajouterSecteur(String chaine, double valeur){
+    public Camembert ajouterSecteur(String chaine, double valeur) {
         double angleDebut = angle;
         double angleFin = angleDebut + (360.0 * valeur);
 
@@ -100,7 +96,7 @@ public class Camembert implements IForme {
      *
      * @return Coordonnées du centre du camembert.
      */
-    public Point centre(){
+    public Point centre() {
         return centre;
     }
 
@@ -126,7 +122,7 @@ public class Camembert implements IForme {
      * @param dy Déplacement sur l'axe des y.
      * @return L'instance actuelle de Camembert après le déplacement.
      */
-    public IForme deplacer(double dx, double dy){
+    public IForme deplacer(double dx, double dy) {
         this.centre = this.centre.plus(dx, dy);
         return this;
     }
@@ -153,7 +149,7 @@ public class Camembert implements IForme {
      *
      * @return Nouvelle instance de Camembert.
      */
-    public IForme dupliquer(){
+    public IForme dupliquer() {
         Camembert copieCamembert = new Camembert(centre, rayon);
         return copieCamembert;
     }
@@ -174,13 +170,12 @@ public class Camembert implements IForme {
         return svg;
     }
 
-
     /**
      * Retourne la hauteur du camembert.
      *
      * @return Hauteur du camembert.
      */
-    public double hauteur(){
+    public double hauteur() {
         return 2 * rayon;
     }
 
@@ -189,7 +184,7 @@ public class Camembert implements IForme {
      *
      * @return largeur du camembert.
      */
-    public double largeur(){
+    public double largeur() {
         return 2 * rayon;
     }
 
@@ -213,7 +208,6 @@ public class Camembert implements IForme {
         return this;
     }
 
-
     @Override
     public String createEnSVG() {
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
@@ -225,7 +219,7 @@ public class Camembert implements IForme {
      * @param angle Angle de rotation.
      * @return L'instance actuelle de Camembert après la rotation.
      */
-    public IForme tourner(int angle){
+    public IForme tourner(int angle) {
         this.angle += angle;
         return this;
     }
@@ -252,9 +246,5 @@ public class Camembert implements IForme {
     public void ajouterLegende(String legende) {
         this.legende = legende;
     }
-
-
-
-
 
 }

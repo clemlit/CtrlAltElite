@@ -23,12 +23,10 @@ User Stories
 
     Et comparer les résultats avec d'autres.
     
-4. Je souhaite pouvoir avoir un historique des diagrammes précédemment créés.
-
-5. Je veux que l'application génère des rapports clairs et informatifs sous 
+4. Je veux que l'application génère des rapports clairs et informatifs sous 
     forme de pages web contenant les résultats des statistiques sélectionnées, 
     ou encore sous forme de pdf.
 
-6. Un développeur doit utiliser visustats pour toutes les visualisations 
+5. Un développeur doit utiliser visustats pour toutes les visualisations 
    de diagramme dans l'app, et doit utiliser la méthodologie SCRUM.
 

@@ -1,20 +1,33 @@
 User Stories
 
-1. En tant qu'utilisateur, je veux pouvoir sélectionner une granularité (ensemble de départements ou de régions) pour analyser les statistiques sur les prix des carburants en France.
-   
-2. En tant qu'utilisateur, je veux avoir la possibilité d'obtenir l'adresse du point de vente proposant le carburant le moins cher dans chaque département ou région sélectionné.
+1. En tant qu'utilisateur, je veux une interface utilisateur conviviale et intuitive.
 
-3. En tant qu'utilisateur, je veux pouvoir choisir parmi différentes statistiques comme le prix moyen, le prix médian, le prix minimum, le nombre de stations proposant chaque type de carburant, et le nombre de stations proposant des services spécifiques.
+2. Je veux donc pouvoir obtenir facilement les informations du point de vente proposant le carburant choisi, dans la granularité choisie, 
+    et pouvoir choisir parmi différentes statistiques comme :
 
-4. En tant qu'utilisateur, je veux pouvoir sélectionner le type de diagramme (camembert, diagramme à barres, diagramme à colonnes, etc.) pour chaque statistique choisie.
+        - le prix moyen, 
+        - le prix médian, 
+        - le prix minimum, 
+        - le nombre de stations proposant chaque type de carburant, 
+        - le nombre de stations proposant des services spécifiques
 
-5. En tant qu'utilisateur, je veux que l'application génère des rapports clairs et informatifs sous forme de pages web contenant les résultats des statistiques sélectionnées.
+    pour savoir par exemple le moins cher dans chaque département ou région sélectionné.
 
-6. En tant qu'utilisateur, je veux une interface utilisateur conviviale et intuitive où je peux facilement naviguer et sélectionner les options de granularité, de types de carburants et de statistiques.
 
-7. En tant que développeur, j'utilise visustats pour toutes les visualisations de diagramme dans l'app.
+3. Je veux pouvoir filtrer les stations-service en fonction :
 
-8. En tant que développeur, je récupére les données à partir d'un JSON, puis à partir d'une API REST plus tard.
+        - d'un ensemble de département ou région
+        - des types de carburants et statistiques
+        - de services spécifiques comme les stations de gonflage, les laveries, le wifi, les toilettes, boutiques alimentaires, etc.
 
-9. En tant que développeur, j'utilise la méthodologie SCRUM.
+
+
+3. je veux pouvoir sélectionner le type de diagramme (camembert, diagramme à barres, 
+    diagramme à colonnes) pour chaque statistique choisie.
+
+4. Je veux que l'application génère des rapports clairs et informatifs sous 
+    forme de pages web contenant les résultats des statistiques sélectionnées.
+
+5. Un développeur doit utiliser visustats pour toutes les visualisations 
+   de diagramme dans l'app, et doit utiliser la méthodologie SCRUM.
 

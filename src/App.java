@@ -21,7 +21,7 @@ public class App {
         visualiseur.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
         visualiseur.ajouterDonnees("2010", 1600, 6800, 16000, 43000, 300);
         visualiseur.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
-        FileWriter writer0 = new FileWriter("DiagrammeCammenbert.svg");
+        FileWriter writer0 = new FileWriter("DiagrammeCamembert.svg");
         writer0.write(visualiseur.agencer().enSVG());
         writer0.close();              
 

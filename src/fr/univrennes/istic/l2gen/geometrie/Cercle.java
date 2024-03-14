@@ -8,14 +8,9 @@ package fr.univrennes.istic.l2gen.geometrie;
 public class Cercle implements IForme {
 
     /**
-     * Coordonnée x du centre du cercle.
+     * Point du centre du cercle.
      */
-    private double x;
-
-    /**
-     * Coordonnée y du centre du cercle.
-     */
-    private double y;
+    private Point p;
 
     /**
      * Rayon du cercle.
@@ -35,8 +30,7 @@ public class Cercle implements IForme {
      * @requires Les valeurs (x,y,r) doivent être strictement positives.
      */
     public Cercle(double x, double y, double r) {
-        this.x = x;
-        this.y = y;
+        this.p = new Point(x, y);
         this.r = r;
         this.angle = 0;
         this.couleur = "White";
@@ -51,8 +45,7 @@ public class Cercle implements IForme {
      * @requires La valeur de r doit être strictement positives.
      */
     public Cercle(Point p, double r) {
-        this.x = p.x();
-        this.y = p.y();
+        this.p = p;
         this.r = r;
         this.couleur = "White";
     }
@@ -63,7 +56,7 @@ public class Cercle implements IForme {
      * @return Point représentant le centre du cercle.
      */
     public Point centre() {
-        return new Point(this.x, this.y);
+        return new Point(this.p.x(), this.p.y());
     }
 
     /**
@@ -108,7 +101,7 @@ public class Cercle implements IForme {
      * @return Nouvelle instance de Cercle identique à l'instance actuelle.
      */
     public IForme dupliquer() {
-        Cercle copieCercle = new Cercle(this.x, this.y, this.r);
+        Cercle copieCercle = new Cercle(this.p, this.r);
         copieCercle.tourner(this.angle); // Assure que la copie a le même angle que l'original
         return copieCercle;
     }
@@ -122,8 +115,8 @@ public class Cercle implements IForme {
      * @ensures Le cercle ne doit pas dépasser les limtes d'affichage.
      */
     public IForme deplacer(double dx, double dy) {
-        this.x += dx;
-        this.y += dy;
+        this.p.setX(this.p.x() + dx);
+        this.p.setY(this.p.y() + dy);
         return this;
     }
 
@@ -165,10 +158,6 @@ public class Cercle implements IForme {
     public String createEnSVG() {
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
-
-
-
-
 
     /**
      * Change la couleur du cercle en utilisant la première couleur spécifiée dans
@@ -230,16 +219,16 @@ public class Cercle implements IForme {
     public IForme aligner(Alignement alignment, double cible) {
         switch (alignment) {
             case HAUT:
-                this.y = cible + this.r;
+                this.p.setY(cible + this.r);
                 break;
             case BAS:
-                this.y = cible - this.r;
+                this.p.setY(cible - this.r);
                 break;
             case GAUCHE:
-                this.x = cible + this.r;
+                this.p.setX(cible + this.r);
                 break;
             case DROITE:
-                this.x = cible - this.r;
+                this.p.setX(cible - this.r);
                 break;
         }
         return this;

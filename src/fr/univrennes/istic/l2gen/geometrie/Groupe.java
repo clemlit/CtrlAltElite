@@ -24,9 +24,6 @@ public class Groupe implements IForme {
     private String couleur;
 
     private int angle;
-
-    private boolean dupliquerAppelee;
-
     // CONSTRUCTEUR
 
 
@@ -62,27 +59,23 @@ public class Groupe implements IForme {
         if (formes.isEmpty()) {
             return null;
         }
-
-        double centreX = 0.0;
-        double centreY = 0.0;
-        int nombreDeFormes = 0;
-
-        for (IForme forme : formes) {
-            Point centreForme = forme.centre();
-            if (centreForme != null) {
-                centreX += centreForme.x();
-                centreY += centreForme.y();
-                nombreDeFormes++;
+        double maxX = formes.get(0).centre().x()+formes.get(0).hauteur()/2;
+        double minX = formes.get(0).centre().x()-formes.get(0).hauteur()/2;
+        double maxY = formes.get(0).centre().y()+formes.get(0).largeur()/2;
+        double minY = formes.get(0).centre().y()-formes.get(0).largeur()/2;
+        
+        for (int i =0;i<formes.size();i++){
+            if (maxX<formes.get(i).centre().x()+formes.get(i).hauteur()/2){
+                maxX=formes.get(i).centre().x()+formes.get(i).hauteur()/2;
+            } else if (minX>formes.get(i).centre().x()-formes.get(i).hauteur()/2){
+                minX=formes.get(i).centre().x()-formes.get(i).hauteur()/2;
+            } if (maxY<formes.get(i).centre().y()+formes.get(i).largeur()/2){
+                maxY=formes.get(i).centre().y()+formes.get(i).largeur()/2;
+            } else if (minY>formes.get(i).centre().y()-formes.get(i).largeur()/2){
+                minY=formes.get(i).centre().y()-formes.get(i).largeur()/2;
             }
         }
-
-        // Moyenne du centre de toutes les formes
-        if (nombreDeFormes > 0) {
-            centreX /= nombreDeFormes;
-            centreY /= nombreDeFormes;
-        }
-
-        return new Point(centreX, centreY);
+        return new Point((maxX-minX)/2, (maxY-minY)/2);
     }
 
     /**
@@ -134,7 +127,6 @@ public class Groupe implements IForme {
             groupeDuplique.ajoutGroupe(formeDupliquee);
         }
         groupeDuplique.angle = this.angle;
-        groupeDuplique.dupliquerAppelee = true;
         return groupeDuplique;
     }
 
@@ -199,25 +191,7 @@ public class Groupe implements IForme {
         svgBuilder.append("<g>\n");
 
         for (IForme forme : formes) {
-            if (forme instanceof Groupe) {
-                svgBuilder.append(((Groupe) forme).enSVG());
-            } else if (forme instanceof Cercle) {
-                svgBuilder.append(((Cercle) forme).enSVG());
-            } else if (forme instanceof Ellipse) {
-                svgBuilder.append(((Ellipse) forme).enSVG());
-            } else if (forme instanceof Ligne) {
-                svgBuilder.append(((Ligne) forme).enSVG());
-            } else if (forme instanceof Polygone) {
-                svgBuilder.append(((Polygone) forme).enSVG());
-            } else if (forme instanceof Secteur) {
-                svgBuilder.append(((Secteur) forme).enSVG());
-            } else if (forme instanceof Texte) {
-                svgBuilder.append(((Texte) forme).enSVG());
-            } else if (forme instanceof Rectangle) {
-                svgBuilder.append(((Rectangle) forme).enSVG());
-            } else if (forme instanceof Triangle) {
-                svgBuilder.append(((Triangle) forme).enSVG());
-            }
+                svgBuilder.append(forme.enSVG());
         }
 
         svgBuilder.append("</g>\n");
@@ -284,15 +258,6 @@ public class Groupe implements IForme {
     }
 
     /**
-     * Indique si la méthode dupliquer a été appelée pour ce groupe.
-     *
-     * @return true si la méthode dupliquer a été appelée, sinon false.
-     */
-    public boolean dupliquerAppelee() {
-        return dupliquerAppelee;
-    }
-
-    /**
      * Fait tourner chaque forme du groupe en spécifiant un angle.
      *
      * @param angle L'angle de rotation à appliquer aux formes du groupe.
@@ -321,26 +286,8 @@ public class Groupe implements IForme {
  */
 public IForme alignerElements(Alignement alignement, double axe) {
     for(IForme forme : formes) {
-        switch (alignement) {
-            case HAUT:
-                forme.deplacer(0, axe - forme.centre().y());
-                forme.deplacer(0, -forme.hauteur()/2);
-                break;
-        
-            case BAS:
-                forme.deplacer(0, axe + forme.centre().y());
-                forme.deplacer(0, +forme.hauteur()/2);
-                break;
-            
-            case DROITE:
-                forme.deplacer(axe +  forme.centre().x() + forme.largeur()/2, 0);
-                break;  
-
-            case GAUCHE: 
-                forme.deplacer(axe + forme.centre().x()+ forme.largeur()/2, 0);
-                break;
+        forme.aligner(alignement,axe);
         }
-    }
 
     return this;
 }

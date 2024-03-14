@@ -24,9 +24,6 @@ public class Groupe implements IForme {
     private String couleur;
 
     private int angle;
-
-    private boolean dupliquerAppelee;
-
     // CONSTRUCTEUR
 
 
@@ -130,7 +127,6 @@ public class Groupe implements IForme {
             groupeDuplique.ajoutGroupe(formeDupliquee);
         }
         groupeDuplique.angle = this.angle;
-        groupeDuplique.dupliquerAppelee = true;
         return groupeDuplique;
     }
 
@@ -262,15 +258,6 @@ public class Groupe implements IForme {
     }
 
     /**
-     * Indique si la méthode dupliquer a été appelée pour ce groupe.
-     *
-     * @return true si la méthode dupliquer a été appelée, sinon false.
-     */
-    public boolean dupliquerAppelee() {
-        return dupliquerAppelee;
-    }
-
-    /**
      * Fait tourner chaque forme du groupe en spécifiant un angle.
      *
      * @param angle L'angle de rotation à appliquer aux formes du groupe.
@@ -299,26 +286,8 @@ public class Groupe implements IForme {
  */
 public IForme alignerElements(Alignement alignement, double axe) {
     for(IForme forme : formes) {
-        switch (alignement) {
-            case HAUT:
-                forme.deplacer(0, axe - forme.centre().y());
-                forme.deplacer(0, -forme.hauteur()/2);
-                break;
-        
-            case BAS:
-                forme.deplacer(0, axe + forme.centre().y());
-                forme.deplacer(0, +forme.hauteur()/2);
-                break;
-            
-            case DROITE:
-                forme.deplacer(axe +  forme.centre().x() + forme.largeur()/2, 0);
-                break;  
-
-            case GAUCHE: 
-                forme.deplacer(axe + forme.centre().x()+ forme.largeur()/2, 0);
-                break;
+        forme.aligner(alignement,axe);
         }
-    }
 
     return this;
 }

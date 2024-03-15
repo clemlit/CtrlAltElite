@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.univrennes.istic.l2gen.geometrie.IForme;
 import fr.univrennes.istic.l2gen.geometrie.Point;
+import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 
 
 
@@ -14,7 +15,7 @@ public class DiagCamemberts implements IDataVisualiseur {
     private Camembert camembert;
     private String couleur; 
     private String legence;
-    private String legendeGeneral;
+    private List<Rectangle> Rec;
     private int nbreDePart;
     private List<Camembert> camemberts;
     private StringBuilder legendeSVG = new StringBuilder();
@@ -39,6 +40,7 @@ public class DiagCamemberts implements IDataVisualiseur {
         this.legence = Titre;
         this.nbreDePart = x;
         this.camemberts = new ArrayList<>();
+        this.Rec = new ArrayList<>();
 
     }
 
@@ -57,7 +59,6 @@ public class DiagCamemberts implements IDataVisualiseur {
 
     @Override
     public IDataVisualiseur ajouterDonnees(String legende, double... valeurs) {
-        this.legendeGeneral = legende;
         if (valeurs.length > 0) {
             double total = 0;
             for (double valeur : valeurs) {
@@ -80,33 +81,56 @@ public class DiagCamemberts implements IDataVisualiseur {
     }
 
     @Override
-    public IForme colorier(String... couleurs) {
+    public IDataVisualiseur legender(String... legendes) {
         if (camembert == null) {
             camembert = new Camembert(250, 250, 100);
         }
 
-        if (couleurs.length > 0) {
-            camembert.colorier(couleurs);
+        if (legendes.length > 0) {
+            // Déterminons la position de départ de la légende
+            int startX = (int) camembert.centre().x();
+            int startY = (int) (camembert.hauteur() + 180);
 
-            int xOffset = 78;
-            int yOffset = (int) camembert.centre().y() + (int) camembert.hauteur() + 15;
+            // Ajoutons la légende pour chaque carré de couleur
+            for (int i = 0; i < legendes.length; i++) {
+                String legende = legendes[i];
 
-            legendeSVG.append("<text x=\"").append(camembert.centre().x()-20).append("\" y=\"")
-                    .append(camembert.largeur() + 175)
-                    .append("\" fill=\"black\">").append(legendeGeneral)
-                    .append("</text>\n");
+                // Créer un carré de couleur
+                Rectangle rect = new Rectangle(startX, startY, 20, 10); // Ajustez les dimensions selon votre besoin
+                Rec.add(rect);
 
-            for (int i = 0; i < couleurs.length; i++) {
-                String couleur = couleurs[i];
+                String legendeSVG = "<text x=\"" + (startX + 15) + "\" y=\"" + (startY + 5) + "\">" + legende
+                        + "</text>";
 
-                legendeSVG.append("<rect x=\"").append(xOffset).append("\" y=\"").append(yOffset)
-                        .append("\" width=\"10\" height=\"10\" fill=\"")
-                        .append(couleur).append("\" />\n");
+                // Ajoutons le carré de couleur et la légende à la légende générale
+                this.legendeSVG.append(rect.enSVG()).append(legendeSVG);
 
-                xOffset += 85;
+                startX += 100;
             }
         }
+        return this;
 
+    }
+
+    @Override
+    public IForme colorier(String... couleurs) {
+        if (camembert == null) {
+            camembert = new Camembert(250, 250, 100);
+        }
+        camembert.colorier(couleurs);
+
+        //ATTENTION DIVISION PAR 0
+        if (couleurs.length == 0) {
+            return this;
+        }
+
+        int index = 0;
+        for (Rectangle rectangle : Rec) {
+            String couleur = couleurs[index % couleurs.length];
+            rectangle.colorier(couleur);
+            this.legendeSVG.append(rectangle.enSVG());
+            index++;
+        }
         return this;
     }
 
@@ -148,27 +172,6 @@ public class DiagCamemberts implements IDataVisualiseur {
     @Override
     public double largeur() {
         return camembert.largeur();
-    }
-
-    @Override
-    public IDataVisualiseur legender(String... legendes) {
-        if (camembert == null) {
-            camembert = new Camembert(250, 250, 100); 
-        }
-        StringBuilder legendeTexteSVG = new StringBuilder();
-        int xOffset = 100;
-        int yOffset = (int)camembert.centre().y() + (int)camembert.hauteur() + 10; 
-
-        for (int i = 0; i < legendes.length; i++) {
-            String legende = legendes[i];
-            int nbreChar = legende.length();
-            legendeTexteSVG.append("<text x=\"").append(xOffset + 2).append("\" y=\"").append(yOffset + 15).append("\" fill=\"black\">").append(legende)
-                    .append("</text>\n");
-
-            xOffset += nbreChar + 75; 
-        }
-        legendeSVG.append(legendeTexteSVG.toString());
-        return this;
     }
 
     @Override

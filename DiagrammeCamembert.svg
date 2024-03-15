@@ -5,15 +5,14 @@
 <path d="M250.0 250.0L327,314A100.0,100.0 0 1 1 247,150Z" fill="Yellow" stroke="black"/>
 <path d="M250.0 250.0L247,150A100.0,100.0 0 0 1 250,150Z" fill="Maroon" stroke="black"/>
 </g>
-</svg><text x="102" y="475" fill="black">Afrique</text>
-<text x="184" y="475" fill="black">Amerique</text>
-<text x="267" y="475" fill="black">Asie</text>
-<text x="346" y="475" fill="black">Europe</text>
-<text x="427" y="475" fill="black">Oceanie</text>
-<text x="230.0" y="375.0" fill="black">2010</text>
-<rect x="78" y="465" width="10" height="10" fill="Blue" />
-<rect x="163" y="465" width="10" height="10" fill="Green" />
-<rect x="248" y="465" width="10" height="10" fill="Red" />
-<rect x="333" y="465" width="10" height="10" fill="Yellow" />
-<rect x="418" y="465" width="10" height="10" fill="Maroon" />
+</svg><rect x="240.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="265" y="385">Afrique</text><rect x="340.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="365" y="385">Amerique</text><rect x="440.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="465" y="385">Asie</text><rect x="540.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="565" y="385">Europe</text><rect x="640.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="665" y="385">Oceanie</text><rect x="240.0" y="375.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="340.0" y="375.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<rect x="440.0" y="375.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<rect x="540.0" y="375.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
+<rect x="640.0" y="375.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
 </svg>

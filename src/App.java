@@ -118,7 +118,7 @@ public class App {
 
             Faisceau fh = new Faisceau(" Exemple de Faisceau horizontal ", 100, 200, 500);
             fh.colorier(" blue ", " red ", " green ");
-            fh.agencer(200, 250, 100, 0.2, true);
+            fh.agencer(20, 250, 100, 0.2, false);
 
         String svgFaisceau = fh.createEnSVG();
         FileWriter write = new FileWriter("Faisceau.svg");

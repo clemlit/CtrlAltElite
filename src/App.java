@@ -75,7 +75,7 @@ public class App {
         writer5.write(triangleSVG);
         writer5.close();
 
-        // AFFICHAGE Rectangle
+        // AFFICHAGE Ellipse
         Groupe ellipseGroupe = arbre(new Ellipse(256, 256, 128, 64));
         ellipseGroupe.tourner(10).colorier("Orange", "Red", "Green", "Brown");;
         String ellipseSVG = ellipseGroupe.createEnSVG();
@@ -83,7 +83,7 @@ public class App {
         writer6.write(ellipseSVG);
         writer6.close();
 
-        // AFFICHAGE Rectangle
+        // AFFICHAGE Polygone
         Groupe polygoneGroupe = arbre(new Polygone(128, 128, 128, 256, 256, 128, 256, 256));
         polygoneGroupe.tourner(10).colorier("Green", "Red", "Purple", "Orange");;
         String polygoneSVG = polygoneGroupe.createEnSVG();
@@ -91,7 +91,7 @@ public class App {
         writer7.write(polygoneSVG);
         writer7.close();
 
-        // AFFICHAGE Rectangle
+        // AFFICHAGE Secteur
         Groupe secteurGroup = arbre(new Secteur(256, 256, 128, 0, 60));
         secteurGroup.tourner(10).colorier("Green", "Red", "Orange");;
         String secteurSVG = secteurGroup.createEnSVG();
@@ -116,9 +116,10 @@ public class App {
 
         // AFFICHAGE Faisceau
 
-        Faisceau fh = new Faisceau(" Exemple de Faisceau horizontal ", 100, 200, 500);
-        fh.colorier(" blue ", " red ", " green ");
-        fh.agencer(20, 250, 100, 0.2, false);
+            Faisceau fh = new Faisceau(" Exemple de Faisceau horizontal ", 100, 200, 500);
+            fh.colorier(" blue ", " red ", " green ");
+            fh.agencer(200, 250, 100, 0.2, true);
+
         String svgFaisceau = fh.createEnSVG();
         FileWriter write = new FileWriter("Faisceau.svg");
         write.write(svgFaisceau);

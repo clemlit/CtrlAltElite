@@ -1,18 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg"><svg xmlns="http://www.w3.org/2000/svg"><g>
-<path d="M250.0 250.0L250,150A100.0,100.0 0 0 1 265,151Z" fill="Blue" stroke="black"/>
-<path d="M250.0 250.0L265,151A100.0,100.0 0 0 1 320,179Z" fill="Green" stroke="black"/>
-<path d="M250.0 250.0L320,179A100.0,100.0 0 0 1 327,314Z" fill="Red" stroke="black"/>
-<path d="M250.0 250.0L327,314A100.0,100.0 0 1 1 247,150Z" fill="Yellow" stroke="black"/>
-<path d="M250.0 250.0L247,150A100.0,100.0 0 0 1 250,150Z" fill="Maroon" stroke="black"/>
+<svg xmlns="http://www.w3.org/2000/svg"><g>
+<path d="M450.0 250.0L450,150A100.0,100.0 0 0 1 484,156Z" fill="Blue" stroke="black"/>
+<path d="M450.0 250.0L484,156A100.0,100.0 0 0 1 547,275Z" fill="Green" stroke="black"/>
+<path d="M450.0 250.0L547,275A100.0,100.0 0 1 1 366,196Z" fill="Red" stroke="black"/>
+<path d="M450.0 250.0L366,196A100.0,100.0 0 0 1 444,150Z" fill="Yellow" stroke="black"/>
+<path d="M450.0 250.0L444,150A100.0,100.0 0 0 1 450,150Z" fill="Maroon" stroke="black"/>
 </g>
-</svg><rect x="240.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="265" y="385">Afrique</text><rect x="340.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="365" y="385">Amerique</text><rect x="440.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="465" y="385">Asie</text><rect x="540.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="565" y="385">Europe</text><rect x="640.0" y="375.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="665" y="385">Oceanie</text><rect x="240.0" y="375.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
-<rect x="340.0" y="375.0" width="20.0" height="10.0" fill="Green" stroke="black" />
-<rect x="440.0" y="375.0" width="20.0" height="10.0" fill="Red" stroke="black" />
-<rect x="540.0" y="375.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
-<rect x="640.0" y="375.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
+<g>
+<path d="M720.0 250.0L720,150A100.0,100.0 0 0 1 759,158Z" fill="Blue" stroke="black"/>
+<path d="M720.0 250.0L759,158A100.0,100.0 0 0 1 818,270Z" fill="Green" stroke="black"/>
+<path d="M720.0 250.0L818,270A100.0,100.0 0 1 1 644,185Z" fill="Red" stroke="black"/>
+<path d="M720.0 250.0L644,185A100.0,100.0 0 0 1 713,150Z" fill="Yellow" stroke="black"/>
+<path d="M720.0 250.0L713,150A100.0,100.0 0 0 1 720,150Z" fill="Maroon" stroke="black"/>
+</g>
+<g>
+<path d="M990.0 250.0L990,150A100.0,100.0 0 0 1 1033,159Z" fill="Blue" stroke="black"/>
+<path d="M990.0 250.0L1033,159A100.0,100.0 0 0 1 1089,266Z" fill="Green" stroke="black"/>
+<path d="M990.0 250.0L1089,266A100.0,100.0 0 1 1 917,182Z" fill="Red" stroke="black"/>
+<path d="M990.0 250.0L917,182A100.0,100.0 0 0 1 983,150Z" fill="Yellow" stroke="black"/>
+<path d="M990.0 250.0L983,150A100.0,100.0 0 0 1 990,150Z" fill="Maroon" stroke="black"/>
+</g>
+<text x="450.0" y="370.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
+<text x="720.0" y="370.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
+<text x="990.0" y="370.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
+<rect x="640.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="665" y="505">Afrique</text><rect x="740.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="765" y="505">Amerique</text><rect x="840.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="865" y="505">Asie</text><rect x="940.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="965" y="505">Europe</text><rect x="1040.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="1065" y="505">Oceanie</text><rect x="640.0" y="495.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="740.0" y="495.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<rect x="840.0" y="495.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<rect x="940.0" y="495.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
+<rect x="1040.0" y="495.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
+<text x="731.0" y="50.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
 </svg>

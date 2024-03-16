@@ -55,6 +55,8 @@ public class Faisceau implements IForme {
         for (Rectangle barre : barres) {
             groupe.ajoutGroupe(barre);
         }
+
+        groupe.deplacer(axeX, axeY);
        
         if (verticalement) {
             groupe.redimensionner(largeur, echelle);
@@ -67,13 +69,9 @@ public class Faisceau implements IForme {
             double lbarre = (largeur - (5 * (barres.size() - 1))) / barres.size();
             groupe.redimensionner(lbarre, echelle);
             groupe.alignerElements(Alignement.HAUT, axeY);
-            groupe.alignerElements(Alignement.DROITE, axeX); 
+            groupe.alignerElements(Alignement.DROITE, axeX);
             groupe.empilerElements(Alignement.DROITE, axeX, 5); // Aligner les barres vers la droite
-
-            
-            
         }
-
     }
 
     @Override

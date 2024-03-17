@@ -19,16 +19,16 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {   
 
-        //AFFICHAGE FAISCEAU
-        DiagColonnes visualiseurfh = new DiagColonnes("Emissions de CO2 (en Mt)");
+        //AFFICHAGE FAISCEAU H
+        DiagColonnes visualiseurfh = new DiagColonnes("Emissions de CO2 (en Mt)", 5);
         visualiseurfh.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
         visualiseurfh.ajouterDonnees("2010", 1600, 6800, 16000, 4300, 300);
+        visualiseurfh.ajouterDonnees("2015", 1900, 6600, 17500, 3800, 330);
+        visualiseurfh.ajouterDonnees("2020", 2100, 6200, 17800, 3600, 340);
         visualiseurfh.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
-        visualiseurfh.agencer().enSVG();
-        FileWriter writer00 = new FileWriter("DiagrammeFaisceauHorizontal.svg");
+        FileWriter writer00 = new FileWriter("DiagrammeColonnes.svg");
         writer00.write(visualiseurfh.agencer().enSVG());
         writer00.close();
-
 
         //AFFICHAGE CAMEMBERT
         DiagCamemberts visualiseur = new DiagCamemberts("Emissions de CO2 (en Mt)", 5);

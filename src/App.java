@@ -131,6 +131,8 @@ public class App {
         fg . colorier ( " cyan " ," purple " ," yellow " );
         fg . agencer (20 , 250 , 100 , 0.2 , true );
         String svgFaisceau2 = fg.createEnSVG();
+
+        
         FileWriter write2 = new FileWriter("Faisceau2.svg");
         write2.write(svgFaisceau2);
         write2.close();

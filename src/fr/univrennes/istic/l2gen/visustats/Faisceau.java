@@ -54,10 +54,7 @@ public class Faisceau implements IForme {
         Groupe groupe = new Groupe();
         for (Rectangle barre : barres) {
             groupe.ajoutGroupe(barre);
-        }
-
-        groupe.deplacer(axeX, axeY);
-       
+        }       
         if (verticalement) {
             groupe.redimensionner(largeur, echelle);
             groupe.alignerElements(Alignement.HAUT, axeY);
@@ -188,6 +185,5 @@ public class Faisceau implements IForme {
         svgBuilder.append("</g>\n");
         return svgBuilder.toString();
     }
-
 
 }

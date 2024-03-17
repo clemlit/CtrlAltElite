@@ -10,6 +10,7 @@ import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
 import fr.univrennes.istic.l2gen.visustats.Camembert;
 import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
+import fr.univrennes.istic.l2gen.visustats.DiagColonnes;
 import fr.univrennes.istic.l2gen.visustats.Faisceau;
 
 import java.io.FileWriter;
@@ -17,6 +18,19 @@ import java.io.FileWriter;
 
 public class App {
     public static void main(String[] args) throws Exception {   
+
+        //AFFICHAGE FAISCEAU
+        DiagColonnes visualiseurfh = new DiagColonnes("Emissions de CO2 (en Mt)");
+        visualiseurfh.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
+        visualiseurfh.ajouterDonnees("2010", 1600, 6800, 16000, 4300, 300);
+        visualiseurfh.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
+        visualiseurfh.agencer().enSVG();
+        FileWriter writer00 = new FileWriter("DiagrammeFaisceauHorizontal.svg");
+        writer00.write(visualiseurfh.agencer().enSVG());
+        writer00.close();
+
+
+        //AFFICHAGE CAMEMBERT
         DiagCamemberts visualiseur = new DiagCamemberts("Emissions de CO2 (en Mt)", 5);
         visualiseur.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
         visualiseur.ajouterDonnees("2010", 1600, 6800, 16000, 4300, 300);
@@ -132,7 +146,7 @@ public class App {
         fg . agencer (20 , 250 , 100 , 0.2 , true );
         String svgFaisceau2 = fg.createEnSVG();
 
-        
+
         FileWriter write2 = new FileWriter("Faisceau2.svg");
         write2.write(svgFaisceau2);
         write2.close();

@@ -317,28 +317,35 @@ public class Groupe implements IForme {
  * @return Le groupe avec les éléments empilés.
  */
 public IForme empilerElements(Alignement alignement, double cible, double separation) {
-    double position = 0; // Position de départ pour l'empilement
+    double positionX = 0; // Position horizontale de départ pour l'empilement
+    double positionY = 0; // Position verticale de départ pour l'empilement
 
     for (IForme forme : formes) {
         double decalageX = 0;
         double decalageY = 0;
+
+        // Ajustement de la position horizontale en fonction de l'alignement horizontal
         switch (alignement) {
-            case HAUT:
-                decalageY = -position; // Ajustement pour l'alignement par le milieu de la largeur
-                break;
-            case BAS:
-                decalageY = position; // Ajustement pour l'alignement par le milieu de la largeur
-                break;
             case DROITE:
-                decalageX = position; // Ajustement pour l'alignement par le milieu de la largeur
+                decalageX = positionX; // Ajustement pour l'alignement par la droite de la forme
                 break;
             case GAUCHE:
-                decalageX = -position; // Ajustement pour l'alignement par le milieu de la largeur
+                decalageX = -positionX; // Ajustement pour l'alignement par la gauche de la forme
+                break;
+        
+            case HAUT:
+                decalageY -= positionY; // Ajustement pour l'alignement par le haut de la forme
+                break;
+            case BAS:
+                decalageY += positionY; // Ajustement pour l'alignement par le bas de la forme
                 break;
         }
 
         forme.deplacer(cible + decalageX, cible + decalageY);
-        position += forme.largeur() + separation; // Met à jour la position pour la prochaine forme
+
+        // Mise à jour de la position pour la prochaine forme
+        positionX += forme.largeur() + separation; // Met à jour la position horizontale pour l'empilement horizontal
+        positionY += forme.hauteur() + separation; // Met à jour la position verticale pour l'empilement vertical
     }
 
     return this;

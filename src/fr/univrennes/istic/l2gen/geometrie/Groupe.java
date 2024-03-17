@@ -284,13 +284,28 @@ public class Groupe implements IForme {
  * @param axe        Ligne horizontale ou verticale sur laquelle doivent s'aligner les éléments du groupe.
  * @return Le groupe avec les éléments alignés.
  */
-public IForme alignerElements(Alignement alignement, double axe) {
-    for(IForme forme : formes) {
-        forme.aligner(alignement,axe);
-        }
-
-    return this;
-}
+ public IForme alignerElements(Alignement alignement, double axe) {
+     for (IForme forme : formes) {
+         double decalageX = 0;
+         double decalageY = 0;
+         switch (alignement) {
+             case HAUT:
+                 decalageY = -forme.hauteur() / 2; // Alignement par le milieu de la hauteur vers le haut
+                 break;
+             case BAS:
+                 decalageY = forme.hauteur() / 2; // Alignement par le milieu de la hauteur vers le bas
+                 break;
+             case DROITE:
+                 decalageX = -forme.largeur() / 2; // Alignement par le milieu de la largeur vers la droite
+                 break;
+             case GAUCHE:
+                 decalageX = forme.largeur() / 2; // Alignement par le milieu de la largeur vers la gauche
+                 break;
+         }
+         forme.deplacer(axe + decalageX, axe + decalageY);
+     }
+     return this;
+ }
 
  
 /**
@@ -304,28 +319,26 @@ public IForme alignerElements(Alignement alignement, double axe) {
 public IForme empilerElements(Alignement alignement, double cible, double separation) {
     double position = 0; // Position de départ pour l'empilement
 
-    for(IForme forme : formes) {
+    for (IForme forme : formes) {
+        double decalageX = 0;
+        double decalageY = 0;
         switch (alignement) {
             case HAUT:
-                forme.deplacer(0, position ); // Déplace la forme pour qu'elle soit alignée sur la cible
-                position -= forme.hauteur() + separation; // Met à jour la position pour la prochaine forme
+                decalageY = -position; // Ajustement pour l'alignement par le milieu de la largeur
                 break;
-        
             case BAS:
-                forme.deplacer(0, position ); // Déplace la forme pour qu'elle soit alignée sur la cible
-                position += forme.hauteur() + separation; // Met à jour la position pour la prochaine forme
+                decalageY = position; // Ajustement pour l'alignement par le milieu de la largeur
                 break;
-            
             case DROITE:
-                forme.deplacer(position, 0); // Déplace la forme pour qu'elle soit alignée sur la cible
-                position += forme.largeur() + separation; // Met à jour la position pour la prochaine forme
-                break;  
-
-            case GAUCHE: 
-                forme.deplacer(position, 0); // Déplace la forme pour qu'elle soit alignée sur la cible
-                position -= forme.largeur() + separation; // Met à jour la position pour la prochaine forme
+                decalageX = position; // Ajustement pour l'alignement par le milieu de la largeur
+                break;
+            case GAUCHE:
+                decalageX = -position; // Ajustement pour l'alignement par le milieu de la largeur
                 break;
         }
+
+        forme.deplacer(cible + decalageX, cible + decalageY);
+        position += forme.largeur() + separation; // Met à jour la position pour la prochaine forme
     }
 
     return this;

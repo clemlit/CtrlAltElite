@@ -27,9 +27,27 @@ public class UI {
     group.add(radio2);
     pannelechelle.add(radio2);
 
+    JPanel pannelservice = new JPanel();
+    Border border3 = BorderFactory.createTitledBorder("Service Spécifique");
+    pannelservice.setBorder(border3);
+    JCheckBox bouton1 = new JCheckBox("Wifi");
+    pannelservice.add(bouton1);
+    JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
+    pannelservice.add(bouton2);
+    JCheckBox bouton3 = new JCheckBox("station de gonflage");
+    pannelservice.add(bouton3);
+    JCheckBox bouton4 = new JCheckBox("Lavage automatique");
+    pannelservice.add(bouton4);
+    JCheckBox bouton5 = new JCheckBox("Bornes éléctrique");
+    pannelservice.add(bouton5);
+    JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
+    pannelservice.add(bouton6);
+
+
 
     f.add(pannelCarburant);
     f.add(pannelechelle,BorderLayout.NORTH);
+    f.add(pannelservice,BorderLayout.EAST);
     f.setVisible(true);
   }
 }

@@ -10,6 +10,14 @@ import fr.univrennes.istic.l2gen.geometrie.Texte;
 
 public class DiagColonnes implements IDataVisualiseur {
 
+    public Faisceau getFaisceau() {
+        return faisceau;
+    }
+
+    public void setFaisceau(Faisceau faisceau) {
+        this.faisceau = faisceau;
+    }
+
     private Faisceau faisceau;
     private List<Faisceau> faisceaux;
     private String titre;

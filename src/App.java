@@ -9,6 +9,7 @@ import fr.univrennes.istic.l2gen.geometrie.Secteur;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 import fr.univrennes.istic.l2gen.geometrie.Triangle;
 import fr.univrennes.istic.l2gen.visustats.Camembert;
+import fr.univrennes.istic.l2gen.visustats.DiagBarre;
 import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
 import fr.univrennes.istic.l2gen.visustats.DiagColonnes;
 import fr.univrennes.istic.l2gen.visustats.Faisceau;
@@ -19,7 +20,18 @@ import java.io.FileWriter;
 public class App {
     public static void main(String[] args) throws Exception {   
 
-        //AFFICHAGE FAISCEAU H
+        // AFFICHAGE FAISCEAU BARRE
+        DiagBarre visualiseurfv = new DiagBarre("Emissions de CO2 (en Mt)", 5);
+        visualiseurfv.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
+        visualiseurfv.ajouterDonnees("2010", 1600, 6800, 16000, 4300, 300);
+        visualiseurfv.ajouterDonnees("2015", 1900, 6600, 17500, 3800, 330);
+        visualiseurfv.ajouterDonnees("2020", 2100, 6200, 17800, 3600, 340);
+        visualiseurfv.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
+        FileWriter writer01 = new FileWriter("DiagrammeBarres.svg");
+        writer01.write(visualiseurfv.agencer().enSVG());
+        writer01.close();
+
+        //AFFICHAGE FAISCEAU COLONNE
         DiagColonnes visualiseurfh = new DiagColonnes("Emissions de CO2 (en Mt)", 5);
         visualiseurfh.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
         visualiseurfh.ajouterDonnees("2010", 1600, 6800, 16000, 4300, 300);

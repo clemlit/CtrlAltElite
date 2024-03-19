@@ -73,15 +73,25 @@ public class Faisceau implements IForme {
 
     @Override
     public Point centre() {
-        double sommeX = 0.0;
-        double sommeY = 0.0;
-        for (Rectangle barre : barres) {
-            sommeX += barre.centre().x();
-            sommeY += barre.centre().y();
+        double maxX = barres.get(0).largeur()/2+barres.get(0).centre().x();
+        double minX = barres.get(0).largeur()/2-barres.get(0).centre().x();
+        double maxY = barres.get(0).hauteur()/2+barres.get(0).centre().y();
+        double minY = barres.get(0).hauteur()/2-barres.get(0).centre().y();
+        for (int i=1;i<barres.size();i++){
+            if (maxX<barres.get(i).largeur()/2+barres.get(i).centre().x()){
+                maxX=barres.get(i).largeur()/2+barres.get(i).centre().x();
+            }
+            if (minX>barres.get(0).largeur()/2-barres.get(0).centre().x()){
+                minX=barres.get(0).largeur()/2-barres.get(0).centre().x();
+            }
+            if (maxY<barres.get(0).hauteur()/2+barres.get(0).centre().y()){
+                maxY=barres.get(0).hauteur()/2+barres.get(0).centre().y();
+            }
+            if (minY>barres.get(0).hauteur()/2-barres.get(0).centre().y()){
+                minY=barres.get(0).hauteur()/2-barres.get(0).centre().y();
+            }
         }
-        double centreX = sommeX / barres.size();
-        double centreY = sommeY / barres.size();
-        return new Point(centreX, centreY);
+        return new Point((maxX-minX)/2+minX, (maxY-minY)/2+maxY);
     }
 
     @Override

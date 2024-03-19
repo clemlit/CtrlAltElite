@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg"><g>
+<rect x="310.0" y="300.0" width="100.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="310.0" y="257.5" width="100.0" height="42.5" fill="Green" stroke="black" />
+<rect x="310.0" y="157.5" width="100.0" height="100.0" fill="Red" stroke="black" />
+<rect x="310.0" y="130.625" width="100.0" height="26.875" fill="Yellow" stroke="black" />
+<rect x="310.0" y="128.75" width="100.0" height="1.875" fill="Maroon" stroke="black" />
+</g>
+<g>
+<rect x="460.0" y="299.1428571428571" width="100.0" height="10.857142857142858" fill="Blue" stroke="black" />
+<rect x="460.0" y="261.42857142857144" width="100.0" height="37.714285714285715" fill="Green" stroke="black" />
+<rect x="460.0" y="161.42857142857144" width="100.0" height="100.0" fill="Red" stroke="black" />
+<rect x="460.0" y="139.71428571428572" width="100.0" height="21.714285714285715" fill="Yellow" stroke="black" />
+<rect x="460.0" y="137.82857142857142" width="100.0" height="1.8857142857142857" fill="Maroon" stroke="black" />
+</g>
+<g>
+<rect x="610.0" y="298.2022471910112" width="100.0" height="11.797752808988763" fill="Blue" stroke="black" />
+<rect x="610.0" y="263.37078651685397" width="100.0" height="34.831460674157306" fill="Green" stroke="black" />
+<rect x="610.0" y="163.37078651685394" width="100.0" height="100.0" fill="Red" stroke="black" />
+<rect x="610.0" y="143.14606741573036" width="100.0" height="20.224719101123593" fill="Yellow" stroke="black" />
+<rect x="610.0" y="141.2359550561798" width="100.0" height="1.9101123595505618" fill="Maroon" stroke="black" />
+</g>
+<text x="360.0" y="328.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
+<text x="510.0" y="332.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
+<text x="660.0" y="333.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
+<rect x="440.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="465" y="355">Afrique</text><rect x="540.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="565" y="355">Amerique</text><rect x="640.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="665" y="355">Asie</text><rect x="740.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="765" y="355">Europe</text><rect x="840.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="865" y="355">Oceanie</text><rect x="440.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="540.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<rect x="640.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<rect x="740.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
+<rect x="840.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
+<text x="524.0" y="100.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
+</svg>

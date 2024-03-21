@@ -1,66 +1,68 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 
 public class UI {
 
   public static void main(String argv[]) {
 
-    
+    try {
+      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+      e.printStackTrace();
+    }
 
     JFrame f = new JFrame("ma fenetre");
-    f.setSize(300,100);
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JPanel topPanel = new JPanel(); 
+    topPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 
+    topPanel.setPreferredSize(new Dimension(f.getWidth(), 200)); 
 
     JPanel pannelCarburant = new JPanel();
+    pannelCarburant.setLayout(new BoxLayout(pannelCarburant, BoxLayout.Y_AXIS));
     Border border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carburant", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
     pannelCarburant.setBorder(border);
 
     String[] Carburant = { "Gazole", "SP95", "SP98", "E10","E85", "GPLc"}; 
     JComboBox jCombo = new JComboBox(Carburant);
     jCombo.setBackground(Color.WHITE);
+    jCombo.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height)); 
 
     pannelCarburant.add(jCombo);
 
-    JPanel pannelechelle = new JPanel();
-    Border border2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "échelle", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
-    pannelechelle.setBorder(border2);
-    ButtonGroup group = new ButtonGroup();
-    JRadioButton radio1 = new JRadioButton("Région", true);
-    JRadioButton radio2 = new JRadioButton("Département");
-    group.add(radio1);
-    pannelechelle.add(radio1);
-    group.add(radio2);
-    pannelechelle.add(radio2);
-
-    JPanel pannelservice = new JPanel();
-    Border border3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Service Spécifique", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
-    pannelservice.setBorder(border3);
     JCheckBox bouton1 = new JCheckBox("Wifi");
-    pannelservice.add(bouton1);
+    pannelCarburant.add(bouton1);
     JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
-    pannelservice.add(bouton2);
+    pannelCarburant.add(bouton2);
     JCheckBox bouton3 = new JCheckBox("station de gonflage");
-    pannelservice.add(bouton3);
+    pannelCarburant.add(bouton3);
     JCheckBox bouton4 = new JCheckBox("Lavage automatique");
-    pannelservice.add(bouton4);
+    pannelCarburant.add(bouton4);
     JCheckBox bouton5 = new JCheckBox("Bornes éléctrique");
-    pannelservice.add(bouton5);
+    pannelCarburant.add(bouton5);
     JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
-    pannelservice.add(bouton6);
+    pannelCarburant.add(bouton6);
 
+    JPanel rightPanel = new JPanel(); 
+    rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 
+
+    f.setLayout(new BorderLayout());
+    f.add(topPanel, BorderLayout.NORTH); 
+    f.add(pannelCarburant, BorderLayout.WEST); 
+    f.add(rightPanel, BorderLayout.EAST); 
+
+    f.pack();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int width = (int) (screenSize.width* 0.5 +100);
-    int height = (int) (screenSize.height * 0.5);
-    f.setMinimumSize(new Dimension(width, height));
-
-    f.add(pannelCarburant);
-    f.add(pannelechelle,BorderLayout.NORTH);
-    f.add(pannelservice,BorderLayout.EAST);
+    int width = screenSize.width * 50 / 100;
+    int height = screenSize.height * 50 / 100;
+    f.setSize(width, height);
     f.setLocationRelativeTo(null);
     f.setVisible(true);
   }

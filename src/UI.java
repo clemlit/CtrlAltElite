@@ -23,7 +23,7 @@ public class UI implements ActionListener{
     FlatLightLaf.setup();
 
     try {
-      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+      UIManager.setLookAndFeel("com.formdev.flatlaf.themes.FlatMacLightLaf");
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
       e.printStackTrace();
     }

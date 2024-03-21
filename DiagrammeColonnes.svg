@@ -33,4 +33,6 @@
 <rect x="740.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
 <rect x="840.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
 <text x="636.0" y="150.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
+<polyline points="394.0 310.0 794.0 310.0 " fill="White" stroke="black" />
+<polyline points="394.0 310.0 394.0 210.0 " fill="White" stroke="black" />
 </svg>

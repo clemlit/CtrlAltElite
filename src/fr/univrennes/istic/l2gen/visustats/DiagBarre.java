@@ -148,11 +148,17 @@ public class DiagBarre implements IDataVisualiseur {
                 legende.deplacer(xOffset, 0);
                 xOffset += faisceau.largeur() + 50;
             }
+            double testY=faisceaux.get(0).centre().y();
+            double maxY=faisceaux.get(0).centre().y()-faisceaux.get(0).hauteur();
             for (Faisceau faisceau : faisceaux) {
+                if (faisceau.centre().y()>testY){
+                    testY=faisceau.centre().y();
+                    maxY=faisceau.centre().y()-faisceau.hauteur();
+                }
                 longeurtotale += faisceau.centre().x();
             }
             int centerX = longeurtotale / faisceaux.size();
-            Texte texteTitre = new Texte(centerX - longueurTexte * 3, 100, 20, getTitre());
+            Texte texteTitre = new Texte(centerX - longueurTexte * faisceaux.size(), maxY, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());
         }
         return this;

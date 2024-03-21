@@ -32,5 +32,5 @@
 <rect x="450.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
 <rect x="550.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
 <rect x="650.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
-<text x="524.0" y="100.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
+<text x="524.0" y="123.75" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
 </svg>

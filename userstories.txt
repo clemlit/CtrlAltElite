@@ -2,8 +2,8 @@ User Stories
 
 1. En tant qu'utilisateur, je veux une interface utilisateur conviviale et intuitive.
 
-2. Je veux donc pouvoir sélectionner le type de diagramme voulu (camembert, diagramme à barres, 
-    diagramme à colonnes) et obtenir facilement les informations du point de vente proposant le carburant choisi, dans la granularité choisie, 
+2. En tant qu'utilisateur, je veux donc pouvoir sélectionner le type de diagramme voulu (camembert, diagramme à barres, 
+    diagramme à colonnes) afin d'obtenir facilement les informations du point de vente proposant le carburant choisi, dans la granularité choisie, 
     et pouvoir choisir parmi différentes statistiques comme :
 
         - le prix moyen, 
@@ -15,18 +15,18 @@ User Stories
     pour savoir par exemple le moins cher dans chaque département ou région sélectionné.
 
 
-3. Je veux pouvoir filtrer les stations-service en fonction :
+3. En tant qu'utilisateur, je veux pouvoir filtrer les stations-service en fonction :
 
         - d'un ensemble de département ou région
         - des types de carburants et statistiques
         - de services spécifiques comme les stations de gonflage, les laveries, le wifi, les toilettes, boutiques alimentaires, etc.
 
-    Et comparer les résultats avec d'autres.
+    afin de comparer les résultats avec d'autres.
     
-4. Je veux que l'application génère des rapports clairs et informatifs sous 
+4. En tant qu'utilisateur, je veux que l'application génère des rapports clairs et informatifs sous 
     forme de pages web contenant les résultats des statistiques sélectionnées, 
     ou encore sous forme de pdf.
 
-5. Un développeur doit utiliser visustats pour toutes les visualisations 
-   de diagramme dans l'app, et doit utiliser la méthodologie SCRUM.
+5. En tant que développeur je dois utiliser visustats pour toutes les visualisations 
+   de diagramme dans l'app, et utiliser la méthodologie SCRUM.
 

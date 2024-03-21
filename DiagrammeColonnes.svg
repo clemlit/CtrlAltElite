@@ -22,15 +22,15 @@
 <text x="444.0" y="340.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
 <text x="594.0" y="339.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
 <text x="744.0" y="339.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
-<rect x="334.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="359.0" y="355">Afrique</text><rect x="434.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="459.0" y="355">Amerique</text><rect x="534.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="559.0" y="355">Asie</text><rect x="634.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="659.0" y="355">Europe</text><rect x="734.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="759.0" y="355">Oceanie</text><rect x="334.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
-<rect x="434.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
-<rect x="534.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
-<rect x="634.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
-<rect x="734.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
-<text x="636.0" y="205.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
+<rect x="440.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="465" y="355">Afrique</text><rect x="540.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="565" y="355">Amerique</text><rect x="640.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="665" y="355">Asie</text><rect x="740.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="765" y="355">Europe</text><rect x="840.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="865" y="355">Oceanie</text><rect x="440.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="540.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<rect x="640.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<rect x="740.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
+<rect x="840.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
+<text x="636.0" y="150.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
 </svg>

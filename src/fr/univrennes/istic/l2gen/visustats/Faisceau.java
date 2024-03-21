@@ -10,9 +10,16 @@ import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Point;
 
 public class Faisceau implements IForme {
+
     private String nom;
     private List<Rectangle> barres;
 
+    /**
+     * Constructeur Faisceau.
+     * 
+     * @param nom nom du faisceau.
+     * @param h   tableau de double.
+     */
     public Faisceau(String nom, double... h) {
         this.nom = nom;
         this.barres = new ArrayList<Rectangle>();
@@ -22,10 +29,25 @@ public class Faisceau implements IForme {
         }
     }
 
+    /**
+     * Ajout de rectangles dans le diagramme.
+     * 
+     * @param rectangle une forme a ajouté
+     */
     public void ajouterBarre(Rectangle rectangle) {
         barres.add(rectangle);
     }
 
+    /**
+     * Colorie la forme géométrique avec les couleurs spécifiées.
+     *
+     * @param couleurs Tableau variable de chaînes de caractères représentant les
+     *                 couleurs.
+     * @require couleur n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
+     * @require couleurs est une couleur existante dans la bibliothèque SVG.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         int i = 0;
@@ -54,14 +76,13 @@ public class Faisceau implements IForme {
         Groupe groupe = new Groupe();
         for (Rectangle barre : barres) {
             groupe.ajoutGroupe(barre);
-        }       
+        }
         if (verticalement) {
             groupe.redimensionner(largeur, echelle);
             groupe.alignerElements(Alignement.HAUT, axeY);
-            groupe.alignerElements(Alignement.DROITE, axeX); 
+            groupe.alignerElements(Alignement.DROITE, axeX);
             groupe.empilerElements(Alignement.HAUT, axeX, 0); // Aligner les barres vers le haut
 
-            
         } else {
             double lbarre = (largeur - (5 * (barres.size() - 1))) / barres.size();
             groupe.redimensionner(lbarre, echelle);
@@ -71,29 +92,39 @@ public class Faisceau implements IForme {
         }
     }
 
+    /**
+     * Renvoi les coordonnées du centre de la figure
+     * 
+     * @return le point du centre de la figure
+     */
     @Override
     public Point centre() {
-        double maxX = barres.get(0).largeur()/2+barres.get(0).centre().x();
-        double minX = barres.get(0).largeur()/2-barres.get(0).centre().x();
-        double maxY = barres.get(0).hauteur()/2+barres.get(0).centre().y();
-        double minY = barres.get(0).hauteur()/2-barres.get(0).centre().y();
-        for (int i=0;i<barres.size();i++){
-            if (maxX<barres.get(i).largeur()/2+barres.get(i).centre().x()){
-                maxX=barres.get(i).largeur()/2+barres.get(i).centre().x();
+        double maxX = barres.get(0).largeur() / 2 + barres.get(0).centre().x();
+        double minX = barres.get(0).largeur() / 2 - barres.get(0).centre().x();
+        double maxY = barres.get(0).hauteur() / 2 + barres.get(0).centre().y();
+        double minY = barres.get(0).hauteur() / 2 - barres.get(0).centre().y();
+        for (int i = 0; i < barres.size(); i++) {
+            if (maxX < barres.get(i).largeur() / 2 + barres.get(i).centre().x()) {
+                maxX = barres.get(i).largeur() / 2 + barres.get(i).centre().x();
             }
-            if (minX>barres.get(0).largeur()/2-barres.get(0).centre().x()){
-                minX=barres.get(0).largeur()/2-barres.get(0).centre().x();
+            if (minX > barres.get(0).largeur() / 2 - barres.get(0).centre().x()) {
+                minX = barres.get(0).largeur() / 2 - barres.get(0).centre().x();
             }
-            if (maxY<barres.get(0).hauteur()/2+barres.get(0).centre().y()){
-                maxY=barres.get(0).hauteur()/2+barres.get(0).centre().y();
+            if (maxY < barres.get(0).hauteur() / 2 + barres.get(0).centre().y()) {
+                maxY = barres.get(0).hauteur() / 2 + barres.get(0).centre().y();
             }
-            if (minY>barres.get(0).hauteur()/2-barres.get(0).centre().y()){
-                minY=barres.get(0).hauteur()/2-barres.get(0).centre().y();
+            if (minY > barres.get(0).hauteur() / 2 - barres.get(0).centre().y()) {
+                minY = barres.get(0).hauteur() / 2 - barres.get(0).centre().y();
             }
         }
-        return new Point((maxX-minX)/2, (maxY-minY)/2);
+        return new Point((maxX - minX) / 2, (maxY - minY) / 2);
     }
 
+    /**
+     * Renvoi la hauteur de la figure
+     * 
+     * @return la hauteur de la figure
+     */
     @Override
     public double hauteur() {
         double minY = Double.MAX_VALUE;
@@ -111,6 +142,11 @@ public class Faisceau implements IForme {
         return maxY - minY;
     }
 
+    /**
+     * Renvoi la largeur de la figure
+     * 
+     * @return la largeur de la figure
+     */
     @Override
     public double largeur() {
         double minX = Double.MAX_VALUE;
@@ -128,6 +164,11 @@ public class Faisceau implements IForme {
         return maxX - minX;
     }
 
+    /**
+     * Renvoi la description de la forme
+     * 
+     * @return la descritption d'un camembert
+     */
     @Override
     public String description(int indentation) {
         StringBuilder sb = new StringBuilder();
@@ -142,6 +183,12 @@ public class Faisceau implements IForme {
         return sb.toString();
     }
 
+    /**
+     * Renvoi la nouvelle forme modifié
+     * 
+     * @param x le facteur de redimenssionement pour l'axe des x
+     * @param y le facteur de redimenssionement pour l'axe des y
+     */
     @Override
     public IForme redimensionner(double dx, double dy) {
         for (Rectangle barre : barres) {
@@ -150,6 +197,13 @@ public class Faisceau implements IForme {
         return this;
     }
 
+    /**
+     * Change les coordonnées du centre de la figure
+     * 
+     * @param x la valeur a ajouté à l'axe des x
+     * @param y la valeur a ajouté à l'axe des y
+     * @return la figure déplacée
+     */
     @Override
     public IForme deplacer(double dx, double dy) {
         for (Rectangle barre : barres) {
@@ -158,16 +212,30 @@ public class Faisceau implements IForme {
         return this;
     }
 
+    /**
+     * Génère le code SVG représentant le triangle sans remplissage.
+     *
+     * @return Le code SVG du diagramme sans remplissage.
+     */
     @Override
     public String createEnSVG() {
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
 
+    /**
+     * Obtient la couleur de la forme
+     */
     @Override
     public String getCouleur() {
         return null; // Aucune couleur spécifique pour le faisceau lui-même
     }
 
+    /**
+     * Renvoi la forme après modification de son angle
+     * 
+     * @param angle le facteur de rotation à appliquer à la figure
+     * @return la forme modifié
+     */
     @Override
     public IForme tourner(int angle) {
         for (Rectangle barre : barres) {
@@ -176,6 +244,11 @@ public class Faisceau implements IForme {
         return this;
     }
 
+    /**
+     * Renvoi une copie du camembert
+     * 
+     * @return un camembert
+     */
     @Override
     public IForme dupliquer() {
         Faisceau copieFaisceau = new Faisceau(nom);
@@ -185,6 +258,11 @@ public class Faisceau implements IForme {
         return copieFaisceau;
     }
 
+    /**
+     * Génère le code SVG représentant le triangle sans remplissage.
+     *
+     * @return Le code SVG du diagramme sans remplissage.
+     */
     @Override
     public String enSVG() {
         StringBuilder svgBuilder = new StringBuilder();

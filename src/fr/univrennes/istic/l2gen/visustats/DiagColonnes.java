@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univrennes.istic.l2gen.geometrie.IForme;
+import fr.univrennes.istic.l2gen.geometrie.Ligne;
 import fr.univrennes.istic.l2gen.geometrie.Point;
 import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
@@ -152,9 +153,32 @@ public class DiagColonnes implements IDataVisualiseur {
             for (Faisceau faisceau : faisceaux) {
                 longeurtotale += faisceau.centre().x();
             }
+            
             int centerX = longeurtotale / faisceaux.size();
             Texte texteTitre = new Texte(centerX - longueurTexte * 3, 150, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());
+
+            double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
+            double pointY1 = faisceaux.get(0).centre().y() + 5;
+            double longeurMax = faisceaux.get(0).centre().x();
+            for (Faisceau faisceau : faisceaux) {
+                if (faisceau.centre().x() > longeurMax) {
+                    longeurMax = faisceau.centre().x();
+                }
+            }
+            double pointAbscisse = longeurMax + faisceaux.get(0).largeur() / 2;
+            Ligne axeAbcisse = new Ligne(pointX1, pointY1, pointAbscisse, pointY1);
+            this.legendeSVG.append(axeAbcisse.enSVG());
+
+            //Axe ordonnée
+            double hauteurMax = faisceaux.get(0).hauteur();
+            for (Faisceau faisceau : faisceaux) {
+                if (faisceau.hauteur() > hauteurMax) {
+                    longeurMax = faisceau.hauteur();
+                }
+            }
+            Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY1 - faisceaux.get(0).hauteur());
+            this.legendeSVG.append(axeOrdonee.enSVG());
         }
         return this;
     }

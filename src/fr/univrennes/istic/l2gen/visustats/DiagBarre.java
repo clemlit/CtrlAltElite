@@ -176,7 +176,7 @@ public class DiagBarre implements IDataVisualiseur {
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
             // Déterminons la position de départ de la légende
-            int startX = 450;
+            double startX = faisceaux.get(0).centre().x();
             int startY = 350;
 
             // Ajoutons la légende pour chaque carré de couleur

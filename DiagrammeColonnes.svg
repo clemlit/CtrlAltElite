@@ -19,9 +19,9 @@
 <rect x="757.0" y="289.7752808988764" width="16.0" height="20.224719101123593" fill="Yellow" stroke="black" />
 <rect x="778.0" y="308.08988764044943" width="16.0" height="1.9101123595505618" fill="Maroon" stroke="black" />
 </g>
-<text x="444.0" y="326.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
-<text x="594.0" y="327.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
-<text x="744.0" y="328.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
+<text x="444.0" y="340.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
+<text x="594.0" y="339.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
+<text x="744.0" y="339.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
 <rect x="440.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
 <text x="465" y="355">Afrique</text><rect x="540.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
 <text x="565" y="355">Amerique</text><rect x="640.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />

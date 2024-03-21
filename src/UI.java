@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -11,12 +13,14 @@ import java.awt.Dimension;
 public class UI {
 
   public static void main(String argv[]) {
+    
+    FlatLightLaf.setup();
 
     try {
-      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-      e.printStackTrace();
-    }
+      UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
+      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+      }
+      JFrame.setDefaultLookAndFeelDecorated(true);
 
     JFrame f = new JFrame("ma fenetre");
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +45,7 @@ public class UI {
     pannelCarburant.add(bouton1);
     JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
     pannelCarburant.add(bouton2);
-    JCheckBox bouton3 = new JCheckBox("station de gonflage");
+    JCheckBox bouton3 = new JCheckBox("Station de gonflage");
     pannelCarburant.add(bouton3);
     JCheckBox bouton4 = new JCheckBox("Lavage automatique");
     pannelCarburant.add(bouton4);
@@ -49,6 +53,13 @@ public class UI {
     pannelCarburant.add(bouton5);
     JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
     pannelCarburant.add(bouton6);
+
+
+    JCheckBox boutonDep = new JCheckBox("Département");
+    topPanel.add(boutonDep);
+    JCheckBox boutonReg = new JCheckBox("Région");
+    topPanel.add(boutonReg);
+
 
     JPanel rightPanel = new JPanel(); 
     rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 

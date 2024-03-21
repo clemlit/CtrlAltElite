@@ -77,7 +77,7 @@ public class Faisceau implements IForme {
         double minX = barres.get(0).largeur()/2-barres.get(0).centre().x();
         double maxY = barres.get(0).hauteur()/2+barres.get(0).centre().y();
         double minY = barres.get(0).hauteur()/2-barres.get(0).centre().y();
-        for (int i=1;i<barres.size();i++){
+        for (int i=0;i<barres.size();i++){
             if (maxX<barres.get(i).largeur()/2+barres.get(i).centre().x()){
                 maxX=barres.get(i).largeur()/2+barres.get(i).centre().x();
             }
@@ -91,7 +91,7 @@ public class Faisceau implements IForme {
                 minY=barres.get(0).hauteur()/2-barres.get(0).centre().y();
             }
         }
-        return new Point((maxX-minX)/2+minX, (maxY-minY)/2+maxY);
+        return new Point((maxX-minX)/2, (maxY-minY)/2);
     }
 
     @Override

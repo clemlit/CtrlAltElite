@@ -31,14 +31,18 @@ public class UI implements ActionListener{
     JFrame f = new JFrame("ma fenetre");
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    JPanel topPanel = new JPanel(); 
-    topPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 
-    topPanel.setPreferredSize(new Dimension(f.getWidth(), 200)); 
+    JPanel panelResults = new JPanel(); 
+    panelResults.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 
+    Border borderResults = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Résultats", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
+    panelResults.setBorder(borderResults);
+    panelResults.setPreferredSize(new Dimension(100, 200));
 
-    JPanel pannelCarburant = new JPanel();
-    pannelCarburant.setLayout(new BoxLayout(pannelCarburant, BoxLayout.Y_AXIS));
-    Border border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carburant", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
-    pannelCarburant.setBorder(border);
+    JPanel panelFiltres = new JPanel();
+    panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
+    Border borderFiltres = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Filtres", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
+    panelFiltres.setBorder(borderFiltres);
+    panelFiltres.setPreferredSize(new Dimension(300, f.getHeight())); 
+
 
     String[] listeregion = { "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne", "Centre-Val de Loire", "Corse", "Grand Est", "Hauts-de-France", "Île-de-France", "Normandie", "Nouvelle-Aquitaine", "Occitanie", "Pays de la Loire", "Provence-Alpes-Côte d'Azur" };
     
@@ -71,9 +75,9 @@ public class UI implements ActionListener{
     departement.setBackground(Color.WHITE);
     departement.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height)); 
 
-    pannelCarburant.add(jCombo);
-    pannelCarburant.add(region);
-    pannelCarburant.add(departement);
+    panelFiltres.add(jCombo);
+    panelFiltres.add(region);
+    panelFiltres.add(departement);
     region.addActionListener(this);
     departement.addActionListener(this);
 
@@ -83,26 +87,29 @@ public class UI implements ActionListener{
     }
     
 
-    JCheckBox bouton1 = new JCheckBox("Wifi");
-    pannelCarburant.add(bouton1);
+    JCheckBox bouton1 = new JCheckBox("Wi-fi");
+    panelFiltres.add(bouton1);
     JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
-    pannelCarburant.add(bouton2);
+    panelFiltres.add(bouton2);
     JCheckBox bouton3 = new JCheckBox("Station de gonflage");
-    pannelCarburant.add(bouton3);
+    panelFiltres.add(bouton3);
     JCheckBox bouton4 = new JCheckBox("Lavage automatique");
-    pannelCarburant.add(bouton4);
+    panelFiltres.add(bouton4);
     JCheckBox bouton5 = new JCheckBox("Bornes éléctrique");
-    pannelCarburant.add(bouton5);
+    panelFiltres.add(bouton5);
     JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
-    pannelCarburant.add(bouton6);
+    panelFiltres.add(bouton6);
 
-    JPanel rightPanel = new JPanel(); 
-    rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 
+    JPanel mapPanel = new JPanel(); 
+    Border borderMap = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carte", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
+    mapPanel.setBorder(borderMap);
+    mapPanel.setMaximumSize(new Dimension(f.getWidth(), f.getHeight()-500));
 
     f.setLayout(new BorderLayout());
-    f.add(topPanel, BorderLayout.NORTH); 
-    f.add(pannelCarburant, BorderLayout.WEST); 
-    f.add(rightPanel, BorderLayout.EAST); 
+
+    f.add(panelFiltres, BorderLayout.WEST); 
+    f.add(mapPanel, BorderLayout.CENTER);
+    f.add(panelResults, BorderLayout.SOUTH); 
 
     f.pack();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

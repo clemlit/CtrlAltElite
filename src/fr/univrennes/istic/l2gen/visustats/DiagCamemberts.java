@@ -3,18 +3,18 @@ package fr.univrennes.istic.l2gen.visustats;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import fr.univrennes.istic.l2gen.geometrie.IForme;
 import fr.univrennes.istic.l2gen.geometrie.Point;
 import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.geometrie.Texte;
 
-
-
 public class DiagCamemberts implements IDataVisualiseur {
 
+    /**
+     * Attributs du diagramme.
+     */
     private Camembert camembert;
-    private String couleur; 
+    private String couleur;
     private String legence;
     private String titre;
     private List<Rectangle> Rec;
@@ -23,43 +23,85 @@ public class DiagCamemberts implements IDataVisualiseur {
     private List<Texte> LegendeTexte;
     private StringBuilder legendeSVG = new StringBuilder();
 
+    /**
+     * Obtient le titre.
+     * 
+     * @return une chaine de caractères.
+     */
     public String getTitre() {
         return titre;
     }
 
+    /**
+     * Définit la valeur du titre.
+     * 
+     * @param titre une chaine de caractères.
+     */
     public void setTitre(String titre) {
         this.titre = titre;
     }
 
+    /**
+     * Obtient la légende.
+     * 
+     * @return une chaîne de caractères legence.
+     */
     public String getLegence() {
         return legence;
     }
 
+    /**
+     * Définit la valeur de legence.
+     * 
+     * @param legence une chaîne de caractères.
+     */
     public void setLegence(String legence) {
         this.legence = legence;
     }
 
+    /**
+     * Obtient le nombre de partie du camembert.
+     * 
+     * @return le nombre de part du camembert.
+     */
     public int getNbreDePart() {
         return nbreDePart;
     }
 
+    /**
+     * Définit la valeur du nombre de parties du camembert.
+     * 
+     * @param nbreDePart le nombre de parties du camembert.
+     */
     public void setNbreDePart(int nbreDePart) {
         this.nbreDePart = nbreDePart;
     }
 
+    /**
+     * Constructeur du diagramme camembert.
+     * 
+     * @param Titre le titre du diagramme
+     * @param x     le nombre de parties du diagramme
+     */
     public DiagCamemberts(String Titre, int x) {
         this.titre = Titre;
         this.nbreDePart = x;
         this.camemberts = new ArrayList<>();
         this.Rec = new ArrayList<>();
-        this.LegendeTexte = new ArrayList<>(); 
+        this.LegendeTexte = new ArrayList<>();
     }
 
+    /**
+     * Déplacer les faisceaux pour pouvoir mettre les informations dans l'ordre
+     * souhaité par l'utilisateur.
+     * 
+     * @requires des faisceaux déjà existants.
+     */
     @Override
     public IDataVisualiseur agencer() {
         if (camemberts != null) {
-            int xOffset = 200; 
-            int longeurtotale = (int)camemberts.get(0).centre().x();
+            int xOffset = 200;
+            int longeurtotale = (int) camemberts.get(0).centre().x();
             int longueurTexte = getTitre().length();
             for (int i = 0; i < camemberts.size(); i++) {
                 Camembert currentCamembert = camemberts.get(i);
@@ -73,13 +115,19 @@ public class DiagCamemberts implements IDataVisualiseur {
             for (Camembert camembert : camemberts) {
                 longeurtotale += camembert.centre().x();
             }
-            int centerX = longeurtotale /  camemberts.size();
+            int centerX = longeurtotale / camemberts.size();
             Texte texteTitre = new Texte(centerX - longueurTexte * 3, 50, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());
         }
         return this;
     }
 
+    /**
+     * Créer des faisceaux pour ajouter des données au diagramme.
+     * 
+     * @param donnees une chaine de caractères à ajouter.
+     * @param x       un tableau de double.
+     */
     @Override
     public IDataVisualiseur ajouterDonnees(String legende, double... valeurs) {
         Camembert nouveauCamembert = new Camembert(250, 250, 100);
@@ -106,11 +154,21 @@ public class DiagCamemberts implements IDataVisualiseur {
         return this;
     }
 
+    /**
+     * Retourne le centre de la forme géométrique
+     * 
+     * @return un point au centre de la forme géométrique
+     */
     @Override
     public Point centre() {
         return camembert.centre();
     }
 
+    /**
+     * Ajoute une légende au diagramme.
+     * 
+     * @param legendes un tableau de chaînes de caractères.
+     */
     @Override
     public IDataVisualiseur legender(String... legendes) {
         if (camembert == null) {
@@ -142,17 +200,27 @@ public class DiagCamemberts implements IDataVisualiseur {
         return this;
     }
 
+    /**
+     * Colorie la forme géométrique avec les couleurs spécifiées.
+     *
+     * @param couleurs Tableau variable de chaînes de caractères représentant les
+     *                 couleurs.
+     * @require couleur n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
+     * @require couleurs est une couleur existante dans la bibliothèque SVG.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (camembert == null) {
             camembert = new Camembert(250, 250, 100);
         }
-        
-        for (Camembert camembert : camemberts){
+
+        for (Camembert camembert : camemberts) {
             camembert.colorier(couleurs);
         }
 
-        //ATTENTION DIVISION PAR 0
+        // ATTENTION DIVISION PAR 0
         if (couleurs.length == 0) {
             return this;
         }
@@ -167,6 +235,11 @@ public class DiagCamemberts implements IDataVisualiseur {
         return this;
     }
 
+    /**
+     * Génère le code SVG représentant le triangle sans remplissage.
+     *
+     * @return Le code SVG du diagramme sans remplissage.
+     */
     @Override
     public String createEnSVG() {
         String svg = "";
@@ -175,59 +248,105 @@ public class DiagCamemberts implements IDataVisualiseur {
             svg += currentCamembert.enSVG();
         }
 
-        for (Texte legende : LegendeTexte ){
+        for (Texte legende : LegendeTexte) {
             svg += legende.enSVG();
         }
         svg += legendeSVG;
         return svg;
     }
 
+    /**
+     * Génère le code en SVG.
+     */
     @Override
     public String enSVG() {
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + createEnSVG() + "</svg>";
     }
-    
 
+    /**
+     * Calcule la hauteur de la forme.
+     */
     @Override
     public double hauteur() {
         return camembert.hauteur();
     }
 
+    /**
+     * Calcule la largeur de la forme.
+     */
     @Override
     public double largeur() {
         return camembert.largeur();
     }
 
+    /**
+     * Renvoi la nouvelle forme modifié
+     * 
+     * @param x le facteur de redimenssionement pour l'axe des x
+     * @param y le facteur de redimenssionement pour l'axe des y
+     */
     @Override
     public IForme redimensionner(double x, double y) {
         return camembert.redimensionner(x, y);
     }
 
+    /**
+     * Définit les nouvelles options de dataVisualiseurs
+     * 
+     * @param options un tableau de String
+     * @return une chaine de caractères
+     */
     @Override
     public IDataVisualiseur setOptions(String... options) {
         return this;
     }
 
+    /**
+     * Renvoi la forme après modification de son angle
+     * 
+     * @param angle le facteur de rotation à appliquer à la figure
+     * @return la forme modifié
+     */
     @Override
     public IForme tourner(int angle) {
         return camembert.tourner(angle);
     }
 
+    /**
+     * Obtient la couleur de la forme
+     */
     @Override
     public String getCouleur() {
         return couleur;
-    }    
-    
+    }
+
+    /**
+     * Change les coordonnées du centre de la figure
+     * 
+     * @param x la valeur a ajouté à l'axe des x
+     * @param y la valeur a ajouté à l'axe des y
+     * @return la figure déplacée
+     */
     @Override
     public IForme deplacer(double x, double y) {
         return camembert.deplacer(x, y);
     }
 
+    /**
+     * Renvoi la description de la forme
+     * 
+     * @return la descritption d'un camembert
+     */
     @Override
     public String description(int indentation) {
         return camembert.description(indentation);
     }
 
+    /**
+     * Renvoi une copie du camembert
+     * 
+     * @return un camembert
+     */
     @Override
     public IForme dupliquer() {
         return camembert.dupliquer();

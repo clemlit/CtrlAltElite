@@ -160,8 +160,6 @@ public class DiagBarre implements IDataVisualiseur {
 
         if (faisceaux != null) {
             int xOffset = 100;
-            int longeurtotale = (int) faisceaux.get(0).centre().x();
-            int longueurTexte = getTitre().length();
             for (int i = 0; i < faisceaux.size(); i++) {
                 Faisceau faisceau = faisceaux.get(i);
                 faisceau.deplacer(xOffset, 0);
@@ -174,10 +172,7 @@ public class DiagBarre implements IDataVisualiseur {
                 if (faisceau.centre().y() > testY) {
                     testY = faisceau.centre().y();
                 }
-                longeurtotale += faisceau.centre().x();
             }
-            int centerX = longeurtotale / faisceaux.size();
-
             // Axe abscisse
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
             double pointY1 = faisceaux.get(0).centre().y() + 5;
@@ -188,7 +183,13 @@ public class DiagBarre implements IDataVisualiseur {
                 }
             }
             double pointAbscisse = longeurMax + faisceaux.get(0).largeur() / 2;
-            Texte texteTitre = new Texte(centerX - longueurTexte * faisceaux.size(), 100, 20, getTitre());
+            int x_titre;
+            if (faisceaux.size() % 2 == 0) {
+                x_titre = 320 + (320 + 150 * faisceaux.size() - 320) / 2 - 35;
+            } else {
+                x_titre = 320 + (320 + 150 * faisceaux.size() - 320 - 50) / 2 - 35;
+            }
+            Texte texteTitre = new Texte(x_titre, 100, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());
             Ligne axeAbcisse = new Ligne(pointX1, pointY1, pointAbscisse, pointY1);
             this.legendeSVG.append(axeAbcisse.enSVG());
@@ -207,7 +208,7 @@ public class DiagBarre implements IDataVisualiseur {
             double[] scaleValuesAxes = generateProportionalValues(pointY1, pointY2, 6);
             double[] scaleValuesValeurs = generateProportionalValues(0.0, xmax, 6);
 
-            for (int i = 0; i < scaleValuesAxes.length; i++){
+            for (int i = 0; i < scaleValuesAxes.length; i++) {
                 double y = scaleValuesAxes[i];
                 Ligne segment = new Ligne(pointX1 - 5, y, pointX1, y);
                 Texte legende = new Texte(pointX1 - 25, y + 3, 10, String.valueOf((int) scaleValuesValeurs[i]));
@@ -240,7 +241,7 @@ public class DiagBarre implements IDataVisualiseur {
         for (int i = 0; i < x.length; i++) {
             ymax += x[i];
         }
-        if (ymax > xmax){
+        if (ymax > xmax) {
             xmax = ymax;
         }
 
@@ -264,8 +265,14 @@ public class DiagBarre implements IDataVisualiseur {
     @Override
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
-            // Déterminons la position de départ de la légende
-            double startX = faisceaux.get(faisceaux.size() / 2).centre().x();
+            int startX;
+            if (faisceaux.size() % 2 == 0) { // ici on veut se positionner au milieu des 2 rectangles aux positions
+                                             // faisceaux.size et faisceaux.size+1 car pair
+                startX = 120 + (320 + 150 * faisceaux.size() - 320) / 2 - 25;
+            } else { // ici on se positionne au milieu du rectangle à la position faisceaux.size/2+1
+                     // car impair
+                startX = 120 + (320 + 150 * faisceaux.size() - 320 - 50) / 2;
+            }
             int startY = 350;
 
             // Ajoutons la légende pour chaque carré de couleur
@@ -275,14 +282,19 @@ public class DiagBarre implements IDataVisualiseur {
                 // Créer un carré de couleur
                 Rectangle rect = new Rectangle(startX, startY, 20, 10); // Ajustez les dimensions selon votre besoin
                 Rec.add(rect);
-
                 String legendeSVG = "<text x=\"" + (startX + 15) + "\" y=\"" + (startY + 5) + "\">" + legende
                         + "</text>";
 
                 // Ajoutons le carré de couleur et la légende à la légende générale
                 this.legendeSVG.append(rect.enSVG()).append(legendeSVG);
+                if (legende == "Asie") {
+                    startX += 60;
+                } else if (legende == "Europe" || legende == "Afrique") {
+                    startX += 80;
+                } else {
+                    startX += 100;
+                }
 
-                startX += 100;
             }
         }
         return this;

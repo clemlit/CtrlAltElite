@@ -26,29 +26,33 @@
 <rect x="760.0" y="142.86516853932585" width="100.0" height="20.224719101123593" fill="Yellow" stroke="black" />
 <rect x="760.0" y="140.95505617977528" width="100.0" height="1.9101123595505618" fill="Maroon" stroke="black" />
 </g>
-<g>
-<rect x="910.0" y="297.92134831460675" width="100.0" height="12.078651685393258" fill="Blue" stroke="black" />
-<rect x="910.0" y="263.0898876404495" width="100.0" height="34.831460674157306" fill="Green" stroke="black" />
-<rect x="910.0" y="163.08988764044943" width="100.0" height="100.0" fill="Red" stroke="black" />
-<rect x="910.0" y="142.86516853932585" width="100.0" height="20.224719101123593" fill="Yellow" stroke="black" />
-<rect x="910.0" y="140.95505617977528" width="100.0" height="1.9101123595505618" fill="Maroon" stroke="black" />
-</g>
 <text x="360.0" y="420.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
 <text x="510.0" y="419.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
 <text x="660.0" y="419.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
 <text x="810.0" y="418.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2025</text>
-<text x="960.0" y="418.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2030</text>
-<rect x="150.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="175.0" y="355">Afrique</text><rect x="250.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="275.0" y="355">Amerique</text><rect x="350.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="375.0" y="355">Asie</text><rect x="450.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="475.0" y="355">Europe</text><rect x="550.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="575.0" y="355">Oceanie</text><rect x="150.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
-<rect x="250.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
-<rect x="350.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
-<rect x="450.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
-<rect x="550.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
-<text x="592.0" y="100.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
-<polyline points="310.0 310.0 1010.0 310.0 " fill="White" stroke="black" />
-<polyline points="310.0 310.0 310.0 128.75 " fill="White" stroke="black" />
+<rect x="385.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="410" y="355">Afrique</text><rect x="465.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="490" y="355">Amerique</text><rect x="565.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="590" y="355">Asie</text><rect x="625.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="650" y="355">Europe</text><rect x="705.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="730" y="355">Oceanie</text><rect x="385.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="465.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<rect x="565.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<rect x="625.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
+<rect x="705.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
+<text x="585.0" y="100.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
+<polyline points="310.0 310.0 860.0 310.0 " fill="White" stroke="black" />
+<polyline points="310.0 310.0 310.0 123.75 " fill="White" stroke="black" />
+<text x="285.0" y="313.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">0</text>
+<polyline points="305.0 310.0 310.0 310.0 " fill="White" stroke="black" />
+<text x="285.0" y="275.75" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">6026</text>
+<polyline points="305.0 272.75 310.0 272.75 " fill="White" stroke="black" />
+<text x="285.0" y="238.5" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">12052</text>
+<polyline points="305.0 235.5 310.0 235.5 " fill="White" stroke="black" />
+<text x="285.0" y="201.25" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">18078</text>
+<polyline points="305.0 198.25 310.0 198.25 " fill="White" stroke="black" />
+<text x="285.0" y="164.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">24104</text>
+<polyline points="305.0 161.0 310.0 161.0 " fill="White" stroke="black" />
+<text x="285.0" y="126.75" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">30130</text>
+<polyline points="305.0 123.75 310.0 123.75 " fill="White" stroke="black" />
 </svg>

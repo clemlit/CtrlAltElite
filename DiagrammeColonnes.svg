@@ -1,27 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg"><g>
-<rect x="394.0" y="300.0" width="16.0" height="10.0" fill="Blue" stroke="black" />
-<rect x="415.0" y="267.5" width="16.0" height="42.5" fill="Green" stroke="black" />
-<rect x="436.0" y="210.0" width="16.0" height="100.0" fill="Red" stroke="black" />
-<rect x="457.0" y="283.125" width="16.0" height="26.875" fill="Yellow" stroke="black" />
-<rect x="478.0" y="308.125" width="16.0" height="1.875" fill="Maroon" stroke="black" />
+<rect x="394.0" y="290.0" width="16.0" height="20.0" fill="Blue" stroke="black" />
+<rect x="415.0" y="225.0" width="16.0" height="85.0" fill="Green" stroke="black" />
+<rect x="436.0" y="110.0" width="16.0" height="200.0" fill="Red" stroke="black" />
+<rect x="457.0" y="256.25" width="16.0" height="53.75" fill="Yellow" stroke="black" />
+<rect x="478.0" y="306.25" width="16.0" height="3.75" fill="Maroon" stroke="black" />
 </g>
 <g>
-<rect x="544.0" y="299.1428571428571" width="16.0" height="10.857142857142858" fill="Blue" stroke="black" />
-<rect x="565.0" y="272.2857142857143" width="16.0" height="37.714285714285715" fill="Green" stroke="black" />
-<rect x="586.0" y="210.0" width="16.0" height="100.0" fill="Red" stroke="black" />
-<rect x="607.0" y="288.2857142857143" width="16.0" height="21.714285714285715" fill="Yellow" stroke="black" />
-<rect x="628.0" y="308.1142857142857" width="16.0" height="1.8857142857142857" fill="Maroon" stroke="black" />
+<rect x="544.0" y="288.2857142857143" width="16.0" height="21.714285714285715" fill="Blue" stroke="black" />
+<rect x="565.0" y="234.57142857142856" width="16.0" height="75.42857142857143" fill="Green" stroke="black" />
+<rect x="586.0" y="110.0" width="16.0" height="200.0" fill="Red" stroke="black" />
+<rect x="607.0" y="266.57142857142856" width="16.0" height="43.42857142857143" fill="Yellow" stroke="black" />
+<rect x="628.0" y="306.22857142857146" width="16.0" height="3.7714285714285714" fill="Maroon" stroke="black" />
 </g>
 <g>
-<rect x="694.0" y="298.2022471910112" width="16.0" height="11.797752808988763" fill="Blue" stroke="black" />
-<rect x="715.0" y="275.1685393258427" width="16.0" height="34.831460674157306" fill="Green" stroke="black" />
-<rect x="736.0" y="210.0" width="16.0" height="100.0" fill="Red" stroke="black" />
-<rect x="757.0" y="289.7752808988764" width="16.0" height="20.224719101123593" fill="Yellow" stroke="black" />
-<rect x="778.0" y="308.08988764044943" width="16.0" height="1.9101123595505618" fill="Maroon" stroke="black" />
+<rect x="694.0" y="286.40449438202245" width="16.0" height="23.595505617977526" fill="Blue" stroke="black" />
+<rect x="715.0" y="240.33707865168537" width="16.0" height="69.66292134831461" fill="Green" stroke="black" />
+<rect x="736.0" y="110.0" width="16.0" height="200.0" fill="Red" stroke="black" />
+<rect x="757.0" y="269.55056179775283" width="16.0" height="40.44943820224719" fill="Yellow" stroke="black" />
+<rect x="778.0" y="306.17977528089887" width="16.0" height="3.8202247191011236" fill="Maroon" stroke="black" />
 </g>
-<text x="444.0" y="340.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
-<text x="594.0" y="339.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
-<text x="744.0" y="339.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
+<text x="444.0" y="335.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2010</text>
+<text x="594.0" y="334.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
+<text x="744.0" y="333.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
 <rect x="334.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
 <text x="359.0" y="355">Afrique</text><rect x="434.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
 <text x="459.0" y="355">Amerique</text><rect x="534.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
@@ -32,7 +32,19 @@
 <rect x="534.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
 <rect x="634.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
 <rect x="734.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
-<text x="636.0" y="205.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
+<text x="636.0" y="100.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
 <polyline points="394.0 310.0 794.0 310.0 " fill="White" stroke="black" />
-<polyline points="394.0 310.0 394.0 210.0 " fill="White" stroke="black" />
+<polyline points="394.0 310.0 394.0 110.0 " fill="White" stroke="black" />
+<text x="374.0" y="314.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">0</text>
+<polyline points="391.0 310.0 397.0 310.0 " fill="White" stroke="black" />
+<text x="374.0" y="274.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">3560</text>
+<polyline points="391.0 270.0 397.0 270.0 " fill="White" stroke="black" />
+<text x="374.0" y="234.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">7120</text>
+<polyline points="391.0 230.0 397.0 230.0 " fill="White" stroke="black" />
+<text x="374.0" y="194.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">10680</text>
+<polyline points="391.0 190.0 397.0 190.0 " fill="White" stroke="black" />
+<text x="374.0" y="154.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">14240</text>
+<polyline points="391.0 150.0 397.0 150.0 " fill="White" stroke="black" />
+<text x="374.0" y="114.0" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">17800</text>
+<polyline points="391.0 110.0 397.0 110.0 " fill="White" stroke="black" />
 </svg>

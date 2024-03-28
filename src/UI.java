@@ -190,8 +190,10 @@ JCheckBox bouton1 = new JCheckBox("Wi-fi");
             public void actionPerformed(ActionEvent e) {
                 if (!menuregion.isVisible()) {
                     menuregion.setVisible(true);
+                    menuCarbu.setVisible(false);
                 } else {
                     menuregion.setVisible(false);
+                    menudepart.setVisible(false);
                 }
             }
         });
@@ -202,6 +204,8 @@ JCheckBox bouton1 = new JCheckBox("Wi-fi");
             public void actionPerformed(ActionEvent e) {
                 if (!menudepart.isVisible()) {
                     menudepart.setVisible(true);
+                    menuregion.setVisible(false);
+                    menuCarbu.setVisible(false);
                 } else {
                     menudepart.setVisible(false);
                 }
@@ -214,6 +218,8 @@ JCheckBox bouton1 = new JCheckBox("Wi-fi");
             public void actionPerformed(ActionEvent e) {
                 if (!menuCarbu.isVisible()) {
                     menuCarbu.setVisible(true);
+                    menuregion.setVisible(false);
+                    menudepart.setVisible(false);
                 } else {
                     menuCarbu.setVisible(false);
                 }

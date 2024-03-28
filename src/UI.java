@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+
 public class UI implements ActionListener {
     ButtonGroup echelle = new ButtonGroup();
     JRadioButton eregion;
@@ -48,7 +49,6 @@ public class UI implements ActionListener {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panelResults = new JPanel();
-        panelResults.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         Border borderResults = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
                 "Résultats", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
         panelResults.setBorder(borderResults);
@@ -61,7 +61,7 @@ public class UI implements ActionListener {
         panelFiltres.setBorder(borderFiltres);
         panelFiltres.setPreferredSize(new Dimension(300, f.getHeight()));
 
-        JCheckBox bouton1 = new JCheckBox("Wi-fi");
+JCheckBox bouton1 = new JCheckBox("Wi-fi");
         panelFiltres.add(bouton1);
         JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
         panelFiltres.add(bouton2);
@@ -227,6 +227,7 @@ public class UI implements ActionListener {
         f.add(panelResults, BorderLayout.SOUTH);
 
         f.pack();
+        panelFiltres.add(buttonCarbu);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width * 50 / 100;
         int height = screenSize.height * 50 / 100;

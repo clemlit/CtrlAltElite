@@ -11,6 +11,8 @@ import fr.univrennes.istic.l2gen.geometrie.Texte;
 
 public class DiagColonnes implements IDataVisualiseur {
 
+    private double xmax = 0.0;
+
     /**
      * Retourne le faisceau.
      * 
@@ -217,6 +219,7 @@ public class DiagColonnes implements IDataVisualiseur {
 
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
             double pointY1 = faisceaux.get(0).centre().y() + 5;
+            double pointY2= pointY1 - faisceaux.get(0).hauteur();
             double longeurMax = faisceaux.get(0).centre().x();
             for (Faisceau faisceau : faisceaux) {
                 if (faisceau.centre().x() > longeurMax) {
@@ -226,16 +229,19 @@ public class DiagColonnes implements IDataVisualiseur {
             double pointAbscisse = longeurMax + faisceaux.get(0).largeur() / 2;
             Ligne axeAbcisse = new Ligne(pointX1, pointY1, pointAbscisse, pointY1);
             this.legendeSVG.append(axeAbcisse.enSVG());
-
-            //Axe ordonnée
-            double hauteurMax = faisceaux.get(0).hauteur();
-            for (Faisceau faisceau : faisceaux) {
-                if (faisceau.hauteur() > hauteurMax) {
-                    longeurMax = faisceau.hauteur();
-                }
-            }
-            Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY1 - faisceaux.get(0).hauteur());
+            Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY2);
             this.legendeSVG.append(axeOrdonee.enSVG());
+
+            double[] scaleValuesAxes = generateProportionalValues(pointY1, pointY2, 6);
+            double[] scaleValuesValeurs = generateProportionalValues(0.0, xmax, 6);
+
+            for (int i = 0; i < scaleValuesAxes.length; i++) {
+                double y = scaleValuesAxes[i];
+                Texte legende = new Texte(pointX1 -10, y + 2, 5, String.valueOf((int)scaleValuesValeurs[i]));
+                Ligne segment = new Ligne(pointX1 - 3, y, pointX1 + 3, y);
+                this.legendeSVG.append(legende.enSVG());
+                this.legendeSVG.append(segment.enSVG());
+            }
         }
         return this;
     }
@@ -257,6 +263,12 @@ public class DiagColonnes implements IDataVisualiseur {
                 (int) (nvfaisceau.centre().y() - 85 + nvfaisceau.largeur() + 20), 15, donnees);
         LegendeTexte.add(texte);
 
+        for (int i = 0; i < x.length; i++){
+            if (x[i] > xmax){
+                xmax = x[i];
+            }
+        }
+
         return this;
     }
 
@@ -277,7 +289,7 @@ public class DiagColonnes implements IDataVisualiseur {
                 String legende = legendes[i];
 
                 // Créer un carré de couleur
-                Rectangle rect = new Rectangle(startX, startY, 20, 10); // Ajustez les dimensions selon votre besoin
+                Rectangle rect = new Rectangle(startX, startY, 20, 10); 
                 Rec.add(rect);
 
                 String legendeSVG = "<text x=\"" + (startX + 15) + "\" y=\"" + (startY + 5) + "\">" + legende
@@ -297,6 +309,15 @@ public class DiagColonnes implements IDataVisualiseur {
     public IDataVisualiseur setOptions(String... options) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setOptions'");
+    }
+
+    public static double[] generateProportionalValues(double lowerBound, double upperBound, int count) {
+        double[] scaleValues = new double[count];
+        double step = (upperBound - lowerBound) / (count - 1);
+        for (int i = 0; i < count; i++) {
+            scaleValues[i] = lowerBound + i * step;
+        }
+        return scaleValues;
     }
 
 }

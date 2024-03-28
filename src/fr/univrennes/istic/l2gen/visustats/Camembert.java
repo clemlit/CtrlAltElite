@@ -16,6 +16,7 @@ public class Camembert implements IForme {
     private String legende;
     private List<Secteur> secteurs;
 
+    // Getters des différents attributs
     public List<Secteur> getSecteurs() {
         return secteurs;
     }
@@ -24,23 +25,25 @@ public class Camembert implements IForme {
         return rayon;
     }
 
-    public void setRayon(double rayon) {
-        this.rayon = rayon;
-    }
-
     public Point getCentre() {
         return centre;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    // Setters des différents attributs
+    public void setRayon(double rayon) {
+        this.rayon = rayon;
     }
 
     public void setCentre(Point centre) {
         this.centre = centre;
     }
+
     public void setSecteurs(List<Secteur> secteurs) {
         this.secteurs = secteurs;
-    }
-
-    public double getAngle() {
-        return angle;
     }
 
     // CONSTRUCTEURS

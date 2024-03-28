@@ -11,6 +11,9 @@ public class App {
         visualiseurfv.ajouterDonnees("2010", 1600, 6800, 16000, 4300, 300);
         visualiseurfv.ajouterDonnees("2015", 1900, 6600, 17500, 3800, 330);
         visualiseurfv.ajouterDonnees("2020", 2100, 6200, 17800, 3600, 340);
+        visualiseurfv.ajouterDonnees("2025", 2150, 6200, 17800, 3600, 340);
+        visualiseurfv.ajouterDonnees("2030", 2150, 6200, 17800, 3600, 340);
+
         visualiseurfv.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
         visualiseurfv.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
         FileWriter writer01 = new FileWriter("DiagrammeBarres.svg");

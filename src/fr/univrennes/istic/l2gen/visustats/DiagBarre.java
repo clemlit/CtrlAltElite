@@ -11,31 +11,33 @@ import fr.univrennes.istic.l2gen.geometrie.Texte;
 
 public class DiagBarre implements IDataVisualiseur {
 
+    // Attributs
+    private Faisceau faisceau;
+    private List<Faisceau> faisceaux;
+    private String titre;
+    private List<Rectangle> Rec;
+    private List<Texte> LegendeTexte;
+    private StringBuilder legendeSVG = new StringBuilder();
+
+    // Getters des différents attributs
     public Faisceau getFaisceau() {
         return faisceau;
     }
 
-    public void setFaisceau(Faisceau faisceau) {
-        this.faisceau = faisceau;
-    }
-
-    private Faisceau faisceau;
-    private List<Faisceau> faisceaux;
-    private String titre;
-
     public String getTitre() {
         return titre;
+    }
+
+    // Setters des différents attributs
+    public void setFaisceau(Faisceau faisceau) {
+        this.faisceau = faisceau;
     }
 
     public void setTitre(String titre) {
         this.titre = titre;
     }
 
-    private List<Rectangle> Rec;
-    private List<Texte> LegendeTexte;
-
-    private StringBuilder legendeSVG = new StringBuilder();
-
+    // Constructeur
     public DiagBarre(String titre, int x) {
         this.titre = titre;
         this.faisceaux = new ArrayList<>();
@@ -86,11 +88,26 @@ public class DiagBarre implements IDataVisualiseur {
         throw new UnsupportedOperationException("Unimplemented method 'dupliquer'");
     }
 
+    /**
+     * Génère une représentation SVG du camembert.
+     *
+     * @return Chaîne de caractères représentant le camembert en format SVG.
+     */
     @Override
     public String enSVG() {
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + createEnSVG() + "</svg>";
     }
 
+    /**
+     * Colorie la forme géométrique avec les couleurs spécifiées.
+     *
+     * @param couleurs Tableau variable de chaînes de caractères représentant les
+     *                 couleurs.
+     * @require couleur n'est pas vide.
+     * @require les couleurs du tableau couleurs sont des couleurs existantes dans
+     *          la bibliothèque SVG.
+     * @require couleurs est une couleur existante dans la bibliothèque SVG.
+     */
     @Override
     public IForme colorier(String... couleurs) {
         if (couleurs.length == 0) {
@@ -122,6 +139,11 @@ public class DiagBarre implements IDataVisualiseur {
         throw new UnsupportedOperationException("Unimplemented method 'tourner'");
     }
 
+    /**
+     * Génère le code SVG représentant le triangle sans remplissage.
+     *
+     * @return Le code SVG du diagramme sans remplissage.
+     */
     @Override
     public String createEnSVG() {
         String svg = "";
@@ -135,6 +157,12 @@ public class DiagBarre implements IDataVisualiseur {
         return svg;
     }
 
+    /**
+     * Déplacer les faisceaux pour pouvoir mettre les informations dans l'ordre
+     * souhaité par l'utilisateur.
+     * 
+     * @requires des faisceaux déjà existants.
+     */
     @Override
     public IDataVisualiseur agencer() {
 
@@ -149,33 +177,33 @@ public class DiagBarre implements IDataVisualiseur {
                 legende.deplacer(xOffset, 0);
                 xOffset += faisceau.largeur() + 50;
             }
-            double testY=faisceaux.get(0).centre().y();
-            double maxY=faisceaux.get(0).centre().y()-faisceaux.get(0).hauteur();
+            double testY = faisceaux.get(0).centre().y();
+            double maxY = faisceaux.get(0).centre().y() - faisceaux.get(0).hauteur();
             for (Faisceau faisceau : faisceaux) {
-                if (faisceau.centre().y()>testY){
-                    testY=faisceau.centre().y();
-                    maxY=faisceau.centre().y()-faisceau.hauteur();
+                if (faisceau.centre().y() > testY) {
+                    testY = faisceau.centre().y();
+                    maxY = faisceau.centre().y() - faisceau.hauteur();
                 }
                 longeurtotale += faisceau.centre().x();
             }
             int centerX = longeurtotale / faisceaux.size();
 
-            //Axe abscisse
-            double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur()/2;
+            // Axe abscisse
+            double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
             double pointY1 = faisceaux.get(0).centre().y() + 5;
             double longeurMax = faisceaux.get(0).centre().x();
             for (Faisceau faisceau : faisceaux) {
-                if (faisceau.centre().x() > longeurMax){
+                if (faisceau.centre().x() > longeurMax) {
                     longeurMax = faisceau.centre().x();
                 }
             }
-            double pointAbscisse =longeurMax + faisceaux.get(0).largeur()/2;
+            double pointAbscisse = longeurMax + faisceaux.get(0).largeur() / 2;
             Texte texteTitre = new Texte(centerX - longueurTexte * faisceaux.size(), 100, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());
             Ligne axeAbcisse = new Ligne(pointX1, pointY1, pointAbscisse, pointY1);
             this.legendeSVG.append(axeAbcisse.enSVG());
 
-            //Axe ordonnée
+            // Axe ordonnée
             double hauteurMax = faisceaux.get(0).hauteur();
             for (Faisceau faisceau : faisceaux) {
                 if (faisceau.hauteur() > hauteurMax) {
@@ -185,11 +213,16 @@ public class DiagBarre implements IDataVisualiseur {
             Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY1 - faisceaux.get(0).hauteur());
             this.legendeSVG.append(axeOrdonee.enSVG());
 
-
         }
         return this;
     }
 
+    /**
+     * Créer des faisceaux pour ajouter des données au diagramme.
+     * 
+     * @param donnees une chaine de caractères à ajouter.
+     * @param x       un tableau de double.
+     */
     @Override
     public IDataVisualiseur ajouterDonnees(String donnees, double... x) {
         Faisceau nvfaisceau = new Faisceau(donnees, x);
@@ -204,11 +237,16 @@ public class DiagBarre implements IDataVisualiseur {
         return this;
     }
 
+    /**
+     * Ajoute une légende au diagramme.
+     * 
+     * @param legendes un tableau de chaînes de caractères.
+     */
     @Override
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
             // Déterminons la position de départ de la légende
-            double startX = faisceaux.get(faisceaux.size()/2).centre().x();
+            double startX = faisceaux.get(faisceaux.size() / 2).centre().x();
             int startY = 350;
 
             // Ajoutons la légende pour chaque carré de couleur

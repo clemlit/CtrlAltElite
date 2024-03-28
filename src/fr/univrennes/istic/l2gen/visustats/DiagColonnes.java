@@ -218,7 +218,7 @@ public class DiagColonnes implements IDataVisualiseur {
             this.legendeSVG.append(texteTitre.enSVG());
 
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
-            double pointY1 = faisceaux.get(0).centre().y() + 5;
+            double pointY1 = faisceaux.get(0).centre().y() + 10;
             double pointY2= pointY1 - faisceaux.get(0).hauteur();
             double longeurMax = faisceaux.get(0).centre().x();
             for (Faisceau faisceau : faisceaux) {
@@ -237,7 +237,7 @@ public class DiagColonnes implements IDataVisualiseur {
 
             for (int i = 0; i < scaleValuesAxes.length; i++) {
                 double y = scaleValuesAxes[i];
-                Texte legende = new Texte(pointX1 -10, y + 2, 5, String.valueOf((int)scaleValuesValeurs[i]));
+                Texte legende = new Texte(pointX1 - 20, y + 4, 10, String.valueOf((int)scaleValuesValeurs[i]));
                 Ligne segment = new Ligne(pointX1 - 3, y, pointX1 + 3, y);
                 this.legendeSVG.append(legende.enSVG());
                 this.legendeSVG.append(segment.enSVG());
@@ -255,7 +255,7 @@ public class DiagColonnes implements IDataVisualiseur {
     @Override
     public IDataVisualiseur ajouterDonnees(String donnees, double... x) {
         Faisceau nvfaisceau = new Faisceau(donnees, x);
-        double echelle = 100.0 / nvfaisceau.hauteur();
+        double echelle =200.0 / nvfaisceau.hauteur();
         nvfaisceau.agencer(55, 200, 100, echelle, false);
         faisceaux.add(nvfaisceau);
 

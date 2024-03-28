@@ -18,12 +18,12 @@ public class DiagCamembertsTest {
 
     }
 
-   @Test
+    @Test
     public void testAjouterDonnees() {
         DiagCamemberts diagCamemberts = new DiagCamemberts(null, 0);
 
         String legende = "Données 1";
-        double[] valeurs = {20.0, 30.0, 50.0}; // Exemple de valeurs
+        double[] valeurs = { 20.0, 30.0, 50.0 }; // Exemple de valeurs
 
         IDataVisualiseur result = diagCamemberts.ajouterDonnees(legende, valeurs);
 
@@ -35,13 +35,11 @@ public class DiagCamembertsTest {
         assertEquals(1, camemberts.size());
         assertEquals(1, legendes.size());
 
-        
         Camembert nouveauCamembert = camemberts.get(0);
-        assertEquals(3, nouveauCamembert.getSecteurs().size()); 
+        assertEquals(3, nouveauCamembert.getSecteurs().size());
         Texte texteLegende = legendes.get(0);
-        assertEquals("Données 1", texteLegende.getTexte()); 
+        assertEquals("Données 1", texteLegende.getTexte());
     }
-
 
     @Test
     public void testCentre() {
@@ -103,7 +101,6 @@ public class DiagCamembertsTest {
         // Déjà testé dans CamembertTest.java
 
     }
-    
 
     @Test
     public void testTourner() {

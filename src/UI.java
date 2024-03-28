@@ -5,13 +5,13 @@ import javax.swing.border.TitledBorder;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+
 
 public class UI implements ActionListener {
     ButtonGroup echelle = new ButtonGroup();
@@ -41,7 +41,6 @@ public class UI implements ActionListener {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panelResults = new JPanel();
-        panelResults.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         Border borderResults = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
                 "Résultats", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
         panelResults.setBorder(borderResults);
@@ -54,25 +53,11 @@ public class UI implements ActionListener {
         panelFiltres.setBorder(borderFiltres);
         panelFiltres.setPreferredSize(new Dimension(300, f.getHeight()));
 
-        JCheckBox bouton1 = new JCheckBox("Wi-fi");
-        panelFiltres.add(bouton1);
-        JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
-        panelFiltres.add(bouton2);
-        JCheckBox bouton3 = new JCheckBox("Station de gonflage");
-        panelFiltres.add(bouton3);
-        JCheckBox bouton4 = new JCheckBox("Lavage automatique");
-        panelFiltres.add(bouton4);
-        JCheckBox bouton5 = new JCheckBox("Bornes éléctrique");
-        panelFiltres.add(bouton5);
-        JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
-        panelFiltres.add(bouton6);
 
         eregion = new JRadioButton("Région");
         edepart = new JRadioButton("Département");
         echelle.add(eregion);
         echelle.add(edepart);
-        panelFiltres.add(eregion);
-        panelFiltres.add(edepart);
 
         JPanel mapPanel = new JPanel();
         Border borderMap = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carte",
@@ -112,17 +97,46 @@ public class UI implements ActionListener {
         departement.setBackground(Color.WHITE);
         departement.setMaximumSize(new Dimension(200, Carbu.getPreferredSize().height));
 
-        panelFiltres.add(Carbu);
 
         eregion.addActionListener(this);
         edepart.addActionListener(this);
+        
 
+        JLabel localisationLabel = new JLabel("Localisation");
+
+        JCheckBox bouton1 = new JCheckBox("Wi-fi");
+        JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
+        JCheckBox bouton3 = new JCheckBox("Station de gonflage");
+        JCheckBox bouton4 = new JCheckBox("Lavage automatique");
+        JCheckBox bouton5 = new JCheckBox("Bornes éléctrique");
+        JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
+
+
+        // Ajout des cases à cocher
+        panelFiltres.add(bouton1);
+        panelFiltres.add(bouton2);
+        panelFiltres.add(bouton3);
+        panelFiltres.add(bouton4);
+        panelFiltres.add(bouton5);
+        panelFiltres.add(bouton6);
+
+        // Ajout des composants pour la sélection de région et de département + carburant
+        panelFiltres.add(localisationLabel);
+        panelFiltres.add(eregion);
+        panelFiltres.add(edepart);
+        panelFiltres.add(Carbu);
+
+
+        
         f.setLayout(new BorderLayout());
 
         f.add(panelFiltres, BorderLayout.WEST);
         f.add(mapPanel, BorderLayout.CENTER);
         f.add(panelResults, BorderLayout.SOUTH);
 
+
+        Font font = new Font("Helvetica", Font.BOLD, 14);
+        localisationLabel.setFont(font);
         f.pack();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width * 50 / 100;
@@ -153,7 +167,7 @@ public class UI implements ActionListener {
                 }
             }
             panelFiltres.revalidate();
-                panelFiltres.repaint();
+            panelFiltres.repaint();
         }
     }
 }

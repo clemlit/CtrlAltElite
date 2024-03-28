@@ -49,43 +49,36 @@ public class DiagBarre implements IDataVisualiseur {
 
     @Override
     public Point centre() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'centre'");
     }
 
     @Override
     public String description(int indentation) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'description'");
     }
 
     @Override
     public double hauteur() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'hauteur'");
     }
 
     @Override
     public double largeur() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'largeur'");
     }
 
     @Override
     public IForme redimensionner(double dx, double dy) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'redimensionner'");
     }
 
     @Override
     public IForme deplacer(double dx, double dy) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deplacer'");
     }
 
     @Override
     public IForme dupliquer() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'dupliquer'");
     }
 
@@ -130,13 +123,11 @@ public class DiagBarre implements IDataVisualiseur {
 
     @Override
     public String getCouleur() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCouleur'");
     }
 
     @Override
     public IForme tourner(int angle) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'tourner'");
     }
 
@@ -300,7 +291,6 @@ public class DiagBarre implements IDataVisualiseur {
 
     @Override
     public IDataVisualiseur setOptions(String... options) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setOptions'");
     }
 

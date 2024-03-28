@@ -1,162 +1,215 @@
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class API {
+    private static final String BASE_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Veuillez choisir l'option (ville/departement/region/France) :");
-        String type = scanner.nextLine();
-        String location;
-        if (type.equals("France")) {
-            location = "";
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Veuillez choisir l'option (ville/departement/region/France) :");
+            String type = scanner.nextLine();
+            String location;
+            if (type.equals("France")) {
+                location = "";
+            } else {
+                System.out.println("Veuillez entrer le nom de la " + type + " :");
+                location = scanner.nextLine();
+            }
+            System.out.println("Vouillez choisir les services que vous souhaite avoir :");
+            String[] services = {
+                    "Vente de gaz domestique (Butane, Propane)",
+                    "Station de gonflage",
+                    "DAB (Distributeur automatique de billets)",
+                    "Automate CB 24/24",
+                    "Boutique alimentaire",
+                    "Piste poids lourds",
+                    "Boutique non alimentaire",
+                    "Carburant additivé",
+                    "Lavage automatique",
+                    "Toilettes publiques",
+                    "Lavage manuel",
+                    "Restauration à emporter",
+                    "Location de véhicule",
+                    "Relais colis",
+                    "Laverie",
+                    "Vente d'additifs carburants",
+                    "Services réparation / entretien",
+                    "Restauration sur place",
+                    "Wifi",
+                    "Vente de fioul domestique",
+                    "Vente de pétrole lampant",
+                    "Bornes électriques",
+                    "Bar",
+                    "Espace bébé",
+                    "Douches",
+                    "Aire de camping-cars",
+                    "GNV"
+            };
+
+            // Liste des services choisis
+            ArrayList<String> servicesChoisis = new ArrayList<>();
+
+            // Demande à l'utilisateur quels services il souhaite avoir
+            System.out.println("Quels services souhaitez-vous avoir ? (Entrez les numéros séparés par des virgules)");
+            for (int i = 0; i < services.length; i++) {
+                System.out.println((i+1) + ". " + services[i]);
+            }
+            System.out.print("Votre choix : ");
+
+            // Lecture de la saisie utilisateur
+            String choixUtilisateur = scanner.nextLine();
+
+            // Traitement de la saisie utilisateur
+            String[] numerosServices = choixUtilisateur.split(",");
+            for (String numero : numerosServices) {
+                int index = Integer.parseInt(numero.trim()) - 1;
+                if (index >= 0 && index < services.length) {
+                    servicesChoisis.add(services[index]);
+                }
+            }
+
+            // Affichage des services choisis
+            System.out.println("Vous avez choisi les services suivants :");
+            for (String service : servicesChoisis) {
+                System.out.println("- " + service);
+            }
+
+
+
+            System.out.println("Choisissez le ou les carburants séparés par des virgules (gazole/gplc/e10/sp95/sp98/e85/tous) :");
+            String carburant = scanner.nextLine();
+            List<String> carburants = Arrays.asList(carburant.split(","));
+            if (carburants.contains("tous")) {
+                carburants = Arrays.asList("gazole", "gplc", "e10", "sp95", "sp98", "e85");
+            }
+            System.out.println("Choisissez le ou les types de calcul séparés par des virgules (avg/min/median/count/tous) :");
+            String cal = scanner.nextLine();
+            List<String> calList = Arrays.asList(cal.split(","));
+            if (calList.contains("tous")) {
+                calList = Arrays.asList("avg", "min", "median", "count");
+            }
+            boolean showAdresseMin = false;
+            if (calList.contains("min")) {
+                System.out.println("Voulez-vous connaître l'adresse de la station avec le prix minimum ? (oui/non)");
+                String adresseMin = scanner.nextLine();
+                showAdresseMin = adresseMin.equalsIgnoreCase("oui");
+            }
+
+            JSONObject jsonData = requeteHttp(type, location, carburants, calList, showAdresseMin,servicesChoisis);
+            extractFuelPrices(jsonData, carburants, calList);
+        }
+    }
+    public static String buildURL(String type, String location, String carburant, List<String> calList, int x,List<String> servicesChoisis) {
+        StringBuilder urlBuilder = new StringBuilder(BASE_URL);
+        urlBuilder.append("select=adresse,ville");
+        if (x == 1) {
+            for (String cal : calList) {
+                urlBuilder.append(",");
+                urlBuilder.append(cal).append("(").append(carburant).append("_prix)");
+            }
         } else {
-            System.out.println("Veuillez entrer le nom de la " + type + " :");
-            location = scanner.nextLine();
+            urlBuilder.append(",");
+            urlBuilder.append(carburant).append("_prix");
         }
-
-        System.out.println("Choisissez le ou less carburants séparés par des virgules (gazole/gplc/e10/sp95/sp98/e85/tous) :");
-        String carburantsInput = scanner.nextLine();
-        String[] carburants = carburantsInput.split(",");
-        System.out.println("Choisissez le ou les type de calcul séparés par des virgules (avg/min/median/tous) :");
-        String cal = scanner.nextLine();
-        List<String> calList = Arrays.asList(cal.split(","));
-        if (calList.contains("tous")) {
-            calList = Arrays.asList("avg", "min", "median");
+        if (servicesChoisis != null && !servicesChoisis.isEmpty() && !type.equals("France") ) {
+            urlBuilder.append("&where=");
         }
-
-
-
-
-        HttpClient client = HttpClient.newHttpClient();
-        System.out.println(type + " : " + location);
-        for (String calType : calList) {
-            
-        
-        String url = buildURL(type, location, calType);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .thenApply(JSONObject::new) // Convert the response to JSONObject
-                .thenAccept(json -> {
-                    try {
-                        // Write the JSONObject to a file
-                        Files.writeString(Paths.get("prixEssence.json"), json.toString(4));
-
-                        // Read the file
-                        String content = new String(Files.readAllBytes(Paths.get("prixEssence.json")));
-                        JSONObject jsonFromFile = new JSONObject(content);
-
-                        // Extract and print fuel prices
-                        extractFuelPrices(jsonFromFile, location, type, carburants, calType);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                })
-                .join();
+        if (!type.equals("France")) {
+            urlBuilder.append(type).append("%3D%22").append(location).append("%22");
+        }
+        if (servicesChoisis != null && !servicesChoisis.isEmpty()) {
+            for (String service : servicesChoisis) {
+                urlBuilder.append("and%20").append("services_service%3D%22").append(service.replace(" ", "%20")).append("%22");
+            }
+        }
+        urlBuilder.append("&order_by=").append(carburant).append("_prix%20asc");
+        urlBuilder.append("&limit=1");
+        return urlBuilder.toString();
     }
-}
-
-    public static String buildURL(String type, String location, String cal) {
-        String locationEncoded = URLEncoder.encode(location, StandardCharsets.UTF_8);
-        locationEncoded = locationEncoded.replace("%C5%A0", "%C3%A8");
-        String typeEncoded = URLEncoder.encode(type, StandardCharsets.UTF_8);
-        typeEncoded = typeEncoded.replace("%C5%A0", "%C3%A8");
-
-        String baseURL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
-        String select = "";
-        String filter = "&where="+ typeEncoded +"%3D%22" + locationEncoded + "%22";
-        String groupBy = "";
-        String limit = "";
-
-
-        if(cal.equals("avg")){
-            select = "select=avg(gazole_prix),avg(sp95_prix),avg(sp98_prix),avg(e85_prix),avg(gplc_prix),avg(e10_prix)";
+    public static void extractFuelPrices(JSONObject json, List<String> carburants, List<String> calList) {
+        for (String carburant : carburants) {
+            System.out.println();
+            System.out.println("Carburant : " + carburant.split("_")[0].toUpperCase());
+            extractFuelPrice(json, carburant + "_avec_adresse_min", calList,true);
+            extractFuelPrice(json, carburant + "_sans_adresse_min", calList,false);
         }
-        else if(cal.equals("min")){
-            select = "select=min(gazole_prix),min(sp95_prix),min(sp98_prix),min(e85_prix),min(gplc_prix),min(e10_prix)";
-        }
-        else if(cal.equals("median")){
-            select = "select=median(gazole_prix),median(sp95_prix),median(sp98_prix),median(e85_prix),median(gplc_prix),median(e10_prix)";
-        }
-        else{
-            System.out.println("Type de calcul non reconnu");
-            System.exit(0);
-        }
-        if (type.equals("France")) {
-            filter = "";
-            limit = "&limit=1";
-        }
-        else if(type.equals("region")){
-            groupBy = "&group_By=region";
-        }
-        else if(type.equals("departement")){
-            groupBy = "&group_By=departement";
-        }
-        else{
-            groupBy = "&group_By=ville";
-        }
-        return baseURL + select + filter + groupBy + limit;
     }
-
-    public static void extractFuelPrices(JSONObject json, String location, String type, String[] carburants, String cal) {
-        if (json.has("results")) {
-            JSONArray records = json.getJSONArray("results");
-            for (int i = 0; i < records.length(); i++) {
-                JSONObject record = records.getJSONObject(i);
-                System.out.println();
-                for (String carburant : carburants) {
-                    switch (carburant.trim().toLowerCase()) {
-                        case "gazole":
-                            System.out.println("Prix " + cal + " du gazole : " + String.format("%.2f", record.getDouble(cal+"(gazole_prix)")));
-                            break;
-                        case "sp95":
-                            System.out.println("Prix " + cal + " du SP95 : " + String.format("%.2f", record.getDouble(cal+"(sp95_prix)")));
-                            break;
-                        case "sp98":
-                            System.out.println("Prix " + cal + " du SP98 : " + String.format("%.2f", record.getDouble(cal+"(sp98_prix)")));
-                            break;
-                        case "e85":
-                            System.out.println("Prix " + cal + " du E85 : " + String.format("%.2f", record.getDouble(cal+"(e85_prix)")));
-                            break;
-                        case "gplc":
-                            System.out.println("Prix " + cal + " du GPLC : " + String.format("%.2f", record.getDouble(cal+"(gplc_prix)")));
-                            break;
-                        case "e10":
-                            System.out.println("Prix " + cal + " du E10 : " + String.format("%.2f", record.getDouble(cal+"(e10_prix)")));
-                            break;
-                        default:
-                            System.out.println("Carburant non reconnu : " + carburant.trim());
-                            break;
-                        case "tous":
-                            System.out.println("Prix " + cal + " du gazole : " + String.format("%.2f", record.getDouble(cal+"(gazole_prix)")));
-                            System.out.println("Prix " + cal + " du SP95 : " + String.format("%.2f", record.getDouble(cal+"(sp95_prix)")));
-                            System.out.println("Prix " + cal + " du SP98 : " + String.format("%.2f", record.getDouble(cal+"(sp98_prix)")));
-                            System.out.println("Prix " + cal + " du E85 : " + String.format("%.2f", record.getDouble(cal+"(e85_prix)")));
-                            System.out.println("Prix " + cal + " du GPLC : " + String.format("%.2f", record.getDouble(cal+"(gplc_prix)")));
-                            System.out.println("Prix " + cal + " du E10 : " + String.format("%.2f", record.getDouble(cal+"(e10_prix)")));
-                            break;
+    private static void extractFuelPrice(JSONObject json, String key, List<String> calList,boolean affiche) {
+        if (json.has(key)) {
+            JSONObject carburantData = json.getJSONObject(key);
+            JSONArray results = carburantData.getJSONArray("results");
+            if (affiche) {
+                if (!results.isEmpty()) {
+                    JSONObject record = results.getJSONObject(0);
+                    String adresse = record.optString("adresse", "Adresse non disponible");
+                    String ville = record.optString("ville","ville non disponible");
+                    System.out.println("L'adresse de la station avec le prix minimum est " + adresse + " dans la ville de " + ville);
+                }
+            }
+            else {
+                for (String cal : calList) {
+                    if (!cal.equals("count")) {
+                        String fieldName = cal + "(" + key.split("_")[0] + "_prix)";
+                        if (!results.isEmpty() && results.getJSONObject(0).has(fieldName) ) {
+                            double prix = results.getJSONObject(0).getDouble(fieldName);
+                            Object prixObj = results.getJSONObject(0).get(fieldName);
+                            if (prixObj != null && prixObj instanceof Number) {
+                                double prix2 = ((Number) prixObj).doubleValue();
+                                System.out.println("Prix " + cal + " : " + String.format("%.2f", prix2));
+                            } else {
+                                System.out.println("Prix " + cal + " non disponible");
+                            }
+                        } else {
+                            System.out.println("Prix " + cal + " non disponible");
+                        }
+                    } else {
+                        if (!results.isEmpty() && results.getJSONObject(0).has("count(" + key.split("_")[0] + "_prix)")) {
+                            double nb = results.getJSONObject(0).getDouble("count(" + key.split("_")[0] + "_prix)");
+                            System.out.println("Nombre de stations : " + String.format("%.0f", nb));
+                        } else {
+                            System.out.println("Nombre de stations non disponible");
+                        }
                     }
                 }
             }
-        } else {
-            System.out.println("Aucun résultat trouvé.");
         }
     }
-    
+    public static JSONObject requeteHttp(String type, String location, List<String> carburants, List<String>calList, boolean showAdresseMin,List<String> serviceChoisis) {
+        ArrayList<String> m = new ArrayList<>(calList);
+        HttpClient client = HttpClient.newHttpClient();
+        JSONObject result = new JSONObject();
+
+        for (String carburant : carburants) {
+            for (int x = showAdresseMin ? 0 : 1; x < 2; x++) {
+                List<String> currentCalList = (x == 0) ? new ArrayList<>() : m;
+                String url = buildURL(type, location, carburant, currentCalList, x,serviceChoisis);
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .build();
+                try {
+                    String jsonResponse = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+                    JSONObject json = new JSONObject(jsonResponse);
+                    String key = x==0 ? carburant + "_avec_adresse_min" : carburant + "_sans_adresse_min";
+                    result.put(key, json);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            Files.writeString(Paths.get("prixEssence.json"), result.toString(4));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

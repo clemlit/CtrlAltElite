@@ -17,6 +17,7 @@ public class DiagBarre implements IDataVisualiseur {
     private String titre;
     private List<Rectangle> Rec;
     private List<Texte> LegendeTexte;
+    private double xmax = 0.0;
     private StringBuilder legendeSVG = new StringBuilder();
 
     // Getters des différents attributs
@@ -48,43 +49,36 @@ public class DiagBarre implements IDataVisualiseur {
 
     @Override
     public Point centre() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'centre'");
     }
 
     @Override
     public String description(int indentation) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'description'");
     }
 
     @Override
     public double hauteur() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'hauteur'");
     }
 
     @Override
     public double largeur() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'largeur'");
     }
 
     @Override
     public IForme redimensionner(double dx, double dy) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'redimensionner'");
     }
 
     @Override
     public IForme deplacer(double dx, double dy) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deplacer'");
     }
 
     @Override
     public IForme dupliquer() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'dupliquer'");
     }
 
@@ -129,13 +123,11 @@ public class DiagBarre implements IDataVisualiseur {
 
     @Override
     public String getCouleur() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCouleur'");
     }
 
     @Override
     public IForme tourner(int angle) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'tourner'");
     }
 
@@ -178,11 +170,9 @@ public class DiagBarre implements IDataVisualiseur {
                 xOffset += faisceau.largeur() + 50;
             }
             double testY = faisceaux.get(0).centre().y();
-            double maxY = faisceaux.get(0).centre().y() - faisceaux.get(0).hauteur();
             for (Faisceau faisceau : faisceaux) {
                 if (faisceau.centre().y() > testY) {
                     testY = faisceau.centre().y();
-                    maxY = faisceau.centre().y() - faisceau.hauteur();
                 }
                 longeurtotale += faisceau.centre().x();
             }
@@ -210,8 +200,20 @@ public class DiagBarre implements IDataVisualiseur {
                     longeurMax = faisceau.hauteur();
                 }
             }
-            Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY1 - faisceaux.get(0).hauteur());
+            double pointY2 = pointY1 - faisceaux.get(0).hauteur() - 5;
+            Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY2);
             this.legendeSVG.append(axeOrdonee.enSVG());
+
+            double[] scaleValuesAxes = generateProportionalValues(pointY1, pointY2, 6);
+            double[] scaleValuesValeurs = generateProportionalValues(0.0, xmax, 6);
+
+            for (int i = 0; i < scaleValuesAxes.length; i++){
+                double y = scaleValuesAxes[i];
+                Ligne segment = new Ligne(pointX1 - 5, y, pointX1, y);
+                Texte legende = new Texte(pointX1 - 25, y + 3, 10, String.valueOf((int) scaleValuesValeurs[i]));
+                this.legendeSVG.append((legende.enSVG()));
+                this.legendeSVG.append(segment.enSVG());
+            }
 
         }
         return this;
@@ -234,7 +236,24 @@ public class DiagBarre implements IDataVisualiseur {
                 (int) (nvfaisceau.centre().y() - 5 + nvfaisceau.largeur() + 20), 15, donnees);
         LegendeTexte.add(texte);
 
+        double ymax = 0.0;
+        for (int i = 0; i < x.length; i++) {
+            ymax += x[i];
+        }
+        if (ymax > xmax){
+            xmax = ymax;
+        }
+
         return this;
+    }
+
+    public static double[] generateProportionalValues(double lowerBound, double upperBound, int count) {
+        double[] scaleValues = new double[count];
+        double step = (upperBound - lowerBound) / (count - 1);
+        for (int i = 0; i < count; i++) {
+            scaleValues[i] = lowerBound + i * step;
+        }
+        return scaleValues;
     }
 
     /**
@@ -272,7 +291,6 @@ public class DiagBarre implements IDataVisualiseur {
 
     @Override
     public IDataVisualiseur setOptions(String... options) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setOptions'");
     }
 

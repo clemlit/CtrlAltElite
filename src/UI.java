@@ -1,10 +1,15 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import java.awt.*;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import fr.univrennes.istic.l2gen.geometrie.Point;
+
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,22 +17,19 @@ import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+
 public class UI implements ActionListener {
-    JComboBox departementARA;
-    JComboBox departementBFC;
-    JComboBox departementB;
-    JComboBox departementCVL;
-    JComboBox departementC;
-    JComboBox departementGE;
-    JComboBox departementHDF;
-    JComboBox departementIDF;
-    JComboBox departementN;
-    JComboBox departementNA;
-    JComboBox departementO;
-    JComboBox departementOM;
-    JComboBox departementPDL;
-    JComboBox departementPACA;
+    ButtonGroup echelle = new ButtonGroup();
+    JRadioButton eregion;
+    JRadioButton edepart;
+    final JPopupMenu menuCarbu = new JPopupMenu();
+    final JPopupMenu menuregion = new JPopupMenu();
+    final JPopupMenu menudepart = new JPopupMenu();
+    final JButton buttonCarbu;
+    final JButton buttonregion;
+    final JButton buttondepart;
     JPanel panelFiltres; // Déclaration de panelFiltres en tant que champ de classe
+    JPanel panelResults;
 
     public static void main(String argv[]) {
         new UI();
@@ -46,8 +48,7 @@ public class UI implements ActionListener {
         JFrame f = new JFrame("ma fenetre");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panelResults = new JPanel();
-        panelResults.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        panelResults = new JPanel();
         Border borderResults = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
                 "Résultats", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
         panelResults.setBorder(borderResults);
@@ -60,7 +61,7 @@ public class UI implements ActionListener {
         panelFiltres.setBorder(borderFiltres);
         panelFiltres.setPreferredSize(new Dimension(300, f.getHeight()));
 
-        JCheckBox bouton1 = new JCheckBox("Wi-fi");
+JCheckBox bouton1 = new JCheckBox("Wi-fi");
         panelFiltres.add(bouton1);
         JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
         panelFiltres.add(bouton2);
@@ -73,127 +74,157 @@ public class UI implements ActionListener {
         JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
         panelFiltres.add(bouton6);
 
+        eregion = new JRadioButton("Région");
+        edepart = new JRadioButton("Département");
+        echelle.add(eregion);
+        echelle.add(edepart);
+        panelFiltres.add(eregion);
+        panelFiltres.add(edepart);
+
         JPanel mapPanel = new JPanel();
         Border borderMap = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carte",
                 TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
         mapPanel.setBorder(borderMap);
         mapPanel.setMaximumSize(new Dimension(f.getWidth(), f.getHeight() - 500));
 
-        String[] listeregion = { "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne", "Centre-Val de Loire",
+        String[] Carburants = { "Gazole", "SP95", "SP98", "E10", "E85", "GPLc" };
+
+        for (String Carburant : Carburants) {
+            menuCarbu.add(new JCheckBoxMenuItem(Carburant));
+        }
+
+
+        eregion.addActionListener(this);
+        edepart.addActionListener(this);
+
+        String[] regions = { "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne", "Centre-Val de Loire",
                 "Corse", "Grand Est", "Hauts-de-France", "Île-de-France", "Normandie", "Nouvelle-Aquitaine",
-                "Occitanie", "Outre-Mer", "Pays de la Loire", "Provence-Alpes-Côte d'Azur" };
+                "Occitanie",
+                "Outre-Mer", "Pays de la Loire", "Provence-Alpes-Côte d'Azur" };
 
-        String[] listedepartementARA = {
-            "Ain", "Allier", "Ardèche", "Cantal", "Drôme", "Haute-Loire", "Haute-Savoie", "Isère", 
-            "Loire", "Puy-de-Dôme", "Rhône", "Savoie"
+        for (String region : regions) {
+            menuregion.add(new JCheckBoxMenuItem(region));
+        }
+
+        // Ajout des départements
+        JMenuItem[] departements = {
+                new JCheckBoxMenuItem("01 - Ain"), new JCheckBoxMenuItem("02 - Aisne"),
+                new JCheckBoxMenuItem("03 - Allier"),
+                new JCheckBoxMenuItem("04 - Alpes-de-Haute-Provence"), new JCheckBoxMenuItem("05 - Hautes-Alpes"),
+                new JCheckBoxMenuItem("06 - Alpes-Maritimes"),
+                new JCheckBoxMenuItem("07 - Ardèche"), new JCheckBoxMenuItem("08 - Ardennes"),
+                new JCheckBoxMenuItem("09 - Ariège"),
+                new JCheckBoxMenuItem("10 - Aube"), new JCheckBoxMenuItem("11 - Aude"),
+                new JCheckBoxMenuItem("12 - Aveyron"),
+                new JCheckBoxMenuItem("13 - Bouches-du-Rhône"), new JCheckBoxMenuItem("14 - Calvados"),
+                new JCheckBoxMenuItem("15 - Cantal"),
+                new JCheckBoxMenuItem("16 - Charente"), new JCheckBoxMenuItem("17 - Charente-Maritime"),
+                new JCheckBoxMenuItem("18 - Cher"),
+                new JCheckBoxMenuItem("19 - Corrèze"), new JCheckBoxMenuItem("21 - Côte-d'Or"),
+                new JCheckBoxMenuItem("22 - Côtes-d'Armor"),
+                new JCheckBoxMenuItem("23 - Creuse"), new JCheckBoxMenuItem("24 - Dordogne"),
+                new JCheckBoxMenuItem("25 - Doubs"),
+                new JCheckBoxMenuItem("26 - Drôme"), new JCheckBoxMenuItem("27 - Eure"),
+                new JCheckBoxMenuItem("28 - Eure-et-Loir"),
+                new JCheckBoxMenuItem("29 - Finistère"), new JCheckBoxMenuItem("2A - Corse-du-Sud"),
+                new JCheckBoxMenuItem("2B - Haute-Corse"),
+                new JCheckBoxMenuItem("30 - Gard"), new JCheckBoxMenuItem("31 - Haute-Garonne"),
+                new JCheckBoxMenuItem("32 - Gers"),
+                new JCheckBoxMenuItem("33 - Gironde"), new JCheckBoxMenuItem("34 - Hérault"),
+                new JCheckBoxMenuItem("35 - Ille-et-Vilaine"),
+                new JCheckBoxMenuItem("36 - Indre"), new JCheckBoxMenuItem("37 - Indre-et-Loire"),
+                new JCheckBoxMenuItem("38 - Isère"),
+                new JCheckBoxMenuItem("39 - Jura"), new JCheckBoxMenuItem("40 - Landes"),
+                new JCheckBoxMenuItem("41 - Loir-et-Cher"),
+                new JCheckBoxMenuItem("42 - Loire"), new JCheckBoxMenuItem("43 - Haute-Loire"),
+                new JCheckBoxMenuItem("44 - Loire-Atlantique"),
+                new JCheckBoxMenuItem("45 - Loiret"), new JCheckBoxMenuItem("46 - Lot"),
+                new JCheckBoxMenuItem("47 - Lot-et-Garonne"),
+                new JCheckBoxMenuItem("48 - Lozère"), new JCheckBoxMenuItem("49 - Maine-et-Loire"),
+                new JCheckBoxMenuItem("50 - Manche"),
+                new JCheckBoxMenuItem("51 - Marne"), new JCheckBoxMenuItem("52 - Haute-Marne"),
+                new JCheckBoxMenuItem("53 - Mayenne"),
+                new JCheckBoxMenuItem("54 - Meurthe-et-Moselle"), new JCheckBoxMenuItem("55 - Meuse"),
+                new JCheckBoxMenuItem("56 - Morbihan"),
+                new JCheckBoxMenuItem("57 - Moselle"), new JCheckBoxMenuItem("58 - Nièvre"),
+                new JCheckBoxMenuItem("59 - Nord"),
+                new JCheckBoxMenuItem("60 - Oise"), new JCheckBoxMenuItem("61 - Orne"),
+                new JCheckBoxMenuItem("62 - Pas-de-Calais"),
+                new JCheckBoxMenuItem("63 - Puy-de-Dôme"), new JCheckBoxMenuItem("64 - Pyrénées-Atlantiques"),
+                new JCheckBoxMenuItem("65 - Hautes-Pyrénées"),
+                new JCheckBoxMenuItem("66 - Pyrénées-Orientales"), new JCheckBoxMenuItem("67 - Bas-Rhin"),
+                new JCheckBoxMenuItem("68 - Haut-Rhin"),
+                new JCheckBoxMenuItem("69 - Rhône"), new JCheckBoxMenuItem("70 - Haute-Saône"),
+                new JCheckBoxMenuItem("71 - Saône-et-Loire"),
+                new JCheckBoxMenuItem("72 - Sarthe"), new JCheckBoxMenuItem("73 - Savoie"),
+                new JCheckBoxMenuItem("74 - Haute-Savoie"),
+                new JCheckBoxMenuItem("75 - Paris"), new JCheckBoxMenuItem("76 - Seine-Maritime"),
+                new JCheckBoxMenuItem("77 - Seine-et-Marne"),
+                new JCheckBoxMenuItem("78 - Yvelines"), new JCheckBoxMenuItem("79 - Deux-Sèvres"),
+                new JCheckBoxMenuItem("80 - Somme"),
+                new JCheckBoxMenuItem("81 - Tarn"), new JCheckBoxMenuItem("82 - Tarn-et-Garonne"),
+                new JCheckBoxMenuItem("83 - Var"),
+                new JCheckBoxMenuItem("84 - Vaucluse"), new JCheckBoxMenuItem("85 - Vendée"),
+                new JCheckBoxMenuItem("86 - Vienne"),
+                new JCheckBoxMenuItem("87 - Haute-Vienne"), new JCheckBoxMenuItem("88 - Vosges"),
+                new JCheckBoxMenuItem("89 - Yonne"),
+                new JCheckBoxMenuItem("90 - Territoire de Belfort"), new JCheckBoxMenuItem("91 - Essonne"),
+                new JCheckBoxMenuItem("92 - Hauts-de-Seine"),
+                new JCheckBoxMenuItem("93 - Seine-Saint-Denis"), new JCheckBoxMenuItem("94 - Val-de-Marne"),
+                new JCheckBoxMenuItem("95 - Val-d'Oise"),
+                new JCheckBoxMenuItem("971 - Guadeloupe"), new JCheckBoxMenuItem("972 - Martinique"),
+                new JCheckBoxMenuItem("973 - Guyane"),
+                new JCheckBoxMenuItem("974 - La Réunion"), new JCheckBoxMenuItem("975 - Saint-Pierre-et-Miquelon"),
+                new JCheckBoxMenuItem("976 - Mayotte"),
+                new JCheckBoxMenuItem("977 - Saint-Barthélemy"), new JCheckBoxMenuItem("978 - Saint-Martin")
         };
-        
-        String[] listedepartementBFC = {
-            "Côte-d'Or", "Doubs", "Haute-Saône", "Jura", "Nièvre", "Saône-et-Loire", "Territoire de Belfort", "Yonne"
-        };    
 
-        String[] listedepartementB = {"Côtes-d'Armor", "Finistère", "Ille-et-Vilaine", "Morbihan"};
+        // Ajout des départements au menu
+        for (JMenuItem departement : departements) {
+            menudepart.add(departement);
+        }
 
-        String[] listedepartementCVL = {
-            "Cher", "Eure-et-Loir", "Indre", "Indre-et-Loire", "Loir-et-Cher", "Loiret"
-        };
-          
-        String[] listedepartementC = { "Corse-du-Sud", "Haute-Corse" };
+        buttonregion = new JButton("Choississez une ou plusieurs région(s)");
+        buttonregion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!menuregion.isVisible()) {
+                    menuregion.setVisible(true);
+                    menuCarbu.setVisible(false);
+                } else {
+                    menuregion.setVisible(false);
+                    menudepart.setVisible(false);
+                }
+            }
+        });
 
-        String[] listedepartementGE = {
-            "Ardennes", "Aube", "Marne", "Haute-Marne", "Meurthe-et-Moselle", "Meuse", "Moselle", "Bas-Rhin", "Haut-Rhin", "Vosges"
-        };
+        buttondepart = new JButton("Choississez un ou plusieurs département(s)");
+        buttondepart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!menudepart.isVisible()) {
+                    menudepart.setVisible(true);
+                    menuregion.setVisible(false);
+                    menuCarbu.setVisible(false);
+                } else {
+                    menudepart.setVisible(false);
+                }
+            }
+        });
 
-        String[] listedepartementHDF = {
-            "Aisne", "Nord", "Oise", "Pas-de-Calais", "Somme"
-        };
-
-        String[] listedepartementIDF = {
-            "Paris", "Seine-et-Marne", "Yvelines", "Essonne", "Hauts-de-Seine", "Seine-Saint-Denis", "Val-de-Marne", "Val-d'Oise"
-        };
-
-        String[] listedepartementN = { "Calvados", "Eure", "Manche", "Orne", "Seine-Maritime" };
-
-        String[] listedepartementNA = {
-            "Charente", "Charente-Maritime", "Corrèze", "Creuse", "Deux-Sèvres",
-            "Dordogne", "Gironde", "Haute-Vienne", "Landes", "Lot-et-Garonne", "Pyrénées-Atlantiques", "Vienne"
-        };
-
-        String[] listedepartementO = {
-            "Ariège", "Aude", "Aveyron", "Gard", "Haute-Garonne",
-            "Gers", "Hérault", "Lot", "Lozère", "Hautes-Pyrénées",
-            "Pyrénées-Orientales", "Tarn", "Tarn-et-Garonne"
-        };
-
-        String[] listedepartementOM = { 
-            "Guadeloupe", "Martinique", "Guyane", "La Réunion", "Mayotte", 
-            "Saint-Barthélemy", "Saint-Martin", "Saint-Pierre-et-Miquelon"
-        };
-        
-
-        String[] listedepartementPDL = {
-            "Loire-Atlantique", "Maine-et-Loire", "Mayenne", "Sarthe", "Vendée"
-        };
-
-        String[] listedepartementPACA = {
-            "Alpes-de-Haute-Provence", "Hautes-Alpes", "Alpes-Maritimes", "Bouches-du-Rhône", "Var", "Vaucluse"
-        };
-
-        String[] Carburant = { "Gazole", "SP95", "SP98", "E10", "E85", "GPLc" };
-
-        JComboBox jCombo = new JComboBox(Carburant);
-        jCombo.setBackground(Color.WHITE);
-        jCombo.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        JComboBox region = new JComboBox(listeregion);
-        region.setBackground(Color.WHITE);
-        region.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementARA = new JComboBox(listedepartementARA);
-        departementARA.setBackground(Color.WHITE);
-        departementARA.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementBFC = new JComboBox(listedepartementBFC);
-        departementBFC.setBackground(Color.WHITE);
-        departementBFC.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementB = new JComboBox(listedepartementB);
-        departementB.setBackground(Color.WHITE);
-        departementB.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementCVL = new JComboBox(listedepartementCVL);
-        departementCVL.setBackground(Color.WHITE);
-        departementCVL.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementC = new JComboBox(listedepartementC);
-        departementC.setBackground(Color.WHITE);
-        departementC.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementGE = new JComboBox(listedepartementGE);
-        departementGE.setBackground(Color.WHITE);
-        departementGE.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementHDF = new JComboBox(listedepartementHDF);
-        departementHDF.setBackground(Color.WHITE);
-        departementHDF.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementIDF = new JComboBox(listedepartementIDF);
-        departementIDF.setBackground(Color.WHITE);
-        departementIDF.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementN = new JComboBox(listedepartementN);
-        departementN.setBackground(Color.WHITE);
-        departementN.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementNA = new JComboBox(listedepartementNA);
-        departementNA.setBackground(Color.WHITE);
-        departementNA.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementO = new JComboBox(listedepartementO);
-        departementO.setBackground(Color.WHITE);
-        departementO.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementOM = new JComboBox(listedepartementOM);
-        departementOM.setBackground(Color.WHITE);
-        departementOM.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementPDL = new JComboBox(listedepartementPDL);
-        departementPDL.setBackground(Color.WHITE);
-        departementPDL.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        departementPACA = new JComboBox(listedepartementPACA);
-        departementPACA.setBackground(Color.WHITE);
-        departementPACA.setMaximumSize(new Dimension(200, jCombo.getPreferredSize().height));
-        
-
-        panelFiltres.add(jCombo);
-        panelFiltres.add(region);
-        region.addActionListener(this);
+        buttonCarbu = new JButton("Choississez un ou plusieurs Carburant(s)");
+        buttonCarbu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!menuCarbu.isVisible()) {
+                    menuCarbu.setVisible(true);
+                    menuregion.setVisible(false);
+                    menudepart.setVisible(false);
+                } else {
+                    menuCarbu.setVisible(false);
+                }
+            }
+        });
 
         f.setLayout(new BorderLayout());
 
@@ -202,6 +233,7 @@ public class UI implements ActionListener {
         f.add(panelResults, BorderLayout.SOUTH);
 
         f.pack();
+        panelFiltres.add(buttonCarbu);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width * 50 / 100;
         int height = screenSize.height * 50 / 100;
@@ -211,71 +243,24 @@ public class UI implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
-        System.out.println("Bouton " + event.getSource() + " cliqué !");
-        if (event.getSource() instanceof JComboBox) { // Vérifie si l'événement provient d'un JComboBox
-            JComboBox source = (JComboBox) event.getSource();
-            if (source.getSelectedItem().equals("Auvergne-Rhône-Alpes")){
-                panelFiltres.add(departementARA);
-            } else {
-                panelFiltres.remove(departementARA); 
-            } if (source.getSelectedItem().equals("Bourgogne-Franche-Comté")){
-                panelFiltres.add(departementBFC);
-            } else {
-                panelFiltres.remove(departementBFC); 
-            } if (source.getSelectedItem().equals("Bretagne")) { 
-                panelFiltres.add(departementB); 
-            } else {
-                panelFiltres.remove(departementB); 
-            }  if (source.getSelectedItem().equals("Centre-Val de Loire")){
-                panelFiltres.add(departementCVL);
-            } else {
-                panelFiltres.remove(departementCVL); 
+        panelFiltres.revalidate(); // Actualise le panel pour refléter les changements
+        panelFiltres.repaint();
+
+        if (event.getSource() instanceof JRadioButton) {
+            JRadioButton sourceradio = (JRadioButton) event.getSource();
+            if (sourceradio == eregion) {
+                if (eregion.isSelected()) {
+                    panelFiltres.add(buttonregion);
+                    panelFiltres.remove(buttondepart);
+                }
             }
-            if (source.getSelectedItem().equals("Corse")) { 
-                panelFiltres.add(departementC); 
-            } else {
-                panelFiltres.remove(departementC); 
-            } if (source.getSelectedItem().equals("Grand Est")){
-                panelFiltres.add(departementGE);
-            } else {
-                panelFiltres.remove(departementGE); 
-            } if (source.getSelectedItem().equals("Hauts-de-France")){
-                panelFiltres.add(departementHDF);
-            } else {
-                panelFiltres.remove(departementHDF); 
-            } if (source.getSelectedItem().equals("Île-de-France")){
-                panelFiltres.add(departementIDF);
-            } else {
-                panelFiltres.remove(departementIDF); 
-            } if (source.getSelectedItem().equals("Normandie")) { 
-                panelFiltres.add(departementN); 
-            } else {
-                panelFiltres.remove(departementN); 
-            }  if (source.getSelectedItem().equals("Nouvelle-Aquitaine")){
-                panelFiltres.add(departementNA);
-            } else {
-                panelFiltres.remove(departementNA); 
+            if (sourceradio == edepart) {
+                if (edepart.isSelected()) {
+                    panelFiltres.add(buttondepart);
+                    panelFiltres.remove(buttonregion);
+                }
             }
-            if (source.getSelectedItem().equals("Occitanie")) { 
-                panelFiltres.add(departementO); 
-            } else {
-                panelFiltres.remove(departementO); 
-            } if (source.getSelectedItem().equals("Outre-Mer")){
-                panelFiltres.add(departementOM);
-            } else {
-                panelFiltres.remove(departementOM); 
-            } if (source.getSelectedItem().equals("Pays de la Loire")) { 
-                panelFiltres.add(departementPDL); 
-            } else {
-                panelFiltres.remove(departementPDL); 
-            } if (source.getSelectedItem().equals("Provence-Alpes-Côte d'Azur")){
-                panelFiltres.add(departementPACA);
-            } else {
-                panelFiltres.remove(departementPACA); 
-            }
-            
-            
-            panelFiltres.revalidate(); // Actualise le panel pour refléter les changements
+            panelFiltres.revalidate();
             panelFiltres.repaint();
         }
     }

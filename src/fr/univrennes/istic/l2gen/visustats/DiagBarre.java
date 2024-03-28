@@ -149,7 +149,13 @@ public class DiagBarre implements IDataVisualiseur {
                 legende.deplacer(xOffset, 0);
                 xOffset += faisceau.largeur() + 50;
             }
+            double testY=faisceaux.get(0).centre().y();
+            double maxY=faisceaux.get(0).centre().y()-faisceaux.get(0).hauteur();
             for (Faisceau faisceau : faisceaux) {
+                if (faisceau.centre().y()>testY){
+                    testY=faisceau.centre().y();
+                    maxY=faisceau.centre().y()-faisceau.hauteur();
+                }
                 longeurtotale += faisceau.centre().x();
             }
             int centerX = longeurtotale / faisceaux.size();
@@ -202,7 +208,7 @@ public class DiagBarre implements IDataVisualiseur {
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
             // Déterminons la position de départ de la légende
-            double startX = faisceaux.get(0).centre().x();
+            double startX = faisceaux.get(faisceaux.size()/2).centre().x();
             int startY = 350;
 
             // Ajoutons la légende pour chaque carré de couleur

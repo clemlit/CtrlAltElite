@@ -201,12 +201,18 @@ public class DiagColonnes implements IDataVisualiseur {
                 legende.deplacer(xOffset, 0);
                 xOffset += faisceau.largeur() + 50;
             }
+            double testY=faisceaux.get(0).centre().y();
+            double maxY=faisceaux.get(0).centre().y()-faisceaux.get(0).hauteur();
             for (Faisceau faisceau : faisceaux) {
+                if (faisceau.centre().y()>testY){
+                    testY=faisceau.centre().y();
+                    maxY=faisceau.centre().y()-faisceau.hauteur();
+                }
                 longeurtotale += faisceau.centre().x();
             }
             
             int centerX = longeurtotale / faisceaux.size();
-            Texte texteTitre = new Texte(centerX - longueurTexte * 3, 150, 20, getTitre());
+            Texte texteTitre = new Texte(centerX - longueurTexte * faisceaux.size(), maxY, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());
 
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
@@ -263,8 +269,8 @@ public class DiagColonnes implements IDataVisualiseur {
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
             // Déterminons la position de départ de la légende
-            int startX = 450;
-            int startY = 350;
+            double startX = faisceaux.get(0).centre().x();
+            int startY =  350;
 
             // Ajoutons la légende pour chaque carré de couleur
             for (int i = 0; i < legendes.length; i++) {

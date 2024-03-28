@@ -110,13 +110,18 @@ public class DiagCamemberts implements IDataVisualiseur {
                 legende.deplacer(xOffset, 0);
                 xOffset += currentCamembert.largeur() + 70;
             }
-
+            double testY=camemberts.get(0).centre().y();
+            double maxY=camemberts.get(0).centre().y()-camemberts.get(0).hauteur();
             // Calculer la largeur totale des camemberts
             for (Camembert camembert : camemberts) {
+                if (camembert.centre().y()>testY){
+                    testY=camembert.centre().y();
+                    maxY=camembert.centre().y()-camembert.hauteur();
+                }
                 longeurtotale += camembert.centre().x();
             }
             int centerX = longeurtotale / camemberts.size();
-            Texte texteTitre = new Texte(centerX - longueurTexte * 3, 50, 20, getTitre());
+            Texte texteTitre = new Texte(centerX - longueurTexte * camemberts.size(), maxY, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());
         }
         return this;

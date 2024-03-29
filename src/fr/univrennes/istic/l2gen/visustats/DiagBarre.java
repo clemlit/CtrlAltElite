@@ -187,7 +187,7 @@ public class DiagBarre implements IDataVisualiseur {
             if (faisceaux.size() % 2 == 0) {
                 x_titre = 320 + (320 + 150 * faisceaux.size() - 320) / 2 - 35;
             } else {
-                x_titre = 320 + (320 + 150 * faisceaux.size() - 320 - 50) / 2 - 35;
+                x_titre = 320 + (320 + 150 * faisceaux.size() - 320 - 50) / 2;
             }
             Texte texteTitre = new Texte(x_titre, 100, 20, getTitre());
             this.legendeSVG.append(texteTitre.enSVG());

@@ -265,13 +265,19 @@ public class DiagBarre implements IDataVisualiseur {
     @Override
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
+            int taille_legendes=0;
+        for (String legendeString : legendes){
+            taille_legendes+=20+legendeString.length()*10;
+        }
+        taille_legendes-=20;
+
             int startX;
             if (faisceaux.size() % 2 == 0) { // ici on veut se positionner au milieu des 2 rectangles aux positions
                                              // faisceaux.size et faisceaux.size+1 car pair
-                startX = 120 + (320 + 150 * faisceaux.size() - 320) / 2 - 25;
+                startX = 320 + (150 * faisceaux.size() -taille_legendes) / 2;
             } else { // ici on se positionne au milieu du rectangle à la position faisceaux.size/2+1
                      // car impair
-                startX = 120 + (320 + 150 * faisceaux.size() - 320 - 50) / 2;
+                     startX = 320 + (150 * faisceaux.size() -taille_legendes-50) / 2;
             }
             int startY = 350;
 
@@ -287,13 +293,7 @@ public class DiagBarre implements IDataVisualiseur {
 
                 // Ajoutons le carré de couleur et la légende à la légende générale
                 this.legendeSVG.append(rect.enSVG()).append(legendeSVG);
-                if (legende == "Asie") {
-                    startX += 60;
-                } else if (legende == "Europe" || legende == "Afrique") {
-                    startX += 80;
-                } else {
-                    startX += 100;
-                }
+                startX+=20+legende.length()*10;
 
             }
         }

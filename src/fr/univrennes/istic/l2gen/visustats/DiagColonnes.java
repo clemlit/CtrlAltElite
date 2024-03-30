@@ -194,8 +194,6 @@ public class DiagColonnes implements IDataVisualiseur {
 
         if (faisceaux != null) {
             int xOffset = 100;
-            int longeurtotale = (int) faisceaux.get(0).centre().x();
-            int longueurTexte = getTitre().length();
             for (int i = 0; i < faisceaux.size(); i++) {
                 Faisceau faisceau = faisceaux.get(i);
                 faisceau.deplacer(xOffset, 0);
@@ -204,16 +202,11 @@ public class DiagColonnes implements IDataVisualiseur {
                 xOffset += faisceau.largeur() + 50;
             }
             double testY = faisceaux.get(0).centre().y();
-            double maxY = faisceaux.get(0).centre().y() - faisceaux.get(0).hauteur();
             for (Faisceau faisceau : faisceaux) {
                 if (faisceau.centre().y() > testY) {
                     testY = faisceau.centre().y();
-                    maxY = faisceau.centre().y() - faisceau.hauteur();
                 }
-                longeurtotale += faisceau.centre().x();
             }
-
-            int centerX = longeurtotale / faisceaux.size();
             int x_titre;
             if (faisceaux.size() % 2 == 0) {
                 x_titre = 404 + (404 + 135 * faisceaux.size() - 404) / 2 - 35;
@@ -287,16 +280,20 @@ public class DiagColonnes implements IDataVisualiseur {
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
             // Déterminons la position de départ de la légende
+            int taille_legendes = 0;
+            for (String legendeString : legendes) {
+                taille_legendes += 20 + legendeString.length() * 10;
+            }
+            taille_legendes -= 20;
             int startX;
             if (faisceaux.size() % 2 == 0) { // ici on veut se positionner au milieu des 2 rectangles aux positions
                                              // faisceaux.size et faisceaux.size+1 car pair
-                startX = 204 + (404 + 135 * faisceaux.size() - 404) / 2;
+                startX = 404 + (150 * faisceaux.size() - taille_legendes) / 2;
             } else { // ici on se positionne au milieu du rectangle à la position faisceaux.size/2+1
-                     // car impair
-                startX = 204 + (404 + 135 * faisceaux.size() - 404) / 2;
+                // car impair
+                startX = 404 + (150 * faisceaux.size() -taille_legendes-50) / 2;
             }
             int startY = 350;
-
             // Ajoutons la légende pour chaque carré de couleur
             for (int i = 0; i < legendes.length; i++) {
                 String legende = legendes[i];
@@ -311,13 +308,7 @@ public class DiagColonnes implements IDataVisualiseur {
                 // Ajoutons le carré de couleur et la légende à la légende générale
                 this.legendeSVG.append(rect.enSVG()).append(legendeSVG);
 
-                if (legende == "Asie") {
-                    startX += 60;
-                } else if (legende == "Europe" || legende == "Afrique") {
-                    startX += 80;
-                } else {
-                    startX += 100;
-                }
+                startX += 20 + legende.length() * 10;
             }
         }
         return this;

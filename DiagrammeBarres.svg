@@ -30,16 +30,16 @@
 <text x="510.0" y="419.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2015</text>
 <text x="660.0" y="419.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2020</text>
 <text x="810.0" y="418.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">2025</text>
-<rect x="385.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="410" y="355">Afrique</text><rect x="465.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="490" y="355">Amerique</text><rect x="565.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="590" y="355">Asie</text><rect x="625.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="650" y="355">Europe</text><rect x="705.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
-<text x="730" y="355">Oceanie</text><rect x="385.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
-<rect x="465.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
-<rect x="565.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
-<rect x="625.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
-<rect x="705.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
+<rect x="410.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="435" y="355">Afrique</text><rect x="500.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="525" y="355">Amerique</text><rect x="600.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="625" y="355">Asie</text><rect x="660.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="685" y="355">Europe</text><rect x="740.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="765" y="355">Oceanie</text><rect x="410.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="500.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<rect x="600.0" y="345.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<rect x="660.0" y="345.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
+<rect x="740.0" y="345.0" width="20.0" height="10.0" fill="Maroon" stroke="black" />
 <text x="585.0" y="100.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Emissions de CO2 (en Mt)</text>
 <polyline points="310.0 310.0 860.0 310.0 " fill="White" stroke="black" />
 <polyline points="310.0 310.0 310.0 123.75 " fill="White" stroke="black" />

@@ -1,21 +1,21 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import java.awt.*;
+
 
 import com.formdev.flatlaf.FlatLightLaf;
 
 import fr.univrennes.istic.l2gen.geometrie.Point;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.MouseInfo;
+import java.awt.PointerInfo;
 
 
 public class UI implements ActionListener {
@@ -28,7 +28,7 @@ public class UI implements ActionListener {
     final JButton buttonCarbu;
     final JButton buttonregion;
     final JButton buttondepart;
-    JPanel panelFiltres; // Déclaration de panelFiltres en tant que champ de classe
+    JPanel panelFiltres;
     JPanel panelResults;
 
     public static void main(String argv[]) {
@@ -189,35 +189,66 @@ JCheckBox bouton1 = new JCheckBox("Wi-fi");
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!menuregion.isVisible()) {
+                    
+                    // Obtenir les coordonnées de la souris
+                    PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+                    java.awt.Point location = pointerInfo.getLocation();
+                    
+                    // Changer la position du menu
+                    menuregion.setLocation(location);
+        
+                    // Afficher le menu
                     menuregion.setVisible(true);
+                    
+                    // Cacher les autres menus
+                    menudepart.setVisible(false);
                     menuCarbu.setVisible(false);
                 } else {
                     menuregion.setVisible(false);
-                    menudepart.setVisible(false);
                 }
-            }
-        });
+        }
+    });
 
         buttondepart = new JButton("Choississez un ou plusieurs département(s)");
         buttondepart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!menudepart.isVisible()) {
+                    // Obtenir les coordonnées de la souris
+                    PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+                    java.awt.Point location = pointerInfo.getLocation();
+                    
+                    // Changer la position du menu
+                    menudepart.setLocation(location);
+        
+                    // Afficher le menu
                     menudepart.setVisible(true);
+                    
+                    // Cacher les autres menus
                     menuregion.setVisible(false);
                     menuCarbu.setVisible(false);
                 } else {
                     menudepart.setVisible(false);
                 }
-            }
-        });
+        }
+    });
 
         buttonCarbu = new JButton("Choississez un ou plusieurs Carburant(s)");
         buttonCarbu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!menuCarbu.isVisible()) {
+                    // Obtenir les coordonnées de la souris
+                    PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+                    java.awt.Point location = pointerInfo.getLocation();
+                
+                    // Changer la position du menu
+                    menuCarbu.setLocation(location);
+        
+                    // Afficher le menu
                     menuCarbu.setVisible(true);
+        
+                    // Cacher les autres menus
                     menuregion.setVisible(false);
                     menudepart.setVisible(false);
                 } else {
@@ -225,6 +256,8 @@ JCheckBox bouton1 = new JCheckBox("Wi-fi");
                 }
             }
         });
+        
+
 
         f.setLayout(new BorderLayout());
 

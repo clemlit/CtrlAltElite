@@ -243,5 +243,6 @@ public class multiBox<E> extends JComboBox<E> {
             g2.dispose();
             super.paintComponent(g);
         }
+        
     }
 }

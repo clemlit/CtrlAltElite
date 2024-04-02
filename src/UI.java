@@ -14,7 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class UI implements ActionListener {
     ButtonGroup echelle = new ButtonGroup();
@@ -164,11 +166,46 @@ public class UI implements ActionListener {
         JButton boutonResultat = new JButton("Resultat");
         boutonResultat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String filePath = "src/page_Web/resultat.html";
-                openWebPage(filePath);
+                StringBuilder htmlContent = new StringBuilder();
+
+                // Ajoutez les données sélectionnées dans le multiBox "comboRegion"
+                htmlContent.append("<h2>Données sélectionnées dans la région :</h2>");
+                List<Object> selectedRegions = comboRegion.getSelectedItems();
+                for (Object region : selectedRegions) {
+                    htmlContent.append("<p>").append(region.toString()).append("</p>");
+                }
+
+                // Ajoutez les données sélectionnées dans le multiBox "comboDepart"
+                htmlContent.append("<h2>Données sélectionnées dans le département :</h2>");
+                List<Object> selectedDepartements = comboDepart.getSelectedItems();
+                for (Object departement : selectedDepartements) {
+                    htmlContent.append("<p>").append(departement.toString()).append("</p>");
+                }
+
+                // Ajoutez les données sélectionnées dans le multiBox "comboCarbu"
+                htmlContent.append("<h2>Données sélectionnées dans le carburant :</h2>");
+                List<Object> selectedCarbus = comboCarbu.getSelectedItems();
+                for (Object carbu : selectedCarbus) {
+                    htmlContent.append("<p>").append(carbu.toString()).append("</p>");
+                }
+
+                // Écrire les données dans un fichier HTML
+                try {
+                    FileWriter writer = new FileWriter("src/page_Web/resultat.html");
+                    writer.write("<html><head><title>Résultats</title></head><body>");
+                    writer.write(htmlContent.toString());
+                    writer.write("</body></html>");
+                    writer.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Ouvrir le fichier HTML dans le navigateur
+                openWebPage("src/page_Web/resultat.html");
             }
         });
         panelResults.add(boutonResultat);
+
     }
 
     // Méthode pour ouvrir la page HTML dans le navigateur

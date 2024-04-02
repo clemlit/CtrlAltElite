@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 
 public class UI implements ActionListener {
     ButtonGroup echelle = new ButtonGroup();
@@ -163,10 +166,21 @@ public class UI implements ActionListener {
         JButton boutonResultat = new JButton("Resultat");
         boutonResultat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Bouton cliqué !");
+                String filePath = "src/page_Web/resultat.html";
+                openWebPage(filePath);
             }
         });
         panelResults.add(boutonResultat);
+    }
+
+    // Méthode pour ouvrir la page HTML dans le navigateur
+    private void openWebPage(String url) {
+        try {
+            File htmlFile = new File(url);
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void actionPerformed(ActionEvent event) {

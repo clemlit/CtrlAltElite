@@ -159,6 +159,14 @@ public class UI implements ActionListener {
         f.setSize(width, height);
         f.setLocationRelativeTo(null);
         f.setVisible(true);
+
+        JButton boutonResultat = new JButton("Resultat");
+        boutonResultat.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Bouton cliqué !");
+            }
+        });
+        panelResults.add(boutonResultat);
     }
 
     public void actionPerformed(ActionEvent event) {

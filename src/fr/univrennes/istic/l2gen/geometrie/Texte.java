@@ -180,5 +180,10 @@ public class Texte implements IForme {
         return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + enSVG() + "</svg>";
     }
 
+    public Object getTexte() {
+        return text;
+    }
+     
+
     
 }

@@ -75,6 +75,7 @@ public class multiBox<E> extends JComboBox<E> {
         }
     }
 
+    @SuppressWarnings("rawtypes") // Suppression des avertissements du compilateur 
     public multiBox() {
         setUI(new ComboBoxMultiUI());
         comboBoxMultiCellEditor = new ComboBoxMultiCellEditor();
@@ -108,6 +109,7 @@ public class multiBox<E> extends JComboBox<E> {
 
         private class MultiComboPopup extends FlatComboPopup {
 
+            @SuppressWarnings("rawtypes") // Suppression des avertissements du compilateur
             public MultiComboPopup(JComboBox combo) {
                 super(combo);
             }
@@ -122,6 +124,7 @@ public class multiBox<E> extends JComboBox<E> {
 
     private class ComboBoxMultiCellRenderer extends BasicComboBoxRenderer {
 
+        @SuppressWarnings("rawtypes") // Suppression des avertissements du compilateur
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
@@ -145,6 +148,7 @@ public class multiBox<E> extends JComboBox<E> {
             panel.revalidate();
         }
 
+        @SuppressWarnings("unchecked") // Suppression des avertissements du compilateur
         protected void removeItem(Object obj) {
             int count = panel.getComponentCount();
             for (int i = 0; i < count; i++) {

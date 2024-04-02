@@ -130,10 +130,17 @@ public class UI implements ActionListener {
         comboDepart.setPreferredSize(new Dimension(200, 50));
         comboCarbu.setPreferredSize(new Dimension(200, 50));
 
+        JLabel labelRegions = new JLabel("Sélectionnez une région ");
+        JLabel labelDepartements = new JLabel("Sélectionnez un département ");
+        JLabel labelCarburants = new JLabel("Sélectionnez un carburant ");
+
         // Pour l'alignement
         Box boxCombos = Box.createVerticalBox();
+        boxCombos.add(labelRegions);
         boxCombos.add(comboRegion);
+        boxCombos.add(labelDepartements);
         boxCombos.add(comboDepart);
+        boxCombos.add(labelCarburants);
         boxCombos.add(comboCarbu);
         panelFiltres.add(boxCombos);
         panelFiltres.setLayout(new FlowLayout(FlowLayout.CENTER));

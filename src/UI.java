@@ -168,24 +168,35 @@ public class UI implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 StringBuilder htmlContent = new StringBuilder();
 
-                // Ajoute les données sélectionnées dans le multiBox "comboRegion"
-                htmlContent.append("<h2>Données sélectionnées dans la région :</h2>");
+                htmlContent.append("<div id=\"results\">");
+
+                for (java.awt.Component component : panelFiltres.getComponents()) {
+                    if (component instanceof JCheckBox) {
+                        JCheckBox checkBox = (JCheckBox) component;
+                        if (checkBox.isSelected()) {
+                            htmlContent.append("<li>").append(checkBox.getText()).append("</li>");
+                        }
+                    }
+                }
+
                 List<Object> selectedRegions = comboRegion.getSelectedItems();
                 for (Object region : selectedRegions) {
+                    // Ajoute les données sélectionnées dans le multiBox "comboRegion"
+                    htmlContent.append("<h2> Région selectionné :</h2>");
                     htmlContent.append("<p>").append(region.toString()).append("</p>");
                 }
 
-                // Ajoute les données sélectionnées dans le multiBox "comboDepart"
-                htmlContent.append("<h2>Données sélectionnées dans le département :</h2>");
                 List<Object> selectedDepartements = comboDepart.getSelectedItems();
                 for (Object departement : selectedDepartements) {
+                    // Ajoute les données sélectionnées dans le multiBox "comboDepart"
+                    htmlContent.append("<h2>Département selectionné :</h2>");
                     htmlContent.append("<p>").append(departement.toString()).append("</p>");
                 }
 
                 // Ajoute les données sélectionnées dans le multiBox "comboCarbu"
-                htmlContent.append("<h2>Données sélectionnées dans le carburant :</h2>");
                 List<Object> selectedCarbus = comboCarbu.getSelectedItems();
                 for (Object carbu : selectedCarbus) {
+                    htmlContent.append("<h2>Carburant selectionné : </h2>");
                     htmlContent.append("<p>").append(carbu.toString()).append("</p>");
                 }
 
@@ -219,5 +230,6 @@ public class UI implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
+    
     }
 }

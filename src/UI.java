@@ -22,6 +22,7 @@ public class UI implements ActionListener {
     ButtonGroup echelle = new ButtonGroup();
     JPanel panelFiltres;
     JPanel mapPanel;
+    
 
     public static void main(String argv[]) {
         new UI();
@@ -158,9 +159,6 @@ public class UI implements ActionListener {
         boutonResultat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 StringBuilder htmlContent = new StringBuilder();
-
-                htmlContent.append("<div id=\"results\">");
-
                 for (java.awt.Component component : panelFiltres.getComponents()) {
                     if (component instanceof JCheckBox) {
                         JCheckBox checkBox = (JCheckBox) component;
@@ -195,6 +193,9 @@ public class UI implements ActionListener {
                 try {
                     FileWriter writer = new FileWriter("src/page_Web/resultat.html");
                     writer.write("<html><head><title>Résultats</title></head><body>");
+                    writer.write("<iframe src=\"DiagrammeCammembert.svg\" width=\"5000\" height=\"5000\" sandbox>\r\n" + //
+                                        
+                                                "</iframe>");
                     writer.write(htmlContent.toString());
                     writer.write("</body></html>");
                     writer.close();

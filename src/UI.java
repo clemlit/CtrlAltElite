@@ -69,10 +69,18 @@ public class UI implements ActionListener {
         panelBanniere.add(themeButton); // Ajout du bouton au panneau bannière
 
         // Crée les ComboBox multi-sélection pour les régions, départements et carburants
+        multiBox<String> comboFiltres = new multiBox<>();
         multiBox<String> comboRegion = new multiBox<>();
         multiBox<String> comboDepart = new multiBox<>();
         multiBox<String> comboCarbu = new multiBox<>();        
-        multiBox<String> comboFilters = new multiBox<>();  
+        multiBox<String> comboOptions = new multiBox<>();  
+
+        String[] filtres = { "Prix moyen", "Prix médian  ", "Prix minimum  ", "Nombre de stations qui proposent chaque type de carburant  ", 
+        "Nombre de stations qui proposent des services spécifiques  "};
+
+        for (String filtre : filtres) {
+            comboFiltres.addItem(filtre);
+        }
 
         String[] regions = {
             "Auvergne-Rhône-Alpes  ", "Bourgogne-Franche-Comté  ", "Bretagne  ", "Centre-Val de Loire  ", "Corse  ",
@@ -116,38 +124,50 @@ public class UI implements ActionListener {
             comboCarbu.addItem(carburant);
         }       
 
-        String[] filtres = { "Wi-fi  ", "Boutique alimentaire  ", "Station de gonflage  ", "Lavage automatique  ", "Bornes éléctrique  ", "Automate CB 24/24  ", 
+        String[] options = { "Wi-fi  ", "Boutique alimentaire  ", "Station de gonflage  ", "Lavage automatique  ", "Bornes éléctrique  ", "Automate CB 24/24  ", 
         "DAB (Distributeur automatique de billets)  ", "Espace bébé  ", "Toilettes publiques  "};
 
-        for (String filtre : filtres) {
-            comboFilters.addItem(filtre);
+        for (String option : options) {
+            comboOptions.addItem(option);
         }
 
         // Définit la taille préférée des ComboBox
+        comboFiltres.setPreferredSize(new Dimension(180, 40));
         comboRegion.setPreferredSize(new Dimension(180, 40));
         comboDepart.setPreferredSize(new Dimension(180, 40));
         comboCarbu.setPreferredSize(new Dimension(180, 40));
-        comboFilters.setPreferredSize(new Dimension(180, 40));
+        comboOptions.setPreferredSize(new Dimension(180, 40));
 
         JLabel labeltitre1 = new JLabel("<html><b><h1>FILTRES</h1></b></html>");
-        JLabel empty = new JLabel(" ");
-        JLabel labelRegions = new JLabel("<html><i>Sélectionnez une région</i></html>");
-        JLabel labelDepartements = new JLabel("<html><i>Sélectionnez un département</i></html>");
-        JLabel labelCarburants = new JLabel("<html><i>Sélectionnez un carburant</i></html>");
-        JLabel labelFilters = new JLabel("<html><i>Sélectionnez un filtre</i></html>");
+        JLabel empty1 = new JLabel(" ");
+        JLabel empty2 = new JLabel(" ");
+        JLabel empty3 = new JLabel(" ");
+        JLabel empty4 = new JLabel(" ");
+        JLabel empty5 = new JLabel(" ");
+        JLabel labelFiltres = new JLabel("<html><i>Sélectionnez des filtres</i></html>");
+        JLabel labelRegions = new JLabel("<html><i>Sélectionnez des régions</i></html>");
+        JLabel labelDepartements = new JLabel("<html><i>Sélectionnez des départements</i></html>");
+        JLabel labelCarburants = new JLabel("<html><i>Sélectionnez des carburants</i></html>");
+        JLabel labelOptions = new JLabel("<html><i>Sélectionnez des options</i></html>");
 
         // Pour l'alignement
         Box boxCombos = Box.createVerticalBox();
         boxCombos.add(labeltitre1);
-        boxCombos.add(empty);
+        boxCombos.add(empty1);
+        boxCombos.add(labelFiltres);
+        boxCombos.add(comboFiltres);
+        boxCombos.add(empty2);
         boxCombos.add(labelRegions);
         boxCombos.add(comboRegion);
+        boxCombos.add(empty3);
         boxCombos.add(labelDepartements);
         boxCombos.add(comboDepart);
+        boxCombos.add(empty4);
         boxCombos.add(labelCarburants);
         boxCombos.add(comboCarbu);
-        boxCombos.add(labelFilters);
-        boxCombos.add(comboFilters);
+        boxCombos.add(empty5);
+        boxCombos.add(labelOptions);
+        boxCombos.add(comboOptions);
 
         panelFiltres.add(boxCombos);
         panelFiltres.setLayout(new FlowLayout(FlowLayout.CENTER));

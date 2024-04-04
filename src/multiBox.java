@@ -211,7 +211,7 @@ public class multiBox<E> extends JComboBox<E> {
         private final Object item;
 
         public Item(Object item) {
-            super(item.toString() + " x"); // Add "x" next to the item's string representation
+            super(item.toString() + " ⨂"); // Add "x" next to the item's string representation
             this.item = item;
             init();
         }

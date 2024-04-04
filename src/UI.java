@@ -43,20 +43,20 @@ public class UI implements ActionListener {
 
         panelResults = new JPanel();
         Border borderResults = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-                "Résultats", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
+                "Résultats  ", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial  ", Font.BOLD, 14), Color.BLACK);
         panelResults.setBorder(borderResults);
         panelResults.setPreferredSize(new Dimension(100, 200));
 
         panelFiltres = new JPanel();
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
         Border borderFiltres = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-                "Filtres", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
+                "Filtres  ", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial  ", Font.BOLD, 14), Color.BLACK);
         panelFiltres.setBorder(borderFiltres);
         panelFiltres.setPreferredSize(new Dimension(300, f.getHeight()));
 
         JPanel mapPanel = new JPanel();
-        Border borderMap = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carte",
-                TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14), Color.BLACK);
+        Border borderMap = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carte  ",
+                TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial  ", Font.BOLD, 14), Color.BLACK);
         mapPanel.setBorder(borderMap);
         mapPanel.setMaximumSize(new Dimension(f.getWidth(), f.getHeight() - 500));
 
@@ -85,9 +85,9 @@ public class UI implements ActionListener {
         multiBox<String> comboCarbu = new multiBox<>();        
 
         String[] regions = {
-            "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne", "Centre-Val de Loire", "Corse",
-            "Grand Est", "Hauts-de-France", "Île-de-France", "Normandie", "Nouvelle-Aquitaine",
-            "Occitanie", "Pays de la Loire", "Provence-Alpes-Côte d'Azur"
+            "Auvergne-Rhône-Alpes  ", "Bourgogne-Franche-Comté  ", "Bretagne  ", "Centre-Val de Loire  ", "Corse  ",
+            "Grand Est  ", "Hauts-de-France  ", "Île-de-France  ", "Normandie  ", "Nouvelle-Aquitaine  ",
+            "Occitanie  ", "Pays de la Loire  ", "Provence-Alpes-Côte d'Azur"
         };
 
         for (String region : regions) {
@@ -122,15 +122,15 @@ public class UI implements ActionListener {
             comboDepart.addItem(departement);
         }
         
-        String[] carburants = { "Gazole", "SP95", "SP98", "E10", "E85", "GPLc"};
+        String[] carburants = { "Gazole  ", "SP95  ", "SP98  ", "E10  ", "E85  ", "GPLc"};
         for (String carburant : carburants) {
             comboCarbu.addItem(carburant);
         }       
 
         // Définit la taille préférée des ComboBox
-        comboRegion.setPreferredSize(new Dimension(200, 50));
-        comboDepart.setPreferredSize(new Dimension(200, 50));
-        comboCarbu.setPreferredSize(new Dimension(200, 50));
+        comboRegion.setPreferredSize(new Dimension(200, 40));
+        comboDepart.setPreferredSize(new Dimension(200, 40));
+        comboCarbu.setPreferredSize(new Dimension(200, 40));
 
         JLabel labelRegions = new JLabel("Sélectionnez une région ");
         JLabel labelDepartements = new JLabel("Sélectionnez un département ");
@@ -146,7 +146,7 @@ public class UI implements ActionListener {
         boxCombos.add(comboCarbu);
         panelFiltres.add(boxCombos);
         panelFiltres.setLayout(new FlowLayout(FlowLayout.CENTER));
-        
+    
 
         f.setLayout(new BorderLayout());
 
@@ -167,21 +167,21 @@ public class UI implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 StringBuilder htmlContent = new StringBuilder();
 
-                // Ajoutez les données sélectionnées dans le multiBox "comboRegion"
+                // Ajoute les données sélectionnées dans le multiBox "comboRegion"
                 htmlContent.append("<h2>Données sélectionnées dans la région :</h2>");
                 List<Object> selectedRegions = comboRegion.getSelectedItems();
                 for (Object region : selectedRegions) {
                     htmlContent.append("<p>").append(region.toString()).append("</p>");
                 }
 
-                // Ajoutez les données sélectionnées dans le multiBox "comboDepart"
+                // Ajoute les données sélectionnées dans le multiBox "comboDepart"
                 htmlContent.append("<h2>Données sélectionnées dans le département :</h2>");
                 List<Object> selectedDepartements = comboDepart.getSelectedItems();
                 for (Object departement : selectedDepartements) {
                     htmlContent.append("<p>").append(departement.toString()).append("</p>");
                 }
 
-                // Ajoutez les données sélectionnées dans le multiBox "comboCarbu"
+                // Ajoute les données sélectionnées dans le multiBox "comboCarbu"
                 htmlContent.append("<h2>Données sélectionnées dans le carburant :</h2>");
                 List<Object> selectedCarbus = comboCarbu.getSelectedItems();
                 for (Object carbu : selectedCarbus) {
@@ -218,7 +218,5 @@ public class UI implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
-        panelFiltres.revalidate(); 
-        panelFiltres.repaint();
     }
 }

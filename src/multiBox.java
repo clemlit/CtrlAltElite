@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -20,6 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.plaf.basic.ComboPopup;
+
+import org.w3c.dom.events.MouseEvent;
+
 import net.miginfocom.swing.MigLayout;
 
 public class multiBox<E> extends JComboBox<E> {
@@ -93,6 +97,7 @@ public class multiBox<E> extends JComboBox<E> {
                 }
             }
         });
+        
     }
 
     @Override
@@ -201,37 +206,26 @@ public class multiBox<E> extends JComboBox<E> {
         }
     }
 
-    private class Item extends JLabel {
+    private class Item extends JButton {
 
         public Object getItem() {
             return item;
         }
-
+    
         private final Object item;
-
+    
         public Item(Object item) {
             super(item.toString());
             this.item = item;
             init();
         }
-
+    
         private void init() {
-            putClientProperty(FlatClientProperties.STYLE, ""
-                    + "border:0,5,0,20;"
-                    + "background:darken($ComboBox.background,10%)");
-            JButton cmd = new JButton("x");
-            cmd.putClientProperty(FlatClientProperties.STYLE, ""
-                    + "arc:999;"
-                    + "margin:1,1,1,1;"
-                    + "background:null;"
-                    + "focusWidth:0");
-            cmd.addActionListener((e) -> {
-                removeItemObject(item);
-            });
-            cmd.setFocusable(false);
-            setLayout(new MigLayout("fill"));
-            add(cmd, "pos 1al 0.5al 10 10");
+            // Ajouter un gestionnaire d'événements de clic pour supprimer l'élément lorsque le bouton est cliqué
+            addActionListener(e -> removeItemObject(item));
         }
+    }
+
 
         @Override
         protected void paintComponent(Graphics g) {
@@ -244,5 +238,5 @@ public class multiBox<E> extends JComboBox<E> {
             super.paintComponent(g);
         }
         
-    }
 }
+

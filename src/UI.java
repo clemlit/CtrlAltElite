@@ -21,7 +21,6 @@ import java.util.List;
 public class UI implements ActionListener {
     ButtonGroup echelle = new ButtonGroup();
     JPanel panelFiltres;
-    JPanel panelResults;
     JPanel mapPanel;
 
     public static void main(String argv[]) {
@@ -40,12 +39,6 @@ public class UI implements ActionListener {
 
         JFrame f = new JFrame("ma fenetre");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        panelResults = new JPanel();
-        Border borderResults = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-                "Résultats  ", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial  ", Font.BOLD, 14), Color.BLACK);
-        panelResults.setBorder(borderResults);
-        panelResults.setPreferredSize(new Dimension(100, 200));
 
         panelFiltres = new JPanel();
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
@@ -129,9 +122,9 @@ public class UI implements ActionListener {
         }       
 
         // Définit la taille préférée des ComboBox
-        comboRegion.setPreferredSize(new Dimension(200, 40));
-        comboDepart.setPreferredSize(new Dimension(200, 40));
-        comboCarbu.setPreferredSize(new Dimension(200, 40));
+        comboRegion.setPreferredSize(new Dimension(180, 40));
+        comboDepart.setPreferredSize(new Dimension(180, 40));
+        comboCarbu.setPreferredSize(new Dimension(180, 40));
 
         JLabel labelRegions = new JLabel("Sélectionnez une région ");
         JLabel labelDepartements = new JLabel("Sélectionnez un département ");
@@ -152,7 +145,6 @@ public class UI implements ActionListener {
         f.setLayout(new BorderLayout());
 
         f.add(panelFiltres, BorderLayout.WEST);
-        f.add(panelResults, BorderLayout.SOUTH);
         f.add(mapPanel, BorderLayout.CENTER);
 
         f.pack();
@@ -215,7 +207,7 @@ public class UI implements ActionListener {
                 openWebPage("src/page_Web/resultat.html");
             }
         });
-        panelResults.add(boutonResultat);
+        panelFiltres.add(boutonResultat);
 
     }
 

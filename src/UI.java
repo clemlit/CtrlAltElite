@@ -108,8 +108,7 @@ public class UI implements ActionListener {
             "82 - Tarn-et-Garonne  ", "83 - Var  ", "84 - Vaucluse  ", "85 - Vendée  ", "86 - Vienne  ",
             "87 - Haute-Vienne  ", "88 - Vosges  ", "89 - Yonne  ", "90 - Territoire de Belfort  ",
             "91 - Essonne  ", "92 - Hauts-de-Seine  ", "93 - Seine-Saint-Denis  ", "94 - Val-de-Marne  ",
-            "95 - Val-d'Oise  ", "971 - Guadeloupe  ", "972 - Martinique  ", "973 - Guyane  ", "974 - La Réunion  ",
-            "975 - Saint-Pierre-et-Miquelon  ", "976 - Mayotte  ", "977 - Saint-Barthélemy  ", "978 - Saint-Martin"
+            "95 - Val-d'Oise  "
         };
 
         for (String departement : departements) {

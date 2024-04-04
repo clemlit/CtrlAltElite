@@ -113,5 +113,4 @@ public interface IForme {
 
     public String createEnSVG();
 
-    
 }

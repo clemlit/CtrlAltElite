@@ -368,4 +368,13 @@ public class DiagCamemberts implements IDataVisualiseur {
         return camembert.dupliquer();
     }
 
+    public List<Camembert> getCamemberts() {
+        return this.camemberts;
+    }
+
+    public List<Texte> getLegendeTexte() {
+        return this.LegendeTexte;
+    }
+
+
 }

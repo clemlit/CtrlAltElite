@@ -218,5 +218,7 @@ public class UI implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
+        panelFiltres.revalidate(); 
+        panelFiltres.repaint();
     }
 }

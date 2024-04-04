@@ -16,7 +16,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
+import javax.swing.plaf.basic.BasicComboBoxEditor; 
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.plaf.basic.ComboPopup;
 
@@ -207,17 +207,17 @@ public class multiBox<E> extends JComboBox<E> {
         public Object getItem() {
             return item;
         }
-    
+
         private final Object item;
-    
+
         public Item(Object item) {
-            super(item.toString());
+            super(item.toString() + " x"); // Add "x" next to the item's string representation
             this.item = item;
             init();
         }
-    
+
         private void init() {
-            // Ajouter un gestionnaire d'événements de clic pour supprimer l'élément lorsque le bouton est cliqué
+            // Add a click event handler to remove the item when the button is clicked
             addActionListener(e -> removeItemObject(item));
         }
     }

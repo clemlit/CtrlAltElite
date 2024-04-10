@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg"><g>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 1200 800">
+<g>
 <path d="M450.0 250.0L450,150A100.0,100.0 0 0 1 484,156Z" fill="Blue" stroke="black"/>
 <path d="M450.0 250.0L484,156A100.0,100.0 0 0 1 547,275Z" fill="Green" stroke="black"/>
 <path d="M450.0 250.0L547,275A100.0,100.0 0 1 1 366,196Z" fill="Red" stroke="black"/>

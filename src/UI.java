@@ -228,10 +228,26 @@ public class UI implements ActionListener {
                 // Écrire les données dans un fichier HTML
                 try {
                     FileWriter writer = new FileWriter("src/page_Web/resultat.html");
-                    writer.write("<html><head><title>Résultats</title></head><body>");
-                    writer.write("<iframe src=\"DiagrammeCammembert.svg\" width=\"5000\" height=\"5000\" sandbox>\r\n" + //
-                                        
-                                                "</iframe>");
+                    writer.write("<html><head><title>Résultats</title>");
+                    writer.write("<style>");
+                    writer.write("body {");
+                    writer.write("    display: flex;");
+                    writer.write("    justify-content: center;"); // Centrer horizontalement
+                    writer.write("    align-items: center;"); // Centrer verticalement
+                    writer.write("    height: 100vh;"); // 100% de la hauteur de la vue (viewport)
+                    writer.write("}");
+                    writer.write("iframe {");
+                    writer.write("    border: none;"); // Supprime la bordure de l'iframe
+                    writer.write("}");
+                    writer.write("</style>");
+                    writer.write("</head><body>");
+
+                    // Écrire l'iframe avec les styles pour centrer
+                    writer.write("<div style=\"text-align: center;\">");
+                    writer.write(
+                            "<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                    writer.write("</div>");
+
                     writer.write(htmlContent.toString());
                     writer.write("</body></html>");
                     writer.close();

@@ -1,35 +1,31 @@
 package test.fr.univrennes.istic.l2gen.visustats;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
+import fr.univrennes.istic.l2gen.geometrie.Point;
+import fr.univrennes.istic.l2gen.geometrie.Rectangle;
 import fr.univrennes.istic.l2gen.visustats.DiagBarre;
 import fr.univrennes.istic.l2gen.visustats.Faisceau;
+import fr.univrennes.istic.l2gen.visustats.IDataVisualiseur;
 
 public class DiagBarreTest {
+
     @Test
     public void testAgencer() {
-
+        // un enfer puisque ya des exceptions de gros fdp partout
     }
 
     @Test
     public void testAjouterDonnees() {
-
-    }
-
-    @Test
-    public void testColorier() {
-        DiagBarre diagBarre = new DiagBarre("Titre", 2);
-
-        String legende = "Données 1";
-        double[] valeurs = { 20.0, 30.0, 50.0 };
-        diagBarre.ajouterDonnees(legende, valeurs);
-
-        diagBarre.colorier("red");
-
+        // j ai pas signé pour ça
     }
 
     @Test
@@ -65,6 +61,8 @@ public class DiagBarreTest {
 
     @Test
     public void testGenerateProportionalValues() {
+        double[] test = { 4.0, 5.0, 6.0 };
+        double[] temoin = DiagBarre.generateProportionalValues(4.0, 5.0, 2);
 
     }
 

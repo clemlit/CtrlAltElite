@@ -248,6 +248,13 @@ public class DiagBarre implements IDataVisualiseur {
         return this;
     }
 
+    /**
+     * 
+     * @param lowerBound un double qui sert à minorer les valeurs générées
+     * @param upperBound un double qui sert à majorer les valeurs générées
+     * @param count      un nombre réel qui donne le nombre de valeurs à générer
+     * @return un tableau de double
+     */
     public static double[] generateProportionalValues(double lowerBound, double upperBound, int count) {
         double[] scaleValues = new double[count];
         double step = (upperBound - lowerBound) / (count - 1);
@@ -265,19 +272,19 @@ public class DiagBarre implements IDataVisualiseur {
     @Override
     public IDataVisualiseur legender(String... legendes) {
         if (legendes.length > 0) {
-            int taille_legendes=0;
-        for (String legendeString : legendes){
-            taille_legendes+=20+legendeString.length()*10;
-        }
-        taille_legendes-=20;
+            int taille_legendes = 0;
+            for (String legendeString : legendes) {
+                taille_legendes += 20 + legendeString.length() * 10;
+            }
+            taille_legendes -= 20;
 
             int startX;
             if (faisceaux.size() % 2 == 0) { // ici on veut se positionner au milieu des 2 rectangles aux positions
                                              // faisceaux.size et faisceaux.size+1 car pair
-                startX = 320 + (150 * faisceaux.size() -taille_legendes) / 2;
+                startX = 320 + (150 * faisceaux.size() - taille_legendes) / 2;
             } else { // ici on se positionne au milieu du rectangle à la position faisceaux.size/2+1
                      // car impair
-                     startX = 320 + (150 * faisceaux.size() -taille_legendes-50) / 2;
+                startX = 320 + (150 * faisceaux.size() - taille_legendes - 50) / 2;
             }
             int startY = 350;
 
@@ -293,7 +300,7 @@ public class DiagBarre implements IDataVisualiseur {
 
                 // Ajoutons le carré de couleur et la légende à la légende générale
                 this.legendeSVG.append(rect.enSVG()).append(legendeSVG);
-                startX+=20+legende.length()*10;
+                startX += 20 + legende.length() * 10;
 
             }
         }

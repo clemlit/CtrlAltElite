@@ -52,7 +52,6 @@ public class DiagCamembertsTest {
     public void testColorier() {
         DiagCamemberts diagCamemberts = new DiagCamemberts("Titre", 2);
 
-        
         String legende = "Données 1";
         double[] valeurs = { 20.0, 30.0, 50.0 };
         diagCamemberts.ajouterDonnees(legende, valeurs);
@@ -62,27 +61,25 @@ public class DiagCamembertsTest {
         Camembert camembert = diagCamemberts.getCamemberts().get(0);
         String couleur = camembert.getSecteurs().get(0).getCouleur();
         assertEquals("red", couleur);
-        
-    }
 
-    
+    }
 
     @Test
     public void testCreateEnSVG() {
-            // Créer une instance de DiagCamemberts
-            DiagCamemberts diagCamemberts = new DiagCamemberts("Titre", 2);
-    
-            // Appeler la méthode createEnSVG() pour générer le contenu SVG
-            String svgContent = diagCamemberts.createEnSVG();
-    
-            // Vérifier que le contenu SVG est non nul
-            assertNotNull(svgContent);
-    
-            // Vérifier que le contenu SVG contient certaines chaînes attendues
-            // Par exemple, vous pouvez vérifier la présence de certaines balises ou d'autres éléments spécifiques
-            assertTrue(svgContent.contains(""));
-        }
-    
+        // Créer une instance de DiagCamemberts
+        DiagCamemberts diagCamemberts = new DiagCamemberts("Titre", 2);
+
+        // Appeler la méthode createEnSVG() pour générer le contenu SVG
+        String svgContent = diagCamemberts.createEnSVG();
+
+        // Vérifier que le contenu SVG est non nul
+        assertNotNull(svgContent);
+
+        // Vérifier que le contenu SVG contient certaines chaînes attendues
+        // Par exemple, vous pouvez vérifier la présence de certaines balises ou
+        // d'autres éléments spécifiques
+        assertTrue(svgContent.contains(""));
+    }
 
     @Test
     public void testDeplacer() {
@@ -109,12 +106,12 @@ public class DiagCamembertsTest {
         // Appeler la méthode enSVG() pour générer le code SVG
         String svgCode = diagCamemberts.enSVG();
 
-        // Vérifier que le code SVG commence par la balise <svg> et se termine par </svg>
+        // Vérifier que le code SVG commence par la balise <svg> et se termine par
+        // </svg>
         assertTrue(svgCode.startsWith("<svg xmlns=\"http://www.w3.org/2000/svg\">"));
         assertTrue(svgCode.endsWith("</svg>"));
     }
 
-    
     @Test
     public void testHauteur() {
         // Déjà testé dans CamembertTest.java

@@ -1,12 +1,8 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-
 import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,12 +13,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.border.LineBorder;
 
 public class UI implements ActionListener {
     ButtonGroup echelle = new ButtonGroup();
+    JPanel panelBanniere;
     JPanel panelFiltres;
     JPanel mapPanel;
-    
+    JButton themeButton;
 
     public static void main(String argv[]) {
         new UI();
@@ -40,43 +38,43 @@ public class UI implements ActionListener {
 
         JFrame f = new JFrame("ma fenetre");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.getContentPane().setBackground(new Color(223, 226, 232));
+        
 
         panelFiltres = new JPanel();
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
-        Border borderFiltres = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2),
-                "Filtres  ", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial  ", Font.BOLD, 14), Color.BLACK);
-        panelFiltres.setBorder(borderFiltres);
+        panelFiltres.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
+        panelFiltres.setBackground(new Color(245, 247, 250));
         panelFiltres.setPreferredSize(new Dimension(300, f.getHeight()));
 
         JPanel mapPanel = new JPanel();
-        Border borderMap = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 2), "Carte  ",
-                TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial  ", Font.BOLD, 14), Color.BLACK);
-        mapPanel.setBorder(borderMap);
-        mapPanel.setMaximumSize(new Dimension(f.getWidth(), f.getHeight() - 500));
+        mapPanel.setBackground(new Color(245, 247, 250));
+        mapPanel.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
+        mapPanel.setMaximumSize(new Dimension(f.getWidth(), f.getHeight()));
 
-        JCheckBox bouton1 = new JCheckBox("Wi-fi");
-        panelFiltres.add(bouton1);
-        JCheckBox bouton2 = new JCheckBox("Boutique alimentaire");
-        panelFiltres.add(bouton2);
-        JCheckBox bouton3 = new JCheckBox("Station de gonflage");
-        panelFiltres.add(bouton3);
-        JCheckBox bouton4 = new JCheckBox("Lavage automatique");
-        panelFiltres.add(bouton4);
-        JCheckBox bouton5 = new JCheckBox("Bornes éléctrique");
-        panelFiltres.add(bouton5);
-        JCheckBox bouton6 = new JCheckBox("Automate CB 24/24");
-        panelFiltres.add(bouton6);
-        JCheckBox bouton7 = new JCheckBox("DAB (Distributeur automatique de billets)");
-        panelFiltres.add(bouton7);
-        JCheckBox bouton8 = new JCheckBox("Espace bébé");
-        panelFiltres.add(bouton8);
-        JCheckBox bouton10 = new JCheckBox("Toilettes publiques");
-        panelFiltres.add(bouton10);
+        JPanel panelBanniere = new JPanel();
+        panelBanniere.setBackground(new Color(255,255,255));
+        panelBanniere.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
+        panelBanniere.setPreferredSize(new Dimension(f.getWidth()-500, 100));
+
+        // Ajout du bouton pour changer de thème
+        themeButton = new JButton("Changer de thème");
+        themeButton.addActionListener(this); // Ajout de l'action listener
+        panelBanniere.add(themeButton); // Ajout du bouton au panneau bannière
 
         // Crée les ComboBox multi-sélection pour les régions, départements et carburants
+        multiBox<String> comboFiltres = new multiBox<>();
         multiBox<String> comboRegion = new multiBox<>();
         multiBox<String> comboDepart = new multiBox<>();
         multiBox<String> comboCarbu = new multiBox<>();        
+        multiBox<String> comboOptions = new multiBox<>();  
+
+        String[] filtres = { "Prix moyen", "Prix médian  ", "Prix minimum  ", "Nombre de stations qui proposent chaque type de carburant  ", 
+        "Nombre de stations qui proposent des services spécifiques  "};
+
+        for (String filtre : filtres) {
+            comboFiltres.addItem(filtre);
+        }
 
         String[] regions = {
             "Auvergne-Rhône-Alpes  ", "Bourgogne-Franche-Comté  ", "Bretagne  ", "Centre-Val de Loire  ", "Corse  ",
@@ -87,7 +85,6 @@ public class UI implements ActionListener {
         for (String region : regions) {
             comboRegion.addItem(region);
         }
-        
         String[] departements = {
             "01 - Ain  ", "02 - Aisne  ", "03 - Allier  ", "04 - Alpes-de-Haute-Provence  ", "05 - Hautes-Alpes  ",
             "06 - Alpes-Maritimes  ", "07 - Ardèche  ", "08 - Ardennes  ", "09 - Ariège  ", "10 - Aube  ",
@@ -121,32 +118,65 @@ public class UI implements ActionListener {
             comboCarbu.addItem(carburant);
         }       
 
+        String[] options = { "Wi-fi  ", "Boutique alimentaire  ", "Station de gonflage  ", "Lavage automatique  ", "Bornes éléctrique  ", "Automate CB 24/24  ", 
+        "DAB (Distributeur automatique de billets)  ", "Espace bébé  ", "Toilettes publiques  "};
+
+        for (String option : options) {
+            comboOptions.addItem(option);
+        }
+
         // Définit la taille préférée des ComboBox
+        comboFiltres.setPreferredSize(new Dimension(180, 40));
         comboRegion.setPreferredSize(new Dimension(180, 40));
         comboDepart.setPreferredSize(new Dimension(180, 40));
         comboCarbu.setPreferredSize(new Dimension(180, 40));
+        comboOptions.setPreferredSize(new Dimension(180, 40));
 
-        JLabel labelRegions = new JLabel("Sélectionnez une région ");
-        JLabel labelDepartements = new JLabel("Sélectionnez un département ");
-        JLabel labelCarburants = new JLabel("Sélectionnez un carburant ");
+        JLabel labeltitre1 = new JLabel("<html><b><h1>FILTRES</h1></b></html>");
+        JLabel empty1 = new JLabel(" ");
+        JLabel empty2 = new JLabel(" ");
+        JLabel empty3 = new JLabel(" ");
+        JLabel empty4 = new JLabel(" ");
+        JLabel empty5 = new JLabel(" ");
+        JLabel labelFiltres = new JLabel("<html><i>Sélectionnez des filtres</i></html>");
+        JLabel labelRegions = new JLabel("<html><i>Sélectionnez des régions</i></html>");
+        JLabel labelDepartements = new JLabel("<html><i>Sélectionnez des départements</i></html>");
+        JLabel labelCarburants = new JLabel("<html><i>Sélectionnez des carburants</i></html>");
+        JLabel labelOptions = new JLabel("<html><i>Sélectionnez des options</i></html>");
 
         // Pour l'alignement
         Box boxCombos = Box.createVerticalBox();
+        boxCombos.add(labeltitre1);
+        boxCombos.add(empty1);
+        boxCombos.add(labelFiltres);
+        boxCombos.add(comboFiltres);
+        boxCombos.add(empty2);
         boxCombos.add(labelRegions);
         boxCombos.add(comboRegion);
+        boxCombos.add(empty3);
         boxCombos.add(labelDepartements);
         boxCombos.add(comboDepart);
+        boxCombos.add(empty4);
         boxCombos.add(labelCarburants);
         boxCombos.add(comboCarbu);
+        boxCombos.add(empty5);
+        boxCombos.add(labelOptions);
+        boxCombos.add(comboOptions);
+
         panelFiltres.add(boxCombos);
         panelFiltres.setLayout(new FlowLayout(FlowLayout.CENTER));
     
-
-        f.setLayout(new BorderLayout());
-
+        BorderLayout layout = new BorderLayout();
+        layout.setVgap(5); // Ajuste la marge verticale entre les composants
+        f.setLayout(layout);
+        f.add(panelBanniere, BorderLayout.NORTH);
         f.add(panelFiltres, BorderLayout.WEST);
         f.add(mapPanel, BorderLayout.CENTER);
-
+        
+        
+        panelBanniere.setSize(new Dimension(500, 100));
+        
+        
         f.pack();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width * 50 / 100;
@@ -192,10 +222,26 @@ public class UI implements ActionListener {
                 // Écrire les données dans un fichier HTML
                 try {
                     FileWriter writer = new FileWriter("src/page_Web/resultat.html");
-                    writer.write("<html><head><title>Résultats</title></head><body>");
-                    writer.write("<iframe src=\"DiagrammeCammembert.svg\" width=\"5000\" height=\"5000\" sandbox>\r\n" + //
-                                        
-                                                "</iframe>");
+                    writer.write("<html><head><title>Résultats</title>");
+                    writer.write("<style>");
+                    writer.write("body {");
+                    writer.write("    display: flex;");
+                    writer.write("    justify-content: center;"); // Centrer horizontalement
+                    writer.write("    align-items: center;"); // Centrer verticalement
+                    writer.write("    height: 100vh;"); // 100% de la hauteur de la vue (viewport)
+                    writer.write("}");
+                    writer.write("iframe {");
+                    writer.write("    border: none;"); // Supprime la bordure de l'iframe
+                    writer.write("}");
+                    writer.write("</style>");
+                    writer.write("</head><body>");
+
+                    // Écrire l'iframe avec les styles pour centrer
+                    writer.write("<div style=\"text-align: center;\">");
+                    writer.write(
+                            "<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                    writer.write("</div>");
+
                     writer.write(htmlContent.toString());
                     writer.write("</body></html>");
                     writer.close();
@@ -221,9 +267,34 @@ public class UI implements ActionListener {
         }
     }
 
+    boolean isLightTheme = true;
     public void actionPerformed(ActionEvent event) {
+        if (isLightTheme) {
+            
+            // Changement vers le thème sombre
+            try {
+                UIManager.setLookAndFeel("com.formdev.flatlaf.themes.FlatMacDarkLaf");
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+            isLightTheme = false;
+        } else {
+            // Changement vers le thème clair
+            try {
+                UIManager.setLookAndFeel("com.formdev.flatlaf.themes.FlatMacLightLaf");
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                    | UnsupportedLookAndFeelException e) {
+                e.printStackTrace();
+            }
+            isLightTheme = true;
+        }
+
+        // Rafraîchir l'apparence de tous les composants
+        SwingUtilities.updateComponentTreeUI(themeButton.getRootPane());
+    
         panelFiltres.revalidate(); 
         panelFiltres.repaint();
-    
     }
 }
+

@@ -138,8 +138,6 @@ public class API {
         Map<String, Map<String, Object>> resultMap = new HashMap<>();
 
         for (String carburant : carburants) {
-            System.out.println();
-            System.out.println("Carburant : " + carburant.split("_")[0].toUpperCase());
             Map<String, Object> avecAdresseMin = extractFuelPrice(json, carburant + "_avec_adresse_min", calList,true);
             Map<String, Object> sansAdresseMin = extractFuelPrice(json, carburant + "_sans_adresse_min", calList,false);
 

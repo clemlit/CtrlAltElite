@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class API {
-    private static final String BASE_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
+    private static final String BASE_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-carburants-flux-instantane-v2/records?";
 
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
@@ -134,53 +134,67 @@ public class API {
         urlBuilder.append("&limit=1");
         return urlBuilder.toString();
     }
-    public static void extractFuelPrices(JSONObject json, List<String> carburants, List<String> calList) {
+    public static Map<String, Map<String, Object>> extractFuelPrices(JSONObject json, List<String> carburants, List<String> calList) {
+        Map<String, Map<String, Object>> resultMap = new HashMap<>();
+
         for (String carburant : carburants) {
-            System.out.println();
-            System.out.println("Carburant : " + carburant.split("_")[0].toUpperCase());
-            extractFuelPrice(json, carburant + "_avec_adresse_min", calList,true);
-            extractFuelPrice(json, carburant + "_sans_adresse_min", calList,false);
+            Map<String, Object> avecAdresseMin = extractFuelPrice(json, carburant + "_avec_adresse_min", calList,true);
+            Map<String, Object> sansAdresseMin = extractFuelPrice(json, carburant + "_sans_adresse_min", calList,false);
+
+            resultMap.put(carburant + "_avec_adresse_min", avecAdresseMin);
+            resultMap.put(carburant + "_sans_adresse_min", sansAdresseMin);
         }
+        for (Map.Entry<String, Map<String, Object>> outerEntry : resultMap.entrySet()) {
+            System.out.println("Carburant : " + outerEntry.getKey());
+            for (Map.Entry<String, Object> innerEntry : outerEntry.getValue().entrySet()) {
+                System.out.println("  " + innerEntry.getKey() + " : " + innerEntry.getValue());
+            }
+        }
+        return resultMap;
     }
-    private static void extractFuelPrice(JSONObject json, String key, List<String> calList,boolean affiche) {
+    private static Map<String, Object> extractFuelPrice(JSONObject json, String key, List<String> calList, boolean affiche) {
+        Map<String, Object> resultMap = new HashMap<>();
+
         if (json.has(key)) {
             JSONObject carburantData = json.getJSONObject(key);
             JSONArray results = carburantData.getJSONArray("results");
+
             if (affiche) {
                 if (!results.isEmpty()) {
                     JSONObject record = results.getJSONObject(0);
                     String adresse = record.optString("adresse", "Adresse non disponible");
                     String ville = record.optString("ville","ville non disponible");
-                    System.out.println("L'adresse de la station avec le prix minimum est " + adresse + " dans la ville de " + ville);
+                    resultMap.put("adresse", adresse);
+                    resultMap.put("ville", ville);
                 }
-            }
-            else {
+            } else {
                 for (String cal : calList) {
                     if (!cal.equals("count")) {
                         String fieldName = cal + "(" + key.split("_")[0] + "_prix)";
-                        if (!results.isEmpty() && results.getJSONObject(0).has(fieldName) ) {
-                            double prix = results.getJSONObject(0).getDouble(fieldName);
+                        if (!results.isEmpty() && results.getJSONObject(0).has(fieldName)) {
                             Object prixObj = results.getJSONObject(0).get(fieldName);
                             if (prixObj != null && prixObj instanceof Number) {
-                                double prix2 = ((Number) prixObj).doubleValue();
-                                System.out.println("Prix " + cal + " : " + String.format("%.2f", prix2));
+                                double prix = ((Number) prixObj).doubleValue();
+                                resultMap.put("Prix " + cal, prix);
                             } else {
-                                System.out.println("Prix " + cal + " non disponible");
+                                resultMap.put("Prix " + cal, "non disponible");
                             }
                         } else {
-                            System.out.println("Prix " + cal + " non disponible");
+                            resultMap.put("Prix " + cal, "non disponible");
                         }
                     } else {
                         if (!results.isEmpty() && results.getJSONObject(0).has("count(" + key.split("_")[0] + "_prix)")) {
                             double nb = results.getJSONObject(0).getDouble("count(" + key.split("_")[0] + "_prix)");
-                            System.out.println("Nombre de stations : " + String.format("%.0f", nb));
+                            resultMap.put("Nombre de stations", nb);
                         } else {
-                            System.out.println("Nombre de stations non disponible");
+                            resultMap.put("Nombre de stations", "non disponible");
                         }
                     }
                 }
             }
         }
+
+        return resultMap;
     }
     public static JSONObject requeteHttp(String type, String location, List<String> carburants, List<String>calList, boolean showAdresseMin,List<String> serviceChoisis) {
         ArrayList<String> m = new ArrayList<>(calList);

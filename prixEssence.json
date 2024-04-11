@@ -1,0 +1,116 @@
+{
+    "sp95_sans_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Daoulas",
+            "avg(sp95_prix)": 1.904438596491228,
+            "count(sp95_prix)": 57,
+            "adresse": "Vern Deredec",
+            "median(sp95_prix)": 1.889,
+            "min(sp95_prix)": 1.834
+        }]
+    },
+    "sp95_avec_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Rennes",
+            "sp95_prix": 1.834,
+            "adresse": "238 Rue Saint-Malo"
+        }]
+    },
+    "gazole_avec_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Saint-Thonan",
+            "adresse": "Z.A. de Croas-ar-Nézic",
+            "gazole_prix": 1.689
+        }]
+    },
+    "e10_sans_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Daoulas",
+            "avg(e10_prix)": 1.8726131386861313,
+            "min(e10_prix)": 1.799,
+            "count(e10_prix)": 137,
+            "median(e10_prix)": 1.859,
+            "adresse": "Vern Deredec"
+        }]
+    },
+    "gplc_avec_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Combourg",
+            "adresse": "Parc d'activités du Moulin Madame, 14 Rue des coutures",
+            "gplc_prix": 0.889
+        }]
+    },
+    "e10_avec_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Saint-Thonan",
+            "adresse": "Z.A. de Croas-ar-Nézic",
+            "e10_prix": 1.799
+        }]
+    },
+    "e85_avec_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Vitré",
+            "adresse": "Rue du Mée",
+            "e85_prix": 0.792
+        }]
+    },
+    "gazole_sans_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "median(gazole_prix)": 1.759,
+            "ville": "Daoulas",
+            "count(gazole_prix)": 168,
+            "adresse": "Vern Deredec",
+            "min(gazole_prix)": 1.689,
+            "avg(gazole_prix)": 1.773904761904762
+        }]
+    },
+    "sp98_sans_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Daoulas",
+            "avg(sp98_prix)": 1.9499931972789115,
+            "count(sp98_prix)": 147,
+            "adresse": "Vern Deredec",
+            "min(sp98_prix)": 1.867,
+            "median(sp98_prix)": 1.939
+        }]
+    },
+    "e85_sans_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Daoulas",
+            "adresse": "Vern Deredec",
+            "avg(e85_prix)": 0.8814615384615385,
+            "min(e85_prix)": 0.792,
+            "count(e85_prix)": 65,
+            "median(e85_prix)": 0.898
+        }]
+    },
+    "sp98_avec_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "ville": "Rennes",
+            "sp98_prix": 1.867,
+            "adresse": "238 Rue Saint-Malo"
+        }]
+    },
+    "gplc_sans_adresse_min": {
+        "total_count": 171,
+        "results": [{
+            "min(gplc_prix)": 0.889,
+            "ville": "Daoulas",
+            "median(gplc_prix)": 0.969,
+            "count(gplc_prix)": 27,
+            "adresse": "Vern Deredec",
+            "avg(gplc_prix)": 0.975037037037037
+        }]
+    }
+}

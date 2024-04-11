@@ -22,6 +22,10 @@ import javax.swing.plaf.basic.ComboPopup;
 
 import net.miginfocom.swing.MigLayout;
 
+// Cette classe est presque entièrement faite par DJ-Raven. 
+// Source: https://github.com/DJ-Raven/raven-java-swing-tutorial-project/tree/main/combobox-multiple-selection
+
+
 public class multiBox<E> extends JComboBox<E> {
 
     public List<Object> getSelectedItems() {

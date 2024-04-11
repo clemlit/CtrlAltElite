@@ -6,7 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ActionListener; 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.io.File;
@@ -45,7 +45,7 @@ public class UI implements ActionListener {
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
         panelFiltres.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
         panelFiltres.setBackground(new Color(245, 247, 250));
-        panelFiltres.setPreferredSize(new Dimension(300, f.getHeight()));
+        panelFiltres.setPreferredSize(new Dimension(500, f.getHeight()));
 
         JPanel mapPanel = new JPanel();
         mapPanel.setBackground(new Color(245, 247, 250));
@@ -126,11 +126,11 @@ public class UI implements ActionListener {
         }
 
         // Définit la taille préférée des ComboBox
-        comboFiltres.setPreferredSize(new Dimension(180, 40));
-        comboRegion.setPreferredSize(new Dimension(180, 40));
-        comboDepart.setPreferredSize(new Dimension(180, 40));
-        comboCarbu.setPreferredSize(new Dimension(180, 40));
-        comboOptions.setPreferredSize(new Dimension(180, 40));
+        comboFiltres.setPreferredSize(new Dimension(350, 40));
+        comboRegion.setPreferredSize(new Dimension(250, 40));
+        comboDepart.setPreferredSize(new Dimension(250, 40));
+        comboCarbu.setPreferredSize(new Dimension(250, 40));
+        comboOptions.setPreferredSize(new Dimension(250, 40));
 
         JLabel labeltitre1 = new JLabel("<html><b><h1>FILTRES</h1></b></html>");
         JLabel empty1 = new JLabel(" ");
@@ -164,6 +164,8 @@ public class UI implements ActionListener {
         boxCombos.add(comboOptions);
 
         panelFiltres.add(boxCombos);
+        boxCombos.setPreferredSize(new Dimension(450, boxCombos.getPreferredSize().height)); // Adjust width as needed
+
         panelFiltres.setLayout(new FlowLayout(FlowLayout.CENTER));
     
         BorderLayout layout = new BorderLayout();
@@ -187,7 +189,7 @@ public class UI implements ActionListener {
 
         JButton boutonResultat = new JButton("Resultat");
         boutonResultat.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { 
                 StringBuilder htmlContent = new StringBuilder();
                 for (java.awt.Component component : panelFiltres.getComponents()) {
                     if (component instanceof JCheckBox) {
@@ -297,4 +299,3 @@ public class UI implements ActionListener {
         panelFiltres.repaint();
     }
 }
-

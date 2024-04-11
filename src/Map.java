@@ -122,18 +122,24 @@ public class Map {
 
         @Override
         public void mouseMoved(MouseEvent e) {
+            int i = 0;
+
+            System.out.print(i);
             int x = e.getX();
             int y = e.getY();
 
             int width = output.getWidth();
             int height = output.getHeight();
-
-            if (x >= 0 && x < width && y >= 0 && y < height) {
-                refresh();
-            } else {
+            boolean valid=true;
+                if (x >= 0 && x < width && y >= 0 && y < height && valid) {
+                    System.out.print(i);
+                    refresh();
+                } else {
+                }
             }
+
         }
-    }
+    
 
     class MouseClickListener implements MouseMotionListener, MouseListener {
 
@@ -145,8 +151,8 @@ public class Map {
             for (Shape s : shapeList) {
 
                 if (s.contains(x, y)) {
-                    System.out.print(i);
-                    if(i==22){
+                    System.out.println(i);
+                    if (i == 22) {
                         System.out.print("Bretagne");
                     }
                 }

@@ -215,13 +215,12 @@ public class multiBox<E> extends JComboBox<E> {
         private final Object item;
 
         public Item(Object item) {
-            super(item.toString() + " ⨂"); // Add "x" next to the item's string representation
+            super(item.toString() + "  x"); 
             this.item = item;
             init();
         }
 
         private void init() {
-            // Add a click event handler to remove the item when the button is clicked
             addActionListener(e -> removeItemObject(item));
         }
     }

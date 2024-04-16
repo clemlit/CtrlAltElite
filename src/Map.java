@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.imageio.ImageIO;
-
+// RAJOUTER SI LE POINT EST DANS REGION COLORER SINON NON
 public class Map {
 
     private JComponent ui = null;
@@ -122,17 +122,12 @@ public class Map {
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            int i = 0;
-
-            System.out.print(i);
             int x = e.getX();
             int y = e.getY();
-
             int width = output.getWidth();
             int height = output.getHeight();
             boolean valid=true;
                 if (x >= 0 && x < width && y >= 0 && y < height && valid) {
-                    System.out.print(i);
                     refresh();
                 } else {
                 }
@@ -151,9 +146,44 @@ public class Map {
             for (Shape s : shapeList) {
 
                 if (s.contains(x, y)) {
-                    System.out.println(i);
+                    if (i == 9) {
+                        System.out.println("Hauts-de-France");
+                    }
+                    if (i == 14) {
+                        System.out.println("Normandie");
+                    }
+                    if (i == 17) {
+                        System.out.println("Île-de-France");
+                    }
                     if (i == 22) {
-                        System.out.print("Bretagne");
+                        System.out.println("Bretagne");
+                    }
+                    if (i == 24) {
+                        System.out.println("Grand Est");
+                    }
+                    if (i == 28) {
+                        System.out.println("Pays de la Loire");
+                    }
+                    if (i == 29) {
+                        System.out.println("Centre Val de Loire");
+                    }
+                    if (i == 31) {
+                        System.out.println("Bourgogne Franche-Comté");
+                    }
+                    if (i == 43) {
+                        System.out.println("Auvergne Rhône Alpes");
+                    }
+                    if (i == 51) {
+                        System.out.println("Nouvelle Aquitaine");
+                    }
+                    if (i == 52) {
+                        System.out.println("PACA");
+                    }
+                    if (i == 54) {
+                        System.out.println("Occitanie");
+                    }
+                    if (i == 58) {
+                        System.out.println("Corse");
                     }
                 }
                 i++;
@@ -227,7 +257,7 @@ public class Map {
             int y = p.y - p1.y;
             Point pointOnImage = new Point(x, y);
             for (Shape shape : shapeList) {
-                if (shape.contains(pointOnImage)) {
+                if (shape.contains(pointOnImage)&&shape!=shapeList.get(60)&&shape!=shapeList.get(55)&&shape!=shapeList.get(59)) {
                     g.setColor(Color.GREEN.darker());
                     g.fill(shape);
                     break;

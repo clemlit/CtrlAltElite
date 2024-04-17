@@ -9,9 +9,21 @@ import java.util.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Classe pour interagir avec l'API de prix des carburants
+ */
+
 public class API {
     private static final String BASE_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-carburants-flux-instantane-v2/records?";
 
+    /**
+     * Méthode principale pour lancer l'application
+     * Demande à l'utilisateur des informations sur la localisation et les services
+     * souhaités
+     * Effectue une requête HTTP pour récupérer les données sur les prix des
+     * carburants
+     * 
+     */
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Veuillez choisir l'option (ville/departement/region/France) :");
@@ -107,6 +119,22 @@ public class API {
             extractFuelPrices(jsonData, carburants, calList);
         }
     }
+
+    /**
+     * Construit l'URL de requête HTTP en fonction des critères fournis
+     * 
+     * @param type            Type de localisation
+     *                        (ville/département/région/France)
+     * @param location        Nom de la localisation (ville/département/région)
+     * @param carburant       Type(s) de carburant(s) à rechercher
+     * @param calList         Liste des types de calcul à appliquer
+     *                        (avg/min/median/count)
+     * @param x               Paramètre de contrôle pour inclure ou non l'adresse
+     *                        minimale
+     * @param servicesChoisis Liste des services choisis par l'utilisateur
+     * @return L'URL de requête HTTP construite.
+     */
+
     public static String buildURL(String type, String location, String carburant, List<String> calList, int x,List<String> servicesChoisis) {
         StringBuilder urlBuilder = new StringBuilder(BASE_URL);
         urlBuilder.append("select=adresse,ville");
@@ -134,6 +162,18 @@ public class API {
         urlBuilder.append("&limit=1");
         return urlBuilder.toString();
     }
+
+
+    /**
+     * Extrait les données sur les prix des carburants à partir du JSON reçu
+     * 
+     * @param json       Objet JSON contenant les données sur les prix des
+     *                   carburants
+     * @param carburants Liste des types de carburants
+     * @param calList    Liste des types de calcul à appliquer
+     *                   (avg/min/median/count)
+     * @return Une carte des résultats avec les prix des carburants extraits
+     */
     public static Map<String, Map<String, Object>> extractFuelPrices(JSONObject json, List<String> carburants, List<String> calList) {
         Map<String, Map<String, Object>> resultMap = new HashMap<>();
 
@@ -152,6 +192,18 @@ public class API {
         }
         return resultMap;
     }
+
+
+    /**
+     * Extrait les informations sur le prix d'un carburant spécifique à partir du
+     * JSON reçu
+     * 
+     * @param json    Objet JSON contenant les données sur les prix des carburants
+     * @param key     Clé pour extraire les informations spécifiques d'un carburant
+     * @param calList Liste des types de calcul à appliquer (avg/min/median/count)
+     * @param affiche Indique si l'adresse minimale doit être affichée
+     * @return Une carte des résultats avec les informations extraites
+     */
     private static Map<String, Object> extractFuelPrice(JSONObject json, String key, List<String> calList, boolean affiche) {
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -196,6 +248,20 @@ public class API {
 
         return resultMap;
     }
+
+    /**
+     * Effectue une requête HTTP à l'API pour récupérer les données sur les prix des
+     * carburants
+     * 
+     * @param type           Type de localisation (ville/département/région/France)
+     * @param location       Nom de la localisation (ville/département/région)
+     * @param carburants     Liste des types de carburants à rechercher
+     * @param calList        Liste des types de calcul à appliquer
+     *                       (avg/min/median/count)
+     * @param showAdresseMin Indique si l'adresse minimale doit être affichée
+     * @param serviceChoisis Liste des services choisis par l'utilisateur
+     * @return Objet JSON contenant les données sur les prix des carburants
+     */
     public static JSONObject requeteHttp(String type, String location, List<String> carburants, List<String>calList, boolean showAdresseMin,List<String> serviceChoisis) {
         ArrayList<String> m = new ArrayList<>(calList);
         HttpClient client = HttpClient.newHttpClient();

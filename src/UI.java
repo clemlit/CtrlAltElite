@@ -21,7 +21,7 @@ public class UI implements ActionListener {
     JPanel panelFiltres;
     JPanel mapPanel;
     JButton themeButton;
-    Map map;
+    Carte map;
 
     public static void main(String argv[]) {
         new UI();
@@ -193,8 +193,8 @@ public class UI implements ActionListener {
         f.setLocationRelativeTo(null);
         f.setVisible(true);
 
-        map = new Map();
-        mapPanel.add(map.getUI());
+        Carte map = new Carte(1);
+        mapPanel.add(map.getUI(1));
 
         JButton boutonResultat = new JButton("Resultat");
         boutonResultat.addActionListener(new ActionListener() {

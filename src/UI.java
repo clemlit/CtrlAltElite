@@ -27,6 +27,11 @@ public class UI implements ActionListener {
         new UI();
     }
 
+    /**
+     * Constructeur de la classe UI qui initialise l'interface utilisateur
+     * Initialise les composants Swing, définit les paramètres visuels et les
+     * interactions
+     */
     public UI() {
         FlatLightLaf.setup();
 
@@ -269,7 +274,11 @@ public class UI implements ActionListener {
 
     }
 
-    // Méthode pour ouvrir la page HTML dans le navigateur
+    /**
+     * Ouvre une page web dans le navigateur par défaut à partir de l'URL spécifiée.
+     *
+     * @param url L'URL de la page web à ouvrir.
+     */
     private void openWebPage(String url) {
         try {
             File htmlFile = new File(url);

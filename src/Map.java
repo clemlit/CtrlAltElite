@@ -8,6 +8,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.imageio.ImageIO;
 // RAJOUTER SI LE POINT EST DANS REGION COLORER SINON NON
+/**
+ * Cette classe représente une carte interactive affichée dans une interface
+ * graphique Swing
+ * Elle permet de détecter les régions cliquées par l'utilisateur
+ */
+
 public class Map {
 
     private JComponent ui = null;
@@ -17,6 +23,10 @@ public class Map {
     Area area;
     ArrayList<Shape> shapeList;
 
+    /**
+     * Constructeur par défaut de la classe Map
+     * Initialise l'interface utilisateur et charge l'image de la carte
+     */
     public Map() {
         try {
             initUI();
@@ -25,6 +35,11 @@ public class Map {
         }
     }
 
+    /**
+     * Initialise l'interface utilisateur avec la carte chargée
+     * 
+     * @throws Exception Si une erreur se produit lors du chargement de l'image
+     */
     public final void initUI() throws Exception {
         if (ui != null) {
             return;
@@ -47,6 +62,15 @@ public class Map {
 
     }
 
+    /**
+     * Obtient le contour de la carte sous forme d'une zone délimitée par une
+     * couleur spécifiée.
+     * 
+     * @param target    La couleur cible du contour de la carte
+     * @param bi        L'image de la carte
+     * @param tolerance La tolérance pour la détection de couleur
+     * @return La zone délimitée par le contour de la carte
+     */
     public Area getOutline(Color target, BufferedImage bi, int tolerance) {
         // construct the GeneralPath
         GeneralPath gp = new GeneralPath();
@@ -77,6 +101,12 @@ public class Map {
         return new Area(gp);
     }
 
+    /**
+     * Sépare la forme principale de la carte en régions distinctes
+     * 
+     * @param shape La forme principale de la carte
+     * @return Une liste de formes représentant les régions distinctes de la carte
+     */
     public static ArrayList<Shape> separateShapeIntoRegions(Shape shape) {
         ArrayList<Shape> regions = new ArrayList<>();
         PathIterator pi = shape.getPathIterator(null);
@@ -112,6 +142,9 @@ public class Map {
         return regions;
     }
 
+    /**
+     * Classe interne pour gérer les événements de clic de souris sur la carte
+     */
     class MouseListen implements MouseMotionListener {
 
         @Override
@@ -224,6 +257,16 @@ public class Map {
 
     }
 
+    /**
+     * Vérifie si une couleur spécifique est incluse dans une autre avec une
+     * tolérance donnée.
+     * 
+     * @param target    La couleur cible à vérifier
+     * @param pixel     La couleur du pixel à comparer
+     * @param tolerance La tolérance pour la comparaison des couleurs
+     * @return true si la couleur cible est incluse dans la couleur du pixel avec la
+     *         tolérance spécifiée, sinon false
+     */
     public static boolean isIncluded(Color target, Color pixel, int tolerance) {
         int rT = target.getRed();
         int gT = target.getGreen();
@@ -275,6 +318,11 @@ public class Map {
         return ui;
     }
 
+    /**
+     * Méthode principale pour tester la classe Map.
+     * 
+     * @param args Les arguments de la ligne de commande (non utilisés ici).
+     */
     public static void main(String[] args) {
         Runnable r = () -> {
             try {

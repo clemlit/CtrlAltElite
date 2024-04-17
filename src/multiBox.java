@@ -28,10 +28,24 @@ import net.miginfocom.swing.MigLayout;
 
 public class multiBox<E> extends JComboBox<E> {
 
+    private final List<Object> selectedItems = new ArrayList<>();
+    private final ComboBoxMultiCellEditor comboBoxMultiCellEditor;
+    private Component comboList;
+
+    /**
+     * Obtient les éléments sélectionnés dans la liste déroulante
+     * 
+     * @return Une liste d'objets représentant les éléments sélectionnés
+     */
     public List<Object> getSelectedItems() {
         return selectedItems;
     }
 
+    /**
+     * Définit les éléments sélectionnés dans la liste déroulante
+     * 
+     * @param selectedItems La liste d'objets à sélectionner
+     */
     public void setSelectedItems(List<Object> selectedItems) {
         List<Object> comboItem = new ArrayList<>();
         int count = getItemCount();
@@ -46,6 +60,9 @@ public class multiBox<E> extends JComboBox<E> {
         comboItem.clear();
     }
 
+    /**
+     * Efface tous les éléments sélectionnés dans la liste déroulante
+     */
     public void clearSelectedItems() {
         selectedItems.clear();
         Component editorCom = getEditor().getEditorComponent();
@@ -59,9 +76,7 @@ public class multiBox<E> extends JComboBox<E> {
         }
     }
 
-    private final List<Object> selectedItems = new ArrayList<>();
-    private final ComboBoxMultiCellEditor comboBoxMultiCellEditor;
-    private Component comboList;
+    // Méthodes privées pour gérer l'ajout et la suppression d'éléments
 
     private void removeItemObject(Object obj) {
         selectedItems.remove(obj);
@@ -80,6 +95,9 @@ public class multiBox<E> extends JComboBox<E> {
     }
 
     @SuppressWarnings("rawtypes") // Suppression des avertissements du compilateur 
+    /**
+     * Constructeur par défaut de la classe multiBox
+     */
     public multiBox() {
         setUI(new ComboBoxMultiUI());
         comboBoxMultiCellEditor = new ComboBoxMultiCellEditor();
@@ -105,6 +123,7 @@ public class multiBox<E> extends JComboBox<E> {
 
     }
 
+    // Classes internes pour personnaliser l'interface utilisateur de la JComboBox
     private class ComboBoxMultiUI extends FlatComboBoxUI {
 
         @Override

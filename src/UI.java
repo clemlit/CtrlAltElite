@@ -20,7 +20,6 @@ public class UI implements ActionListener {
     JPanel panelBanniere;
     JPanel panelFiltres;
     JPanel mapPanel;
-    JButton themeButton;
     Carte map;
 
     public static void main(String argv[]) {
@@ -61,11 +60,6 @@ public class UI implements ActionListener {
         panelBanniere.setBackground(new Color(255, 255, 255));
         panelBanniere.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
         panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 100));
-
-        // Ajout du bouton pour changer de thème
-        themeButton = new JButton("Changer de thème");
-        themeButton.addActionListener(this); // Ajout de l'action listener
-        panelBanniere.add(themeButton); // Ajout du bouton au panneau bannière
 
         // Crée les ComboBox multi-sélection pour les régions, départements et
         // carburants
@@ -288,33 +282,8 @@ public class UI implements ActionListener {
         }
     }
 
-    boolean isLightTheme = true;
 
     public void actionPerformed(ActionEvent event) {
-        if (isLightTheme) {
-
-            // Changement vers le thème sombre
-            try {
-                UIManager.setLookAndFeel("com.formdev.flatlaf.themes.FlatMacDarkLaf");
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                    | UnsupportedLookAndFeelException e) {
-                e.printStackTrace();
-            }
-            isLightTheme = false;
-        } else {
-            // Changement vers le thème clair
-            try {
-                UIManager.setLookAndFeel("com.formdev.flatlaf.themes.FlatMacLightLaf");
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                    | UnsupportedLookAndFeelException e) {
-                e.printStackTrace();
-            }
-            isLightTheme = true;
-        }
-
-        // Rafraîchir l'apparence de tous les composants
-        SwingUtilities.updateComponentTreeUI(themeButton.getRootPane());
-
         panelFiltres.revalidate();
         panelFiltres.repaint();
     }

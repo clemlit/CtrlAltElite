@@ -184,7 +184,6 @@ public class UI implements ActionListener {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         f.setSize(screenSize.width, screenSize.height); // Taille de l'écran
         f.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximisation de la fenêtre
-        ;
         f.setVisible(true);
 
         JButton boutonResultat = new JButton("Resultat");

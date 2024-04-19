@@ -172,7 +172,7 @@ public class Carte {
             int width = output.getWidth();
             int height = output.getHeight();
             boolean valid=true;
-            int i=0;
+            //int i=0;
             if (x >= 0 && x < width && y >= 0 && y < height && valid) {
                 refresh();
             } else {
@@ -365,7 +365,7 @@ public class Carte {
      * @param args Les arguments de la ligne de commande (non utilisés ici).
      */
     public static void main(String[] args) {
-        boolean isOver = false;
+        //boolean isOver = false;
         Runnable r = () -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

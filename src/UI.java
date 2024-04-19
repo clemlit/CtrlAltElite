@@ -190,6 +190,8 @@ public class UI implements ActionListener {
 
         JButton boutonResultat = new JButton("Resultat");
         boutonResultat.addActionListener(new ActionListener() {
+
+
             public void actionPerformed(ActionEvent e) {
                 StringBuilder htmlContent = new StringBuilder();
                 for (java.awt.Component component : panelFiltres.getComponents()) {
@@ -203,6 +205,7 @@ public class UI implements ActionListener {
 
                 List<Object> selectedRegions = comboRegion.getSelectedItems();
                 if (!selectedRegions.isEmpty()) {
+                    API.retrieveFuelDataByLocation("region",selectedRegions.get(0).toString());
                     // Ajoute les données sélectionnées dans le multiBox "comboRegion"
                     htmlContent.append("<h2> Région selectionné :</h2>");
                 }
@@ -212,6 +215,14 @@ public class UI implements ActionListener {
 
                 List<Object> selectedDepartements = comboDepart.getSelectedItems();
                 if (!selectedDepartements.isEmpty()) {
+                    String fullDepartementName = selectedDepartements.get(0).toString();
+                    String[] parts = fullDepartementName.split(" - ", 2); // Sépare la chaîne au premier " - "
+                    if (parts.length > 1) {
+                        String cleanedDepartementName = parts[1]; // Récupère la partie après le " - "
+                        API.retrieveFuelDataByLocation("departement", cleanedDepartementName);
+                        htmlContent.append("<h2>Département sélectionné :</h2>");
+                        htmlContent.append("<p>").append(cleanedDepartementName).append("</p>");
+                    }
                     htmlContent.append("<h2>Département selectionné :</h2>");
                 }
                 for (Object departement : selectedDepartements) {

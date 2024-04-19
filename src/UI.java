@@ -32,6 +32,7 @@ public class UI implements ActionListener {
      * interactions
      */
     public UI() {
+        
         FlatLightLaf.setup();
 
         try {
@@ -187,9 +188,6 @@ public class UI implements ActionListener {
         f.setLocationRelativeTo(null);
         f.setVisible(true);
 
-        Carte map = new Carte(1);
-        mapPanel.add(map.getUI(1));
-
         JButton boutonResultat = new JButton("Resultat");
         boutonResultat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -265,6 +263,9 @@ public class UI implements ActionListener {
             }
         });
         panelFiltres.add(boutonResultat);
+
+        Carte map = new Carte(1);
+        mapPanel.add(map.getUI(1));
 
     }
 

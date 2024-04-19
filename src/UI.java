@@ -272,6 +272,17 @@ public class UI implements ActionListener {
         panelFiltres.add(boutonResultat);
 
         Carte map = new Carte(1);
+        mapPanel.setLayout(new BorderLayout()); // Utilisation de BorderLayout pour centrer la carte
+
+        // Ajout de la carte au centre du mapPanel
+        mapPanel.add(map.getUI(1), BorderLayout.CENTER);
+
+        // Suppression de la ligne inutile
+        // mapPanel.add(map.getUI(1));
+
+        // Ajustement de la taille préférée du mapPanel pour contrôler la taille de la
+        // carte
+        mapPanel.setPreferredSize(new Dimension(800, 600));
         mapPanel.add(map.getUI(1));
 
     }

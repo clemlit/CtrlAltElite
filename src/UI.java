@@ -223,7 +223,6 @@ public class UI implements ActionListener {
                         htmlContent.append("<h2>Département sélectionné :</h2>");
                         htmlContent.append("<p>").append(cleanedDepartementName).append("</p>");
                     }
-                    htmlContent.append("<h2>Département selectionné :</h2>");
                 }
                 for (Object departement : selectedDepartements) {
                     // Ajoute les données sélectionnées dans le multiBox "comboDepart"

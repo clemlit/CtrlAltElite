@@ -193,8 +193,7 @@ public class Carte {
         public void mouseClicked(MouseEvent e) {
             Point screenPoint = e.getLocationOnScreen(); // Get screen coordinates
             Point componentPoint = new Point(); // Create a new Point object
-            SwingUtilities.convertPointFromScreen(screenPoint, output); // Convert screen to component
-                                                                                        // coordinates
+            SwingUtilities.convertPointFromScreen(screenPoint, output); // Convert screen to component coordinates
             int x = componentPoint.x;
             int y = componentPoint.y;
             int i = 0;

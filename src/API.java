@@ -60,7 +60,10 @@ public class API extends UI{
     }
 
     public static void retrieveFuelDataByLocation(String type, String location) {
-        String apiUrl = buildApiUrl(type, location);
+        // Supprimez les espaces inutiles en utilisant trim()
+        String cleanedLocation = location.trim();
+        String apiUrl = buildApiUrl(type, cleanedLocation);
+        System.out.println(apiUrl);
 
         try {
             URL url = new URL(apiUrl);

@@ -182,10 +182,9 @@ public class UI implements ActionListener {
 
         f.pack();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = screenSize.width * 50 / 100;
-        int height = screenSize.height * 50 / 100;
-        f.setSize(width, height);
-        f.setLocationRelativeTo(null);
+        f.setSize(screenSize.width, screenSize.height); // Taille de l'écran
+        f.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximisation de la fenêtre
+        ;
         f.setVisible(true);
 
         JButton boutonResultat = new JButton("Resultat");
@@ -221,7 +220,6 @@ public class UI implements ActionListener {
                         String cleanedDepartementName = parts[1]; // Récupère la partie après le " - "
                         API.retrieveFuelDataByLocation("departement", cleanedDepartementName);
                         htmlContent.append("<h2>Département sélectionné :</h2>");
-                        htmlContent.append("<p>").append(cleanedDepartementName).append("</p>");
                     }
                 }
                 for (Object departement : selectedDepartements) {

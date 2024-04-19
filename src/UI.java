@@ -53,6 +53,8 @@ public class UI implements ActionListener {
         panelFiltres.setPreferredSize(new Dimension(500, f.getHeight()));
 
         JPanel mapPanel = new JPanel();
+        mapPanel.setLayout(new BorderLayout());
+
         mapPanel.setBackground(new Color(245, 247, 250));
         mapPanel.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
         mapPanel.setMaximumSize(new Dimension(f.getWidth(), f.getHeight()));
@@ -184,6 +186,7 @@ public class UI implements ActionListener {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         f.setSize(screenSize.width, screenSize.height); // Taille de l'écran
         f.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximisation de la fenêtre
+
         f.setVisible(true);
 
         JButton boutonResultat = new JButton("Resultat");
@@ -272,18 +275,8 @@ public class UI implements ActionListener {
         panelFiltres.add(boutonResultat);
 
         Carte map = new Carte(1);
-        mapPanel.setLayout(new BorderLayout()); // Utilisation de BorderLayout pour centrer la carte
-
-        // Ajout de la carte au centre du mapPanel
         mapPanel.add(map.getUI(1), BorderLayout.CENTER);
 
-        // Suppression de la ligne inutile
-        // mapPanel.add(map.getUI(1));
-
-        // Ajustement de la taille préférée du mapPanel pour contrôler la taille de la
-        // carte
-        mapPanel.setPreferredSize(new Dimension(800, 600));
-        mapPanel.add(map.getUI(1));
 
     }
 

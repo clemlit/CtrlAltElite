@@ -191,8 +191,12 @@ public class Carte {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            int x = e.getX(); // Coordonnée X du clic de la souris
-            int y = e.getY(); // Coordonnée Y du clic de la souris
+            Point screenPoint = e.getLocationOnScreen(); // Get screen coordinates
+            Point componentPoint = new Point(); // Create a new Point object
+            SwingUtilities.convertPointFromScreen(screenPoint, output); // Convert screen to component
+                                                                                        // coordinates
+            int x = componentPoint.x;
+            int y = componentPoint.y;
             int i = 0;
             for (Shape s : shapeList) {
                 if (numeroMap == 1) {
@@ -393,4 +397,5 @@ public class Carte {
 
         SwingUtilities.invokeLater(r);
     }
+    
 }

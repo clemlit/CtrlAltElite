@@ -12,6 +12,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.border.LineBorder;
 
@@ -205,28 +206,36 @@ public class UI implements ActionListener {
                 }
 
                 List<Object> selectedRegions = comboRegion.getSelectedItems();
-                if (!selectedRegions.isEmpty()) {
-                    API.retrieveFuelDataByLocation("region",selectedRegions.get(0).toString());
-                    // Ajoute les données sélectionnées dans le multiBox "comboRegion"
-                    htmlContent.append("<h2> Région selectionné :</h2>");
-                }
+                List<String> selectedRegionNames = new ArrayList<>();
                 for (Object region : selectedRegions) {
-                    htmlContent.append("<p>").append(region.toString()).append("</p>");
+                    selectedRegionNames.add(region.toString());
+                }
+                if (!selectedRegionNames.isEmpty()) {
+                    API.retrieveFuelDataByLocation("region", selectedRegionNames);
+                    // Ajoute les données sélectionnées dans le multiBox "comboRegion"
+                    htmlContent.append("<h2> Régions sélectionnées :</h2>");
+                    for (Object region : selectedRegionNames) {
+                        htmlContent.append("<p>").append(region.toString()).append("</p>");
+                    }
                 }
 
                 List<Object> selectedDepartements = comboDepart.getSelectedItems();
-                if (!selectedDepartements.isEmpty()) {
-                    String fullDepartementName = selectedDepartements.get(0).toString();
+                List<String> selectedDepartementNames = new ArrayList<>();
+                for (Object departement : selectedDepartements) {
+                    String fullDepartementName = departement.toString();
                     String[] parts = fullDepartementName.split(" - ", 2); // Sépare la chaîne au premier " - "
                     if (parts.length > 1) {
                         String cleanedDepartementName = parts[1]; // Récupère la partie après le " - "
-                        API.retrieveFuelDataByLocation("departement", cleanedDepartementName);
-                        htmlContent.append("<h2>Département sélectionné :</h2>");
+                        selectedDepartementNames.add(cleanedDepartementName);
                     }
                 }
-                for (Object departement : selectedDepartements) {
-                    // Ajoute les données sélectionnées dans le multiBox "comboDepart"
-                    htmlContent.append("<p>").append(departement.toString()).append("</p>");
+                if (!selectedDepartementNames.isEmpty()) {
+                    API.retrieveFuelDataByLocation("departement", selectedDepartementNames);
+                    htmlContent.append("<h2>Départements sélectionnés :</h2>");
+                    for (Object departement : selectedDepartementNames) {
+                        // Ajoute les données sélectionnées dans le multiBox "comboDepart"
+                        htmlContent.append("<p>").append(departement.toString()).append("</p>");
+                    }
                 }
 
                 // Ajoute les données sélectionnées dans le multiBox "comboCarbu"

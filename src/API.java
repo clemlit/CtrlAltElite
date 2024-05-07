@@ -24,7 +24,7 @@ public class API extends UI{
             boolean running = true;
 
             while (running) {
-                System.out.println("Veuillez choisir l'option (ville/departement/region/carburant/France/quitter) :");
+                System.out.println("Veuillez choisir l'option (ville/departement/region/carburant/France/option/quitter) :");
                 String option = scanner.nextLine().toLowerCase();
 
                 switch (option) {
@@ -48,6 +48,11 @@ public class API extends UI{
                         String carburant = scanner.nextLine();
                         retrieveFuelDataByLocation("carburant", Arrays.asList(carburant));
                         break;
+                    case "option":
+                        System.out.println("Veuillez choisir l'option (Wifi /boutique alimentaire /station de gonflage /lavage automatique/ borne electrique /automate / distributeur /espace bebe/toilette publique) :");
+                        String Option = scanner.nextLine(); 
+                        retrieveFuelDataByLocation("option", Arrays.asList(Option));
+                        break;
                     case "france":
                         retrieveFuelDataByLocation("France", Arrays.asList("France"));
                         break;
@@ -63,6 +68,7 @@ public class API extends UI{
             System.out.println("Programme terminé.");
         }
     }
+
 
     public static void retrieveFuelDataByLocation(String type, List<String> locations) {
         // Supprimez les espaces inutiles en utilisant trim()
@@ -98,16 +104,30 @@ public class API extends UI{
 
     private static String buildApiUrl(String type, List<String> locations) {
         StringBuilder apiUrlBuilder = new StringBuilder(API_URL);
+
         // Supprimez les espaces inutiles en utilisant trim()
         String encodedLocation = URLEncoder.encode(locations.get(0).trim(), StandardCharsets.UTF_8);
 
+        // Traiter le type "carburant"
         if (type.equals("carburant") && locations.size() > 0) {
             apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
             for (int i = 1; i < locations.size(); i++) {
                 encodedLocation = URLEncoder.encode(locations.get(i).trim(), StandardCharsets.UTF_8);
                 apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
             }
-        } else {
+        }
+        else if (type.equals("option")) {
+            // Parcourir la liste des options
+            for (String option : locations) {
+                // Encoder l'option avec les guillemets autour du nom et les espaces encodés en
+                // "%20"
+                String encodedOption = URLEncoder.encode("\"" + option.trim() + "\"", StandardCharsets.UTF_8);
+                // Ajouter l'option à l'URL de l'API
+                apiUrlBuilder.append("&refine=services_service%3A").append(encodedOption);
+                System.out.println(apiUrlBuilder);
+            }
+        }
+        else {
             apiUrlBuilder.append("&refine=").append(type).append("%3A%22").append(encodedLocation).append("%22");
         }
         return apiUrlBuilder.toString();

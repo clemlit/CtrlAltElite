@@ -68,43 +68,48 @@ public class API extends UI{
         // Supprimez les espaces inutiles en utilisant trim()
 
         try {
-            for (String location : locations) {
-                String cleanedLocation = location.trim();
-                String apiUrl = buildApiUrl(type, cleanedLocation);
+            String apiUrl = buildApiUrl(type, locations);
 
-                URL url = new URL(apiUrl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
 
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-                    reader.close();
-
-                    System.out.println("Données récupérées :");
-                    System.out.println(response.toString());
-                } else {
-                    System.out.println("La requête a échoué avec le code : " + responseCode);
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
                 }
+                reader.close();
 
-                conn.disconnect();
+                System.out.println("Données récupérées :");
+                System.out.println(response.toString());
+            } else {
+                System.out.println("La requête a échoué avec le code : " + responseCode);
             }
+
+            conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static String buildApiUrl(String type, String location) {
-        String encodedLocation = URLEncoder.encode(location, StandardCharsets.UTF_8);
-        if (type.equals("carburant")){
-            return API_URL + "&refine=carburants_disponibles" + "%3A%22" + encodedLocation + "%22";
-        }else{
-            return API_URL + "&refine=" + type + "%3A%22" + encodedLocation + "%22";
+    private static String buildApiUrl(String type, List<String> locations) {
+        StringBuilder apiUrlBuilder = new StringBuilder(API_URL);
+        // Supprimez les espaces inutiles en utilisant trim()
+        String encodedLocation = URLEncoder.encode(locations.get(0).trim(), StandardCharsets.UTF_8);
+
+        if (type.equals("carburant") && locations.size() > 0) {
+            apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
+            for (int i = 1; i < locations.size(); i++) {
+                encodedLocation = URLEncoder.encode(locations.get(i).trim(), StandardCharsets.UTF_8);
+                apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
+            }
+        } else {
+            apiUrlBuilder.append("&refine=").append(type).append("%3A%22").append(encodedLocation).append("%22");
         }
+        return apiUrlBuilder.toString();
     }
 }

@@ -24,7 +24,7 @@ public class API extends UI{
             boolean running = true;
 
             while (running) {
-                System.out.println("Veuillez choisir l'option (ville/departement/region/France/quitter) :");
+                System.out.println("Veuillez choisir l'option (ville/departement/region/carburant/France/quitter) :");
                 String option = scanner.nextLine().toLowerCase();
 
                 switch (option) {
@@ -42,6 +42,11 @@ public class API extends UI{
                         System.out.println("Veuillez saisir le nom de la région (ex: Nouvelle-Aquitaine) :");
                         String region = scanner.nextLine();
                         retrieveFuelDataByLocation("region", Arrays.asList(region));
+                        break;
+                    case "carburant":
+                        System.out.println("Veuillez saisir le nom du carburant :");
+                        String carburant = scanner.nextLine();
+                        retrieveFuelDataByLocation("carburant", Arrays.asList(carburant));
                         break;
                     case "france":
                         retrieveFuelDataByLocation("France", Arrays.asList("France"));
@@ -96,6 +101,10 @@ public class API extends UI{
 
     private static String buildApiUrl(String type, String location) {
         String encodedLocation = URLEncoder.encode(location, StandardCharsets.UTF_8);
-        return API_URL + "&refine=" + type + "%3A%22" + encodedLocation + "%22";
+        if (type.equals("carburant")){
+            return API_URL + "&refine=carburants_disponibles" + "%3A%22" + encodedLocation + "%22";
+        }else{
+            return API_URL + "&refine=" + type + "%3A%22" + encodedLocation + "%22";
+        }
     }
 }

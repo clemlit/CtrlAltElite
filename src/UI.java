@@ -123,8 +123,8 @@ public class UI implements ActionListener {
             comboCarbu.addItem(carburant);
         }
 
-        String[] options = { "Wi-fi ", "Boutique alimentaire ", "Station de gonflage ", "Lavage automatique ",
-                "Bornes éléctrique ", "Automate CB 24/24 ",
+        String[] options = { "Wifi", "Boutique alimentaire ", "Station de gonflage ", "Lavage automatique ",
+                "Bornes électrique ", "Automate CB 24/24 ",
                 "DAB (Distributeur automatique de billets) ", "Espace bébé ", "Toilettes publiques " };
 
         for (String option : options) {
@@ -202,6 +202,25 @@ public class UI implements ActionListener {
                         if (checkBox.isSelected()) {
                             htmlContent.append("<li>").append(checkBox.getText()).append("</li>");
                         }
+                    }
+                }
+
+                List<Object> selectedOptions = comboOptions.getSelectedItems();
+                List<String> selectedOptionsNames = new ArrayList<>();
+                for (Object option : selectedOptions) {
+                    selectedOptionsNames.add(option.toString());
+                }
+
+                // Vérifier si des options ont été sélectionnées
+                if (!selectedOptionsNames.isEmpty()) {
+                    // Appel à la méthode retrieveFuelDataByLocation avec le type "option" et les
+                    // options sélectionnées
+                    API.retrieveFuelDataByLocation("option", selectedOptionsNames);
+
+                    // Ajouter les données sélectionnées dans le HTML
+                    htmlContent.append("<h2>Options sélectionnées :</h2>");
+                    for (String option : selectedOptionsNames) {
+                        htmlContent.append("<p>").append(option).append("</p>");
                     }
                 }
 

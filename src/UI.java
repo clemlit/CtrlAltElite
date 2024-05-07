@@ -2,6 +2,7 @@ import javax.swing.*;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.Color;
+import java.util.Map;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.Dimension;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.border.LineBorder;
 
@@ -195,7 +197,9 @@ public class UI implements ActionListener {
 
 
             public void actionPerformed(ActionEvent e) {
+                Map<String, List<String>> criteria = new HashMap<>();
                 StringBuilder htmlContent = new StringBuilder();
+
                 for (java.awt.Component component : panelFiltres.getComponents()) {
                     if (component instanceof JCheckBox) {
                         JCheckBox checkBox = (JCheckBox) component;
@@ -213,11 +217,7 @@ public class UI implements ActionListener {
 
                 // Vérifier si des options ont été sélectionnées
                 if (!selectedOptionsNames.isEmpty()) {
-                    // Appel à la méthode retrieveFuelDataByLocation avec le type "option" et les
-                    // options sélectionnées
-                    API.retrieveFuelDataByLocation("option", selectedOptionsNames);
-
-                    // Ajouter les données sélectionnées dans le HTML
+                    criteria.put("option", selectedOptionsNames);
                     htmlContent.append("<h2>Options sélectionnées :</h2>");
                     for (String option : selectedOptionsNames) {
                         htmlContent.append("<p>").append(option).append("</p>");
@@ -230,8 +230,7 @@ public class UI implements ActionListener {
                     selectedRegionNames.add(region.toString());
                 }
                 if (!selectedRegionNames.isEmpty()) {
-                    API.retrieveFuelDataByLocation("region", selectedRegionNames);
-                    // Ajoute les données sélectionnées dans le multiBox "comboRegion"
+                    criteria.put("region", selectedRegionNames);
                     htmlContent.append("<h2> Régions sélectionnées :</h2>");
                     for (Object region : selectedRegionNames) {
                         htmlContent.append("<p>").append(region.toString()).append("</p>");
@@ -249,7 +248,7 @@ public class UI implements ActionListener {
                     }
                 }
                 if (!selectedDepartementNames.isEmpty()) {
-                    API.retrieveFuelDataByLocation("departement", selectedDepartementNames);
+                    criteria.put("departement", selectedDepartementNames);
                     htmlContent.append("<h2>Départements sélectionnés :</h2>");
                     for (Object departement : selectedDepartementNames) {
                         // Ajoute les données sélectionnées dans le multiBox "comboDepart"
@@ -263,13 +262,20 @@ public class UI implements ActionListener {
                     selectedCarburantNames.add(carburant.toString());
                 }
                 if (!selectedCarburantNames.isEmpty()) {
-                    API.retrieveFuelDataByLocation("carburant", selectedCarburantNames);
+                    criteria.put("carburant", selectedCarburantNames);
                     htmlContent.append("<h2>Carburants sélectionnés :</h2>");
                     for (Object carburant : selectedCarburantNames) {
                         // Ajoute les données sélectionnées dans le multiBox "comboCarbu"
                         htmlContent.append("<p>").append(carburant.toString()).append("</p>");
                     }
                 }
+
+                // Vérifier si des critères ont été sélectionnés
+                if (!criteria.isEmpty()) {
+                    API.retrieveFuelDataByLocation(criteria);
+                }
+
+
 
                 // Écrire les données dans un fichier HTML
                 try {

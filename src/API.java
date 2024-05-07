@@ -31,20 +31,20 @@ public class API extends UI{
                     case "ville":
                         System.out.println("Veuillez saisir le nom de la ville :");
                         String ville = scanner.nextLine();
-                        retrieveFuelDataByLocation("ville", ville);
+                        retrieveFuelDataByLocation("ville", Arrays.asList(ville));
                         break;
                     case "departement":
                         System.out.println("Veuillez saisir le département (ex : Gironde) :");
                         String departement = scanner.nextLine();
-                        retrieveFuelDataByLocation("departement", departement);
+                        retrieveFuelDataByLocation("departement", Arrays.asList(departement));
                         break;
                     case "region":
                         System.out.println("Veuillez saisir le nom de la région (ex: Nouvelle-Aquitaine) :");
                         String region = scanner.nextLine();
-                        retrieveFuelDataByLocation("region", region);
+                        retrieveFuelDataByLocation("region", Arrays.asList(region));
                         break;
                     case "france":
-                        retrieveFuelDataByLocation("France", "France");
+                        retrieveFuelDataByLocation("France", Arrays.asList("France"));
                         break;
                     case "quitter":
                         running = false;
@@ -59,34 +59,36 @@ public class API extends UI{
         }
     }
 
-    public static void retrieveFuelDataByLocation(String type, String location) {
+    public static void retrieveFuelDataByLocation(String type, List<String> locations) {
         // Supprimez les espaces inutiles en utilisant trim()
-        String cleanedLocation = location.trim();
-        String apiUrl = buildApiUrl(type, cleanedLocation);
-        System.out.println(apiUrl);
 
         try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            for (String location : locations) {
+                String cleanedLocation = location.trim();
+                String apiUrl = buildApiUrl(type, cleanedLocation);
 
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
+                URL url = new URL(apiUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
+
+                    System.out.println("Données récupérées :");
+                    System.out.println(response.toString());
+                } else {
+                    System.out.println("La requête a échoué avec le code : " + responseCode);
                 }
-                reader.close();
 
-                System.out.println("Données récupérées :");
-                System.out.println(response.toString());
-            } else {
-                System.out.println("La requête a échoué avec le code : " + responseCode);
+                conn.disconnect();
             }
-
-            conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }

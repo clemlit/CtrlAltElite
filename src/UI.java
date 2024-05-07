@@ -238,14 +238,18 @@ public class UI implements ActionListener {
                     }
                 }
 
-                // Ajoute les données sélectionnées dans le multiBox "comboCarbu"
-                List<Object> selectedCarbus = comboCarbu.getSelectedItems();
-                if (!selectedCarbus.isEmpty()) {
-                    htmlContent.append("<h2>Carburant selectionné : </h2>");
+                List<Object> selectedCarburants = comboCarbu.getSelectedItems();
+                List<String> selectedCarburantNames = new ArrayList<>();
+                for (Object carburant : selectedCarburants) {
+                    selectedCarburantNames.add(carburant.toString());
                 }
-                for (Object carbu : selectedCarbus) {
-
-                    htmlContent.append("<p>").append(carbu.toString()).append("</p>");
+                if (!selectedCarburantNames.isEmpty()) {
+                    API.retrieveFuelDataByLocation("carburant", selectedCarburantNames);
+                    htmlContent.append("<h2>Carburants sélectionnés :</h2>");
+                    for (Object carburant : selectedCarburantNames) {
+                        // Ajoute les données sélectionnées dans le multiBox "comboCarbu"
+                        htmlContent.append("<p>").append(carburant.toString()).append("</p>");
+                    }
                 }
 
                 // Écrire les données dans un fichier HTML

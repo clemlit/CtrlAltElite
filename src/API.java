@@ -4,6 +4,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -20,7 +26,7 @@ public class API extends UI{
 
     private static final String API_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?limit=20";
 
-    public static void retrieveFuelDataByLocation(Map<String, List<String>> criteria) {
+        public static void retrieveFuelDataByLocation(Map<String, List<String>> criteria) {
         try {
             String apiUrl = buildApiUrl(criteria);
             URL url = new URL(apiUrl);
@@ -37,14 +43,86 @@ public class API extends UI{
                 }
                 reader.close();
 
-                System.out.println("Données récupérées :");
-                System.out.println(response.toString());
+                // Convertir la réponse JSON en objet JSONObject
+                JSONObject jsonResponse = new JSONObject(response.toString());
+
+                // Extraire les résultats
+                JSONArray results = jsonResponse.getJSONArray("results");
+
+                // Créer un Map pour stocker les prix de chaque type de carburant
+                Map<String, List<Double>> fuelPrices = new HashMap<>();
+
+                // Parcourir les résultats
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject station = results.getJSONObject(i);
+
+                    // Extraire le champ "prix"
+                    Object prixObj = station.get("prix");
+
+                    if (prixObj instanceof JSONArray) {
+                        JSONArray prices = (JSONArray) prixObj;
+
+                        // Parcourir les prix
+                        for (int j = 0; j < prices.length(); j++) {
+                            JSONObject price = prices.getJSONObject(j);
+                            String fuelType = price.getString("@nom");
+                            double fuelPrice = price.getDouble("@valeur");
+
+                            // Ajouter le prix à la liste des prix pour ce type de carburant
+                            fuelPrices.computeIfAbsent(fuelType, k -> new ArrayList<>()).add(fuelPrice);
+                        }
+                    } else if (prixObj instanceof String) {
+                        // Traitement spécial si le champ "prix" est une chaîne JSON
+                        JSONArray prices = new JSONArray((String) prixObj);
+
+                        // Parcourir les prix
+                        for (int j = 0; j < prices.length(); j++) {
+                            JSONObject price = prices.getJSONObject(j);
+                            String fuelType = price.getString("@nom");
+                            double fuelPrice = price.getDouble("@valeur");
+
+                            // Ajouter le prix à la liste des prix pour ce type de carburant
+                            fuelPrices.computeIfAbsent(fuelType, k -> new ArrayList<>()).add(fuelPrice);
+                        }
+                    }
+                }
+
+                // Afficher le prix moyen, médian et minimal pour chaque type de carburant
+                DecimalFormat df = new DecimalFormat("#.##");
+                for (String fuelType : fuelPrices.keySet()) {
+                    List<Double> prices = fuelPrices.get(fuelType);
+                    Collections.sort(prices); // Trier les prix
+
+                    // Calculer le prix moyen
+                    double totalPrice = 0;
+                    for (double price : prices) {
+                        totalPrice += price;
+                    }
+                    double averagePrice = totalPrice / prices.size();
+
+                    // Calculer le prix médian
+                    double medianPrice;
+                    int size = prices.size();
+                    if (size % 2 == 0) {
+                        medianPrice = (prices.get(size / 2 - 1) + prices.get(size / 2)) / 2.0;
+                    } else {
+                        medianPrice = prices.get(size / 2);
+                    }
+
+                    // Obtenir le prix minimal
+                    double minPrice = prices.get(0);
+
+                    System.out.println("Type de carburant : " + fuelType);
+                    System.out.println("Prix moyen : " + df.format(averagePrice));
+                    System.out.println("Prix médian : " + df.format(medianPrice));
+                    System.out.println("Prix minimal : " + df.format(minPrice));
+                }
             } else {
                 System.out.println("La requête a échoué avec le code : " + responseCode);
             }
 
             conn.disconnect();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
     }

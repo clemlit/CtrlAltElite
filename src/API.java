@@ -110,6 +110,7 @@ public class API extends UI{
                         .append("%22");
             }
         }
+        System.out.println("Requête HTTP : " + apiUrlBuilder.toString());
 
         return apiUrlBuilder.toString();
     }

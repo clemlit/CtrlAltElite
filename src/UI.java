@@ -270,6 +270,12 @@ public class UI implements ActionListener {
                     }
                 }
 
+                if (comboFiltres.getSelectedItems().contains("Prix moyen")) {
+                    List<String> prixMoyenOption = new ArrayList<>();
+                    prixMoyenOption.add("Prix moyen");
+                    criteria.put("filtre", prixMoyenOption);
+                }
+
                 // Vérifier si des critères ont été sélectionnés
                 if (!criteria.isEmpty()) {
                     API.retrieveFuelDataByLocation(criteria);

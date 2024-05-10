@@ -58,6 +58,25 @@ public class API extends UI{
                     System.out.println("Prix moyen E85 : " + avgE85);
                     System.out.println("Prix moyen E10 : " + avgE10);
                 }
+
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median")) {
+                    String jsonString = response.toString();
+                    // Extraire et arrondir les prix médians
+                    double medianGazole = extractAndRoundMedianPrice(jsonString, "median(gazole_prix)");
+                    double medianSP98 = extractAndRoundMedianPrice(jsonString, "median(sp98_prix)");
+                    double medianSP95 = extractAndRoundMedianPrice(jsonString, "median(sp95_prix)");
+                    double medianGPLc = extractAndRoundMedianPrice(jsonString, "median(gplc_prix)");
+                    double medianE85 = extractAndRoundMedianPrice(jsonString, "median(e85_prix)");
+                    double medianE10 = extractAndRoundMedianPrice(jsonString, "median(e10_prix)");
+
+                    // Afficher les prix médians
+                    System.out.println("Prix médian Gazole : " + medianGazole);
+                    System.out.println("Prix médian SP98 : " + medianSP98);
+                    System.out.println("Prix médian SP95 : " + medianSP95);
+                    System.out.println("Prix médian GPLc : " + medianGPLc);
+                    System.out.println("Prix médian E85 : " + medianE85);
+                    System.out.println("Prix médian E10 : " + medianE10);
+                }
             } else {
                 System.out.println("La requête a échoué avec le code : " + responseCode);
             }
@@ -73,12 +92,19 @@ public class API extends UI{
 
         // Ajouter le paramètre "select" si nécessaire
         boolean isPrixSelected = false;
+        boolean isMedianPrixSelected = false;
         if (criteria.containsKey("filtre")) {
             List<String> filtres = criteria.get("filtre");
             isPrixSelected = filtres.contains("Prix moyen");
+            isMedianPrixSelected = filtres.contains("Prix median");
+
         }
         if (isPrixSelected) {
             apiUrlBuilder.append("select=avg(gazole_prix)%2Cavg(sp98_prix)%2Cavg(gplc_prix)%2Cavg(sp95_prix)%2Cavg(e85_prix)%2Cavg(e10_prix)");
+        }
+        if (isMedianPrixSelected){
+            apiUrlBuilder.append("select=median(gazole_prix)%2Cmedian(sp98_prix)%2Cmedian(gplc_prix)%2Cmedian(sp95_prix)%2Cmedian(e85_prix)%2Cmedian(e10_prix)");
+
         }
 
         // Ajouter le paramètre "limit"
@@ -135,6 +161,34 @@ public class API extends UI{
         }
 
         // Convertir la valeur du prix moyen en double et arrondir à deux chiffres après
+        // la virgule
+        double roundedPrice = Double.parseDouble(priceValue);
+        roundedPrice = Math.round(roundedPrice * 100.0) / 100.0; // Arrondir à deux chiffres après la virgule
+
+        return roundedPrice;
+    }
+
+    private static double extractAndRoundMedianPrice(String jsonString, String priceType) {
+        // Trouver l'indice de début et de fin de la valeur du prix médian
+        int startIndex = jsonString.indexOf(priceType) + priceType.length() + 3;
+        int endIndex = jsonString.indexOf("}", startIndex);
+
+        // Extraire la valeur du prix médian
+        String priceValue = jsonString.substring(startIndex, endIndex);
+
+        // Nettoyer la chaîne en supprimant les caractères non numériques sauf le point
+        // décimal
+        priceValue = priceValue.replaceAll("[^0-9.]", "");
+
+        // Si la chaîne contient plus d'un point décimal, supprimer les occurrences
+        // supplémentaires
+        int dotIndex = priceValue.indexOf(".");
+        if (dotIndex != -1) {
+            priceValue = priceValue.substring(0, dotIndex + 1) + priceValue.substring(dotIndex + 1).replace(".", "");
+        }
+
+        // Convertir la valeur du prix médian en double et arrondir à deux chiffres
+        // après
         // la virgule
         double roundedPrice = Double.parseDouble(priceValue);
         roundedPrice = Math.round(roundedPrice * 100.0) / 100.0; // Arrondir à deux chiffres après la virgule

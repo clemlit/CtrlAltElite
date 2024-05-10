@@ -4,7 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -102,7 +101,12 @@ public class API extends UI{
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent chaque type de carburant")){
                     int totalCount = countTotalStations(response.toString());
-                System.out.println("Nombre total de stations : " + totalCount);
+                    System.out.println("Nombre total de stations ayant tous les carburants: " + totalCount);
+                }
+
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent des services spécifiques")){
+                    int totalCount = countTotalStations(response.toString());
+                    System.out.println("Nombre total de stations ayant au moins un service : " + totalCount);
                 }
 
             } else {
@@ -123,12 +127,14 @@ public class API extends UI{
         boolean isMedianPrixSelected = false;
         boolean isMinPrixSelected = false;
         boolean isNbreStationsCarburantSelected = false;
+        boolean isNbreStationsServiceSelected = false;
         if (criteria.containsKey("filtre")) {
             List<String> filtres = criteria.get("filtre");
             isPrixSelected = filtres.contains("Prix moyen");
             isMedianPrixSelected = filtres.contains("Prix median");
             isMinPrixSelected = filtres.contains("Prix minimum");
             isNbreStationsCarburantSelected = filtres.contains("Nombre de stations qui proposent chaque type de carburant");
+            isNbreStationsServiceSelected = filtres.contains("Nombre de stations qui proposent des services spécifiques");
 
         }
         if (isPrixSelected) {
@@ -143,6 +149,10 @@ public class API extends UI{
 
         if (isNbreStationsCarburantSelected){
             apiUrlBuilder.append("select=carburants_disponibles&limit=20&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22");
+        }
+
+        if (isNbreStationsServiceSelected){
+            apiUrlBuilder.append("where=services%20IS%20NOT%20NULL");
         }
 
         // Ajouter les autres critères de filtrage (refine)

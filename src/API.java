@@ -55,39 +55,13 @@ public class API extends UI{
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median")) {
                     String jsonString = response.toString();
                     // Extraire et arrondir les prix médians
-                    double medianGazole = extractAndRoundMedianPrice(jsonString, "median(gazole_prix)");
-                    double medianSP98 = extractAndRoundMedianPrice(jsonString, "median(sp98_prix)");
-                    double medianSP95 = extractAndRoundMedianPrice(jsonString, "median(sp95_prix)");
-                    double medianGPLc = extractAndRoundMedianPrice(jsonString, "median(gplc_prix)");
-                    double medianE85 = extractAndRoundMedianPrice(jsonString, "median(e85_prix)");
-                    double medianE10 = extractAndRoundMedianPrice(jsonString, "median(e10_prix)");
+                    extractAndPrintMedianPrices(jsonString, criteria);
 
-                    // Afficher les prix médians
-                    System.out.println("Prix médian Gazole : " + medianGazole);
-                    System.out.println("Prix médian SP98 : " + medianSP98);
-                    System.out.println("Prix médian SP95 : " + medianSP95);
-                    System.out.println("Prix médian GPLc : " + medianGPLc);
-                    System.out.println("Prix médian E85 : " + medianE85);
-                    System.out.println("Prix médian E10 : " + medianE10);
                 }
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix minimum")) {
                     String jsonString = response.toString();
-                    // Extraire et arrondir les prix minimums
-                    double minGazole = extractAndRoundMinPrice(jsonString, "min(gazole_prix)");
-                    double minSP98 = extractAndRoundMinPrice(jsonString, "min(sp98_prix)");
-                    double minSP95 = extractAndRoundMinPrice(jsonString, "min(sp95_prix)");
-                    double minGPLc = extractAndRoundMinPrice(jsonString, "min(gplc_prix)");
-                    double minE85 = extractAndRoundMinPrice(jsonString, "min(e85_prix)");
-                    double minE10 = extractAndRoundMinPrice(jsonString, "min(e10_prix)");
-
-                    // Afficher les prix minimums
-                    System.out.println("Prix minimum Gazole : " + minGazole);
-                    System.out.println("Prix minimum SP98 : " + minSP98);
-                    System.out.println("Prix minimum SP95 : " + minSP95);
-                    System.out.println("Prix minimum GPLc : " + minGPLc);
-                    System.out.println("Prix minimum E85 : " + minE85);
-                    System.out.println("Prix minimum E10 : " + minE10);
+                    extractAndPrintMinPrices(jsonString, criteria);
                 }
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent chaque type de carburant")){
@@ -138,15 +112,32 @@ public class API extends UI{
                     String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), StandardCharsets.UTF_8);
                     apiUrlBuilder.append("avg(").append(encodedCarburant).append("_prix)%2C");
                 }
-                    // Supprimer le dernier caractère ", "
+                    // Supprime le dernier caractère ", "
                 apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
             }
         }
         if (isMedianPrixSelected){
-            apiUrlBuilder.append("select=median(gazole_prix)%2Cmedian(sp98_prix)%2Cmedian(gplc_prix)%2Cmedian(sp95_prix)%2Cmedian(e85_prix)%2Cmedian(e10_prix)");
-
+            apiUrlBuilder.append("select=");
+            List<String> selectedCarburants = criteria.get("carburant");
+            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                for (String carburant : selectedCarburants) {
+                    String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), StandardCharsets.UTF_8);
+                    apiUrlBuilder.append("median(").append(encodedCarburant).append("_prix)%2C");
+                }
+                // Supprime le dernier caractère ", "
+                apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
+            }
         }if (isMinPrixSelected){
-            apiUrlBuilder.append("select=min(gazole_prix)%2Cmin(sp98_prix)%2Cmin(gplc_prix)%2Cmin(sp95_prix)%2Cmin(e85_prix)%2Cmin(e10_prix)");
+            apiUrlBuilder.append("select=");
+            List<String> selectedCarburants = criteria.get("carburant");
+            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                for (String carburant : selectedCarburants) {
+                    String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), StandardCharsets.UTF_8);
+                    apiUrlBuilder.append("min(").append(encodedCarburant).append("_prix)%2C");
+                }
+                // Supprime le dernier caractère ", "
+                apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
+            }
         }     
 
         if (isNbreStationsCarburantSelected){
@@ -166,17 +157,19 @@ public class API extends UI{
             String encodedLocation = URLEncoder.encode(locations.get(0).trim(), StandardCharsets.UTF_8);
 
             // Traiter le type "carburant"
-            if (type.equals("carburant") && locations.size() > 0) {
+            if (type.equals("carburant") && locations.size() > 0 && !isPrixSelected  && !isMinPrixSelected  && !isMedianPrixSelected) {
                 for (String location : locations) {
                     encodedLocation = URLEncoder.encode(location.trim(), StandardCharsets.UTF_8);
+                    System.out.println("abc");
                     apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
                 }
-            } else if (type.equals("option")) {
+            } 
+            else if (type.equals("option")) {
                 for (String option : locations) {
                     String encodedOption = URLEncoder.encode("\"" + option.trim() + "\"", StandardCharsets.UTF_8);
                     apiUrlBuilder.append("&refine=services_service%3A").append(encodedOption);
                 }
-            } else if (!type.equals("filtre")) {
+            } else if (!type.equals("filtre") && !type.equals("carburant")) {
                 // Ajouter les autres critères de filtrage (ex: departement, region)
                 String refineType = URLEncoder.encode(type.trim(), StandardCharsets.UTF_8);
                 apiUrlBuilder.append("&refine=").append(refineType).append("%3A%22").append(encodedLocation)
@@ -235,61 +228,79 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
     return price;
 }
 
-    private static double extractAndRoundMedianPrice(String jsonString, String priceType) {
-        // Trouver l'indice de début et de fin de la valeur du prix médian
-        int startIndex = jsonString.indexOf(priceType) + priceType.length() + 3;
-        int endIndex = jsonString.indexOf("}", startIndex);
+    private static void extractAndPrintMedianPrices(String jsonString, Map<String, List<String>> criteria) {
+    try {
+        // Convertir la réponse JSON en un objet JSON
+        JSONObject jsonObject = new JSONObject(jsonString);
 
-        // Extraire la valeur du prix médian
-        String priceValue = jsonString.substring(startIndex, endIndex);
+        // Obtenir la liste des résultats
+        JSONArray results = jsonObject.getJSONArray("results");
 
-        // Nettoyer la chaîne en supprimant les caractères non numériques sauf le point
-        // décimal
-        priceValue = priceValue.replaceAll("[^0-9.]", "");
+        // Vérifier s'il y a des résultats
+        if (results.length() > 0) {
+            JSONObject result = results.getJSONObject(0); // Prendre le premier résultat
 
-        // Si la chaîne contient plus d'un point décimal, supprimer les occurrences
-        // supplémentaires
-        int dotIndex = priceValue.indexOf(".");
-        if (dotIndex != -1) {
-            priceValue = priceValue.substring(0, dotIndex + 1) + priceValue.substring(dotIndex + 1).replace(".", "");
+            // Vérifier les carburants sélectionnés par l'utilisateur
+            List<String> selectedCarburants = criteria.get("carburant");
+            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                for (String carburant : selectedCarburants) {
+                    String key = "median(" + carburant.trim().toLowerCase() + "_prix)";
+                    if (result.has(key)) {
+                        // Extraire et arrondir le prix médian du carburant spécifié
+                        double medianPrice = extractAndRoundPrice(result, key);
+                        // Afficher le prix médian du carburant
+                        System.out.println("Prix médian de " + carburant + " : " + medianPrice);
+                    } else {
+                        System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                    }
+                }
+            } else {
+                System.out.println("Aucun carburant spécifié.");
+            }
+        } else {
+            System.out.println("Aucun résultat trouvé.");
         }
-
-        // Convertir la valeur du prix médian en double et arrondir à deux chiffres
-        // après
-        // la virgule
-        double roundedPrice = Double.parseDouble(priceValue);
-        roundedPrice = Math.round(roundedPrice * 100.0) / 100.0; // Arrondir à deux chiffres après la virgule
-
-        return roundedPrice;
+    } catch (JSONException e) {
+        e.printStackTrace();
     }
+}
 
-    private static double extractAndRoundMinPrice(String jsonString, String priceType) {
-        // Trouver l'indice de début et de fin de la valeur du prix minimum
-        int startIndex = jsonString.indexOf(priceType) + priceType.length() + 3;
-        int endIndex = jsonString.indexOf("}", startIndex);
+    private static void extractAndPrintMinPrices(String jsonString, Map<String, List<String>> criteria) {
+    try {
+        // Convertir la réponse JSON en un objet JSON
+        JSONObject jsonObject = new JSONObject(jsonString);
 
-        // Extraire la valeur du prix minimum
-        String priceValue = jsonString.substring(startIndex, endIndex);
+        // Obtenir la liste des résultats
+        JSONArray results = jsonObject.getJSONArray("results");
 
-        // Nettoyer la chaîne en supprimant les caractères non numériques sauf le point
-        // décimal
-        priceValue = priceValue.replaceAll("[^0-9.]", "");
+        // Vérifier s'il y a des résultats
+        if (results.length() > 0) {
+            JSONObject result = results.getJSONObject(0); // Prendre le premier résultat
 
-        // Si la chaîne contient plus d'un point décimal, supprimer les occurrences
-        // supplémentaires
-        int dotIndex = priceValue.indexOf(".");
-        if (dotIndex != -1) {
-            priceValue = priceValue.substring(0, dotIndex + 1) + priceValue.substring(dotIndex + 1).replace(".", "");
+            // Vérifier les carburants sélectionnés par l'utilisateur
+            List<String> selectedCarburants = criteria.get("carburant");
+            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                for (String carburant : selectedCarburants) {
+                    String key = "min(" + carburant.trim().toLowerCase() + "_prix)";
+                    if (result.has(key)) {
+                        // Extraire et arrondir le prix minimum du carburant spécifié
+                        double minPrice = extractAndRoundPrice(result, key);
+                        // Afficher le prix minimum du carburant
+                        System.out.println("Prix minimum de " + carburant + " : " + minPrice);
+                    } else {
+                        System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                    }
+                }
+            } else {
+                System.out.println("Aucun carburant spécifié.");
+            }
+        } else {
+            System.out.println("Aucun résultat trouvé.");
         }
-
-        // Convertir la valeur du prix minimum en double et arrondir à deux chiffres
-        // après
-        // la virgule
-        double roundedPrice = Double.parseDouble(priceValue);
-        roundedPrice = Math.round(roundedPrice * 100.0) / 100.0; // Arrondir à deux chiffres après la virgule
-
-        return roundedPrice;
+    } catch (JSONException e) {
+        e.printStackTrace();
     }
+}
 
     private static int countTotalStations(String jsonString) {
     // Convertir la réponse JSON en un objet JSON

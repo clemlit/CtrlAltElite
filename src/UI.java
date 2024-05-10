@@ -75,7 +75,7 @@ public class UI implements ActionListener {
         multiBox<String> comboCarbu = new multiBox<>();
         multiBox<String> comboOptions = new multiBox<>();
 
-        String[] filtres = { "Prix moyen", "Prix médian ", "Prix minimum ",
+        String[] filtres = { "Prix moyen", "Prix median", "Prix minimum",
                 "Nombre de stations qui proposent chaque type de carburant ",
                 "Nombre de stations qui proposent des services spécifiques " };
 
@@ -274,6 +274,12 @@ public class UI implements ActionListener {
                     List<String> prixMoyenOption = new ArrayList<>();
                     prixMoyenOption.add("Prix moyen");
                     criteria.put("filtre", prixMoyenOption);
+                }
+
+                if (comboFiltres.getSelectedItems().contains("Prix median")) {
+                    List<String> prixMedianOption = new ArrayList<>();
+                    prixMedianOption.add("Prix median");
+                    criteria.put("filtre", prixMedianOption);
                 }
 
                 // Vérifier si des critères ont été sélectionnés

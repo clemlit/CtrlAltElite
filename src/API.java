@@ -77,6 +77,26 @@ public class API extends UI{
                     System.out.println("Prix médian E85 : " + medianE85);
                     System.out.println("Prix médian E10 : " + medianE10);
                 }
+
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix minimum")) {
+                    String jsonString = response.toString();
+                    // Extraire et arrondir les prix minimums
+                    double minGazole = extractAndRoundMinPrice(jsonString, "min(gazole_prix)");
+                    double minSP98 = extractAndRoundMinPrice(jsonString, "min(sp98_prix)");
+                    double minSP95 = extractAndRoundMinPrice(jsonString, "min(sp95_prix)");
+                    double minGPLc = extractAndRoundMinPrice(jsonString, "min(gplc_prix)");
+                    double minE85 = extractAndRoundMinPrice(jsonString, "min(e85_prix)");
+                    double minE10 = extractAndRoundMinPrice(jsonString, "min(e10_prix)");
+
+                    // Afficher les prix minimums
+                    System.out.println("Prix minimum Gazole : " + minGazole);
+                    System.out.println("Prix minimum SP98 : " + minSP98);
+                    System.out.println("Prix minimum SP95 : " + minSP95);
+                    System.out.println("Prix minimum GPLc : " + minGPLc);
+                    System.out.println("Prix minimum E85 : " + minE85);
+                    System.out.println("Prix minimum E10 : " + minE10);
+                }
+
             } else {
                 System.out.println("La requête a échoué avec le code : " + responseCode);
             }
@@ -93,10 +113,12 @@ public class API extends UI{
         // Ajouter le paramètre "select" si nécessaire
         boolean isPrixSelected = false;
         boolean isMedianPrixSelected = false;
+        boolean isMinPrixSelected = false;
         if (criteria.containsKey("filtre")) {
             List<String> filtres = criteria.get("filtre");
             isPrixSelected = filtres.contains("Prix moyen");
             isMedianPrixSelected = filtres.contains("Prix median");
+            isMinPrixSelected = filtres.contains("Prix minimum");
 
         }
         if (isPrixSelected) {
@@ -105,6 +127,8 @@ public class API extends UI{
         if (isMedianPrixSelected){
             apiUrlBuilder.append("select=median(gazole_prix)%2Cmedian(sp98_prix)%2Cmedian(gplc_prix)%2Cmedian(sp95_prix)%2Cmedian(e85_prix)%2Cmedian(e10_prix)");
 
+        }if (isMinPrixSelected){
+            apiUrlBuilder.append("select=min(gazole_prix)%2Cmin(sp98_prix)%2Cmin(gplc_prix)%2Cmin(sp95_prix)%2Cmin(e85_prix)%2Cmin(e10_prix)");
         }
 
         // Ajouter le paramètre "limit"
@@ -188,6 +212,34 @@ public class API extends UI{
         }
 
         // Convertir la valeur du prix médian en double et arrondir à deux chiffres
+        // après
+        // la virgule
+        double roundedPrice = Double.parseDouble(priceValue);
+        roundedPrice = Math.round(roundedPrice * 100.0) / 100.0; // Arrondir à deux chiffres après la virgule
+
+        return roundedPrice;
+    }
+
+    private static double extractAndRoundMinPrice(String jsonString, String priceType) {
+        // Trouver l'indice de début et de fin de la valeur du prix minimum
+        int startIndex = jsonString.indexOf(priceType) + priceType.length() + 3;
+        int endIndex = jsonString.indexOf("}", startIndex);
+
+        // Extraire la valeur du prix minimum
+        String priceValue = jsonString.substring(startIndex, endIndex);
+
+        // Nettoyer la chaîne en supprimant les caractères non numériques sauf le point
+        // décimal
+        priceValue = priceValue.replaceAll("[^0-9.]", "");
+
+        // Si la chaîne contient plus d'un point décimal, supprimer les occurrences
+        // supplémentaires
+        int dotIndex = priceValue.indexOf(".");
+        if (dotIndex != -1) {
+            priceValue = priceValue.substring(0, dotIndex + 1) + priceValue.substring(dotIndex + 1).replace(".", "");
+        }
+
+        // Convertir la valeur du prix minimum en double et arrondir à deux chiffres
         // après
         // la virgule
         double roundedPrice = Double.parseDouble(priceValue);

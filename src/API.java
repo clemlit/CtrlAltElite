@@ -101,8 +101,8 @@ public class API extends UI{
                 }
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent chaque type de carburant")){
-                    int count = countStationsWithAllFuels(response.toString());
-                    System.out.println("Nombre de stations avec tous les carburants disponibles : " + count);
+                    int totalCount = countTotalStations(response.toString());
+                System.out.println("Nombre total de stations : " + totalCount);
                 }
 
             } else {
@@ -139,13 +139,11 @@ public class API extends UI{
 
         }if (isMinPrixSelected){
             apiUrlBuilder.append("select=min(gazole_prix)%2Cmin(sp98_prix)%2Cmin(gplc_prix)%2Cmin(sp95_prix)%2Cmin(e85_prix)%2Cmin(e10_prix)");
-        }
-        if (isNbreStationsCarburantSelected){
-            apiUrlBuilder.append("select=carburants_disponibles");
-        }
+        }     
 
-        // Ajouter le paramètre "limit"
-        apiUrlBuilder.append("&limit=20");
+        if (isNbreStationsCarburantSelected){
+            apiUrlBuilder.append("select=carburants_disponibles&limit=20&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22");
+        }
 
         // Ajouter les autres critères de filtrage (refine)
         for (Map.Entry<String, List<String>> entry : criteria.entrySet()) {
@@ -261,41 +259,16 @@ public class API extends UI{
         return roundedPrice;
     }
 
-    private static int countStationsWithAllFuels(String jsonString) {
+    private static int countTotalStations(String jsonString) {
     // Convertir la réponse JSON en un objet JSON
     JSONObject jsonObject = new JSONObject(jsonString);
     
-    // Obtenir le tableau JSON "results" de l'objet JSON racine
-    JSONArray jsonArray = jsonObject.getJSONArray("results");
+    // Extraire la valeur du champ "total_count"
+    int totalCount = jsonObject.getInt("total_count");
     
-    // Initialiser un compteur pour les stations ayant tous les carburants
-    int count = 0;
-    
-    // Créer un ensemble pour stocker les carburants nécessaires
-    Set<String> requiredFuels = new HashSet<>(Arrays.asList("Gazole", "SP95", "E10", "SP98", "E85", "GPLc"));
-    
-    // Parcourir le tableau JSON
-    for (int i = 0; i < jsonArray.length(); i++) {
-        // Obtenir l'objet JSON représentant une station
-        JSONObject station = jsonArray.getJSONObject(i);
-        
-        // Vérifier si la station a tous les carburants nécessaires
-        JSONArray fuelsArray = station.getJSONArray("carburants_disponibles");
-        Set<String> availableFuels = new HashSet<>();
-        for (int j = 0; j < fuelsArray.length(); j++) {
-            availableFuels.add(fuelsArray.getString(j));
-        }
-        
-        // Si la station a tous les carburants nécessaires, incrémenter le compteur
-        if (availableFuels.containsAll(requiredFuels)) {
-            count++;
-        }
-    }
-    
-    return count;
+    return totalCount;
 }
 
 }
-
 
 

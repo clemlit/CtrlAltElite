@@ -77,7 +77,7 @@ public class UI implements ActionListener {
 
         String[] filtres = { "Prix moyen", "Prix median", "Prix minimum",
                 "Nombre de stations qui proposent chaque type de carburant",
-                "Nombre de stations qui proposent des services spécifiques " };
+                "Nombre de stations qui proposent des services spécifiques" };
 
         for (String filtre : filtres) {
             comboFiltres.addItem(filtre);
@@ -293,6 +293,14 @@ public class UI implements ActionListener {
                     NbreStationCarburants.add("Nombre de stations qui proposent chaque type de carburant");
                     criteria.put("filtre", NbreStationCarburants);
                 }
+
+                if (comboFiltres.getSelectedItems().contains("Nombre de stations qui proposent des services spécifiques")) {
+                    List<String> NbreStationServices = new ArrayList<>();
+                    NbreStationServices.add("Nombre de stations qui proposent des services spécifiques");
+                    criteria.put("filtre", NbreStationServices);
+                }
+
+
 
                 // Vérifier si des critères ont été sélectionnés
                 if (!criteria.isEmpty()) {

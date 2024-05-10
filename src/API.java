@@ -4,6 +4,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -97,6 +100,11 @@ public class API extends UI{
                     System.out.println("Prix minimum E10 : " + minE10);
                 }
 
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent chaque type de carburant")){
+                    int count = countStationsWithAllFuels(response.toString());
+                    System.out.println("Nombre de stations avec tous les carburants disponibles : " + count);
+                }
+
             } else {
                 System.out.println("La requête a échoué avec le code : " + responseCode);
             }
@@ -114,11 +122,13 @@ public class API extends UI{
         boolean isPrixSelected = false;
         boolean isMedianPrixSelected = false;
         boolean isMinPrixSelected = false;
+        boolean isNbreStationsCarburantSelected = false;
         if (criteria.containsKey("filtre")) {
             List<String> filtres = criteria.get("filtre");
             isPrixSelected = filtres.contains("Prix moyen");
             isMedianPrixSelected = filtres.contains("Prix median");
             isMinPrixSelected = filtres.contains("Prix minimum");
+            isNbreStationsCarburantSelected = filtres.contains("Nombre de stations qui proposent chaque type de carburant");
 
         }
         if (isPrixSelected) {
@@ -129,6 +139,9 @@ public class API extends UI{
 
         }if (isMinPrixSelected){
             apiUrlBuilder.append("select=min(gazole_prix)%2Cmin(sp98_prix)%2Cmin(gplc_prix)%2Cmin(sp95_prix)%2Cmin(e85_prix)%2Cmin(e10_prix)");
+        }
+        if (isNbreStationsCarburantSelected){
+            apiUrlBuilder.append("select=carburants_disponibles");
         }
 
         // Ajouter le paramètre "limit"
@@ -248,4 +261,41 @@ public class API extends UI{
         return roundedPrice;
     }
 
+    private static int countStationsWithAllFuels(String jsonString) {
+    // Convertir la réponse JSON en un objet JSON
+    JSONObject jsonObject = new JSONObject(jsonString);
+    
+    // Obtenir le tableau JSON "results" de l'objet JSON racine
+    JSONArray jsonArray = jsonObject.getJSONArray("results");
+    
+    // Initialiser un compteur pour les stations ayant tous les carburants
+    int count = 0;
+    
+    // Créer un ensemble pour stocker les carburants nécessaires
+    Set<String> requiredFuels = new HashSet<>(Arrays.asList("Gazole", "SP95", "E10", "SP98", "E85", "GPLc"));
+    
+    // Parcourir le tableau JSON
+    for (int i = 0; i < jsonArray.length(); i++) {
+        // Obtenir l'objet JSON représentant une station
+        JSONObject station = jsonArray.getJSONObject(i);
+        
+        // Vérifier si la station a tous les carburants nécessaires
+        JSONArray fuelsArray = station.getJSONArray("carburants_disponibles");
+        Set<String> availableFuels = new HashSet<>();
+        for (int j = 0; j < fuelsArray.length(); j++) {
+            availableFuels.add(fuelsArray.getString(j));
+        }
+        
+        // Si la station a tous les carburants nécessaires, incrémenter le compteur
+        if (availableFuels.containsAll(requiredFuels)) {
+            count++;
+        }
+    }
+    
+    return count;
 }
+
+}
+
+
+

@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -41,25 +43,14 @@ public class API extends UI{
 
                 // Vérifier si les prix moyens sont demandés
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")) {
-                    // Analyser la réponse JSON
-                    String jsonString = response.toString();
+                // Analyser la réponse JSON
+                String jsonString = response.toString();
 
-                    // Extraire et arrondir les prix moyens
-                    double avgGazole = extractAndRoundAveragePrice(jsonString, "avg(gazole_prix)");
-                    double avgSP98 = extractAndRoundAveragePrice(jsonString, "avg(sp98_prix)");
-                    double avgSP95 = extractAndRoundAveragePrice(jsonString, "avg(sp95_prix)");
-                    double avgGPLc = extractAndRoundAveragePrice(jsonString, "avg(gplc_prix)");
-                    double avgE85 = extractAndRoundAveragePrice(jsonString, "avg(e85_prix)");
-                    double avgE10 = extractAndRoundAveragePrice(jsonString, "avg(e10_prix)");
-
-                    // Afficher les prix moyens
-                    System.out.println("Prix moyen Gazole : " + avgGazole);
-                    System.out.println("Prix moyen SP98 : " + avgSP98);
-                    System.out.println("Prix moyen SP95 : " + avgSP95);
-                    System.out.println("Prix moyen GPLc : " + avgGPLc);
-                    System.out.println("Prix moyen E85 : " + avgE85);
-                    System.out.println("Prix moyen E10 : " + avgE10);
+                // Récupérer les prix moyens des carburants sélectionnés
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")) {
+                    extractAndPrintAveragePrices(jsonString, criteria);
                 }
+            }
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median")) {
                     String jsonString = response.toString();
@@ -128,6 +119,8 @@ public class API extends UI{
         boolean isMinPrixSelected = false;
         boolean isNbreStationsCarburantSelected = false;
         boolean isNbreStationsServiceSelected = false;
+
+        
         if (criteria.containsKey("filtre")) {
             List<String> filtres = criteria.get("filtre");
             isPrixSelected = filtres.contains("Prix moyen");
@@ -138,7 +131,16 @@ public class API extends UI{
 
         }
         if (isPrixSelected) {
-            apiUrlBuilder.append("select=avg(gazole_prix)%2Cavg(sp98_prix)%2Cavg(gplc_prix)%2Cavg(sp95_prix)%2Cavg(e85_prix)%2Cavg(e10_prix)");
+            apiUrlBuilder.append("select=");
+            List<String> selectedCarburants = criteria.get("carburant");
+            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                for (String carburant : selectedCarburants) {
+                    String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), StandardCharsets.UTF_8);
+                    apiUrlBuilder.append("avg(").append(encodedCarburant).append("_prix)%2C");
+                }
+                    // Supprimer le dernier caractère ", "
+                apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
+            }
         }
         if (isMedianPrixSelected){
             apiUrlBuilder.append("select=median(gazole_prix)%2Cmedian(sp98_prix)%2Cmedian(gplc_prix)%2Cmedian(sp95_prix)%2Cmedian(e85_prix)%2Cmedian(e10_prix)");
@@ -186,32 +188,52 @@ public class API extends UI{
         return apiUrlBuilder.toString();
     }
 
-    private static double extractAndRoundAveragePrice(String jsonString, String priceType) {
-        // Trouver l'indice de début et de fin de la valeur du prix moyen
-        int startIndex = jsonString.indexOf(priceType) + priceType.length() + 3;
-        int endIndex = jsonString.indexOf("}", startIndex);
-
-        // Extraire la valeur du prix moyen
-        String priceValue = jsonString.substring(startIndex, endIndex);
-
-        // Nettoyer la chaîne en supprimant les caractères non numériques sauf le point
-        // décimal
-        priceValue = priceValue.replaceAll("[^0-9.]", "");
-
-        // Si la chaîne contient plus d'un point décimal, supprimer les occurrences
-        // supplémentaires
-        int dotIndex = priceValue.indexOf(".");
-        if (dotIndex != -1) {
-            priceValue = priceValue.substring(0, dotIndex + 1) + priceValue.substring(dotIndex + 1).replace(".", "");
+    private static void extractAndPrintAveragePrices(String jsonString, Map<String, List<String>> criteria) {
+    try {
+        // Convertir la réponse JSON en un objet JSON
+        JSONObject jsonObject = new JSONObject(jsonString);
+        
+        // Obtenir la liste des résultats
+        JSONArray results = jsonObject.getJSONArray("results");
+        
+        // Vérifier s'il y a des résultats
+        if (results.length() > 0) {
+            JSONObject result = results.getJSONObject(0); // Prendre le premier résultat
+            
+            // Vérifier les carburants sélectionnés par l'utilisateur
+            List<String> selectedCarburants = criteria.get("carburant");
+            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                for (String carburant : selectedCarburants) {
+                    String key = "avg(" + carburant.trim().toLowerCase() + "_prix)";
+                    if (result.has(key)) {
+                        // Extraire et arrondir le prix moyen du carburant spécifié
+                        double avgPrice = extractAndRoundPrice(result, key);
+                        // Afficher le prix moyen du carburant
+                        System.out.println("Prix moyen de " + carburant + " : " + avgPrice);
+                    } else {
+                        System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                    }
+                }
+            } else {
+                System.out.println("Aucun carburant spécifié.");
+            }
+        } else {
+            System.out.println("Aucun résultat trouvé.");
         }
-
-        // Convertir la valeur du prix moyen en double et arrondir à deux chiffres après
-        // la virgule
-        double roundedPrice = Double.parseDouble(priceValue);
-        roundedPrice = Math.round(roundedPrice * 100.0) / 100.0; // Arrondir à deux chiffres après la virgule
-
-        return roundedPrice;
+    } catch (JSONException e) {
+        e.printStackTrace();
     }
+}
+
+private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
+    // Extraire la valeur associée à la clé spécifiée
+    double price = jsonObject.getDouble(key);
+    
+    // Arrondir à deux chiffres après la virgule
+    price = Math.round(price * 100.0) / 100.0;
+    
+    return price;
+}
 
     private static double extractAndRoundMedianPrice(String jsonString, String priceType) {
         // Trouver l'indice de début et de fin de la valeur du prix médian

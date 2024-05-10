@@ -282,6 +282,12 @@ public class UI implements ActionListener {
                     criteria.put("filtre", prixMedianOption);
                 }
 
+                if (comboFiltres.getSelectedItems().contains("Prix minimum")) {
+                    List<String> prixMinOption = new ArrayList<>();
+                    prixMinOption.add("Prix minimum");
+                    criteria.put("filtre", prixMinOption);
+                }
+
                 // Vérifier si des critères ont été sélectionnés
                 if (!criteria.isEmpty()) {
                     API.retrieveFuelDataByLocation(criteria);

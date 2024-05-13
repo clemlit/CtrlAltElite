@@ -24,6 +24,9 @@ public class UI implements ActionListener {
     JPanel panelFiltres;
     JPanel mapPanel;
     Carte map;
+    private static List<Double> averagePrices = new ArrayList<>();
+    private static List<Double> medianPrices = new ArrayList<>();
+    private static List<Double> minPrices = new ArrayList<>();
 
     public static void main(String argv[]) {
         new UI();
@@ -306,6 +309,11 @@ public class UI implements ActionListener {
                 if (!criteria.isEmpty()) {
                     API.retrieveFuelDataByLocation(criteria);
                 }
+                
+                averagePrices = API.getAveragePrices();
+                medianPrices = API.getMedianPrices();
+                minPrices = API.getMinPrices();
+
 
 
 
@@ -330,6 +338,27 @@ public class UI implements ActionListener {
                     writer.write(
                             "<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
                     writer.write("</div>");
+
+                    htmlContent.append("<h2>Prix moyens :</h2>");
+                    htmlContent.append("<ul>");
+                    for (Double price : averagePrices) {
+                        htmlContent.append("<li>").append(price).append("€</li>");
+                    }
+                    htmlContent.append("</ul>");
+
+                    htmlContent.append("<h2>Prix médian :</h2>");
+                    htmlContent.append("<ul>");
+                    for (Double price : medianPrices) {
+                        htmlContent.append("<li>").append(price).append("€</li>");
+                    }
+                    htmlContent.append("</ul>");
+
+                    htmlContent.append("<h2>Prix minimum :</h2>");
+                    htmlContent.append("<ul>");
+                    for (Double price : minPrices) {
+                        htmlContent.append("<li>").append(price).append("€</li>");
+                    }
+                    htmlContent.append("</ul>");
 
                     writer.write(htmlContent.toString());
                     writer.write("</body></html>");
@@ -369,4 +398,5 @@ public class UI implements ActionListener {
         panelFiltres.revalidate();
         panelFiltres.repaint();
     }
+
 }

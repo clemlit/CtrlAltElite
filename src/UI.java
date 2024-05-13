@@ -19,6 +19,7 @@ import java.util.List;
 import javax.swing.border.LineBorder;
 
 public class UI implements ActionListener {
+    private ArrayList<String> choix_carburants;
     ButtonGroup echelle = new ButtonGroup();
     JPanel panelBanniere;
     JPanel panelFiltres;
@@ -27,6 +28,7 @@ public class UI implements ActionListener {
     private static List<Double> averagePrices = new ArrayList<>();
     private static List<Double> medianPrices = new ArrayList<>();
     private static List<Double> minPrices = new ArrayList<>();
+
 
     public static void main(String argv[]) {
         new UI();
@@ -40,6 +42,7 @@ public class UI implements ActionListener {
     public UI() {
         
         FlatLightLaf.setup();
+        choix_carburants = new ArrayList<>();
 
         try {
             UIManager.setLookAndFeel("com.formdev.flatlaf.themes.FlatMacLightLaf");
@@ -314,8 +317,13 @@ public class UI implements ActionListener {
                 medianPrices = API.getMedianPrices();
                 minPrices = API.getMinPrices();
 
-
-
+                List<Object> selectedItems = comboCarbu.getSelectedItems(); 
+                for (Object item : selectedItems) {
+                    if (item instanceof String) { 
+                        choix_carburants.add((String) item); 
+                    }
+                }
+                
 
                 // Écrire les données dans un fichier HTML
                 try {
@@ -341,22 +349,25 @@ public class UI implements ActionListener {
 
                     htmlContent.append("<h2>Prix moyens :</h2>");
                     htmlContent.append("<ul>");
-                    for (Double price : averagePrices) {
-                        htmlContent.append("<li>").append(price).append("€</li>");
+                    for (int i = 0; i < averagePrices.size(); i++) {
+                        htmlContent.append("<li>").append(choix_carburants.get(i)).append(": ").append(averagePrices.get(i))
+                                .append("€</li>");
                     }
                     htmlContent.append("</ul>");
 
                     htmlContent.append("<h2>Prix médian :</h2>");
                     htmlContent.append("<ul>");
-                    for (Double price : medianPrices) {
-                        htmlContent.append("<li>").append(price).append("€</li>");
+                    for (int i = 0; i < medianPrices.size(); i++) {
+                        htmlContent.append("<li>").append(choix_carburants.get(i)).append(": ").append(medianPrices.get(i))
+                                .append("€</li>");
                     }
                     htmlContent.append("</ul>");
 
                     htmlContent.append("<h2>Prix minimum :</h2>");
                     htmlContent.append("<ul>");
-                    for (Double price : minPrices) {
-                        htmlContent.append("<li>").append(price).append("€</li>");
+                    for (int i = 0; i < minPrices.size(); i++) {
+                        htmlContent.append("<li>").append(choix_carburants.get(i)).append(": ").append(minPrices.get(i))
+                                .append("€</li>");
                     }
                     htmlContent.append("</ul>");
 

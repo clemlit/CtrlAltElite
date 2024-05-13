@@ -22,6 +22,48 @@ import java.net.URL;
 
 public class API extends UI{
 
+    //ATTRIBUTS DE LA CLASSE 
+
+    private static List<Double> averagePrices = new ArrayList<>();
+    private static List<Double> medianPrices = new ArrayList<>();
+    private static List<Double> minPrices = new ArrayList<>();
+    private static Integer totalCountStations;
+    
+
+    //SETTERS AND GETTERS
+
+    public static List<Double> getAveragePrices() {
+        return averagePrices;
+    }
+
+    public static void setAveragePrices(List<Double> averagePrices) {
+        API.averagePrices = averagePrices;
+    }
+
+    public static List<Double> getMedianPrices() {
+        return medianPrices;
+    }
+
+    public static void setMedianPrices(List<Double> medianPrices) {
+        API.medianPrices = medianPrices;
+    }
+
+    public static List<Double> getMinPrices() {
+        return minPrices;
+    }
+
+    public static void setMinPrices(List<Double> minPrices) {
+        API.minPrices = minPrices;
+    }
+
+    public static int getTotalCountStations() {
+        return totalCountStations;
+    }
+
+    public static void setTotalCountStations(int totalCountStations) {
+        API.totalCountStations = totalCountStations;
+    }
+
     private static final String API_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
 
     public static void retrieveFuelDataByLocation(Map<String, List<String>> criteria) {
@@ -201,6 +243,7 @@ public class API extends UI{
                     if (result.has(key)) {
                         // Extraire et arrondir le prix moyen du carburant spécifié
                         double avgPrice = extractAndRoundPrice(result, key);
+                        getAveragePrices().add(avgPrice);
                         // Afficher le prix moyen du carburant
                         System.out.println("Prix moyen de " + carburant + " : " + avgPrice);
                     } else {
@@ -249,6 +292,7 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
                         // Extraire et arrondir le prix médian du carburant spécifié
                         double medianPrice = extractAndRoundPrice(result, key);
                         // Afficher le prix médian du carburant
+                        getMedianPrices().add(medianPrice);
                         System.out.println("Prix médian de " + carburant + " : " + medianPrice);
                     } else {
                         System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
@@ -286,6 +330,7 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
                         // Extraire et arrondir le prix minimum du carburant spécifié
                         double minPrice = extractAndRoundPrice(result, key);
                         // Afficher le prix minimum du carburant
+                        getMinPrices().add(minPrice);
                         System.out.println("Prix minimum de " + carburant + " : " + minPrice);
                     } else {
                         System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
@@ -307,8 +352,10 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
     JSONObject jsonObject = new JSONObject(jsonString);
     
     // Extraire la valeur du champ "total_count"
-    int totalCount = jsonObject.getInt("total_count");
     
+    int totalCount = jsonObject.getInt("total_count");
+    totalCountStations = totalCount;
+
     return totalCount;
 }
 

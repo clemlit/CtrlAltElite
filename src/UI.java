@@ -54,19 +54,18 @@ public class UI implements ActionListener {
         JFrame f = new JFrame("ma fenetre");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.getContentPane().setBackground(new Color(223, 226, 232));
+        
 
         panelFiltres = new JPanel();
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
         panelFiltres.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
         panelFiltres.setBackground(new Color(245, 247, 250));
-        panelFiltres.setPreferredSize(new Dimension(500, f.getHeight()));
 
         JPanel mapPanel = new JPanel();
         mapPanel.setLayout(new BorderLayout());
 
         mapPanel.setBackground(new Color(245, 247, 250));
         mapPanel.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
-        mapPanel.setMaximumSize(new Dimension(f.getWidth(), f.getHeight()));
 
         JPanel panelBanniere = new JPanel();
         panelBanniere.setBackground(new Color(255, 255, 255));
@@ -212,6 +211,10 @@ public class UI implements ActionListener {
                 StringBuilder htmlContentAucuneRegion = new StringBuilder(); // Ca contourne un problème d'esthétique et surtout si on voulait prendre les données dans les autre StringBuilder,
                 StringBuilder htmlContentAucunDepartement = new StringBuilder(); // Ici, on aurait une erreur car il y aurait "Aucune ... selectionnée" en plus des données.
                 StringBuilder htmlContentAucunCarburant = new StringBuilder();
+                
+                averagePrices.clear();
+                medianPrices.clear();
+                minPrices.clear();
 
                 List<Object> selectedOptions = comboOptions.getSelectedItems();
                 List<String> selectedOptionsNames = new ArrayList<>();
@@ -325,40 +328,45 @@ public class UI implements ActionListener {
                     API.retrieveFuelDataByLocation(criteria);
                 }
                 
+                choix_carburants.clear();
+                List<Object> selectedItems = comboCarbu.getSelectedItems();
+                for (Object item : selectedItems) {
+                    if (item instanceof String) {
+                        choix_carburants.add((String) item);
+                    }
+                }
 
 
                 htmlContentFiltres.append("<h4>Prix moyens :</h4>");
-                    htmlContentFiltres.append("<ul>");
-                    for (Double price : averagePrices) {
-                        htmlContentFiltres.append("<li>").append(price).append("€</li>");
-                    }
-                    htmlContentFiltres.append("</ul>");
-
-                    htmlContentFiltres.append("<h4>Prix médian :</h4>");
-                    htmlContentFiltres.append("<ul>");
-                    for (Double price : medianPrices) {
-                        htmlContentFiltres.append("<li>").append(price).append("€</li>");
-                    }
-                    htmlContentFiltres.append("</ul>");
-
-                    htmlContentFiltres.append("<h4>Prix minimum :</h4>");
-                    htmlContentFiltres.append("<ul>");
-                    for (Double price : minPrices) {
-                        htmlContentFiltres.append("<li>").append(price).append("€</li>");
-                    }
-                    htmlContentFiltres.append("</ul>");                List<Object> selectedItems = comboCarbu.getSelectedItems(); 
-                for (Object item : selectedItems) {
-                    if (item instanceof String) { 
-                        choix_carburants.add((String) item); 
-                    }
+                htmlContentFiltres.append("<ul>");
+                for (int i = 0; i < averagePrices.size(); i++) {
+                    htmlContentFiltres.append("<li>").append(choix_carburants.get(i)).append(" : ")
+                            .append(averagePrices.get(i)).append("€</li>");
                 }
+                htmlContentFiltres.append("</ul>");
+
+                htmlContentFiltres.append("<h4>Prix médian :</h4>");
+                htmlContentFiltres.append("<ul>");
+                for (int i = 0; i < medianPrices.size(); i++) {
+                    htmlContentFiltres.append("<li>").append(choix_carburants.get(i)).append(" : ")
+                            .append(medianPrices.get(i)).append("€</li>");
+                }
+                htmlContentFiltres.append("</ul>");
+
+                htmlContentFiltres.append("<h4>Prix minimum :</h4>");
+                htmlContentFiltres.append("<ul>");
+                for (int i = 0; i < minPrices.size(); i++) {
+                    htmlContentFiltres.append("<li>").append(choix_carburants.get(i)).append(" : ")
+                            .append(minPrices.get(i)).append("€</li>");
+                }
+                htmlContentFiltres.append("</ul>");
                 
 
                 // Écrire les données dans un fichier HTML
                 try {
                     FileWriter writer = new FileWriter("src/page_Web/resultat.html");
                     writer.write("<html><head>");
-                    writer.write("<meta charset=\"UTF-8\">");
+                    writer.write("<meta charset='UTF-8'>");
                     writer.write("<title>Résultats</title>");
                     writer.write("<style>");
                     writer.write("@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');");

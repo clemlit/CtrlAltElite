@@ -144,35 +144,34 @@ public class UI implements ActionListener {
         comboOptions.setPreferredSize(new Dimension(250, 40));
 
         JLabel labeltitre1 = new JLabel("<html><b><h1>FILTRES</h1></b></html>");
-        JLabel empty1 = new JLabel(" ");
-        JLabel empty2 = new JLabel(" ");
-        JLabel empty3 = new JLabel(" ");
-        JLabel empty4 = new JLabel(" ");
-        JLabel empty5 = new JLabel(" ");
-        JLabel labelFiltres = new JLabel("<html><i>Sélectionnez des filtres</i></html>");
-        JLabel labelRegions = new JLabel("<html><i>Sélectionnez des régions</i></html>");
-        JLabel labelDepartements = new JLabel("<html><i>Sélectionnez des départements</i></html>");
-        JLabel labelCarburants = new JLabel("<html><i>Sélectionnez des carburants</i></html>");
-        JLabel labelOptions = new JLabel("<html><i>Sélectionnez des options</i></html>");
+        labeltitre1.setBorder(BorderFactory.createEmptyBorder(10, 120, 100, 10));
+        JLabel labelFiltres = new JLabel("<html><b>Sélectionnez des filtres</b></html>");
+        labelFiltres.setBorder(BorderFactory.createEmptyBorder(10, 95, 20, 10));
+        JLabel labelRegions = new JLabel("<html><b>Sélectionnez des régions</b></html>");
+        labelRegions.setBorder(BorderFactory.createEmptyBorder(20, 95, 20, 10));
+        JLabel labelDepartements = new JLabel("<html><b>Sélectionnez des départements</b></html>");
+        labelDepartements.setBorder(BorderFactory.createEmptyBorder(20, 85, 20, 10));
+        JLabel labelCarburants = new JLabel("<html><b>Sélectionnez des carburants</b></html>");
+        labelCarburants.setBorder(BorderFactory.createEmptyBorder(20, 87, 20, 10));
+        JLabel labelOptions = new JLabel("<html><b>Sélectionnez des options</b></html>");
+        labelOptions.setBorder(BorderFactory.createEmptyBorder(20, 91, 20, 10));
+        JLabel empty = new JLabel("");
+        empty.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Pour l'alignement
         Box boxCombos = Box.createVerticalBox();
         boxCombos.add(labeltitre1);
-        boxCombos.add(empty1);
         boxCombos.add(labelFiltres);
         boxCombos.add(comboFiltres);
-        boxCombos.add(empty2);
         boxCombos.add(labelRegions);
         boxCombos.add(comboRegion);
-        boxCombos.add(empty3);
         boxCombos.add(labelDepartements);
         boxCombos.add(comboDepart);
-        boxCombos.add(empty4);
         boxCombos.add(labelCarburants);
         boxCombos.add(comboCarbu);
-        boxCombos.add(empty5);
         boxCombos.add(labelOptions);
         boxCombos.add(comboOptions);
+        boxCombos.add(empty);
 
         panelFiltres.add(boxCombos);
         boxCombos.setPreferredSize(new Dimension(450, boxCombos.getPreferredSize().height)); // Adjust width as needed
@@ -205,6 +204,7 @@ public class UI implements ActionListener {
                 StringBuilder htmlContentRegion = new StringBuilder();
                 StringBuilder htmlContentDep = new StringBuilder();
                 StringBuilder htmlContentCarb = new StringBuilder();
+                StringBuilder htmlContentFiltres = new StringBuilder();
                 StringBuilder htmlContentAucuneOption = new StringBuilder(); // Je rajoute ces quatre StringBuilder au cas où l'utilisateur n'aurait pas sélectionné d'option
                 StringBuilder htmlContentAucuneRegion = new StringBuilder(); // Ca contourne un problème d'esthétique et surtout si on voulait prendre les données dans les autre StringBuilder,
                 StringBuilder htmlContentAucunDepartement = new StringBuilder(); // Ici, on aurait une erreur car il y aurait "Aucune ... selectionnée" en plus des données.
@@ -312,25 +312,45 @@ public class UI implements ActionListener {
                     NbreStationServices.add("Nombre de stations qui proposent des services spécifiques");
                     criteria.put("filtre", NbreStationServices);
                 }
-
-
-
+                
+                averagePrices = API.getAveragePrices();
+                medianPrices = API.getMedianPrices();
+                minPrices = API.getMinPrices(); 
+                
                 // Vérifier si des critères ont été sélectionnés
                 if (!criteria.isEmpty()) {
                     API.retrieveFuelDataByLocation(criteria);
                 }
                 
-                averagePrices = API.getAveragePrices();
-                medianPrices = API.getMedianPrices();
-                minPrices = API.getMinPrices();
 
 
+                htmlContentFiltres.append("<h4>Prix moyens :</h4>");
+                    htmlContentFiltres.append("<ul>");
+                    for (Double price : averagePrices) {
+                        htmlContentFiltres.append("<li>").append(price).append("€</li>");
+                    }
+                    htmlContentFiltres.append("</ul>");
+
+                    htmlContentFiltres.append("<h4>Prix médian :</h4>");
+                    htmlContentFiltres.append("<ul>");
+                    for (Double price : medianPrices) {
+                        htmlContentFiltres.append("<li>").append(price).append("€</li>");
+                    }
+                    htmlContentFiltres.append("</ul>");
+
+                    htmlContentFiltres.append("<h4>Prix minimum :</h4>");
+                    htmlContentFiltres.append("<ul>");
+                    for (Double price : minPrices) {
+                        htmlContentFiltres.append("<li>").append(price).append("€</li>");
+                    }
+                    htmlContentFiltres.append("</ul>");
 
 
                 // Écrire les données dans un fichier HTML
                 try {
                     FileWriter writer = new FileWriter("src/page_Web/resultat.html");
-                    writer.write("<html><head> <meta charset=\"UTF-8\">");
+                    writer.write("<html><head>");
+                    writer.write("<meta charset=\"UTF-8\">");
                     writer.write("<title>Résultats</title>");
                     writer.write("<style>");
                     writer.write("@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');");
@@ -340,58 +360,73 @@ public class UI implements ActionListener {
                     writer.write("    height: 100vh;"); // 100% de la hauteur de la vue (viewport)
                     writer.write("}");
                     writer.write("#liste {");
+                    writer.write("    align-items: center;"); // Police de caractères
                     writer.write("    font-family: 'Space Mono', monospace;"); // Police de caractères
-                    writer.write("    display: flex;"); 
+                    writer.write("    display: flex;");
+                    writer.write("    width:500px;");
                     writer.write("    flex-direction: column;"); // Alignement vertical
                     writer.write("    padding: 32px;");
-                    writer.write("    max-width: 420px;");
+                    writer.write("    max-width: 500px;");
                     writer.write("    margin: auto;");
+                    writer.write("    margin-right: -150px;");
                     writer.write("    border: 1px solid #eee;");
                     writer.write("    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);");
                     writer.write("}");
                     writer.write("#graphiques {");
                     writer.write("    font-family: 'Space Mono', monospace;"); // Police de caractères
                     writer.write("    flex: 1;"); // Prend tout l'espace restant
-                    writer.write("    text-align: center;");
                     writer.write("    padding: 32px;");
                     writer.write("}");
-                    writer.write("iframe {");
+                    writer.write("#graphiques h2 {");
+                    writer.write("    margin-left: 100px;");
+                    writer.write("    text-align: center;");
+                    writer.write("}");
+                    writer.write("#graphiques iframe {");
+                    writer.write("    margin-right: -200px;");
+                    writer.write("    margin-bottom: -150px;");
                     writer.write("    border: none;"); // Supprime la bordure de l'iframe
                     writer.write("}");
                     writer.write("* {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;text-rendering: optimizelegibility;letter-spacing: -0.25px;}");
                     writer.write("ol { padding-left: 50px; }");
                     writer.write("li {");
                     writer.write("color: #4F4F4F; padding-left: 16px; margin-top: 24px; position: relative; font-size: 16px; line-height: 20px; ");
-                    writer.write("&:before {");
+                    writer.write("}");
+                    writer.write("li:before {");
                     writer.write("content: ''; display: block; height: 42px; width: 42px; border-radius: 50%; border: 2px solid #ddd; position: absolute; top: -12px; left: -46px;");
-                    writer.write("} }");
+                    writer.write("}");
                     writer.write("strong { color:#000000; }");
+
+                    writer.write("#graphiques h4 {");
+                    writer.write("    padding-left: 200px;");
+                    writer.write("    text-align: center;");
+                    writer.write("    margin: auto;");
+                    writer.write("}");
+
+
                     writer.write("</style>");
                     writer.write("</head><body>");
 
-                    // Écrire l'iframe avec les styles pour centrer
-                    // writer.write("<div style=\"text-align: center;\">");
-                    // writer.write(
-                    //         "<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
-                    // writer.write("</div>");
-
                     writer.write("<div id=\"liste\">");
-                    writer.write("<strong>Vos choix :</strong>");
-                    writer.write("<ol> <li> <strong>Options </strong>");
+                    writer.write("<strong><u><h2>Vos choix :</h2></u></strong>");
+                    writer.write("<ol> <li> <strong> <h3>Options</h3> </strong>");
                     writer.write(htmlContentOption.toString());
                     writer.write(htmlContentAucuneOption.toString());
-                    writer.write("</li> <li> <strong>Régions </strong>");
+                    writer.write("</li> <li> <strong><h3>Régions</h3> </strong>");
                     writer.write(htmlContentRegion.toString());
                     writer.write(htmlContentAucuneRegion.toString());
-                    writer.write("</li> <li> <strong>Départements </strong>");
+                    writer.write("</li> <li> <strong><h3>Départements </h3></strong>");
                     writer.write(htmlContentDep.toString());
                     writer.write(htmlContentAucunDepartement.toString());
-                    writer.write("</li> <li> <strong>Carburants </strong>");
+                    writer.write("</li> <li> <strong><h3>Carburants</h3> </strong>");
                     writer.write(htmlContentCarb.toString());
                     writer.write(htmlContentAucunCarburant.toString());
                     writer.write("</li> </ol>");
                     writer.write("</div>");
-                    writer.write("<div id=\"graphiques\">Graphiques</div>");
+                    writer.write("<div id=\"graphiques\"><b><u><h2>Graphiques et filtres</h2></u></b>");
+                    writer.write("<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                    writer.write("<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                    writer.write(htmlContentFiltres.toString());
+                    writer.write("</div>");
                     writer.write("</body></html>");
                     writer.close();
                 } catch (IOException ex) {

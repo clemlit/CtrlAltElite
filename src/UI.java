@@ -24,6 +24,9 @@ public class UI implements ActionListener {
     JPanel panelFiltres;
     JPanel mapPanel;
     Carte map;
+    private static List<Double> averagePrices = new ArrayList<>();
+    private static List<Double> medianPrices = new ArrayList<>();
+    private static List<Double> minPrices = new ArrayList<>();
 
     public static void main(String argv[]) {
         new UI();
@@ -316,6 +319,11 @@ public class UI implements ActionListener {
                 if (!criteria.isEmpty()) {
                     API.retrieveFuelDataByLocation(criteria);
                 }
+                
+                averagePrices = API.getAveragePrices();
+                medianPrices = API.getMedianPrices();
+                minPrices = API.getMinPrices();
+
 
 
 
@@ -421,4 +429,5 @@ public class UI implements ActionListener {
         panelFiltres.revalidate();
         panelFiltres.repaint();
     }
+
 }

@@ -309,8 +309,41 @@ public class Carte {
     }
 
     private void refresh() {
-        output.setIcon(new ImageIcon(getImage()));
+        BufferedImage bi = new BufferedImage(
+                2 * SIZE, SIZE, BufferedImage.TYPE_INT_RGB);
+    
+        Graphics2D g = bi.createGraphics();
+    
+        // POUR CHANGER LE FOND
+        g.setColor(new Color(245, 247, 250)); // 
+        g.fillRect(0, 0, 2 * SIZE, SIZE);
+    
+        g.drawImage(image, 0, 0, output);
+        g.setColor(new Color(245, 247, 250));
+        g.fill(area);
+        g.draw(area);
+    
+        try {
+            Point p = MouseInfo.getPointerInfo().getLocation();
+            Point p1 = output.getLocationOnScreen();
+            int x = p.x - p1.x;
+            int y = p.y - 50 - p1.y;
+            Point pointOnImage = new Point(x, y);
+            for (Shape shape : shapeList) {
+                if (shape.contains(pointOnImage) && shape != shapeList.get(60) && shape != shapeList.get(55) && shape != shapeList.get(59)) {
+                    g.setColor(Color.BLUE.darker());
+                    g.fill(shape);
+                    break;
+                }
+            }
+        } catch (Exception doNothing) {
+        }
+    
+        g.dispose();
+    
+        output.setIcon(new ImageIcon(bi));
     }
+    
 
     private BufferedImage getImage() {
         BufferedImage bi = new BufferedImage(
@@ -325,11 +358,11 @@ public class Carte {
             Point p = MouseInfo.getPointerInfo().getLocation();
             Point p1 = output.getLocationOnScreen();
             int x = p.x - p1.x;
-            int y = p.y - p1.y;
+            int y = p.y-100 - p1.y;
             Point pointOnImage = new Point(x, y);
             for (Shape shape : shapeList) {
                 if (shape.contains(pointOnImage)&&shape!=shapeList.get(60)&&shape!=shapeList.get(55)&&shape!=shapeList.get(59)) {
-                    g.setColor(Color.GREEN.darker());
+                    g.setColor(Color.BLUE.darker());
                     g.fill(shape);
                     break;
                 }
@@ -353,6 +386,8 @@ public class Carte {
             f.setLocationByPlatform(true);
             f.setLocation(10, 10);
             f.setContentPane(o.getUI(numeroMap));
+            JComponent contentPane = (JComponent) f.getContentPane();
+            contentPane.setBackground(new Color(245, 247, 250));
             f.setResizable(true);
             f.pack();
             f.setVisible(true);

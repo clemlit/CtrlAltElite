@@ -198,16 +198,14 @@ public class UI implements ActionListener {
 
             public void actionPerformed(ActionEvent e) {
                 Map<String, List<String>> criteria = new HashMap<>();
-                StringBuilder htmlContent = new StringBuilder();
-
-                for (java.awt.Component component : panelFiltres.getComponents()) {
-                    if (component instanceof JCheckBox) {
-                        JCheckBox checkBox = (JCheckBox) component;
-                        if (checkBox.isSelected()) {
-                            htmlContent.append("<li>").append(checkBox.getText()).append("</li>");
-                        }
-                    }
-                }
+                StringBuilder htmlContentOption = new StringBuilder();
+                StringBuilder htmlContentRegion = new StringBuilder();
+                StringBuilder htmlContentDep = new StringBuilder();
+                StringBuilder htmlContentCarb = new StringBuilder();
+                StringBuilder htmlContentAucuneOption = new StringBuilder(); // Je rajoute ces quatre StringBuilder au cas où l'utilisateur n'aurait pas sélectionné d'option
+                StringBuilder htmlContentAucuneRegion = new StringBuilder(); // Ca contourne un problème d'esthétique et surtout si on voulait prendre les données dans les autre StringBuilder,
+                StringBuilder htmlContentAucunDepartement = new StringBuilder(); // Ici, on aurait une erreur car il y aurait "Aucune ... selectionnée" en plus des données.
+                StringBuilder htmlContentAucunCarburant = new StringBuilder();
 
                 List<Object> selectedOptions = comboOptions.getSelectedItems();
                 List<String> selectedOptionsNames = new ArrayList<>();
@@ -218,10 +216,13 @@ public class UI implements ActionListener {
                 // Vérifier si des options ont été sélectionnées
                 if (!selectedOptionsNames.isEmpty()) {
                     criteria.put("option", selectedOptionsNames);
-                    htmlContent.append("<h2>Options sélectionnées :</h2>");
                     for (String option : selectedOptionsNames) {
-                        htmlContent.append("<p>").append(option).append("</p>");
+                        htmlContentOption.append("<p>").append(option).append("</p>");
                     }
+                }
+
+                else {
+                    htmlContentAucuneOption.append("<p>").append("Aucune option sélectionnée").append("</p>");
                 }
 
                 List<Object> selectedRegions = comboRegion.getSelectedItems();
@@ -231,10 +232,13 @@ public class UI implements ActionListener {
                 }
                 if (!selectedRegionNames.isEmpty()) {
                     criteria.put("region", selectedRegionNames);
-                    htmlContent.append("<h2> Régions sélectionnées :</h2>");
                     for (Object region : selectedRegionNames) {
-                        htmlContent.append("<p>").append(region.toString()).append("</p>");
+                        htmlContentRegion.append("<p>").append(region.toString()).append("</p>");
                     }
+                }
+                
+                else {
+                    htmlContentAucuneRegion.append("<p>").append("Aucune région sélectionnée").append("</p>");
                 }
 
                 List<Object> selectedDepartements = comboDepart.getSelectedItems();
@@ -249,11 +253,14 @@ public class UI implements ActionListener {
                 }
                 if (!selectedDepartementNames.isEmpty()) {
                     criteria.put("departement", selectedDepartementNames);
-                    htmlContent.append("<h2>Départements sélectionnés :</h2>");
                     for (Object departement : selectedDepartementNames) {
                         // Ajoute les données sélectionnées dans le multiBox "comboDepart"
-                        htmlContent.append("<p>").append(departement.toString()).append("</p>");
+                        htmlContentDep.append("<p>").append(departement.toString()).append("</p>");
                     }
+                }
+
+                else {
+                    htmlContentAucunDepartement.append("<p>").append("Aucun département sélectionné").append("</p>");
                 }
 
                 List<Object> selectedCarburants = comboCarbu.getSelectedItems();
@@ -263,11 +270,14 @@ public class UI implements ActionListener {
                 }
                 if (!selectedCarburantNames.isEmpty()) {
                     criteria.put("carburant", selectedCarburantNames);
-                    htmlContent.append("<h2>Carburants sélectionnés :</h2>");
                     for (Object carburant : selectedCarburantNames) {
                         // Ajoute les données sélectionnées dans le multiBox "comboCarbu"
-                        htmlContent.append("<p>").append(carburant.toString()).append("</p>");
+                        htmlContentCarb.append("<p>").append(carburant.toString()).append("</p>");
                     }
+                }
+                    
+                else {
+                    htmlContentAucunCarburant.append("<p>").append("Aucun carburant sélectionné").append("</p>");
                 }
 
                 if (comboFiltres.getSelectedItems().contains("Prix moyen")) {
@@ -312,26 +322,68 @@ public class UI implements ActionListener {
                 // Écrire les données dans un fichier HTML
                 try {
                     FileWriter writer = new FileWriter("src/page_Web/resultat.html");
-                    writer.write("<html><head><title>Résultats</title>");
+                    writer.write("<html><head> <meta charset=\"UTF-8\">");
+                    writer.write("<title>Résultats</title>");
                     writer.write("<style>");
+                    writer.write("@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');");
                     writer.write("body {");
-                    writer.write("    justify-content: center;"); // Centrer horizontalement
-                    writer.write("    align-items: center;"); // Centrer verticalement
+                    writer.write("    display:flex;");
+                    writer.write("    margin:0;");
                     writer.write("    height: 100vh;"); // 100% de la hauteur de la vue (viewport)
+                    writer.write("}");
+                    writer.write("#liste {");
+                    writer.write("    font-family: 'Space Mono', monospace;"); // Police de caractères
+                    writer.write("    display: flex;"); 
+                    writer.write("    flex-direction: column;"); // Alignement vertical
+                    writer.write("    padding: 32px;");
+                    writer.write("    max-width: 420px;");
+                    writer.write("    margin: auto;");
+                    writer.write("    border: 1px solid #eee;");
+                    writer.write("    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);");
+                    writer.write("}");
+                    writer.write("#graphiques {");
+                    writer.write("    font-family: 'Space Mono', monospace;"); // Police de caractères
+                    writer.write("    flex: 1;"); // Prend tout l'espace restant
+                    writer.write("    text-align: center;");
+                    writer.write("    padding: 32px;");
                     writer.write("}");
                     writer.write("iframe {");
                     writer.write("    border: none;"); // Supprime la bordure de l'iframe
                     writer.write("}");
+                    writer.write("* {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;text-rendering: optimizelegibility;letter-spacing: -0.25px;}");
+                    writer.write("ol { padding-left: 50px; }");
+                    writer.write("li {");
+                    writer.write("color: #4F4F4F; padding-left: 16px; margin-top: 24px; position: relative; font-size: 16px; line-height: 20px; ");
+                    writer.write("&:before {");
+                    writer.write("content: ''; display: block; height: 42px; width: 42px; border-radius: 50%; border: 2px solid #ddd; position: absolute; top: -12px; left: -46px;");
+                    writer.write("} }");
+                    writer.write("strong { color:#000000; }");
                     writer.write("</style>");
                     writer.write("</head><body>");
 
                     // Écrire l'iframe avec les styles pour centrer
-                    writer.write("<div style=\"text-align: center;\">");
-                    writer.write(
-                            "<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
-                    writer.write("</div>");
+                    // writer.write("<div style=\"text-align: center;\">");
+                    // writer.write(
+                    //         "<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                    // writer.write("</div>");
 
-                    writer.write(htmlContent.toString());
+                    writer.write("<div id=\"liste\">");
+                    writer.write("<strong>Vos choix :</strong>");
+                    writer.write("<ol> <li> <strong>Options </strong>");
+                    writer.write(htmlContentOption.toString());
+                    writer.write(htmlContentAucuneOption.toString());
+                    writer.write("</li> <li> <strong>Régions </strong>");
+                    writer.write(htmlContentRegion.toString());
+                    writer.write(htmlContentAucuneRegion.toString());
+                    writer.write("</li> <li> <strong>Départements </strong>");
+                    writer.write(htmlContentDep.toString());
+                    writer.write(htmlContentAucunDepartement.toString());
+                    writer.write("</li> <li> <strong>Carburants </strong>");
+                    writer.write(htmlContentCarb.toString());
+                    writer.write(htmlContentAucunCarburant.toString());
+                    writer.write("</li> </ol>");
+                    writer.write("</div>");
+                    writer.write("<div id=\"graphiques\">Graphiques</div>");
                     writer.write("</body></html>");
                     writer.close();
                 } catch (IOException ex) {

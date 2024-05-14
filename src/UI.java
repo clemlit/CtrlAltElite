@@ -317,6 +317,7 @@ public class UI implements ActionListener {
                     List<String> NbreStationServices = new ArrayList<>();
                     NbreStationServices.add("Nombre de stations qui proposent des services spécifiques");
                     criteria.put("filtre", NbreStationServices);
+
                 }
                 
                 averagePrices = API.getAveragePrices();
@@ -439,8 +440,11 @@ public class UI implements ActionListener {
                     writer.write("</li> </ol>");
                     writer.write("</div>");
                     writer.write("<div id=\"graphiques\"><b><u><h2>Graphiques et filtres</h2></u></b>");
-                    writer.write("<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
-                    writer.write("<iframe src=\"DiagrammeCammembert.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+
+                    if (comboFiltres.getSelectedItems().contains("Nombre de stations qui proposent des services spécifiques")){
+                        writer.write(
+                                "<iframe src=\"DiagrammeCammembertServices.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                    }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");
                     writer.write("</body></html>");

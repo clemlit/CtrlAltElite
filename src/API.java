@@ -33,6 +33,7 @@ public class API extends UI{
     private static Integer totalCountStations;
     private static int nombreTotalStationServices = 0;
     private static int nombreTotalStations = 0;
+    private static int nombreTotalStationCarburants = 0;
 
     
 
@@ -115,6 +116,8 @@ public class API extends UI{
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent chaque type de carburant")){
                     int totalCount = countTotalStations(response.toString());
                     System.out.println("Nombre total de stations ayant tous les carburants: " + totalCount);
+                    nombreTotalStationCarburants = totalCount;
+                    camembertCarburants();
                 }
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent des services spécifiques")){
@@ -226,11 +229,20 @@ public class API extends UI{
             }
         }
 
-        //URL SANS LA CONDITION IS NOT NULL
-        String apiUrlWithoutNotNull = apiUrlBuilder.toString().replace("where=services%20IS%20NOT%20NULL", "");
-        // Compter le nombre total de stations sans la condition "IS NOT NULL"
-        nombreTotalStations = countTotalStationsWithoutNotNull(apiUrlWithoutNotNull);
-        System.out.println(nombreTotalStations);
+        if (isNbreStationsCarburantSelected){
+            String apiUrlCarbs = apiUrlBuilder.toString().replace("select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22", "");
+            // Compter le nombre total de stations sans la condition "IS NOT NULL"
+            nombreTotalStations = countTotalStationsWithoutNotNull(apiUrlCarbs);
+            System.out.println(nombreTotalStations);
+        }
+
+        if (isNbreStationsServiceSelected){
+            // URL SANS LA CONDITION IS NOT NULL
+            String apiUrlWithoutNotNull = apiUrlBuilder.toString().replace("where=services%20IS%20NOT%20NULL", "");
+            // Compter le nombre total de stations sans la condition "IS NOT NULL"
+            nombreTotalStations = countTotalStationsWithoutNotNull(apiUrlWithoutNotNull);
+            System.out.println(nombreTotalStations);
+        }
         return apiUrlBuilder.toString();
     }
 
@@ -373,13 +385,25 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
     private static void camembertService() throws IOException {
         int sum = nombreTotalStations - nombreTotalStationServices;
         DiagCamemberts camembertsSer = new DiagCamemberts("Nombre de stations ayant un service", 2);
-        camembertsSer.ajouterDonnees(" ", sum, nombreTotalStations);
-        System.out.println(" ABC " +sum + " "+ nombreTotalStationServices + " " + nombreTotalStations);
+        camembertsSer.ajouterDonnees(" ", sum, nombreTotalStationServices);
         camembertsSer.legender("Station n'ayant aucun service ","Station avec au moins un service");
         camembertsSer.colorier("Blue", "Red");
         String chemin = "src/page_Web/DiagrammeCammembertServices.svg";
         FileWriter writer0 = new FileWriter(chemin);
         writer0.write(camembertsSer.agencer().enSVG());
+        writer0.close();
+
+    }
+
+    private static void camembertCarburants() throws IOException {
+        int diff = nombreTotalStations - nombreTotalStationCarburants;
+        DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 2);
+        camembertsCarburants.ajouterDonnees(" ", nombreTotalStationCarburants, diff);
+        camembertsCarburants.legender("Stations ayant tous les carburants ", "Station n'ayant pas tous les carburants");
+        camembertsCarburants.colorier("Green", "Orange");
+        String chemin = "src/page_Web/DiagrammeCammembertCarburants.svg";
+        FileWriter writer0 = new FileWriter(chemin);
+        writer0.write(camembertsCarburants.agencer().enSVG());
         writer0.close();
 
     }

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg"><g>
+<path d="M450.0 250.0L450,150A100.0,100.0 0 0 1 495,161Z" fill="Blue" stroke="black"/>
+<path d="M450.0 250.0L495,161A100.0,100.0 0 1 1 450,150Z" fill="Red" stroke="black"/>
+</g>
+<text x="450.0" y="370.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black"> </text>
+<rect x="120.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="145" y="505">Station n'ayant aucun service </text><rect x="440.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="465" y="505">Station avec au moins un service</text><rect x="120.0" y="495.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="440.0" y="495.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<text x="665.0" y="50.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Nombre de stations ayant un service</text>
+</svg>

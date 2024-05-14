@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg"><g>
+<path d="M450.0 250.0L450,150A100.0,100.0 0 1 1 402,338Z" fill="Green" stroke="black"/>
+<path d="M450.0 250.0L402,338A100.0,100.0 0 0 1 353,226Z" fill="Orange" stroke="black"/>
+<path d="M450.0 250.0L353,226A100.0,100.0 0 0 1 405,160Z" fill="Blue" stroke="black"/>
+<path d="M450.0 250.0L405,160A100.0,100.0 0 0 1 435,151Z" fill="Red" stroke="black"/>
+<path d="M450.0 250.0L435,151A100.0,100.0 0 0 1 447,150Z" fill="Yellow" stroke="black"/>
+<path d="M450.0 250.0L447,150A100.0,100.0 0 0 1 450,150Z" fill="Purple" stroke="black"/>
+</g>
+<text x="450.0" y="370.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black">Stations avec n carburants</text>
+<rect x="330.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="355" y="505">1c</text><rect x="370.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="395" y="505">2c</text><rect x="410.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="435" y="505">3c</text><rect x="450.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="475" y="505">4c</text><rect x="490.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="515" y="505">5c</text><rect x="530.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="555" y="505">6c</text><rect x="330.0" y="495.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<rect x="370.0" y="495.0" width="20.0" height="10.0" fill="Orange" stroke="black" />
+<rect x="410.0" y="495.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="450.0" y="495.0" width="20.0" height="10.0" fill="Red" stroke="black" />
+<rect x="490.0" y="495.0" width="20.0" height="10.0" fill="Yellow" stroke="black" />
+<rect x="530.0" y="495.0" width="20.0" height="10.0" fill="Purple" stroke="black" />
+<text x="656.0" y="50.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Nombre de stations ayant tous les carburants</text>
+</svg>

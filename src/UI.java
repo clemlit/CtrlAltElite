@@ -444,7 +444,11 @@ public class UI implements ActionListener {
                     if (comboFiltres.getSelectedItems().contains("Nombre de stations qui proposent des services spécifiques")){
                         writer.write(
                                 "<iframe src=\"DiagrammeCammembertServices.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
-                    }
+                    }else if (comboFiltres.getSelectedItems()
+                            .contains("Nombre de stations qui proposent chaque type de carburant")){
+                                writer.write(
+                                "<iframe src=\"DiagrammeCammembertCarburants.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                            }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");
                     writer.write("</body></html>");

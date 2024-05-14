@@ -7,6 +7,9 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.FileWriter;
+
+import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,6 +31,9 @@ public class API extends UI{
     private static List<Double> medianPrices = new ArrayList<>();
     private static List<Double> minPrices = new ArrayList<>();
     private static Integer totalCountStations;
+    private static int nombreTotalStationServices = 0;
+    private static int nombreTotalStations = 0;
+
     
 
     //SETTERS AND GETTERS
@@ -113,6 +119,8 @@ public class API extends UI{
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent des services spécifiques")){
                     int totalCount = countTotalStations(response.toString());
+                    nombreTotalStationServices = totalCount;
+                    camembertService();
                     System.out.println("Nombre total de stations ayant au moins un service : " + totalCount);
                 }
 
@@ -183,7 +191,7 @@ public class API extends UI{
         }     
 
         if (isNbreStationsCarburantSelected){
-            apiUrlBuilder.append("select=carburants_disponibles&limit=20&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22");
+            apiUrlBuilder.append("select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22");
         }
 
         if (isNbreStationsServiceSelected){
@@ -202,7 +210,6 @@ public class API extends UI{
             if (type.equals("carburant") && locations.size() > 0 && !isPrixSelected  && !isMinPrixSelected  && !isMedianPrixSelected) {
                 for (String location : locations) {
                     encodedLocation = URLEncoder.encode(location.trim(), StandardCharsets.UTF_8);
-                    System.out.println("abc");
                     apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
                 }
             } 
@@ -218,8 +225,12 @@ public class API extends UI{
                         .append("%22");
             }
         }
-        System.out.println("Requête HTTP : " + apiUrlBuilder.toString());
 
+        //URL SANS LA CONDITION IS NOT NULL
+        String apiUrlWithoutNotNull = apiUrlBuilder.toString().replace("where=services%20IS%20NOT%20NULL", "");
+        // Compter le nombre total de stations sans la condition "IS NOT NULL"
+        nombreTotalStations = countTotalStationsWithoutNotNull(apiUrlWithoutNotNull);
+        System.out.println(nombreTotalStations);
         return apiUrlBuilder.toString();
     }
 
@@ -266,7 +277,7 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
     double price = jsonObject.getDouble(key);
     
     // Arrondir à deux chiffres après la virgule
-    price = Math.round(price * 100.0) / 100.0;
+    price = Math.round(price * 1000.0) / 1000.0;
     
     return price;
 }
@@ -359,6 +370,55 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
     return totalCount;
 }
 
+    private static void camembertService() throws IOException {
+        int sum = nombreTotalStations - nombreTotalStationServices;
+        DiagCamemberts camembertsSer = new DiagCamemberts("Nombre de stations ayant un service", 2);
+        camembertsSer.ajouterDonnees(" ", sum, nombreTotalStations);
+        System.out.println(" ABC " +sum + " "+ nombreTotalStationServices + " " + nombreTotalStations);
+        camembertsSer.legender("Station n'ayant aucun service ","Station avec au moins un service");
+        camembertsSer.colorier("Blue", "Red");
+        String chemin = "src/page_Web/DiagrammeCammembertServices.svg";
+        FileWriter writer0 = new FileWriter(chemin);
+        writer0.write(camembertsSer.agencer().enSVG());
+        writer0.close();
+
+    }
+
+    private static int countTotalStationsWithoutNotNull(String apiUrlWithoutNotNull) {
+        try {
+            URL url = new URL(apiUrlWithoutNotNull);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // Convertir la réponse JSON en un objet JSON
+                JSONObject jsonObject = new JSONObject(response.toString());
+
+                // Extraire la valeur du champ "total_count"
+                int totalCount = jsonObject.getInt("total_count");
+
+                return totalCount;
+            } else {
+                System.out.println("La requête a échoué avec le code : " + responseCode);
+                return 0;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
 
 

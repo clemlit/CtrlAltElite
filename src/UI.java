@@ -447,7 +447,9 @@ public class UI implements ActionListener {
                     }else if (comboFiltres.getSelectedItems()
                             .contains("Nombre de stations qui proposent chaque type de carburant")){
                                 writer.write(
-                                "<iframe src=\"DiagrammeCammembertCarburants.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                                "<img src=\"DiagrammeCammembertCarburants.svg\" width=\"800\" height=\"600\"></iframe>");
+                                writer.write(
+                                "<iframe src=\"DiagrammeCammembertAllCarburants.svg\" width=\"800\" height=\"600\"></iframe>");
                             }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");

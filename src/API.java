@@ -34,6 +34,8 @@ public class API extends UI{
     private static int nombreTotalStationServices = 0;
     private static int nombreTotalStations = 0;
     private static int nombreTotalStationCarburants = 0;
+    private static int nombreTotalStations0Carbs =0;
+    private static ArrayList<Integer> nombreTotalStationsCabrs = new ArrayList<>();
 
     
 
@@ -118,6 +120,7 @@ public class API extends UI{
                     System.out.println("Nombre total de stations ayant tous les carburants: " + totalCount);
                     nombreTotalStationCarburants = totalCount;
                     camembertCarburants();
+                    camembertAllCarburants();
                 }
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent des services spécifiques")){
@@ -230,10 +233,21 @@ public class API extends UI{
         }
 
         if (isNbreStationsCarburantSelected){
-            String apiUrlCarbs = apiUrlBuilder.toString().replace("select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22", "");
-            // Compter le nombre total de stations sans la condition "IS NOT NULL"
-            nombreTotalStations = countTotalStationsWithoutNotNull(apiUrlCarbs);
-            System.out.println(nombreTotalStations);
+            String apiUrl0Carbs = apiUrlBuilder.toString().replace("select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22", "");
+            nombreTotalStations0Carbs = countTotalStationsWithoutNotNull(apiUrl0Carbs);
+            System.out.println(nombreTotalStations0Carbs);
+
+            String[] selectedCarburants = { "Gazole", "SP95", "SP98", "E10", "E85", "GPLc" };
+            for (int i = 1; i <= selectedCarburants.length; i++) {
+                StringBuilder apiUrlCarbs = new StringBuilder(API_URL);
+                apiUrlCarbs.append("select=carburants_disponibles");
+                for (int j = 0; j < i; j++) {
+                    String carburant = selectedCarburants[j];
+                    apiUrlCarbs.append("&refine=carburants_disponibles%3A%22").append(carburant).append("%22");
+                }
+                int nombreStationsCarbs = countTotalStationsWithoutNotNull(apiUrlCarbs.toString());
+                nombreTotalStationsCabrs.add(nombreStationsCarbs);
+            }
         }
 
         if (isNbreStationsServiceSelected){
@@ -396,12 +410,48 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
     }
 
     private static void camembertCarburants() throws IOException {
-        int diff = nombreTotalStations - nombreTotalStationCarburants;
-        DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 2);
-        camembertsCarburants.ajouterDonnees(" ", nombreTotalStationCarburants, diff);
-        camembertsCarburants.legender("Stations ayant tous les carburants ", "Station n'ayant pas tous les carburants");
-        camembertsCarburants.colorier("Green", "Orange");
-        String chemin = "src/page_Web/DiagrammeCammembertCarburants.svg";
+        int diff = nombreTotalStations0Carbs - nombreTotalStationCarburants;
+        System.out.println(diff + " " + nombreTotalStationCarburants); 
+        if (diff != 0 && nombreTotalStationCarburants !=0){
+            DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 2);
+                camembertsCarburants.ajouterDonnees(" ", nombreTotalStationCarburants, diff);
+                camembertsCarburants.legender("Stations ayant tous les carburants ", "Station n'ayant pas tous les carburants");
+                camembertsCarburants.colorier("Green", "Orange");
+                String chemin = "src/page_Web/DiagrammeCammembertCarburants.svg";
+                FileWriter writer0 = new FileWriter(chemin);
+                writer0.write(camembertsCarburants.agencer().enSVG());
+                writer0.close();
+        }
+    }
+
+    private static void camembertAllCarburants() throws IOException {
+    
+        DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 6);
+
+        // Convertissez la liste en tableau d'entiers pour les données
+        int[] donnees = nombreTotalStationsCabrs.stream().mapToInt(Integer::intValue).toArray();
+
+        // Convertissez les valeurs entières en doubles
+        double[] donneesDoubles = new double[donnees.length];
+        for (int i = 0; i < donnees.length; i++) {
+            donneesDoubles[i] = (double) donnees[i];
+            System.out.println(donneesDoubles   [i]);
+        }
+
+        // Ajoutez les données à votre objet DiagCamemberts
+        camembertsCarburants.ajouterDonnees("Stations avec n carburants", donneesDoubles);
+
+        // Définissez les légendes pour les sections
+        camembertsCarburants.legender("1c", "2c", "3c", "4c", "5c", "6c");
+        // Gazole", "Gazole + SP95", "Gazole + SP95 + SP98", "Gazole + SP95 + SP98 +
+        // E10", "Gazole + SP95 + SP98 + E10 + E85", "Gazole + SP95 + SP98 + E10 + E85 +
+        // GPLc
+
+        // Définissez les couleurs pour les sections
+        camembertsCarburants.colorier("Green", "Orange", "Blue", "Red", "Yellow", "Purple");
+
+        // Enregistrez le diagramme dans un fichier
+        String chemin = "src/page_Web/DiagrammeCammembertAllCarburants.svg";
         FileWriter writer0 = new FileWriter(chemin);
         writer0.write(camembertsCarburants.agencer().enSVG());
         writer0.close();

@@ -216,6 +216,7 @@ public class UI implements ActionListener {
                 medianPrices.clear();
                 minPrices.clear();
 
+
                 List<Object> selectedOptions = comboOptions.getSelectedItems();
                 List<String> selectedOptionsNames = new ArrayList<>();
                 for (Object option : selectedOptions) {
@@ -289,7 +290,10 @@ public class UI implements ActionListener {
                     htmlContentAucunCarburant.append("<p>").append("Aucun carburant sélectionné").append("</p>");
                 }
 
+                System.out.println(API.getAveragePrices());
+
                 if (comboFiltres.getSelectedItems().contains("Prix moyen")) {
+                    System.out.println(API.getAveragePrices());
                     List<String> prixMoyenOption = new ArrayList<>();
                     prixMoyenOption.add("Prix moyen");
                     criteria.put("filtre", prixMoyenOption);
@@ -340,11 +344,25 @@ public class UI implements ActionListener {
 
                 htmlContentFiltres.append("<h4>Prix moyens :</h4>");
                 htmlContentFiltres.append("<ul>");
-                for (int i = 0; i < averagePrices.size(); i++) {
-                    htmlContentFiltres.append("<li>").append(choix_carburants.get(i)).append(" : ")
-                            .append(averagePrices.get(i)).append("€</li>");
+
+                int nbCarburants = choix_carburants.size();
+                int nbDepartements = selectedDepartementNames.size();
+                // Boucle sur les départements
+                for (int i = 0; i < nbDepartements; i++) {
+                    String departement = selectedDepartementNames.get(i);
+                    htmlContentFiltres.append("<li>").append("Département : ").append(departement).append("</li>");
+                    htmlContentFiltres.append("<ul>");
+
+                    // Boucle sur les carburants
+                    for (int j = 0; j < nbCarburants; j++) {
+                        String carburant = choix_carburants.get(j);
+                        double prixMoyen = averagePrices.get(i * nbCarburants + j);
+                        htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                .append(" - Prix moyen : ").append(prixMoyen).append("€</li>");
+                    }
+
+                    htmlContentFiltres.append("</ul>");
                 }
-                htmlContentFiltres.append("</ul>");
 
                 htmlContentFiltres.append("<h4>Prix médian :</h4>");
                 htmlContentFiltres.append("<ul>");
@@ -465,8 +483,8 @@ public class UI implements ActionListener {
         });
         panelFiltres.add(boutonResultat);
 
-        Carte map = new Carte(1);
-        mapPanel.add(map.getUI(1), BorderLayout.CENTER);
+        //Carte map = new Carte(1);
+        //mapPanel.add(map.getUI(1), BorderLayout.CENTER);
 
 
     }

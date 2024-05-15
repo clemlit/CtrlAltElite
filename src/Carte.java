@@ -2,11 +2,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.imageio.ImageIO;
+
 // RAJOUTER SI LE POINT EST DANS REGION COLORER SINON NON
 /**
  * Cette classe représente une carte interactive affichée dans une interface
@@ -22,43 +26,139 @@ public class Carte {
     BufferedImage image;
     Area area;
     ArrayList<Shape> shapeList;
-    public static int numeroMap = 1;
-    public static int numeroActuel = 1;
-
-
+    HashMap<Integer, String> regionMap;
 
     /**
      * Constructeur par défaut de la classe Map
      * Initialise l'interface utilisateur et charge l'image de la carte
      */
-    public Carte(int numeroMap) {
+    public Carte() {
         try {
-            initUI(numeroMap);
+            initRegionMap(); // Initialise the region map
+            initUI();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
+    public void initRegionMap() {
+        regionMap = new HashMap<>();
+        regionMap.put(53, "29");
+        regionMap.put(45, "22");
+        regionMap.put(63, "56");
+        regionMap.put(57, "35");
+        regionMap.put(30, "50");
+        regionMap.put(23, "14");
+        regionMap.put(61, "44");
+        regionMap.put(25, "27");
+        regionMap.put(76, "10");
+        regionMap.put(58, "53");
+        regionMap.put(61, "72");
+        regionMap.put(75, "49");
+        regionMap.put(76, "44");
+        regionMap.put(87, "85");
+        regionMap.put(99, "79");
+        regionMap.put(98, "86");
+        regionMap.put(113, "16");
+        regionMap.put(115, "17");
+        regionMap.put(132, "33");
+        regionMap.put(145, "40");
+        regionMap.put(159, "64");
+        regionMap.put(47, "136");
+        regionMap.put(125, "24");
+        regionMap.put(109, "87");
+        regionMap.put(105, "23");
+        regionMap.put(116, "19");
+
+        regionMap.put(162, "65");
+        regionMap.put(151, "32");
+        regionMap.put(163, "31");
+        regionMap.put(138, "82");
+        regionMap.put(133, "46");
+        regionMap.put(165, "09");
+        regionMap.put(150, "81");
+        regionMap.put(140, "12");
+        regionMap.put(164, "11");
+        regionMap.put(174, "66");
+        regionMap.put(153, "34");
+        regionMap.put(146, "30");
+        regionMap.put(135, "48");
+
+        regionMap.put(154, "13");
+        regionMap.put(156, "83");
+        regionMap.put(144, "06");
+        regionMap.put(139, "04");
+        regionMap.put(141, "84");
+        regionMap.put(131, "05");
+
+        regionMap.put(166, "2B");
+        regionMap.put(181, "2A");
+
+        regionMap.put(124, "15");
+        regionMap.put(120, "43");
+        regionMap.put(130, "07");
+        regionMap.put(134, "26");
+        regionMap.put(121, "38");
+        regionMap.put(114, "73");
+        regionMap.put(104, "74");
+        regionMap.put(106, "01");
+        regionMap.put(108, "69");
+        regionMap.put(112, "42");
+        regionMap.put(111, "63");
+        regionMap.put(101, "03");
+
+        regionMap.put(193, "71");
+        regionMap.put(80, "58");
+        regionMap.put(88, "39");
+        regionMap.put(81, "25");
+        regionMap.put(72, "70");
+        regionMap.put(64, "90");
+        regionMap.put(77, "21");
+        regionMap.put(69, "89");
+
+        regionMap.put(65, "68");
+        regionMap.put(43, "67");
+        regionMap.put(27, "57");
+        regionMap.put(39, "54");
+        regionMap.put(54, "88");
+        regionMap.put(60, "52");
+        regionMap.put(52, "10");
+        regionMap.put(31, "51");
+        regionMap.put(33, "55");
+        regionMap.put(11, "08");
+
+        regionMap.put(0, "59");
+        regionMap.put(2, "62");
+        regionMap.put(6, "80");
+        regionMap.put(20, "02");
+        regionMap.put(14, "60");
+
+        regionMap.put(51, "28");
+        regionMap.put(66, "45");
+        regionMap.put(73, "41");
+        regionMap.put(79, "37");
+        regionMap.put(86, "36");
+        regionMap.put(84, "18");
+
+        regionMap.put(48, "77");
+        regionMap.put(42, "91");
+        regionMap.put(32, "78");
+        regionMap.put(17, "95");
+        regionMap.put(24, "Région parisienne");
+        regionMap.put(26, "Région parisienne");
+    }
     /**
      * Initialise l'interface utilisateur avec la carte chargée
      * 
      * @throws Exception Si une erreur se produit lors du chargement de l'image
      */
-    public final void initUI(int numeroMap) throws Exception {
+    public final void initUI() throws Exception {
         if (ui != null) {
             return;
         }
-        String urlString="";
-        switch (numeroMap) {
-            case 1:
-            urlString = "https://img.freepik.com/premium-vector/france-map-background-with-states-france-map-isolated-white-background-vector-illustration_1003415-27.jpg";
-                break;
-            case 2:
-            urlString = "https://d-maps.com/m/europa/france/bretagne/bretagne50.gif";
-                break;
-        }        
-        URL url = new URL(urlString);
-        image = ImageIO.read(url);
+        String filePath = "l2gengr5_ctrlaltelite\\lib\\carte_france.jpg";
+        File file = new File(filePath);
+        BufferedImage image = ImageIO.read(file);
         area = getOutline(Color.WHITE, image, 12);
         shapeList = separateShapeIntoRegions(area);
         ui = new JPanel(new BorderLayout(4, 4));
@@ -171,85 +271,31 @@ public class Carte {
             int y = e.getY();
             int width = output.getWidth();
             int height = output.getHeight();
-            boolean valid=true;
-            //int i=0;
+            boolean valid = true;
             if (x >= 0 && x < width && y >= 0 && y < height && valid) {
                 refresh();
             } else {
             }
-            /*for (Shape s : shapeList) {
-                if (s.contains(x, y) && i!=122&&i!=73&&i) {
-                    System.out.println(i);
-                }i++;
-            }*/
-
         }
+
     }
-    
 
     class MouseClickListener implements MouseMotionListener, MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            Point screenPoint = e.getLocationOnScreen(); // Get screen coordinates
-            Point componentPoint = new Point(); // Create a new Point object
-            SwingUtilities.convertPointFromScreen(screenPoint, output); // Convert screen to component coordinates
-            int x = componentPoint.x;
-            int y = componentPoint.y;
+            int x = e.getX(); // Coordonnée X du clic de la souris
+            int y = e.getY(); // Coordonnée Y du clic de la souris
             int i = 0;
             for (Shape s : shapeList) {
-                if (numeroMap == 1) {
-                    if (s.contains(x, y)) {
-                        switch (i) {
-                            case 9:
-                                System.out.println("Hauts-de-France");
-                                break;
-                            case 14:
-                                System.out.println("Normandie");
-                                break;
-                            case 17:
-                                System.out.println("Île-de-France");
-                                numeroMap = 2;
-                                break;
-                            case 22:
-                                System.out.println("Bretagne");
-                                numeroMap = 2;
-                                break;
-                            case 24:
-                                System.out.println("Grand Est");
-                                break;
-                            case 28:
-                                System.out.println("Pays de la Loire");
-                                break;
-                            case 29:
-                                System.out.println("Centre Val de Loire");
-                                break;
-                            case 31:
-                                System.out.println("Bourgogne Franche-Comté");
-                                break;
-                            case 43:
-                                System.out.println("Auvergne Rhône Alpes");
-                                break;
-                            case 51:
-                                System.out.println("Nouvelle Aquitaine");
-                                break;
-                            case 52:
-                                System.out.println("PACA");
-                                break;
-                            case 54:
-                                System.out.println("Occitanie");
-                                break;
-                            case 58:
-                                System.out.println("Corse");
-                                break;
 
-                        }
+                if (s.contains(x, y)) {
+                    if (regionMap.containsKey(i)) {
+                        System.out.println(regionMap.get(i));
                     }
-
                 }
                 i++;
             }
-                
         }
 
         @Override
@@ -309,41 +355,8 @@ public class Carte {
     }
 
     private void refresh() {
-        BufferedImage bi = new BufferedImage(
-                2 * SIZE, SIZE, BufferedImage.TYPE_INT_RGB);
-    
-        Graphics2D g = bi.createGraphics();
-    
-        // POUR CHANGER LE FOND
-        g.setColor(new Color(245, 247, 250)); // 
-        g.fillRect(0, 0, 2 * SIZE, SIZE);
-    
-        g.drawImage(image, 0, 0, output);
-        g.setColor(new Color(245, 247, 250));
-        g.fill(area);
-        g.draw(area);
-    
-        try {
-            Point p = MouseInfo.getPointerInfo().getLocation();
-            Point p1 = output.getLocationOnScreen();
-            int x = p.x - p1.x;
-            int y = p.y - 50 - p1.y;
-            Point pointOnImage = new Point(x, y);
-            for (Shape shape : shapeList) {
-                if (shape.contains(pointOnImage) && shape != shapeList.get(60) && shape != shapeList.get(55) && shape != shapeList.get(59)) {
-                    g.setColor(Color.BLUE.darker());
-                    g.fill(shape);
-                    break;
-                }
-            }
-        } catch (Exception doNothing) {
-        }
-    
-        g.dispose();
-    
-        output.setIcon(new ImageIcon(bi));
+        output.setIcon(new ImageIcon(getImage()));
     }
-    
 
     private BufferedImage getImage() {
         BufferedImage bi = new BufferedImage(
@@ -353,19 +366,24 @@ public class Carte {
         g.drawImage(image, 0, 0, output);
         g.setColor(Color.WHITE);
         g.fill(area);
+        g.setColor(Color.BLACK);
         g.draw(area);
         try {
             Point p = MouseInfo.getPointerInfo().getLocation();
             Point p1 = output.getLocationOnScreen();
             int x = p.x - p1.x;
-            int y = p.y-200 - p1.y;
+            int y = p.y - p1.y;
             Point pointOnImage = new Point(x, y);
+            int i = 0;
             for (Shape shape : shapeList) {
-                if (shape.contains(pointOnImage)&&shape!=shapeList.get(60)&&shape!=shapeList.get(55)&&shape!=shapeList.get(59)) {
-                    g.setColor(Color.BLUE.darker());
+                if (shape.contains(pointOnImage)
+                        && ((i < 175 && i != 129 && i != 149 && i != 56 && i != 70 && i != 102) || i == 181)) {
+                    g.setColor(Color.GREEN.darker());
                     g.fill(shape);
+                    i++;
                     break;
                 }
+                i++;
             }
         } catch (Exception doNothing) {
         }
@@ -375,61 +393,29 @@ public class Carte {
         return bi;
     }
 
-    public JComponent getUI(int numeroMap) {
+    public JComponent getUI() {
         return ui;
     }
 
-
-    public static void creationMap(int numeroMap,Carte o, JFrame f, boolean modifMap){
-            if (!modifMap){
-            f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            f.setLocationByPlatform(true);
-            f.setLocation(10, 10);
-            f.setContentPane(o.getUI(numeroMap));
-            JComponent contentPane = (JComponent) f.getContentPane();
-            contentPane.setBackground(new Color(245, 247, 250));
-            f.setResizable(true);
-            f.pack();
-            f.setVisible(true);
-            }
-            else {
-                f.setContentPane(o.getUI(numeroMap));
-                f.revalidate();
-            }
-    }
     /**
-     * Méthode principale pour tester la classe Map.
-     * 
-     * @param args Les arguments de la ligne de commande (non utilisés ici).
+     * Méthode principale pour tester la classe Map
      */
     public static void main(String[] args) {
-        //boolean isOver = false;
         Runnable r = () -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            Carte o = new Carte(1);
+            Carte o = new Carte();
             JFrame f = new JFrame(o.getClass().getSimpleName());
-            creationMap(numeroMap,o,f,false);
-            Timer timer = new Timer(100, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (numeroMap != numeroActuel) {
-                        System.out.print(numeroMap);
-                        System.out.print(numeroActuel);
-
-                        numeroActuel = numeroMap;
-                        Carte n= new Carte(numeroMap);
-                        creationMap(numeroMap, n, f, true);
-                    }
-                }
-            });
-            timer.start();
+            f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            f.setLocationByPlatform(true);
+            f.setContentPane(o.getUI());
+            f.setResizable(false);
+            f.pack();
+            f.setVisible(true);
         };
-
         SwingUtilities.invokeLater(r);
     }
-    
 }

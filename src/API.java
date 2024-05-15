@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +35,7 @@ public class API extends UI{
     private static int nombreTotalStationCarburants = 0;
     private static int nombreTotalStations0Carbs =0;
     private static ArrayList<Integer> nombreTotalStationsCabrs = new ArrayList<>();
+    private static final String API_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
 
     
 
@@ -73,7 +73,8 @@ public class API extends UI{
         API.totalCountStations = totalCountStations;
     }
 
-    private static final String API_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
+
+    //METHODES
 
     public static void retrieveFuelDataByLocation(Map<String, List<String>> criteria) {
         try {
@@ -92,16 +93,33 @@ public class API extends UI{
                 }
                 reader.close();
 
-                // Vérifier si les prix moyens sont demandés
-                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")) {
-                // Analyser la réponse JSON
-                String jsonString = response.toString();
+                
 
-                // Récupérer les prix moyens des carburants sélectionnés
-                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")) {
+                // Vérifier si les prix moyens sont demandés et s'il y a un seul département sélectionné
+                List<String> departements = new ArrayList<>(criteria.get("departement"));
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen") && criteria.get("departement").size() == 1) {
+                    // Analyser la réponse JSON
+                    String jsonString = response.toString();
                     extractAndPrintAveragePrices(jsonString, criteria);
+                } else {
+                    // Itérer sur chaque département sélectionné
+                    for (String departement : departements) {
+                        departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
+                        // Créer une copie des critères avec un seul département
+                        Map<String, List<String>> singleDepartementCriteria = new HashMap<>();
+                        // Copier les autres clés et valeurs de criteria
+                        for (Map.Entry<String, List<String>> entry : criteria.entrySet()) {
+                            if (!entry.getKey().equals("departement")) {
+                                singleDepartementCriteria.put(entry.getKey(), entry.getValue());
+                            }
+                        }
+                        singleDepartementCriteria.put("departement", Collections.singletonList(departement));
+                        retrieveFuelDataByLocation(singleDepartementCriteria);
+                    }
                 }
-            }
+        
+
+
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median")) {
                     String jsonString = response.toString();
@@ -280,9 +298,10 @@ public class API extends UI{
                     if (result.has(key)) {
                         // Extraire et arrondir le prix moyen du carburant spécifié
                         double avgPrice = extractAndRoundPrice(result, key);
-                        getAveragePrices().add(avgPrice);
+                        averagePrices.add(avgPrice);
                         // Afficher le prix moyen du carburant
                         System.out.println("Prix moyen de " + carburant + " : " + avgPrice);
+                        System.out.println(getAveragePrices());
                     } else {
                         System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
                     }

@@ -340,24 +340,71 @@ public class UI implements ActionListener {
                 }
                 int nbCarburants = choix_carburants.size();
                 int nbDepartements = selectedDepartementNames.size();
+                int nbRegions = selectedRegionNames.size();
 
 
                 if (API.getAveragePrices().size() > 0){
-                    htmlContentFiltres.append("<h4>Prix moyens :</h4>");
-                    htmlContentFiltres.append("<ul>");
 
-                    // Boucle sur les départements
-                    for (int i = 0; i < nbDepartements; i++) {
-                        String departement = selectedDepartementNames.get(i);
-                        htmlContentFiltres.append("<li>").append("Département : ").append(departement).append("</li>");
+                    if (nbRegions > 0) {
+                        htmlContentFiltres.append("<h4>Prix moyens :</h4>");
                         htmlContentFiltres.append("<ul>");
 
-                        // Boucle sur les carburants
-                        for (int j = 0; j < nbCarburants; j++) {
-                            String carburant = choix_carburants.get(j);
-                            double prixMoyen = averagePrices.get(i * nbCarburants + j);
-                            htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
-                                    .append(" - Prix moyen : ").append(prixMoyen).append("€</li>");
+                        // Boucle sur les régions
+                        for (int i = 0; i < nbRegions; i++) {
+                            String region = selectedRegionNames.get(i);
+                            htmlContentFiltres.append("<li>").append("Région : ").append(region).append("</li>");
+                            htmlContentFiltres.append("<ul>");
+
+                            // Boucle sur les carburants
+                            for (int j = 0; j < nbCarburants; j++) {
+                                String carburant = choix_carburants.get(j);
+                                // Trouver l'index correspondant dans la liste des prix moyens
+                                int index = i * nbCarburants + j;
+                                // Vérifier si l'index est valide pour éviter les dépassements d'index
+                                if (index < API.getAveragePrices().size()) {
+                                    double prixMoyen = API.getAveragePrices().get(index);
+                                    htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                            .append(" - Prix moyen : ").append(prixMoyen).append("€</li>");
+                                } else {
+                                    htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                            .append(" - Prix moyen : Non disponible</li>");
+                                }
+                            }
+
+                            htmlContentFiltres.append("</ul>");
+                        }
+
+                        htmlContentFiltres.append("</ul>");
+                    }
+
+                    if (nbDepartements > 0) {
+                        htmlContentFiltres.append("<h4>Prix moyens :</h4>");
+                        htmlContentFiltres.append("<ul>");
+
+                        // Boucle sur les départements
+                        for (int i = 0; i < nbDepartements; i++) {
+                            String departement = selectedDepartementNames.get(i);
+                            htmlContentFiltres.append("<li>").append("Département : ").append(departement)
+                                    .append("</li>");
+                            htmlContentFiltres.append("<ul>");
+
+                            // Boucle sur les carburants
+                            for (int j = 0; j < nbCarburants; j++) {
+                                String carburant = choix_carburants.get(j);
+                                // Trouver l'index correspondant dans la liste des prix moyens
+                                int index = i * nbCarburants + j;
+                                // Vérifier si l'index est valide pour éviter les dépassements d'index
+                                if (index < API.getAveragePrices().size()) {
+                                    double prixMoyen = API.getAveragePrices().get(index);
+                                    htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                            .append(" - Prix moyen : ").append(prixMoyen).append("€</li>");
+                                } else {
+                                    htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                            .append(" - Prix moyen : Non disponible</li>");
+                                }
+                            }
+
+                            htmlContentFiltres.append("</ul>");
                         }
 
                         htmlContentFiltres.append("</ul>");

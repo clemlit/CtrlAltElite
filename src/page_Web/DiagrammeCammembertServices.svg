@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg"><g>
-<path d="M450.0 250.0L450,150A100.0,100.0 0 0 1 515,174Z" fill="Blue" stroke="black"/>
-<path d="M450.0 250.0L515,174A100.0,100.0 0 1 1 450,150Z" fill="Red" stroke="black"/>
+<path d="M450.0 250.0L450,150A100.0,100.0 0 0 1 498,162Z" fill="Blue" stroke="black"/>
+<path d="M450.0 250.0L498,162A100.0,100.0 0 1 1 450,150Z" fill="Red" stroke="black"/>
 </g>
 <text x="450.0" y="370.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black"> </text>
 <rect x="120.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />

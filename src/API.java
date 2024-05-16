@@ -93,30 +93,58 @@ public class API extends UI{
                 }
                 reader.close();
 
-                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen") && criteria.get("departement").size() == 1) {
-                    // Analyser la réponse JSON
-                    String jsonString = response.toString();
-                    extractAndPrintAveragePrices(jsonString, criteria);
-                }
-                else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
-                        && criteria.get("departement").size() > 1) {
-                            
-                    // Itérer sur chaque département sélectionné
-                    List<String> departements = new ArrayList<>(criteria.get("departement"));
-                    for (String departement : departements) {
-                        departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
-                        // Créer une copie des critères avec un seul département
-                        Map<String, List<String>> singleDepartementCriteria = new HashMap<>();
-                        // Copier les autres clés et valeurs de criteria
-                        for (Map.Entry<String, List<String>> entry : criteria.entrySet()) {
-                            if (!entry.getKey().equals("departement")) {
-                                singleDepartementCriteria.put(entry.getKey(), entry.getValue());
+                if (criteria.containsKey("departement")){
+                    if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
+                            && criteria.get("departement").size() == 1) {
+                        // Analyser la réponse JSON
+                        String jsonString = response.toString();
+                        extractAndPrintAveragePrices(jsonString, criteria);
+                    } else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
+                            && criteria.get("departement").size() > 1) {
+                        // Itérer sur chaque département sélectionné
+                        List<String> departements = new ArrayList<>(criteria.get("departement"));
+                        for (String departement : departements) {
+                            departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
+                            // Créer une copie des critères avec un seul département
+                            Map<String, List<String>> singleDepartementCriteria = new HashMap<>();
+                            // Copier les autres clés et valeurs de criteria
+                            for (Map.Entry<String, List<String>> entry : criteria.entrySet()) {
+                                if (!entry.getKey().equals("departement")) {
+                                    singleDepartementCriteria.put(entry.getKey(), entry.getValue());
+                                }
                             }
+                            singleDepartementCriteria.put("departement", Collections.singletonList(departement));
+                            retrieveFuelDataByLocation(singleDepartementCriteria);
                         }
-                        singleDepartementCriteria.put("departement", Collections.singletonList(departement));
-                        retrieveFuelDataByLocation(singleDepartementCriteria);
                     }
                 }
+
+                if (criteria.containsKey("region")){
+                    if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
+                            && criteria.get("region").size() == 1) {
+                        // Analyser la réponse JSON
+                        String jsonString = response.toString();
+                        extractAndPrintAveragePrices(jsonString, criteria);
+                    } else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
+                            && criteria.get("region").size() > 1) {
+                        // Itérer sur chaque département sélectionné
+                        List<String> regions = new ArrayList<>(criteria.get("region"));
+                        for (String region : regions) {
+                            region = region.trim(); // Supprimer les espaces en début et fin de chaîne
+                            // Créer une copie des critères avec un seul département
+                            Map<String, List<String>> singleRegionCriteria = new HashMap<>();
+                            // Copier les autres clés et valeurs de criteria
+                            for (Map.Entry<String, List<String>> entry : criteria.entrySet()) {
+                                if (!entry.getKey().equals("departement")) {
+                                    singleRegionCriteria.put(entry.getKey(), entry.getValue());
+                                }
+                            }
+                            singleRegionCriteria.put("region", Collections.singletonList(region));
+                            retrieveFuelDataByLocation(singleRegionCriteria);
+                        }
+                    }
+                }
+
         
 
 
@@ -353,7 +381,7 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
     double price = jsonObject.getDouble(key);
     
     // Arrondir à deux chiffres après la virgule
-    price = Math.round(price * 1000.0) / 1000.0;
+    price = Math.round(price * 100.0) / 100.0;
     
     return price;
 }

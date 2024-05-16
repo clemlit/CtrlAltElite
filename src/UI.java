@@ -57,12 +57,14 @@ public class UI implements ActionListener {
         JFrame f = new JFrame("ma fenetre");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.getContentPane().setBackground(new Color(223, 226, 232));
-        
+        f.setMinimumSize(new Dimension(1600, 800));
 
         panelFiltres = new JPanel();
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
         panelFiltres.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
         panelFiltres.setBackground(new Color(245, 247, 250));
+        panelFiltres.setPreferredSize(new Dimension(500, f.getHeight() - 100));
+
 
         JPanel mapPanel = new JPanel();
         mapPanel.setLayout(new BorderLayout());
@@ -149,7 +151,7 @@ public class UI implements ActionListener {
         comboOptions.setPreferredSize(new Dimension(250, 40));
 
         JLabel labeltitre1 = new JLabel("<html><b><h1>FILTRES</h1></b></html>");
-        labeltitre1.setBorder(BorderFactory.createEmptyBorder(10, 120, 100, 10));
+        labeltitre1.setBorder(BorderFactory.createEmptyBorder(10, 120, 50, 10));
         JLabel labelFiltres = new JLabel("<html><b>Sélectionnez des filtres</b></html>");
         labelFiltres.setBorder(BorderFactory.createEmptyBorder(10, 95, 20, 10));
         JLabel labelRegions = new JLabel("<html><b>Sélectionnez des régions</b></html>");
@@ -161,7 +163,7 @@ public class UI implements ActionListener {
         JLabel labelOptions = new JLabel("<html><b>Sélectionnez des options</b></html>");
         labelOptions.setBorder(BorderFactory.createEmptyBorder(20, 91, 20, 10));
         JLabel empty = new JLabel("");
-        empty.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        empty.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
         // Pour l'alignement
         Box boxCombos = Box.createVerticalBox();
@@ -529,7 +531,7 @@ public class UI implements ActionListener {
                     writer.write("    padding: 32px;");
                     writer.write("    max-width: 500px;");
                     writer.write("    margin: auto;");
-                    writer.write("    margin-right: -150px;");
+                    writer.write("    margin-right: 150px;");
                     writer.write("    border: 1px solid #eee;");
                     writer.write("    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);");
                     writer.write("}");
@@ -539,7 +541,7 @@ public class UI implements ActionListener {
                     writer.write("    padding: 32px;");
                     writer.write("}");
                     writer.write("#graphiques h2 {");
-                    writer.write("    margin-left: 100px;");
+                    writer.write("    padding-right: 250px;");
                     writer.write("    text-align: center;");
                     writer.write("}");
                     writer.write("#graphiques iframe {");
@@ -587,13 +589,13 @@ public class UI implements ActionListener {
 
                     if (comboFiltres.getSelectedItems().contains("Nombre de stations qui proposent des services spécifiques")){
                         writer.write(
-                                "<iframe src=\"DiagrammeCammembertServices.svg\" width=\"800\" height=\"600\" sandbox></iframe>");
+                                "<iframe src=\"DiagrammeCammembertServices.svg\" width=\"1200\" height=\"600\" sandbox></iframe>");
                     }else if (comboFiltres.getSelectedItems()
                             .contains("Nombre de stations qui proposent chaque type de carburant")){
                                 writer.write(
-                                "<img src=\"DiagrammeCammembertCarburants.svg\" width=\"800\" height=\"600\"></iframe>");
+                                "<img src=\"DiagrammeCammembertCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
                                 writer.write(
-                                "<iframe src=\"DiagrammeCammembertAllCarburants.svg\" width=\"800\" height=\"600\"></iframe>");
+                                "<iframe src=\"DiagrammeCammembertAllCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
                             }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");

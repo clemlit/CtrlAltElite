@@ -28,6 +28,9 @@ public class UI implements ActionListener {
     private static List<Double> averagePrices = new ArrayList<>();
     private static List<Double> medianPrices = new ArrayList<>();
     private static List<Double> minPrices = new ArrayList<>();
+    protected static List<String> selectedRegionNames = new ArrayList<>();
+    protected static List<String> selectedDepartementNames = new ArrayList<>();
+    List<String> selectedCarburantNames = new ArrayList<>();
 
  
     public static void main(String argv[]) {
@@ -236,7 +239,6 @@ public class UI implements ActionListener {
                 }
 
                 List<Object> selectedRegions = comboRegion.getSelectedItems();
-                List<String> selectedRegionNames = new ArrayList<>();
                 for (Object region : selectedRegions) {
                     selectedRegionNames.add(region.toString());
                 }
@@ -252,7 +254,6 @@ public class UI implements ActionListener {
                 }
 
                 List<Object> selectedDepartements = comboDepart.getSelectedItems();
-                List<String> selectedDepartementNames = new ArrayList<>();
                 for (Object departement : selectedDepartements) {
                     String fullDepartementName = departement.toString();
                     String[] parts = fullDepartementName.split(" - ", 2); // Sépare la chaîne au premier " - "
@@ -274,7 +275,6 @@ public class UI implements ActionListener {
                 }
 
                 List<Object> selectedCarburants = comboCarbu.getSelectedItems();
-                List<String> selectedCarburantNames = new ArrayList<>();
                 for (Object carburant : selectedCarburants) {
                     selectedCarburantNames.add(carburant.toString());
                 }

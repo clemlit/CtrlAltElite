@@ -129,6 +129,9 @@ public class Faisceau implements IForme {
     public double hauteur() {
         double minY = Double.MAX_VALUE;
         double maxY = Double.MIN_VALUE;
+
+        // Trouver les coordonnées y les plus extrêmes parmi les centres supérieurs et
+        // inférieurs des barres
         for (Rectangle barre : barres) {
             double barreMinY = barre.centre().y() - barre.hauteur() / 2;
             double barreMaxY = barre.centre().y() + barre.hauteur() / 2;
@@ -139,7 +142,9 @@ public class Faisceau implements IForme {
                 maxY = barreMaxY;
             }
         }
-        return maxY - minY;
+
+        // Calculer la hauteur totale
+        return Math.abs(maxY - minY);
     }
 
     /**

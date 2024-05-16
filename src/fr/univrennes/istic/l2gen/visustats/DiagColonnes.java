@@ -193,47 +193,34 @@ public class DiagColonnes implements IDataVisualiseur {
     @Override
     public IDataVisualiseur agencer() {
 
-        if (faisceaux != null) {
-            int xOffset = 100;
-            for (int i = 0; i < faisceaux.size(); i++) {
-                Faisceau faisceau = faisceaux.get(i);
-                faisceau.deplacer(xOffset, 0);
-                Texte legende = LegendeTexte.get(i);
-                legende.deplacer(xOffset, 0);
-                xOffset += faisceau.largeur() + 50;
-            }
-            double testY = faisceaux.get(0).centre().y();
-            for (Faisceau faisceau : faisceaux) {
-                if (faisceau.centre().y() < testY) {
-                    testY = faisceau.centre().y();
-                }
-            }
-            int x_titre;
-            if (faisceaux.size() % 2 == 0) {
-                x_titre = 404 + (404 + 135 * faisceaux.size() - 404) / 2 - 35;
-            } else {
-                x_titre = 404 + (404 + 135 * faisceaux.size() - 404 - 50) / 2;
-            }
-            Texte texteTitre = new Texte(x_titre, 100, 20, getTitre());
-            this.legendeSVG.append(texteTitre.enSVG());
+        if (faisceaux != null && !faisceaux.isEmpty()) {
 
+            
+            // Origine du repère (coin inférieur gauche du premier faisceau)
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
-            double pointY1 = faisceaux.get(0).centre().y() + faisceaux.get(0).hauteur()/2-2;
-            double pointY2 = pointY1 - faisceaux.get(0).hauteur();
+            double pointY1 = faisceaux.get(0).centre().y() + faisceaux.get(0).hauteur() / 2;
+
+            // Trouver la coordonnée maximale sur l'axe des x
             double longeurMax = faisceaux.get(0).centre().x();
             for (Faisceau faisceau : faisceaux) {
                 if (faisceau.centre().x() > longeurMax) {
                     longeurMax = faisceau.centre().x();
                 }
             }
+            // Fin de l'axe des x
             double pointAbscisse = longeurMax + faisceaux.get(0).largeur() / 2;
+
+            // Placer l'axe des x
             Ligne axeAbcisse = new Ligne(pointX1, pointY1, pointAbscisse, pointY1);
             this.legendeSVG.append(axeAbcisse.enSVG());
+
+            // Placer l'axe des y (vers le bas, donc à la hauteur minimale des faisceaux)
+            double pointY2 = faisceaux.get(0).centre().y() - faisceaux.get(0).hauteur() / 2;
             Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY2);
             this.legendeSVG.append(axeOrdonee.enSVG());
 
+            // Ajouter des marques et des valeurs sur les axes
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
             double[] scaleValuesAxes = generateProportionalValues(pointY1, pointY2, 6);
             double[] scaleValuesValeurs = generateProportionalValues(0.0, xmax, 6);
 

@@ -586,20 +586,38 @@ public class API extends UI{
 
     }
 
-    private static void diagBarreAvgPrice() throws IOException{
-            int nbre = departements.size();
-            System.out.println(nbre);
-            System.out.println(departements);
-            DiagColonnes diagPrixMoyen = new DiagColonnes("Prix moyen en fonction de plusieurs departement", 2);
+    private static void diagBarreAvgPrice() throws IOException {
+        // Suppose que vous avez une liste de prix appelée "listePrix"
+        List<Double> listePrix = getAveragePrices();
+        int nbre = averagePrices.size();
 
-            diagPrixMoyen.ajouterDonnees("cvd", 1.94, 1.81);
+        // Créez le diagramme avec le titre approprié
+        DiagColonnes diagPrixMoyen = new DiagColonnes("Prix moyen en fonction de plusieurs departements", nbre);
+
+        // Construisez dynamiquement la liste des prix
+        double[] prixArray = new double[listePrix.size()];
+        for (int i = 0; i < listePrix.size(); i++) {
+            prixArray[i] = listePrix.get(i); // Ajoutez chaque prix à la liste des prix
+        }
+
+        // Appelez la méthode ajouterDonnees() avec la liste de prix construite
+        // dynamiquement
+        diagPrixMoyen.ajouterDonnees("", prixArray);
+
+        String[] departementArray = new String[selectedDepartementNames.size()];
+        for (int i = 0; i < selectedDepartementNames.size(); i++) {
+            String cleanedName = selectedDepartementNames.get(i)
+                    .replaceAll("[éè]", "e") // Remplace é et è par e
+                    .replaceAll("ô", "o"); // Remplace ô par o
+            departementArray[i] = cleanedName;
+        }
+        diagPrixMoyen.legender(departementArray);
+    
             
-
-            diagPrixMoyen.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
-            diagPrixMoyen.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
-            FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMoyen.svg");
-            writer01.write(diagPrixMoyen.agencer().enSVG());
-            writer01.close();
+        diagPrixMoyen.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
+        FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMoyen.svg");
+        writer01.write(diagPrixMoyen.agencer().enSVG());
+        writer01.close();
         }
 
     private static int countTotalStationsWithoutNotNull(String apiUrlWithoutNotNull) {

@@ -204,7 +204,7 @@ public class DiagColonnes implements IDataVisualiseur {
             }
             double testY = faisceaux.get(0).centre().y();
             for (Faisceau faisceau : faisceaux) {
-                if (faisceau.centre().y() > testY) {
+                if (faisceau.centre().y() < testY) {
                     testY = faisceau.centre().y();
                 }
             }
@@ -218,7 +218,7 @@ public class DiagColonnes implements IDataVisualiseur {
             this.legendeSVG.append(texteTitre.enSVG());
 
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
-            double pointY1 = faisceaux.get(0).centre().y() + faisceaux.get(0).hauteur() /2;
+            double pointY1 = faisceaux.get(0).centre().y() + faisceaux.get(0).hauteur()/2-2;
             double pointY2 = pointY1 - faisceaux.get(0).hauteur();
             double longeurMax = faisceaux.get(0).centre().x();
             for (Faisceau faisceau : faisceaux) {

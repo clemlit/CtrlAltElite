@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +10,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.imageio.ImageIO;
 
-// RAJOUTER SI LE POINT EST DANS REGION COLORER SINON NON
 /**
  * Cette classe représente une carte interactive affichée dans une interface
  * graphique Swing
@@ -19,10 +17,13 @@ import javax.imageio.ImageIO;
  */
 
 public class Carte {
-
+/* 
+ Code utilisé et modifié from:
+ https://stackoverflow.com/q/7218309/418556
+ */
     private JComponent ui = null;
     JLabel output = new JLabel();
-    public static final int SIZE = 750;
+    public static final int SIZE = 700;
     BufferedImage image;
     Area area;
     ArrayList<Shape> shapeList;
@@ -166,7 +167,6 @@ public class Carte {
         ui.setBorder(new EmptyBorder(4, 4, 4, 4));
         output.addMouseListener(new MouseClickListener());
         output.addMouseMotionListener(new MouseListen());
-        output.addMouseMotionListener(new MouseClickListener());
         ui.add(output);
         refresh();
     }
@@ -214,6 +214,27 @@ public class Carte {
         return new Area(gp);
     }
 
+    /**
+     * Vérifie si une couleur spécifique est incluse dans une autre avec une
+     * tolérance donnée.
+     * 
+     * @param target    La couleur cible à vérifier
+     * @param pixel     La couleur du pixel à comparer
+     * @param tolerance La tolérance pour la comparaison des couleurs
+     * @return true si la couleur cible est incluse dans la couleur du pixel avec la
+     *         tolérance spécifiée, sinon false
+     */
+    public static boolean isIncluded(Color target, Color pixel, int tolerance) {
+        int rT = target.getRed();
+        int gT = target.getGreen();
+        int bT = target.getBlue();
+        int rP = pixel.getRed();
+        int gP = pixel.getGreen();
+        int bP = pixel.getBlue();
+        return ((rP - tolerance <= rT) && (rT <= rP + tolerance)
+                && (gP - tolerance <= gT) && (gT <= gP + tolerance)
+                && (bP - tolerance <= bT) && (bT <= bP + tolerance));
+    }
     /**
      * Sépare la forme principale de la carte en régions distinctes
      * 
@@ -281,7 +302,7 @@ public class Carte {
 
     }
 
-    class MouseClickListener implements MouseMotionListener, MouseListener {
+    class MouseClickListener implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -322,41 +343,8 @@ public class Carte {
             // Code à exécuter lorsque la souris quitte la zone du composant
         }
 
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            // Code à exécuter lorsque la souris est déplacée en maintenant un bouton
-            // enfoncé
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-            // Code à exécuter lorsque la souris est déplacée sans maintenir de bouton
-            // enfoncé
-        }
-
     }
 
-    /**
-     * Vérifie si une couleur spécifique est incluse dans une autre avec une
-     * tolérance donnée.
-     * 
-     * @param target    La couleur cible à vérifier
-     * @param pixel     La couleur du pixel à comparer
-     * @param tolerance La tolérance pour la comparaison des couleurs
-     * @return true si la couleur cible est incluse dans la couleur du pixel avec la
-     *         tolérance spécifiée, sinon false
-     */
-    public static boolean isIncluded(Color target, Color pixel, int tolerance) {
-        int rT = target.getRed();
-        int gT = target.getGreen();
-        int bT = target.getBlue();
-        int rP = pixel.getRed();
-        int gP = pixel.getGreen();
-        int bP = pixel.getBlue();
-        return ((rP - tolerance <= rT) && (rT <= rP + tolerance)
-                && (gP - tolerance <= gT) && (gT <= gP + tolerance)
-                && (bP - tolerance <= bT) && (bT <= bP + tolerance));
-    }
 
     private void refresh() {
         output.setIcon(new ImageIcon(getImage()));

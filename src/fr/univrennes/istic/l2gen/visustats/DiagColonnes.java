@@ -1,5 +1,6 @@
 package fr.univrennes.istic.l2gen.visustats;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -217,7 +218,7 @@ public class DiagColonnes implements IDataVisualiseur {
             this.legendeSVG.append(texteTitre.enSVG());
 
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
-            double pointY1 = faisceaux.get(0).centre().y() + 10;
+            double pointY1 = faisceaux.get(0).centre().y() + faisceaux.get(0).hauteur() /2;
             double pointY2 = pointY1 - faisceaux.get(0).hauteur();
             double longeurMax = faisceaux.get(0).centre().x();
             for (Faisceau faisceau : faisceaux) {
@@ -231,12 +232,15 @@ public class DiagColonnes implements IDataVisualiseur {
             Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY2);
             this.legendeSVG.append(axeOrdonee.enSVG());
 
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
             double[] scaleValuesAxes = generateProportionalValues(pointY1, pointY2, 6);
             double[] scaleValuesValeurs = generateProportionalValues(0.0, xmax, 6);
 
             for (int i = 0; i < scaleValuesAxes.length; i++) {
                 double y = scaleValuesAxes[i];
-                Texte legende = new Texte(pointX1 - 20, y + 4, 10, String.valueOf((int) scaleValuesValeurs[i]));
+                String valeurFormatee = decimalFormat.format(scaleValuesValeurs[i]);
+                Texte legende = new Texte(pointX1 - 20, y + 4, 10, valeurFormatee);
                 Ligne segment = new Ligne(pointX1 - 3, y, pointX1 + 3, y);
                 this.legendeSVG.append(legende.enSVG());
                 this.legendeSVG.append(segment.enSVG());

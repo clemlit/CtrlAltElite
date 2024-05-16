@@ -29,7 +29,7 @@ public class UI implements ActionListener {
     private static List<Double> medianPrices = new ArrayList<>();
     private static List<Double> minPrices = new ArrayList<>();
 
-
+ 
     public static void main(String argv[]) {
         new UI();
     }
@@ -608,8 +608,8 @@ public class UI implements ActionListener {
             }
         });
         panelFiltres.add(boutonResultat);
-        String i ="0";
-        Carte map = new Carte(i);
+
+        Carte map = new Carte();
         mapPanel.add(map.getUI(), BorderLayout.CENTER);
 
 

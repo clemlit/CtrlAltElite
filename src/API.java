@@ -95,13 +95,18 @@ public class API extends UI{
 
                 
 
-                // Vérifier si les prix moyens sont demandés et s'il y a un seul département sélectionné
                 List<String> departements = new ArrayList<>(criteria.get("departement"));
+
+
+
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen") && criteria.get("departement").size() == 1) {
                     // Analyser la réponse JSON
                     String jsonString = response.toString();
                     extractAndPrintAveragePrices(jsonString, criteria);
-                } else {
+                } 
+                
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
+                        && criteria.get("departement").size() > 1) {
                     // Itérer sur chaque département sélectionné
                     for (String departement : departements) {
                         departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
@@ -121,11 +126,25 @@ public class API extends UI{
 
 
 
-                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median")) {
+                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median") && criteria.get("departement").size() == 1) {
                     String jsonString = response.toString();
                     // Extraire et arrondir les prix médians
                     extractAndPrintMedianPrices(jsonString, criteria);
-
+                }else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median") && criteria.get("departement").size() > 1){
+                    // Itérer sur chaque département sélectionné
+                    for (String departement : departements) {
+                        departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
+                        // Créer une copie des critères avec un seul département
+                        Map<String, List<String>> singleDepartementCriteria1 = new HashMap<>();
+                        // Copier les autres clés et valeurs de criteria
+                        for (Map.Entry<String, List<String>> entry : criteria.entrySet()) {
+                            if (!entry.getKey().equals("departement")) {
+                                singleDepartementCriteria1.put(entry.getKey(), entry.getValue());
+                            }
+                        }
+                        singleDepartementCriteria1.put("departement", Collections.singletonList(departement));
+                        retrieveFuelDataByLocation(singleDepartementCriteria1);
+                    }
                 }
 
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix minimum")) {
@@ -348,7 +367,7 @@ private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
                         // Extraire et arrondir le prix médian du carburant spécifié
                         double medianPrice = extractAndRoundPrice(result, key);
                         // Afficher le prix médian du carburant
-                        getMedianPrices().add(medianPrice);
+                        medianPrices.add(medianPrice);
                         System.out.println("Prix médian de " + carburant + " : " + medianPrice);
                     } else {
                         System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);

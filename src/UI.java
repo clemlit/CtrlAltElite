@@ -412,47 +412,99 @@ public class UI implements ActionListener {
 
                 }
 
-                if (API.getMedianPrices().size() > 0){
+                if (API.getMedianPrices().size() > 0) {
 
-                    htmlContentFiltres.append("<h4>Prix median :</h4>");
+                    htmlContentFiltres.append("<h4>Prix médian :</h4>");
                     htmlContentFiltres.append("<ul>");
 
-                    for (int i = 0; i < nbDepartements; i++) {
-                        String departement = selectedDepartementNames.get(i);
-                        htmlContentFiltres.append("<li>").append("Département : ").append(departement).append("</li>");
-                        htmlContentFiltres.append("<ul>");
+                    if (nbRegions > 0) {
+                        // Boucle sur les régions
+                        for (int i = 0; i < nbRegions; i++) {
+                            String region = selectedRegionNames.get(i);
+                            htmlContentFiltres.append("<li>").append("Région : ").append(region).append("</li>");
+                            htmlContentFiltres.append("<ul>");
 
-                        // Boucle sur les carburants
-                        for (int j = 0; j < nbCarburants; j++) {
-                            String carburant = choix_carburants.get(j);
-                            double prixMedian = medianPrices.get(i * nbCarburants + j);
-                            htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
-                                    .append(" - Prix median : ").append(prixMedian).append("€</li>");
+                            // Boucle sur les carburants
+                            for (int j = 0; j < nbCarburants; j++) {
+                                String carburant = choix_carburants.get(j);
+                                double prixMedian = medianPrices.get(i * nbCarburants + j);
+                                htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                        .append(" - Prix médian : ").append(prixMedian).append("€</li>");
+                            }
+
+                            htmlContentFiltres.append("</ul>");
                         }
-                        htmlContentFiltres.append("</ul>");
                     }
+
+                    if (nbDepartements > 0) {
+                        // Boucle sur les départements
+                        for (int i = 0; i < nbDepartements; i++) {
+                            String departement = selectedDepartementNames.get(i);
+                            htmlContentFiltres.append("<li>").append("Département : ").append(departement)
+                                    .append("</li>");
+                            htmlContentFiltres.append("<ul>");
+
+                            // Boucle sur les carburants
+                            for (int j = 0; j < nbCarburants; j++) {
+                                String carburant = choix_carburants.get(j);
+                                double prixMedian = medianPrices.get(i * nbCarburants + j);
+                                htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                        .append(" - Prix médian : ").append(prixMedian).append("€</li>");
+                            }
+
+                            htmlContentFiltres.append("</ul>");
+                        }
+                    }
+
+                    htmlContentFiltres.append("</ul>");
                 }
 
 
 
-                if (API.getMinPrices().size() > 0){
+                if (API.getMinPrices().size() > 0) {
                     htmlContentFiltres.append("<h4>Prix minimum :</h4>");
                     htmlContentFiltres.append("<ul>");
 
-                    for (int i = 0; i < nbDepartements; i++) {
-                        String departement = selectedDepartementNames.get(i);
-                        htmlContentFiltres.append("<li>").append("Département : ").append(departement).append("</li>");
-                        htmlContentFiltres.append("<ul>");
+                    if (nbRegions > 0) {
+                        // Boucle sur les régions
+                        for (int i = 0; i < nbRegions; i++) {
+                            String region = selectedRegionNames.get(i);
+                            htmlContentFiltres.append("<li>").append("Région : ").append(region).append("</li>");
+                            htmlContentFiltres.append("<ul>");
 
-                        // Boucle sur les carburants
-                        for (int j = 0; j < nbCarburants; j++) {
-                            String carburant = choix_carburants.get(j);
-                            double prixMin = minPrices.get(i * nbCarburants + j);
-                            htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
-                                    .append(" - Prix minimum : ").append(prixMin).append("€</li>");
+                            // Boucle sur les carburants
+                            for (int j = 0; j < nbCarburants; j++) {
+                                String carburant = choix_carburants.get(j);
+                                double prixMin = minPrices.get(i * nbCarburants + j);
+                                htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                        .append(" - Prix minimum : ").append(prixMin).append("€</li>");
+                            }
+
+                            htmlContentFiltres.append("</ul>");
                         }
-                        htmlContentFiltres.append("</ul>");
                     }
+
+                    if (nbDepartements > 0) {
+                        // Boucle sur les départements
+                        for (int i = 0; i < nbDepartements; i++) {
+                            String departement = selectedDepartementNames.get(i);
+                            htmlContentFiltres.append("<li>").append("Département : ").append(departement)
+                                    .append("</li>");
+                            htmlContentFiltres.append("<ul>");
+
+                            // Boucle sur les carburants
+                            for (int j = 0; j < nbCarburants; j++) {
+                                String carburant = choix_carburants.get(j);
+                                double prixMin = minPrices.get(i * nbCarburants + j);
+                                htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                        .append(" - Prix minimum : ").append(prixMin).append("€</li>");
+                            }
+
+                            htmlContentFiltres.append("</ul>");
+                        }
+                    }
+
+                    htmlContentFiltres.append("</ul>");
                 }
 
                 // Écrire les données dans un fichier HTML

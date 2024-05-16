@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.FileWriter;
 
 import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
+import fr.univrennes.istic.l2gen.visustats.DiagColonnes;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,6 +35,7 @@ public class API extends UI{
     private static int nombreTotalStations = 0;
     private static int nombreTotalStationCarburants = 0;
     private static int nombreTotalStations0Carbs =0;
+    private static List<String> departements = new ArrayList<String>();
     private static ArrayList<Integer> nombreTotalStationsCabrs = new ArrayList<>();
     private static final String API_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
 
@@ -103,7 +105,7 @@ public class API extends UI{
                     } else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
                             && criteria.get("departement").size() > 1) {
                         // Itérer sur chaque département sélectionné
-                        List<String> departements = new ArrayList<>(criteria.get("departement"));
+                        departements = new ArrayList<>(criteria.get("departement"));
                         for (String departement : departements) {
                             departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
                             // Créer une copie des critères avec un seul département
@@ -126,7 +128,7 @@ public class API extends UI{
                     } else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median")
                             && criteria.get("departement").size() > 1) {
                         // Itérer sur chaque département sélectionné
-                        List<String> departements = new ArrayList<>(criteria.get("departement"));
+                        departements = new ArrayList<>(criteria.get("departement"));
                         for (String departement : departements) {
                             departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
                             // Créer une copie des critères avec un seul département
@@ -148,7 +150,7 @@ public class API extends UI{
                         extractAndPrintMinPrices(jsonString, criteria);
                     } else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix minimum")
                             && criteria.get("departement").size() > 1) {
-                        List<String> departements = new ArrayList<>(criteria.get("departement"));
+                        departements = new ArrayList<>(criteria.get("departement"));
                         // Itérer sur chaque département sélectionné
                         for (String departement : departements) {
                             departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
@@ -582,6 +584,22 @@ public class API extends UI{
         writer0.close();
 
     }
+
+    private static void diagBarreAvgPrice() throws IOException{
+            int nbre = departements.size();
+            System.out.println(nbre);
+            System.out.println(departements);
+            DiagColonnes diagPrixMoyen = new DiagColonnes("Prix moyen en fonction de plusieurs departement", 2);
+
+            diagPrixMoyen.ajouterDonnees("cvd", 1.94, 1.81);
+            
+
+            diagPrixMoyen.legender("Afrique", "Amerique", "Asie", "Europe", "Oceanie");
+            diagPrixMoyen.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
+            FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMoyen.svg");
+            writer01.write(diagPrixMoyen.agencer().enSVG());
+            writer01.close();
+        }
 
     private static int countTotalStationsWithoutNotNull(String apiUrlWithoutNotNull) {
         try {

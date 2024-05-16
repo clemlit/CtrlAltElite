@@ -388,18 +388,27 @@ public class UI implements ActionListener {
                     }
                 }
 
-                
 
 
+                if (API.getMinPrices().size() > 0){
+                    htmlContentFiltres.append("<h4>Prix minimum :</h4>");
+                    htmlContentFiltres.append("<ul>");
 
-                htmlContentFiltres.append("<h4>Prix minimum :</h4>");
-                htmlContentFiltres.append("<ul>");
-                for (int i = 0; i < minPrices.size(); i++) {
-                    htmlContentFiltres.append("<li>").append(choix_carburants.get(i)).append(" : ")
-                            .append(minPrices.get(i)).append("€</li>");
+                    for (int i = 0; i < nbDepartements; i++) {
+                        String departement = selectedDepartementNames.get(i);
+                        htmlContentFiltres.append("<li>").append("Département : ").append(departement).append("</li>");
+                        htmlContentFiltres.append("<ul>");
+
+                        // Boucle sur les carburants
+                        for (int j = 0; j < nbCarburants; j++) {
+                            String carburant = choix_carburants.get(j);
+                            double prixMin = minPrices.get(i * nbCarburants + j);
+                            htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                    .append(" - Prix minimum : ").append(prixMin).append("€</li>");
+                        }
+                        htmlContentFiltres.append("</ul>");
+                    }
                 }
-                htmlContentFiltres.append("</ul>");
-                
 
                 // Écrire les données dans un fichier HTML
                 try {

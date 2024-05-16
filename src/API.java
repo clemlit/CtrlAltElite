@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import java.io.FileWriter;
 
 import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
-import fr.univrennes.istic.l2gen.visustats.DiagColonnes;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -78,6 +77,13 @@ public class API extends UI{
 
     //METHODES
 
+
+    /**
+     * Récupère les données sur le carburant en fonction des critères de
+     * localisation spécifiés.
+     *
+     * @param criteria les critères de sélection basés sur la localisation
+     */
     public static void retrieveFuelDataByLocation(Map<String, List<String>> criteria) {
         try {
             String apiUrl = buildApiUrl(criteria);
@@ -266,7 +272,13 @@ public class API extends UI{
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Construit l'URL de l'API en fonction des critères spécifiés
+     *
+     * @param criteria les critères de sélection
+     * @return l'URL de l'API construite
+     */
     private static String buildApiUrl(Map<String, List<String>> criteria) {
         StringBuilder apiUrlBuilder = new StringBuilder(API_URL);
 
@@ -387,93 +399,120 @@ public class API extends UI{
         return apiUrlBuilder.toString();
     }
 
+    /**
+     * Extrait et imprime les prix moyens des carburants spécifiés à partir d'une
+     * chaîne JSON donnée
+     *
+     * @param jsonString la chaîne JSON contenant les données des prix moyens
+     * @param criteria   les critères de sélection des carburants
+     */
     private static void extractAndPrintAveragePrices(String jsonString, Map<String, List<String>> criteria) {
-    try {
-        // Convertir la réponse JSON en un objet JSON
-        JSONObject jsonObject = new JSONObject(jsonString);
-        
-        // Obtenir la liste des résultats
-        JSONArray results = jsonObject.getJSONArray("results");
-        
-        // Vérifier s'il y a des résultats
-        if (results.length() > 0) {
-            JSONObject result = results.getJSONObject(0); // Prendre le premier résultat
-            
-            // Vérifier les carburants sélectionnés par l'utilisateur
-            List<String> selectedCarburants = criteria.get("carburant");
-            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
-                for (String carburant : selectedCarburants) {
-                    String key = "avg(" + carburant.trim().toLowerCase() + "_prix)";
-                    if (result.has(key)) {
-                        // Extraire et arrondir le prix moyen du carburant spécifié
-                        double avgPrice = extractAndRoundPrice(result, key);
-                        averagePrices.add(avgPrice);
-                        // Afficher le prix moyen du carburant
-                        System.out.println("Prix moyen de " + carburant + " : " + avgPrice);
-                        System.out.println(getAveragePrices());
-                    } else {
-                        System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+        try {
+            // Convertit la réponse JSON en un objet JSON
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            // Obtient la liste des résultats
+            JSONArray results = jsonObject.getJSONArray("results");
+
+            // Vérifie s'il y a des résultats
+            if (results.length() > 0) {
+                JSONObject result = results.getJSONObject(0); // Prend le premier résultat
+
+                // Vérifie les carburants sélectionnés par l'utilisateur
+                List<String> selectedCarburants = criteria.get("carburant");
+                if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                    for (String carburant : selectedCarburants) {
+                        String key = "avg(" + carburant.trim().toLowerCase() + "_prix)";
+                        if (result.has(key)) {
+                            // Extrait et arrondit le prix moyen du carburant spécifié
+                            double avgPrice = extractAndRoundPrice(result, key);
+                            averagePrices.add(avgPrice);
+                            // Affiche le prix moyen du carburant
+                            System.out.println("Prix moyen de " + carburant + " : " + avgPrice);
+                        } else {
+                            System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                        }
                     }
+                } else {
+                    System.out.println("Aucun carburant spécifié.");
                 }
             } else {
-                System.out.println("Aucun carburant spécifié.");
+                System.out.println("Aucun résultat trouvé.");
             }
-        } else {
-            System.out.println("Aucun résultat trouvé.");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-    } catch (JSONException e) {
-        e.printStackTrace();
     }
-}
 
+    /**
+     * Extrait et arrondit un prix à deux chiffres après la virgule à partir d'un
+     * objet JSON donné
+     *
+     * @param jsonObject l'objet JSON contenant le prix
+     * @param key        la clé associée au prix dans l'objet JSON
+     * @return le prix extrait et arrondi à deux chiffres après la virgule
+     */
     private static double extractAndRoundPrice(JSONObject jsonObject, String key) {
-    // Extraire la valeur associée à la clé spécifiée
-    double price = jsonObject.getDouble(key);
-    
-    // Arrondir à deux chiffres après la virgule
-    price = Math.round(price * 100.0) / 100.0;
-    
-    return price;
-}
+        // Extrait la valeur associée à la clé spécifiée
+        double price = jsonObject.getDouble(key);
 
+        // Arrondit à deux chiffres après la virgule
+        price = Math.round(price * 100.0) / 100.0;
+        return price;
+    }
+
+    /**
+     * Extrait et imprime les prix médians des carburants spécifiés à partir d'une
+     * chaîne JSON donnée.
+     *
+     * @param jsonString la chaîne JSON contenant les données des prix médians
+     * @param criteria   les critères de sélection des carburants
+     */
     private static void extractAndPrintMedianPrices(String jsonString, Map<String, List<String>> criteria) {
-    try {
-        // Convertir la réponse JSON en un objet JSON
-        JSONObject jsonObject = new JSONObject(jsonString);
+        try {
+            // Convertit la réponse JSON en un objet JSON
+            JSONObject jsonObject = new JSONObject(jsonString);
 
-        // Obtenir la liste des résultats
-        JSONArray results = jsonObject.getJSONArray("results");
+            // Obtient la liste des résultats
+            JSONArray results = jsonObject.getJSONArray("results");
 
-        // Vérifier s'il y a des résultats
-        if (results.length() > 0) {
-            JSONObject result = results.getJSONObject(0); // Prendre le premier résultat
+            // Vérifie s'il y a des résultats
+            if (results.length() > 0) {
+                JSONObject result = results.getJSONObject(0); // Prend le premier résultat
 
-            // Vérifier les carburants sélectionnés par l'utilisateur
-            List<String> selectedCarburants = criteria.get("carburant");
-            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
-                for (String carburant : selectedCarburants) {
-                    String key = "median(" + carburant.trim().toLowerCase() + "_prix)";
-                    if (result.has(key)) {
-                        // Extraire et arrondir le prix médian du carburant spécifié
-                        double medianPrice = extractAndRoundPrice(result, key);
-                        // Afficher le prix médian du carburant
-                        medianPrices.add(medianPrice);
-                        System.out.println("Prix médian de " + carburant + " : " + medianPrice);
-                    } else {
-                        System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                // Vérifie les carburants sélectionnés par l'utilisateur
+                List<String> selectedCarburants = criteria.get("carburant");
+                if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                    for (String carburant : selectedCarburants) {
+                        String key = "median(" + carburant.trim().toLowerCase() + "_prix)";
+                        if (result.has(key)) {
+                            // Extrait et arrondit le prix médian du carburant spécifié
+                            double medianPrice = extractAndRoundPrice(result, key);
+                            medianPrices.add(medianPrice);
+                            // Affiche le prix médian du carburant
+                            System.out.println("Prix médian de " + carburant + " : " + medianPrice);
+                        } else {
+                            System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                        }
                     }
+                } else {
+                    System.out.println("Aucun carburant spécifié.");
                 }
             } else {
-                System.out.println("Aucun carburant spécifié.");
+                System.out.println("Aucun résultat trouvé.");
             }
-        } else {
-            System.out.println("Aucun résultat trouvé.");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-    } catch (JSONException e) {
-        e.printStackTrace();
-    }
-}
+    } 
 
+    /**
+     * Extrait et affiche les prix minimums des carburants spécifiés à partir d'une
+     * chaîne JSON donnée
+     *
+     * @param jsonString la chaîne JSON contenant les données des stations
+     * @param criteria   les critères de sélection des données
+     */
     private static void extractAndPrintMinPrices(String jsonString, Map<String, List<String>> criteria) {
     try {
         // Convertir la réponse JSON en un objet JSON
@@ -509,11 +548,17 @@ public class API extends UI{
         }
     } catch (JSONException e) {
         e.printStackTrace();
+        }
     }
-}
 
+    /**
+     * Compte le nombre total de stations à partir d'une chaîne JSON donnée
+     *
+     * @param jsonString la chaîne JSON contenant les données des stations
+     * @return le nombre total de stations extrait de la chaîne JSON
+     */
     private static int countTotalStations(String jsonString) {
-    // Convertir la réponse JSON en un objet JSON
+    // Converti la réponse JSON en un objet JSON
     JSONObject jsonObject = new JSONObject(jsonString);
     
     // Extraire la valeur du champ "total_count"
@@ -523,7 +568,14 @@ public class API extends UI{
 
     return totalCount;
 }
-
+    
+    /**
+     * Crée un diagramme camembert représentant le nombre de stations ayant tous les
+     * services
+     *
+     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
+     *                     création du diagramme
+     */
     private static void camembertService() throws IOException {
         int sum = nombreTotalStations - nombreTotalStationServices;
         DiagCamemberts camembertsSer = new DiagCamemberts("Nombre de stations ayant un service", 2);
@@ -537,13 +589,20 @@ public class API extends UI{
 
     }
 
+    /**
+     * Crée un diagramme camembert représentant le nombre de stations ayant tous les
+     * carburants
+     *
+     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
+     *                     création du diagramme
+     */
     private static void camembertCarburants() throws IOException {
         int diff = nombreTotalStations0Carbs - nombreTotalStationCarburants;
         System.out.println(diff + " " + nombreTotalStationCarburants); 
         if (diff != 0 && nombreTotalStationCarburants !=0){
             DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 2);
                 camembertsCarburants.ajouterDonnees(" ", nombreTotalStationCarburants, diff);
-                camembertsCarburants.legender("Stations ayant tous les carburants ", "Station n'ayant pas tous les carburants");
+                camembertsCarburants.legender("Stations n'ayant pas tous les carburants ", "Station ayant tous les carburants");
                 camembertsCarburants.colorier("Green", "Orange");
                 String chemin = "src/page_Web/DiagrammeCammembertCarburants.svg";
                 FileWriter writer0 = new FileWriter(chemin);
@@ -552,33 +611,38 @@ public class API extends UI{
         }
     }
 
+    /**
+     * Crée un diagramme camembert représentant le nombre de stations ayant tous les
+     * carburants
+     *
+     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
+     *                     création du diagramme
+     */
     private static void camembertAllCarburants() throws IOException {
     
         DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 6);
 
-        // Convertissez la liste en tableau d'entiers pour les données
+        // Convertie la liste en tableau d'entiers pour les données
         int[] donnees = nombreTotalStationsCabrs.stream().mapToInt(Integer::intValue).toArray();
 
-        // Convertissez les valeurs entières en doubles
+        // Convertie les valeurs entières en doubles
         double[] donneesDoubles = new double[donnees.length];
         for (int i = 0; i < donnees.length; i++) {
             donneesDoubles[i] = (double) donnees[i];
             System.out.println(donneesDoubles   [i]);
         }
 
-        // Ajoutez les données à votre objet DiagCamemberts
+        // Ajoute les données à objet DiagCamemberts
         camembertsCarburants.ajouterDonnees("Stations avec n carburants", donneesDoubles);
 
-        // Définissez les légendes pour les sections
+        // Définie les légendes pour les sections
         camembertsCarburants.legender("1c", "2c", "3c", "4c", "5c", "6c");
         // Gazole", "Gazole + SP95", "Gazole + SP95 + SP98", "Gazole + SP95 + SP98 +
         // E10", "Gazole + SP95 + SP98 + E10 + E85", "Gazole + SP95 + SP98 + E10 + E85 +
         // GPLc
 
-        // Définissez les couleurs pour les sections
+        // Définie les couleurs pour les sections
         camembertsCarburants.colorier("Green", "Orange", "Blue", "Red", "Yellow", "Purple");
-
-        // Enregistrez le diagramme dans un fichier
         String chemin = "src/page_Web/DiagrammeCammembertAllCarburants.svg";
         FileWriter writer0 = new FileWriter(chemin);
         writer0.write(camembertsCarburants.agencer().enSVG());
@@ -587,39 +651,15 @@ public class API extends UI{
     }
 
     private static void diagBarreAvgPrice() throws IOException {
-        // Suppose que vous avez une liste de prix appelée "listePrix"
-        List<Double> listePrix = getAveragePrices();
-        int nbre = averagePrices.size();
-
-        // Créez le diagramme avec le titre approprié
-        DiagColonnes diagPrixMoyen = new DiagColonnes("Prix moyen en fonction de plusieurs departements", nbre);
-
-        // Construisez dynamiquement la liste des prix
-        double[] prixArray = new double[listePrix.size()];
-        for (int i = 0; i < listePrix.size(); i++) {
-            prixArray[i] = listePrix.get(i); // Ajoutez chaque prix à la liste des prix
-        }
-
-        // Appelez la méthode ajouterDonnees() avec la liste de prix construite
-        // dynamiquement
-        diagPrixMoyen.ajouterDonnees("", prixArray);
-
-        String[] departementArray = new String[selectedDepartementNames.size()];
-        for (int i = 0; i < selectedDepartementNames.size(); i++) {
-            String cleanedName = selectedDepartementNames.get(i)
-                    .replaceAll("[éè]", "e") // Remplace é et è par e
-                    .replaceAll("ô", "o"); // Remplace ô par o
-            departementArray[i] = cleanedName;
-        }
-        diagPrixMoyen.legender(departementArray);
     
-            
-        diagPrixMoyen.colorier("Blue", "Green", "Red", "Yellow", "Maroon");
-        FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMoyen.svg");
-        writer01.write(diagPrixMoyen.agencer().enSVG());
-        writer01.close();
         }
-
+    
+    /**
+     * Compte le nombre total de stations sans valeurs nulles à partir de l'URL de l'API donnée
+     *
+     * @param apiUrlWithoutNotNull l'URL de l'API sans valeurs nulles
+     * @return le nombre total de stations sans valeurs nulles
+     */
     private static int countTotalStationsWithoutNotNull(String apiUrlWithoutNotNull) {
         try {
             URL url = new URL(apiUrlWithoutNotNull);

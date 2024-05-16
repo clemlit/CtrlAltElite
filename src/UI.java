@@ -30,7 +30,7 @@ public class UI implements ActionListener {
     private static List<Double> minPrices = new ArrayList<>();
     protected static List<String> selectedRegionNames = new ArrayList<>();
     protected static List<String> selectedDepartementNames = new ArrayList<>();
-    List<String> selectedCarburantNames = new ArrayList<>();
+    protected List<String> selectedCarburantNames = new ArrayList<>();
 
  
     public static void main(String argv[]) {

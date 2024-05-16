@@ -27,12 +27,13 @@ public class Carte {
     Area area;
     ArrayList<Shape> shapeList;
     HashMap<Integer, String> regionMap;
+    public static String num_departement = "0";
 
     /**
      * Constructeur par défaut de la classe Map
      * Initialise l'interface utilisateur et charge l'image de la carte
      */
-    public Carte() {
+    public Carte(String num_dep) {
         try {
             initRegionMap(); // Initialise the region map
             initUI();
@@ -292,6 +293,9 @@ public class Carte {
                 if (s.contains(x, y)) {
                     if (regionMap.containsKey(i)) {
                         System.out.println(regionMap.get(i));
+                        num_departement=regionMap.get(i);
+                        System.out.println(num_departement);
+                        
                     }
                 }
                 i++;
@@ -407,7 +411,7 @@ public class Carte {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            Carte o = new Carte();
+            Carte o = new Carte(num_departement);
             JFrame f = new JFrame(o.getClass().getSimpleName());
             f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             f.setLocationByPlatform(true);

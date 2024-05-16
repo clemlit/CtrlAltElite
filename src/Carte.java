@@ -157,7 +157,7 @@ public class Carte {
         if (ui != null) {
             return;
         }
-        String filePath = "l2gengr5_ctrlaltelite\\lib\\carte_france.jpg";
+        String filePath = "lib\\carte_france.jpg";
         File file = new File(filePath);
         BufferedImage image = ImageIO.read(file);
         area = getOutline(Color.WHITE, image, 12);

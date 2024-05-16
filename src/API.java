@@ -118,6 +118,7 @@ public class API extends UI{
                             }
                             singleDepartementCriteria.put("departement", Collections.singletonList(departement));
                             retrieveFuelDataByLocation(singleDepartementCriteria);
+                            diagBarreAvgPrice();
                         }
                     }
 

@@ -609,8 +609,8 @@ public class UI implements ActionListener {
         });
         panelFiltres.add(boutonResultat);
 
-        //Carte map = new Carte();
-        //mapPanel.add(map.getUI(), BorderLayout.CENTER);
+        Carte map = new Carte();
+        mapPanel.add(map.getUI(), BorderLayout.CENTER);
 
 
     }

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg"><g>
+<rect x="362.5" y="114.51977401129945" width="47.5" height="195.48022598870054" fill="Blue" stroke="black" />
+<rect x="415.0" y="110.0" width="47.5" height="200.0" fill="Green" stroke="black" />
+</g>
+<text x="412.0" y="247.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black"></text>
+<rect x="269.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="294" y="355">Bouches-du-Rhone </text><rect x="459.0" y="345.0" width="20.0" height="10.0" fill="White" stroke="black" />
+<text x="484" y="355">Alpes-Maritimes </text><rect x="269.0" y="345.0" width="20.0" height="10.0" fill="Blue" stroke="black" />
+<rect x="459.0" y="345.0" width="20.0" height="10.0" fill="Green" stroke="black" />
+<text x="446.0" y="100.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Prix moyen en fonction de plusieurs departements</text>
+<polyline points="362.5 310.2598870056497 462.5 310.2598870056497 " fill="White" stroke="black" />
+<polyline points="362.5 310.2598870056497 362.5 110.25988700564972 " fill="White" stroke="black" />
+<text x="342.5" y="314.2598870056497" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">0</text>
+<polyline points="359.5 310.2598870056497 365.5 310.2598870056497 " fill="White" stroke="black" />
+<text x="342.5" y="274.2598870056497" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">0,35</text>
+<polyline points="359.5 270.2598870056497 365.5 270.2598870056497 " fill="White" stroke="black" />
+<text x="342.5" y="234.25988700564972" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">0,71</text>
+<polyline points="359.5 230.25988700564972 365.5 230.25988700564972 " fill="White" stroke="black" />
+<text x="342.5" y="194.25988700564972" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">1,06</text>
+<polyline points="359.5 190.25988700564972 365.5 190.25988700564972 " fill="White" stroke="black" />
+<text x="342.5" y="154.25988700564972" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">1,42</text>
+<polyline points="359.5 150.25988700564972 365.5 150.25988700564972 " fill="White" stroke="black" />
+<text x="342.5" y="114.25988700564972" font-size="10.0" text-anchor="middle" fill="Black" stroke="Black">1,77</text>
+<polyline points="359.5 110.25988700564972 365.5 110.25988700564972 " fill="White" stroke="black" />
+</svg>

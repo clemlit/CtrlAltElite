@@ -290,10 +290,8 @@ public class UI implements ActionListener {
                     htmlContentAucunCarburant.append("<p>").append("Aucun carburant sélectionné").append("</p>");
                 }
 
-                System.out.println(API.getAveragePrices());
 
                 if (comboFiltres.getSelectedItems().contains("Prix moyen")) {
-                    System.out.println(API.getAveragePrices());
                     List<String> prixMoyenOption = new ArrayList<>();
                     prixMoyenOption.add("Prix moyen");
                     criteria.put("filtre", prixMoyenOption);
@@ -512,8 +510,8 @@ public class UI implements ActionListener {
         });
         panelFiltres.add(boutonResultat);
 
-        Carte map = new Carte();
-        mapPanel.add(map.getUI(), BorderLayout.CENTER);
+        //Carte map = new Carte();
+        //mapPanel.add(map.getUI(), BorderLayout.CENTER);
 
 
     }

@@ -93,19 +93,16 @@ public class API extends UI{
                 }
                 reader.close();
 
-                
-
-                List<String> departements = new ArrayList<>(criteria.get("departement"));
-
-
-
                 if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen") && criteria.get("departement").size() == 1) {
                     // Analyser la réponse JSON
                     String jsonString = response.toString();
                     extractAndPrintAveragePrices(jsonString, criteria);
-                } else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
+                }
+                else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
                         && criteria.get("departement").size() > 1) {
+                            
                     // Itérer sur chaque département sélectionné
+                    List<String> departements = new ArrayList<>(criteria.get("departement"));
                     for (String departement : departements) {
                         departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
                         // Créer une copie des critères avec un seul département
@@ -129,6 +126,7 @@ public class API extends UI{
                     extractAndPrintMedianPrices(jsonString, criteria);
                 }else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix median") && criteria.get("departement").size() > 1){
                     // Itérer sur chaque département sélectionné
+                    List<String> departements = new ArrayList<>(criteria.get("departement"));
                     for (String departement : departements) {
                         departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne
                         // Créer une copie des critères avec un seul département
@@ -149,6 +147,7 @@ public class API extends UI{
                     extractAndPrintMinPrices(jsonString, criteria);
                 } else if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix minimum")
                         && criteria.get("departement").size() >1){
+                            List<String> departements = new ArrayList<>(criteria.get("departement"));
                             // Itérer sur chaque département sélectionné
                     for (String departement : departements) {
                         departement = departement.trim(); // Supprimer les espaces en début et fin de chaîne

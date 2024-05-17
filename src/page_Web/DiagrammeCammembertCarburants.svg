@@ -1,11 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg"><g>
-<path d="M450.0 250.0L450,150A100.0,100.0 0 0 1 455,150Z" fill="Green" stroke="black"/>
-<path d="M450.0 250.0L455,150A100.0,100.0 0 1 1 450,150Z" fill="Orange" stroke="black"/>
+<path d="M450.0 250.0L450,150A100.0,100.0 0 0 1 457,150Z" fill="Green" stroke="black"/>
+<path d="M450.0 250.0L457,150A100.0,100.0 0 1 1 450,150Z" fill="Orange" stroke="black"/>
 </g>
 <text x="450.0" y="370.0" font-size="15.0" text-anchor="middle" fill="Black" stroke="Black"> </text>
 <rect x="60.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
 <text x="85" y="505">Stations ayant tous les carburants </text><rect x="430.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
 <text x="455" y="505">Station n'ayant pas tous les carburants</text><rect x="60.0" y="495.0" width="20.0" height="10.0" fill="Green" stroke="black" />
 <rect x="430.0" y="495.0" width="20.0" height="10.0" fill="Orange" stroke="black" />
-<text x="656.0" y="50.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Nombre de stations ayant tous les carburants</text>
 </svg>

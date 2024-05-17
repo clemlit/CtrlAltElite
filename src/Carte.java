@@ -364,13 +364,13 @@ public class Carte {
             Point p = MouseInfo.getPointerInfo().getLocation();
             Point p1 = output.getLocationOnScreen();
             int x = p.x - p1.x;
-            int y = p.y - p1.y;
+            int y = p.y-100 - p1.y;
             Point pointOnImage = new Point(x, y);
             int i = 0;
             for (Shape shape : shapeList) {
                 if (shape.contains(pointOnImage)
                         && ((i < 175 && i != 129 && i != 149 && i != 56 && i != 70 && i != 102) || i == 181)) {
-                    g.setColor(Color.GREEN.darker());
+                    g.setColor(Color.BLUE);
                     g.fill(shape);
                     i++;
                     break;

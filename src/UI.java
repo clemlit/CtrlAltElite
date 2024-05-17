@@ -69,7 +69,7 @@ public class UI implements ActionListener {
         JFrame f = new JFrame("ma fenetre");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.getContentPane().setBackground(new Color(223, 226, 232));
-        f.setMinimumSize(new Dimension(900, 400));
+        f.setMinimumSize(new Dimension(1600, 800));
 
         panelFiltres = new JPanel();
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
@@ -87,7 +87,7 @@ public class UI implements ActionListener {
         JPanel panelBanniere = new JPanel();
         panelBanniere.setBackground(new Color(255, 255, 255));
         panelBanniere.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
-        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 10));
+        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 100));
 
         // Crée les ComboBox multi-sélection pour les régions, départements et
         // carburants
@@ -360,7 +360,6 @@ public class UI implements ActionListener {
                 if (API.getAveragePrices().size() > 0){
 
                     if (nbRegions > 0) {
-                        htmlContentFiltres.append("<h4>Prix moyens :</h4>");
                         htmlContentFiltres.append("<ul>");
 
                         // Boucle sur les régions
@@ -392,7 +391,6 @@ public class UI implements ActionListener {
                     }
 
                     if (nbDepartements > 0) {
-                        htmlContentFiltres.append("<h4>Prix moyens :</h4>");
                         htmlContentFiltres.append("<ul>");
 
                         // Boucle sur les départements
@@ -428,7 +426,6 @@ public class UI implements ActionListener {
 
                 if (API.getMedianPrices().size() > 0) {
 
-                    htmlContentFiltres.append("<h4>Prix médian :</h4>");
                     htmlContentFiltres.append("<ul>");
 
                     if (nbRegions > 0) {
@@ -476,7 +473,6 @@ public class UI implements ActionListener {
 
 
                 if (API.getMinPrices().size() > 0) {
-                    htmlContentFiltres.append("<h4>Prix minimum :</h4>");
                     htmlContentFiltres.append("<ul>");
 
                     if (nbRegions > 0) {
@@ -502,7 +498,7 @@ public class UI implements ActionListener {
                         // Boucle sur les départements
                         for (int i = 0; i < nbDepartements; i++) {
                             String departement = selectedDepartementNames.get(i);
-                            htmlContentFiltres.append("<li>").append("Département : ").append(departement)
+                            htmlContentFiltres.append("<li  id ='opt'>").append("Département : ").append(departement)
                                     .append("</li>");
                             htmlContentFiltres.append("<ul>");
 
@@ -510,7 +506,7 @@ public class UI implements ActionListener {
                             for (int j = 0; j < nbCarburants; j++) {
                                 String carburant = choix_carburants.get(j);
                                 double prixMin = minPrices.get(i * nbCarburants + j);
-                                htmlContentFiltres.append("<li>").append("Carburant : ").append(carburant)
+                                htmlContentFiltres.append("<li  id ='opt'>").append("Carburant : ").append(carburant)
                                         .append(" - Prix minimum : ").append(prixMin).append("€</li>");
                             }
 
@@ -523,7 +519,7 @@ public class UI implements ActionListener {
 
                 // Écrire les données dans un fichier HTML
                 try {
-                    FileWriter writer = new FileWriter("src" + File.separator + "page_Web" + File.separator + "resultat.html");
+                    FileWriter writer = new FileWriter("src/page_Web/resultat.html");
                     writer.write("<html><head>");
                     writer.write("<meta charset='UTF-8'>");
                     writer.write("<title>Résultats</title>");
@@ -566,16 +562,8 @@ public class UI implements ActionListener {
                     writer.write("li {");
                     writer.write("color: #4F4F4F; padding-left: 16px; margin-top: 24px; position: relative; font-size: 16px; line-height: 20px; ");
                     writer.write("}");
-                    writer.write("li:before {");
-                    writer.write("content: ''; display: block; height: 42px; width: 42px; border-radius: 50%; border: 2px solid #ddd; position: absolute; top: -12px; left: -46px;");
-                    writer.write("}");
                     writer.write("strong { color:#000000; }");
-
-                    writer.write("#graphiques h4 {");
-                    writer.write("    padding-left: 200px;");
-                    writer.write("    text-align: center;");
-                    writer.write("    margin: auto;");
-                    writer.write("}");
+                    
 
 
                     writer.write("</style>");
@@ -622,7 +610,6 @@ public class UI implements ActionListener {
 
                 // Ouvrir le fichier HTML dans le navigateur
                 openWebPage("src" + File.separator + "page_Web" + File.separator + "resultat.html");
-
             }
         });
         panelFiltres.add(boutonResultat);

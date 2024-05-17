@@ -17,10 +17,10 @@ import javax.imageio.ImageIO;
  */
 
 public class Carte {
-/* 
- Code utilisé et modifié from:
- https://stackoverflow.com/q/7218309/418556
- */
+    /*
+     * Code utilisé et modifié from:
+     * https://stackoverflow.com/q/7218309/418556
+     */
     private JComponent ui = null;
     JLabel output = new JLabel();
     public static final int SIZE = 700;
@@ -28,13 +28,13 @@ public class Carte {
     Area area;
     ArrayList<Shape> shapeList;
     HashMap<Integer, String> regionMap;
-    public static String num_departement = "0";
+    public static String valeur_dep_reg = "0";
 
     /**
      * Constructeur par défaut de la classe Map
      * Initialise l'interface utilisateur et charge l'image de la carte
      */
-    public Carte(String num_dep) {
+    public Carte() {
         try {
             initRegionMap(); // Initialise the region map
             initUI();
@@ -149,6 +149,7 @@ public class Carte {
         regionMap.put(24, "Région parisienne");
         regionMap.put(26, "Région parisienne");
     }
+
     /**
      * Initialise l'interface utilisateur avec la carte chargée
      * 
@@ -180,10 +181,6 @@ public class Carte {
         ui.add(spacer, BorderLayout.EAST);
         
         refresh();
-    }
-
-    public void updateUI() {
-
     }
 
     /**
@@ -246,6 +243,7 @@ public class Carte {
                 && (gP - tolerance <= gT) && (gT <= gP + tolerance)
                 && (bP - tolerance <= bT) && (bT <= bP + tolerance));
     }
+
     /**
      * Sépare la forme principale de la carte en régions distinctes
      * 
@@ -320,18 +318,58 @@ public class Carte {
             int x = e.getX(); // Coordonnée X du clic de la souris
             int y = e.getY(); // Coordonnée Y du clic de la souris
             int i = 0;
-            for (Shape s : shapeList) {
+                for (Shape s : shapeList) {
+                    if (s.contains(x, y)) {
+                        if (regionMap.containsKey(i)) {
+                            if (SwingUtilities.isLeftMouseButton(e)){
+                            System.out.println(regionMap.get(i));
+                            valeur_dep_reg = regionMap.get(i);
+                        } 
+                            else if (SwingUtilities.isRightMouseButton(e)){
+                                if (regionMap.get(i).equals("56") || regionMap.get(i).equals("29") || regionMap.get(i).equals("22") || regionMap.get(i).equals("35")) {
+                                    valeur_dep_reg = "Bretagne ";
+                                } else if (regionMap.get(i).equals("75") || regionMap.get(i).equals("77") || regionMap.get(i).equals("78") || regionMap.get(i).equals("91") || regionMap.get(i).equals("92") || regionMap.get(i).equals("93") || regionMap.get(i).equals("94") || regionMap.get(i).equals("95")) {
+                                    valeur_dep_reg = "Île-de-France ";
+                                } else if (regionMap.get(i).equals("01") || regionMap.get(i).equals("03") || regionMap.get(i).equals("07") || regionMap.get(i).equals("15") || regionMap.get(i).equals("26") || regionMap.get(i).equals("38") || regionMap.get(i).equals("42") || regionMap.get(i).equals("43") || regionMap.get(i).equals("63") || regionMap.get(i).equals("69") || regionMap.get(i).equals("73") || regionMap.get(i).equals("74")) {
+                                    valeur_dep_reg = "Auvergne-Rhône-Alpes ";
+                                } else if (regionMap.get(i).equals("21") || regionMap.get(i).equals("58") || regionMap.get(i).equals("71") || regionMap.get(i).equals("89")) {
+                                    valeur_dep_reg = "Bourgogne-Franche-Comté ";
+                                } else if (regionMap.get(i).equals("25") || regionMap.get(i).equals("39") || regionMap.get(i).equals("70") || regionMap.get(i).equals("90")) {
+                                    valeur_dep_reg = "Bourgogne-Franche-Comté ";
+                                } else if (regionMap.get(i).equals("02") || regionMap.get(i).equals("60") || regionMap.get(i).equals("80")) {
+                                    valeur_dep_reg = "Hauts-de-France ";
+                                } else if (regionMap.get(i).equals("59") || regionMap.get(i).equals("62")) {
+                                    valeur_dep_reg = "Hauts-de-France ";
+                                } else if (regionMap.get(i).equals("08") || regionMap.get(i).equals("10") || regionMap.get(i).equals("51") || regionMap.get(i).equals("52")) {
+                                    valeur_dep_reg = "Grand Est ";
+                                } else if (regionMap.get(i).equals("54") || regionMap.get(i).equals("55") || regionMap.get(i).equals("57") || regionMap.get(i).equals("88")) {
+                                    valeur_dep_reg = "Grand Est ";
+                                } else if (regionMap.get(i).equals("67") || regionMap.get(i).equals("68")) {
+                                    valeur_dep_reg = "Grand Est ";
+                                } else if (regionMap.get(i).equals("14") || regionMap.get(i).equals("27") || regionMap.get(i).equals("50") || regionMap.get(i).equals("61") || regionMap.get(i).equals("76")) {
+                                    valeur_dep_reg = "Normandie ";
+                                } else if (regionMap.get(i).equals("16") || regionMap.get(i).equals("17") || regionMap.get(i).equals("19") || regionMap.get(i).equals("23") || regionMap.get(i).equals("24") || regionMap.get(i).equals("33") || regionMap.get(i).equals("40") || regionMap.get(i).equals("47") || regionMap.get(i).equals("64") || regionMap.get(i).equals("79") || regionMap.get(i).equals("86") || regionMap.get(i).equals("87")) {
+                                    valeur_dep_reg = "Nouvelle-Aquitaine ";
+                                } else if (regionMap.get(i).equals("09") || regionMap.get(i).equals("11") || regionMap.get(i).equals("12") || regionMap.get(i).equals("30") || regionMap.get(i).equals("31") || regionMap.get(i).equals("32") || regionMap.get(i).equals("34") || regionMap.get(i).equals("46") || regionMap.get(i).equals("48") || regionMap.get(i).equals("65") || regionMap.get(i).equals("66") || regionMap.get(i).equals("81") || regionMap.get(i).equals("82")) {
+                                    valeur_dep_reg = "Occitanie ";
+                                } else if (regionMap.get(i).equals("18") || regionMap.get(i).equals("28") || regionMap.get(i).equals("36") || regionMap.get(i).equals("37") || regionMap.get(i).equals("41") || regionMap.get(i).equals("45")) {
+                                    valeur_dep_reg = "Centre-Val de Loire ";
+                                } else if (regionMap.get(i).equals("22") || regionMap.get(i).equals("29") || regionMap.get(i).equals("35") || regionMap.get(i).equals("56")) {
+                                    valeur_dep_reg = "Bretagne ";
+                                } else if (regionMap.get(i).equals("44") || regionMap.get(i).equals("49") || regionMap.get(i).equals("53") || regionMap.get(i).equals("72") || regionMap.get(i).equals("85")) {
+                                    valeur_dep_reg = "Pays de la Loire ";
+                                } else if (regionMap.get(i).equals("04") || regionMap.get(i).equals("05") || regionMap.get(i).equals("06") || regionMap.get(i).equals("13") || regionMap.get(i).equals("83") || regionMap.get(i).equals("84")) {
+                                    valeur_dep_reg = "Provence-Alpes-Côte d'Azur";
+                                } else if (regionMap.get(i).equals("2A") || regionMap.get(i).equals("2B")) {
+                                    valeur_dep_reg = "Corse ";
+                                }
+                            }
 
-                if (s.contains(x, y)) {
-                    if (regionMap.containsKey(i)) {
-                        System.out.println(regionMap.get(i));
-                        num_departement=regionMap.get(i);
-                        System.out.println(num_departement);
-                        
+                        }
                     }
+                    i++;
                 }
-                i++;
-            }
+            
         }
 
         @Override
@@ -355,7 +393,6 @@ public class Carte {
         }
 
     }
-
 
     private void refresh() {
         output.setIcon(new ImageIcon(getImage()));
@@ -400,7 +437,9 @@ public class Carte {
         return ui;
     }
 
-     
+    public String getvaleur_dep_reg() {
+        return valeur_dep_reg;
+    }
 
     /**
      * Méthode principale pour tester la classe Map
@@ -412,12 +451,12 @@ public class Carte {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            Carte o = new Carte(num_departement);
+            Carte o = new Carte();
             JFrame f = new JFrame(o.getClass().getSimpleName());
             f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             f.setLocationByPlatform(true);
             f.setContentPane(o.getUI());
-            f.setResizable(false);  
+            f.setResizable(false);
             f.pack();
             f.setVisible(true);
         };

@@ -33,6 +33,11 @@ public class API extends UI{
     private static int nombreTotalStationServices = 0;
     private static int nombreTotalStations = 0;
     private static int nombreTotalStationCarburants = 0;
+
+    public static void setNombreTotalStationCarburants(int nombreTotalStationCarburants) {
+        API.nombreTotalStationCarburants = nombreTotalStationCarburants;
+    }
+
     private static int nombreTotalStations0Carbs =0;
     private static List<String> departements = new ArrayList<String>();
     private static ArrayList<Integer> nombreTotalStationsCabrs = new ArrayList<>();
@@ -41,6 +46,14 @@ public class API extends UI{
     
 
     //SETTERS AND GETTERS
+
+    public static int getNombreTotalStationServices() {
+        return nombreTotalStationServices;
+    }
+
+    public static int getNombreTotalStationCarburants() {
+        return nombreTotalStationCarburants;
+    }
 
     public static List<Double> getAveragePrices() {
         return averagePrices;
@@ -602,7 +615,7 @@ public class API extends UI{
         if (diff != 0 && nombreTotalStationCarburants !=0){
             DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 2);
                 camembertsCarburants.ajouterDonnees(" ", nombreTotalStationCarburants, diff);
-                camembertsCarburants.legender("Stations n'ayant pas tous les carburants ", "Station ayant tous les carburants");
+                camembertsCarburants.legender("Stations ayant tous les carburants ", "Station n'ayant pas tous les carburants");
                 camembertsCarburants.colorier("Green", "Orange");
                 String chemin = "src/page_Web/DiagrammeCammembertCarburants.svg";
                 FileWriter writer0 = new FileWriter(chemin);
@@ -652,7 +665,7 @@ public class API extends UI{
 
     private static void diagBarreAvgPrice() throws IOException {
     
-        }
+    }
     
     /**
      * Compte le nombre total de stations sans valeurs nulles à partir de l'URL de l'API donnée

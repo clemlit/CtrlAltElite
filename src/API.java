@@ -12,6 +12,7 @@ import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -312,41 +313,49 @@ public class API extends UI{
             isNbreStationsServiceSelected = filtres.contains("Nombre de stations qui proposent des services spécifiques");
 
         }
-        if (isPrixSelected) {
-            apiUrlBuilder.append("select=");
-            List<String> selectedCarburants = criteria.get("carburant");
-            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
-                for (String carburant : selectedCarburants) {
-                    String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), StandardCharsets.UTF_8);
-                    apiUrlBuilder.append("avg(").append(encodedCarburant).append("_prix)%2C");
+        try {
+            if (isPrixSelected) {
+                apiUrlBuilder.append("select=");
+                List<String> selectedCarburants = criteria.get("carburant");
+                if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                    for (String carburant : selectedCarburants) {
+                        String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), "UTF-8");
+                        apiUrlBuilder.append("avg(").append(encodedCarburant).append("_prix)%2C");
+                    }
+                    // Supprime le dernier caractère ","
+                    apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
                 }
-                    // Supprime le dernier caractère ", "
-                apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
             }
+        
+            if (isMedianPrixSelected) {
+                apiUrlBuilder.append("select=");
+                List<String> selectedCarburants = criteria.get("carburant");
+                if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                    for (String carburant : selectedCarburants) {
+                        String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), "UTF-8");
+                        apiUrlBuilder.append("median(").append(encodedCarburant).append("_prix)%2C");
+                    }
+                    // Supprime le dernier caractère ","
+                    apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
+                }
+            }
+        
+            if (isMinPrixSelected) {
+                apiUrlBuilder.append("select=");
+                List<String> selectedCarburants = criteria.get("carburant");
+                if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                    for (String carburant : selectedCarburants) {
+                        String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), "UTF-8");
+                        apiUrlBuilder.append("min(").append(encodedCarburant).append("_prix)%2C");
+                    }
+                    // Supprime le dernier caractère ","
+                    apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
+                }
+            }
+        } catch (UnsupportedEncodingException e) {
+            // Gérer l'exception ici, par exemple en enregistrant un message d'erreur ou en lançant une exception runtime
+            e.printStackTrace(); // ou logger.error("Encoding not supported", e);
         }
-        if (isMedianPrixSelected){
-            apiUrlBuilder.append("select=");
-            List<String> selectedCarburants = criteria.get("carburant");
-            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
-                for (String carburant : selectedCarburants) {
-                    String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), StandardCharsets.UTF_8);
-                    apiUrlBuilder.append("median(").append(encodedCarburant).append("_prix)%2C");
-                }
-                // Supprime le dernier caractère ", "
-                apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
-            }
-        }if (isMinPrixSelected){
-            apiUrlBuilder.append("select=");
-            List<String> selectedCarburants = criteria.get("carburant");
-            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
-                for (String carburant : selectedCarburants) {
-                    String encodedCarburant = URLEncoder.encode(carburant.trim().toLowerCase(), StandardCharsets.UTF_8);
-                    apiUrlBuilder.append("min(").append(encodedCarburant).append("_prix)%2C");
-                }
-                // Supprime le dernier caractère ", "
-                apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
-            }
-        }     
 
         if (isNbreStationsCarburantSelected){
             apiUrlBuilder.append("select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22");
@@ -361,26 +370,29 @@ public class API extends UI{
             String type = entry.getKey();
             List<String> locations = entry.getValue();
 
-            // Supprimez les espaces inutiles en utilisant trim()
-            String encodedLocation = URLEncoder.encode(locations.get(0).trim(), StandardCharsets.UTF_8);
+            try {
+                // Supprimez les espaces inutiles en utilisant trim()
+                String encodedLocation = URLEncoder.encode(locations.get(0).trim(), "UTF-8");
 
-            // Traiter le type "carburant"
-            if (type.equals("carburant") && locations.size() > 0 && !isPrixSelected  && !isMinPrixSelected  && !isMedianPrixSelected) {
-                for (String location : locations) {
-                    encodedLocation = URLEncoder.encode(location.trim(), StandardCharsets.UTF_8);
-                    apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
+                // Traiter le type "carburant"
+                if (type.equals("carburant") && locations.size() > 0 && !isPrixSelected && !isMinPrixSelected && !isMedianPrixSelected) {
+                    for (String location : locations) {
+                        encodedLocation = URLEncoder.encode(location.trim(), "UTF-8");
+                        apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
+                    }
+                } else if (type.equals("option")) {
+                    for (String option : locations) {
+                        String encodedOption = URLEncoder.encode("\"" + option.trim() + "\"", "UTF-8");
+                        apiUrlBuilder.append("&refine=services_service%3A").append(encodedOption);
+                    }
+                } else if (!type.equals("filtre") && !type.equals("carburant")) {
+                    // Ajouter les autres critères de filtrage (ex: departement, region)
+                    String refineType = URLEncoder.encode(type.trim(), "UTF-8");
+                    apiUrlBuilder.append("&refine=").append(refineType).append("%3A%22").append(encodedLocation).append("%22");
                 }
-            } 
-            else if (type.equals("option")) {
-                for (String option : locations) {
-                    String encodedOption = URLEncoder.encode("\"" + option.trim() + "\"", StandardCharsets.UTF_8);
-                    apiUrlBuilder.append("&refine=services_service%3A").append(encodedOption);
-                }
-            } else if (!type.equals("filtre") && !type.equals("carburant")) {
-                // Ajouter les autres critères de filtrage (ex: departement, region)
-                String refineType = URLEncoder.encode(type.trim(), StandardCharsets.UTF_8);
-                apiUrlBuilder.append("&refine=").append(refineType).append("%3A%22").append(encodedLocation)
-                        .append("%22");
+            } catch (UnsupportedEncodingException e) {
+                // Gérer l'exception ici, par exemple en enregistrant un message d'erreur ou en lançant une exception runtime
+                e.printStackTrace(); // ou logger.error("Encoding not supported", e);
             }
         }
 
@@ -709,5 +721,3 @@ public class API extends UI{
         }
     }
 }
-
-

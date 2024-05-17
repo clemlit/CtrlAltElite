@@ -688,12 +688,6 @@ public class API extends UI {
 
     }
 
-    /**
-     * Crée un diagramme en barre
-     *
-     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
-     *                     création du diagramme
-     */
     private static void diagBarreAvgPriceDep() throws IOException {
         List<Double> listePrix = getAveragePrices();
         List<String> carburants = getSelectedCarburantNames();
@@ -761,12 +755,6 @@ public class API extends UI {
         writer01.close();
     }
 
-    /**
-     * Crée un diagramme en barre
-     *
-     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
-     *                     création du diagramme
-     */
     private static void diagBarreMedPriceDep() throws IOException {
         List<Double> listePrix = getMedianPrices();
         List<String> carburants = getSelectedCarburantNames();
@@ -833,12 +821,6 @@ public class API extends UI {
         writer01.close();
     }
 
-    /**
-     * Crée un diagramme en barre
-     *
-     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
-     *                     création du diagramme
-     */
     private static void diagBarreMinPriceDep() throws IOException {
         List<Double> listePrix = getMinPrices();
         List<String> carburants = getSelectedCarburantNames();
@@ -904,13 +886,8 @@ public class API extends UI {
         writer01.write(diagPrixMin.agencer().enSVG());
         writer01.close();
     }
+    
 
-    /**
-     * Crée un diagramme en barre
-     *
-     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
-     *                     création du diagramme
-     */
     private static void diagBarreAvgPriceReg() throws IOException {
         List<Double> listePrix = getAveragePrices();
         List<String> carburants = getSelectedCarburantNames();
@@ -978,12 +955,6 @@ public class API extends UI {
         writer01.close();
     }
 
-    /**
-     * Crée un diagramme en barre
-     *
-     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
-     *                     création du diagramme
-     */
     private static void diagBarreMedPriceReg() throws IOException {
         List<Double> listePrix = getMedianPrices();
         List<String> carburants = getSelectedCarburantNames();
@@ -1051,14 +1022,8 @@ public class API extends UI {
         writer01.close();
     }
 
-    /**
-     * Crée un diagramme en barre
-     *
-     * @throws IOException si une erreur d'entrée/sortie se produit lors de la
-     *                     création du diagramme
-     */
     private static void diagBarreMinPriceReg() throws IOException {
-        List<Double> listePrix = getMinPrices();
+        List<Double> listePrix = getMedianPrices();
         List<String> carburants = getSelectedCarburantNames();
         int nbre = listePrix.size() / carburants.size();
 
@@ -1119,10 +1084,11 @@ public class API extends UI {
         }
 
         diagPrixMoyen.colorier(coloriage);
-        FileWriter writer01 = new FileWriter("src/page_Web/DiagrammeBarresPrixMin.svg");
+        FileWriter writer01 = new FileWriter("src/page_Web/DiagrammeBarresPrixMinimum.svg");
         writer01.write(diagPrixMoyen.agencer().enSVG());
         writer01.close();
     }
+
 
     /**
      * Compte le nombre total de stations sans valeurs nulles à partir de l'URL de

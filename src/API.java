@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.FileWriter;
 
 import fr.univrennes.istic.l2gen.visustats.DiagCamemberts;
+import fr.univrennes.istic.l2gen.visustats.DiagColonnes;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,9 +23,9 @@ import java.net.URL;
  * récupérer les données au format JSON
  */
 
-public class API extends UI{
+public class API extends UI {
 
-    //ATTRIBUTS DE LA CLASSE 
+    // ATTRIBUTS DE LA CLASSE
 
     private static List<Double> averagePrices = new ArrayList<>();
     private static List<Double> medianPrices = new ArrayList<>();
@@ -43,9 +44,7 @@ public class API extends UI{
     private static ArrayList<Integer> nombreTotalStationsCabrs = new ArrayList<>();
     private static final String API_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";
 
-    
-
-    //SETTERS AND GETTERS
+    // SETTERS AND GETTERS
 
     public static int getNombreTotalStationServices() {
         return nombreTotalStationServices;
@@ -87,9 +86,7 @@ public class API extends UI{
         API.totalCountStations = totalCountStations;
     }
 
-
-    //METHODES
-
+    // METHODES
 
     /**
      * Récupère les données sur le carburant en fonction des critères de
@@ -114,7 +111,7 @@ public class API extends UI{
                 }
                 reader.close();
 
-                if (criteria.containsKey("departement")){
+                if (criteria.containsKey("departement")) {
 
                     if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
                             && criteria.get("departement").size() == 1) {
@@ -161,6 +158,7 @@ public class API extends UI{
                             }
                             singleDepartementCriteria1.put("departement", Collections.singletonList(departement));
                             retrieveFuelDataByLocation(singleDepartementCriteria1);
+                            diagBarreMedPrice();
                         }
                     }
 
@@ -184,11 +182,12 @@ public class API extends UI{
                             }
                             singleDepartementCriteria1.put("departement", Collections.singletonList(departement));
                             retrieveFuelDataByLocation(singleDepartementCriteria1);
+                            diagBarreMinPrice();
                         }
                     }
                 }
 
-                if (criteria.containsKey("region")){
+                if (criteria.containsKey("region")) {
 
                     if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Prix moyen")
                             && criteria.get("region").size() == 1) {
@@ -261,7 +260,8 @@ public class API extends UI{
                     }
                 }
 
-                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent chaque type de carburant")){
+                if (criteria.containsKey("filtre") && criteria.get("filtre")
+                        .contains("Nombre de stations qui proposent chaque type de carburant")) {
                     int totalCount = countTotalStations(response.toString());
                     System.out.println("Nombre total de stations ayant tous les carburants: " + totalCount);
                     nombreTotalStationCarburants = totalCount;
@@ -269,7 +269,8 @@ public class API extends UI{
                     camembertAllCarburants();
                 }
 
-                if (criteria.containsKey("filtre") && criteria.get("filtre").contains("Nombre de stations qui proposent des services spécifiques")){
+                if (criteria.containsKey("filtre") && criteria.get("filtre")
+                        .contains("Nombre de stations qui proposent des services spécifiques")) {
                     int totalCount = countTotalStations(response.toString());
                     nombreTotalStationServices = totalCount;
                     camembertService();
@@ -285,7 +286,7 @@ public class API extends UI{
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Construit l'URL de l'API en fonction des critères spécifiés
      *
@@ -302,14 +303,15 @@ public class API extends UI{
         boolean isNbreStationsCarburantSelected = false;
         boolean isNbreStationsServiceSelected = false;
 
-        
         if (criteria.containsKey("filtre")) {
             List<String> filtres = criteria.get("filtre");
             isPrixSelected = filtres.contains("Prix moyen");
             isMedianPrixSelected = filtres.contains("Prix median");
             isMinPrixSelected = filtres.contains("Prix minimum");
-            isNbreStationsCarburantSelected = filtres.contains("Nombre de stations qui proposent chaque type de carburant");
-            isNbreStationsServiceSelected = filtres.contains("Nombre de stations qui proposent des services spécifiques");
+            isNbreStationsCarburantSelected = filtres
+                    .contains("Nombre de stations qui proposent chaque type de carburant");
+            isNbreStationsServiceSelected = filtres
+                    .contains("Nombre de stations qui proposent des services spécifiques");
 
         }
         try {
@@ -325,7 +327,7 @@ public class API extends UI{
                     apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
                 }
             }
-        
+
             if (isMedianPrixSelected) {
                 apiUrlBuilder.append("select=");
                 List<String> selectedCarburants = criteria.get("carburant");
@@ -338,7 +340,7 @@ public class API extends UI{
                     apiUrlBuilder.delete(apiUrlBuilder.length() - 3, apiUrlBuilder.length());
                 }
             }
-        
+
             if (isMinPrixSelected) {
                 apiUrlBuilder.append("select=");
                 List<String> selectedCarburants = criteria.get("carburant");
@@ -352,15 +354,17 @@ public class API extends UI{
                 }
             }
         } catch (UnsupportedEncodingException e) {
-            // Gérer l'exception ici, par exemple en enregistrant un message d'erreur ou en lançant une exception runtime
+            // Gérer l'exception ici, par exemple en enregistrant un message d'erreur ou en
+            // lançant une exception runtime
             e.printStackTrace(); // ou logger.error("Encoding not supported", e);
         }
 
-        if (isNbreStationsCarburantSelected){
-            apiUrlBuilder.append("select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22");
+        if (isNbreStationsCarburantSelected) {
+            apiUrlBuilder.append(
+                    "select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22");
         }
 
-        if (isNbreStationsServiceSelected){
+        if (isNbreStationsServiceSelected) {
             apiUrlBuilder.append("where=services%20IS%20NOT%20NULL");
         }
 
@@ -374,10 +378,12 @@ public class API extends UI{
                 String encodedLocation = URLEncoder.encode(locations.get(0).trim(), "UTF-8");
 
                 // Traiter le type "carburant"
-                if (type.equals("carburant") && locations.size() > 0 && !isPrixSelected && !isMinPrixSelected && !isMedianPrixSelected) {
+                if (type.equals("carburant") && locations.size() > 0 && !isPrixSelected && !isMinPrixSelected
+                        && !isMedianPrixSelected) {
                     for (String location : locations) {
                         encodedLocation = URLEncoder.encode(location.trim(), "UTF-8");
-                        apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation).append("%22");
+                        apiUrlBuilder.append("&refine=carburants_disponibles%3A%22").append(encodedLocation)
+                                .append("%22");
                     }
                 } else if (type.equals("option")) {
                     for (String option : locations) {
@@ -387,16 +393,20 @@ public class API extends UI{
                 } else if (!type.equals("filtre") && !type.equals("carburant")) {
                     // Ajouter les autres critères de filtrage (ex: departement, region)
                     String refineType = URLEncoder.encode(type.trim(), "UTF-8");
-                    apiUrlBuilder.append("&refine=").append(refineType).append("%3A%22").append(encodedLocation).append("%22");
+                    apiUrlBuilder.append("&refine=").append(refineType).append("%3A%22").append(encodedLocation)
+                            .append("%22");
                 }
             } catch (UnsupportedEncodingException e) {
-                // Gérer l'exception ici, par exemple en enregistrant un message d'erreur ou en lançant une exception runtime
+                // Gérer l'exception ici, par exemple en enregistrant un message d'erreur ou en
+                // lançant une exception runtime
                 e.printStackTrace(); // ou logger.error("Encoding not supported", e);
             }
         }
 
-        if (isNbreStationsCarburantSelected){
-            String apiUrl0Carbs = apiUrlBuilder.toString().replace("select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22", "");
+        if (isNbreStationsCarburantSelected) {
+            String apiUrl0Carbs = apiUrlBuilder.toString().replace(
+                    "select=carburants_disponibles&refine=carburants_disponibles%3A%22Gazole%22&refine=carburants_disponibles%3A%22SP98%22&refine=carburants_disponibles%3A%22E10%22&refine=carburants_disponibles%3A%22E85%22&refine=carburants_disponibles%3A%22GPLc%22&refine=carburants_disponibles%3A%22SP95%22",
+                    "");
             nombreTotalStations0Carbs = countTotalStationsWithoutNotNull(apiUrl0Carbs);
             System.out.println(nombreTotalStations0Carbs);
 
@@ -413,7 +423,7 @@ public class API extends UI{
             }
         }
 
-        if (isNbreStationsServiceSelected){
+        if (isNbreStationsServiceSelected) {
             // URL SANS LA CONDITION IS NOT NULL
             String apiUrlWithoutNotNull = apiUrlBuilder.toString().replace("where=services%20IS%20NOT%20NULL", "");
             // Compter le nombre total de stations sans la condition "IS NOT NULL"
@@ -528,7 +538,7 @@ public class API extends UI{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    } 
+    }
 
     /**
      * Extrait et affiche les prix minimums des carburants spécifiés à partir d'une
@@ -538,40 +548,40 @@ public class API extends UI{
      * @param criteria   les critères de sélection des données
      */
     private static void extractAndPrintMinPrices(String jsonString, Map<String, List<String>> criteria) {
-    try {
-        // Convertir la réponse JSON en un objet JSON
-        JSONObject jsonObject = new JSONObject(jsonString);
+        try {
+            // Convertir la réponse JSON en un objet JSON
+            JSONObject jsonObject = new JSONObject(jsonString);
 
-        // Obtenir la liste des résultats
-        JSONArray results = jsonObject.getJSONArray("results");
+            // Obtenir la liste des résultats
+            JSONArray results = jsonObject.getJSONArray("results");
 
-        // Vérifier s'il y a des résultats
-        if (results.length() > 0) {
-            JSONObject result = results.getJSONObject(0); // Prendre le premier résultat
+            // Vérifier s'il y a des résultats
+            if (results.length() > 0) {
+                JSONObject result = results.getJSONObject(0); // Prendre le premier résultat
 
-            // Vérifier les carburants sélectionnés par l'utilisateur
-            List<String> selectedCarburants = criteria.get("carburant");
-            if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
-                for (String carburant : selectedCarburants) {
-                    String key = "min(" + carburant.trim().toLowerCase() + "_prix)";
-                    if (result.has(key)) {
-                        // Extraire et arrondir le prix minimum du carburant spécifié
-                        double minPrice = extractAndRoundPrice(result, key);
-                        // Afficher le prix minimum du carburant
-                        minPrices.add(minPrice);
-                        System.out.println("Prix minimum de " + carburant + " : " + minPrice);
-                    } else {
-                        System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                // Vérifier les carburants sélectionnés par l'utilisateur
+                List<String> selectedCarburants = criteria.get("carburant");
+                if (selectedCarburants != null && !selectedCarburants.isEmpty()) {
+                    for (String carburant : selectedCarburants) {
+                        String key = "min(" + carburant.trim().toLowerCase() + "_prix)";
+                        if (result.has(key)) {
+                            // Extraire et arrondir le prix minimum du carburant spécifié
+                            double minPrice = extractAndRoundPrice(result, key);
+                            // Afficher le prix minimum du carburant
+                            minPrices.add(minPrice);
+                            System.out.println("Prix minimum de " + carburant + " : " + minPrice);
+                        } else {
+                            System.out.println("Aucun résultat trouvé pour le carburant : " + carburant);
+                        }
                     }
+                } else {
+                    System.out.println("Aucun carburant spécifié.");
                 }
             } else {
-                System.out.println("Aucun carburant spécifié.");
+                System.out.println("Aucun résultat trouvé.");
             }
-        } else {
-            System.out.println("Aucun résultat trouvé.");
-        }
-    } catch (JSONException e) {
-        e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -582,17 +592,17 @@ public class API extends UI{
      * @return le nombre total de stations extrait de la chaîne JSON
      */
     private static int countTotalStations(String jsonString) {
-    // Converti la réponse JSON en un objet JSON
-    JSONObject jsonObject = new JSONObject(jsonString);
-    
-    // Extraire la valeur du champ "total_count"
-    
-    int totalCount = jsonObject.getInt("total_count");
-    totalCountStations = totalCount;
+        // Converti la réponse JSON en un objet JSON
+        JSONObject jsonObject = new JSONObject(jsonString);
 
-    return totalCount;
-}
-    
+        // Extraire la valeur du champ "total_count"
+
+        int totalCount = jsonObject.getInt("total_count");
+        totalCountStations = totalCount;
+
+        return totalCount;
+    }
+
     /**
      * Crée un diagramme camembert représentant le nombre de stations ayant tous les
      * services
@@ -604,7 +614,7 @@ public class API extends UI{
         int sum = nombreTotalStations - nombreTotalStationServices;
         DiagCamemberts camembertsSer = new DiagCamemberts("Nombre de stations ayant un service", 2);
         camembertsSer.ajouterDonnees(" ", sum, nombreTotalStationServices);
-        camembertsSer.legender("Station n'ayant aucun service ","Station avec au moins un service");
+        camembertsSer.legender("Station n'ayant aucun service ", "Station avec au moins un service");
         camembertsSer.colorier("Blue", "Red");
         String chemin = "src/page_Web/DiagrammeCammembertServices.svg";
         FileWriter writer0 = new FileWriter(chemin);
@@ -622,16 +632,17 @@ public class API extends UI{
      */
     private static void camembertCarburants() throws IOException {
         int diff = nombreTotalStations0Carbs - nombreTotalStationCarburants;
-        System.out.println(diff + " " + nombreTotalStationCarburants); 
-        if (diff != 0 && nombreTotalStationCarburants !=0){
+        System.out.println(diff + " " + nombreTotalStationCarburants);
+        if (diff != 0 && nombreTotalStationCarburants != 0) {
             DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 2);
-                camembertsCarburants.ajouterDonnees(" ", nombreTotalStationCarburants, diff);
-                camembertsCarburants.legender("Stations ayant tous les carburants ", "Station n'ayant pas tous les carburants");
-                camembertsCarburants.colorier("Green", "Orange");
-                String chemin = "src/page_Web/DiagrammeCammembertCarburants.svg";
-                FileWriter writer0 = new FileWriter(chemin);
-                writer0.write(camembertsCarburants.agencer().enSVG());
-                writer0.close();
+            camembertsCarburants.ajouterDonnees(" ", nombreTotalStationCarburants, diff);
+            camembertsCarburants.legender("Stations ayant tous les carburants ",
+                    "Station n'ayant pas tous les carburants");
+            camembertsCarburants.colorier("Green", "Orange");
+            String chemin = "src/page_Web/DiagrammeCammembertCarburants.svg";
+            FileWriter writer0 = new FileWriter(chemin);
+            writer0.write(camembertsCarburants.agencer().enSVG());
+            writer0.close();
         }
     }
 
@@ -643,7 +654,7 @@ public class API extends UI{
      *                     création du diagramme
      */
     private static void camembertAllCarburants() throws IOException {
-    
+
         DiagCamemberts camembertsCarburants = new DiagCamemberts("Nombre de stations ayant tous les carburants", 6);
 
         // Convertie la liste en tableau d'entiers pour les données
@@ -653,7 +664,7 @@ public class API extends UI{
         double[] donneesDoubles = new double[donnees.length];
         for (int i = 0; i < donnees.length; i++) {
             donneesDoubles[i] = (double) donnees[i];
-            System.out.println(donneesDoubles   [i]);
+            System.out.println(donneesDoubles[i]);
         }
 
         // Ajoute les données à objet DiagCamemberts
@@ -675,11 +686,163 @@ public class API extends UI{
     }
 
     private static void diagBarreAvgPrice() throws IOException {
-    
+
+        List<Double> listePrix = getAveragePrices();
+        int nbre = averagePrices.size();
+
+        // Créez le diagramme avec le titre approprié
+        DiagColonnes diagPrixMoyen = new DiagColonnes("Prix moyen en fonction de plusieurs departements", nbre);
+
+        // Construisez dynamiquement la liste des prix
+        double[] prixArray = new double[listePrix.size()];
+        for (int i = 0; i < listePrix.size(); i++) {
+            prixArray[i] = listePrix.get(i); // Ajoutez chaque prix à la liste des prix
+        }
+
+        int maxIndex = 0;
+        for (int i = 0; i < prixArray.length; i++) {
+            if (prixArray[i] > prixArray[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+
+        double temp = prixArray[0];
+        prixArray[0] = prixArray[maxIndex];
+        prixArray[maxIndex] = temp;
+
+        // Appelez la méthode ajouterDonnees() avec la liste de prix construite
+        // dynamiquement
+        diagPrixMoyen.ajouterDonnees("", prixArray);
+
+        String[] departementArray = new String[selectedDepartementNames.size()];
+        for (int i = 0; i < selectedDepartementNames.size(); i++) {
+            String cleanedName = selectedDepartementNames.get(i)
+                    .replaceAll("[éè]", "e") // Remplace é et è par e
+                    .replaceAll("ô", "o"); // Remplace ô par o
+            departementArray[i] = cleanedName;
+        }
+        diagPrixMoyen.legender(departementArray);
+
+        String[] colors = { "Blue", "Green", "Red", "Orange", "Purple", "Yellow", "Cyan", "Magenta" };
+        String[] coloriage = new String[departementArray.length];
+
+        // Attribution cyclique des couleurs à chaque département
+        for (int i = 0; i < departementArray.length; i++) {
+            coloriage[i] = colors[i % colors.length];
+        }
+
+        diagPrixMoyen.colorier(coloriage);
+        FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMoyen.svg");
+        writer01.write(diagPrixMoyen.agencer().enSVG());
+        writer01.close();
     }
-    
+
+    private static void diagBarreMedPrice() throws IOException {
+        List<Double> listePrix = getMedianPrices();
+        int nbre = medianPrices.size();
+
+        // Créez le diagramme avec le titre approprié
+        DiagColonnes diagPrixMoyen = new DiagColonnes("Prix median en fonction de plusieurs departements", nbre);
+
+        // Construisez dynamiquement la liste des prix
+        double[] prixArray = new double[listePrix.size()];
+        for (int i = 0; i < listePrix.size(); i++) {
+            prixArray[i] = listePrix.get(i); // Ajoutez chaque prix à la liste des prix
+        }
+
+        int maxIndex = 0;
+        for (int i = 0; i < prixArray.length; i++) {
+            if (prixArray[i] > prixArray[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+
+        double temp = prixArray[0];
+        prixArray[0] = prixArray[maxIndex];
+        prixArray[maxIndex] = temp;
+
+        // Appelez la méthode ajouterDonnees() avec la liste de prix construite
+        // dynamiquement
+        diagPrixMoyen.ajouterDonnees("", prixArray);
+
+        String[] departementArray = new String[selectedDepartementNames.size()];
+        for (int i = 0; i < selectedDepartementNames.size(); i++) {
+            String cleanedName = selectedDepartementNames.get(i)
+                    .replaceAll("[éè]", "e") // Remplace é et è par e
+                    .replaceAll("ô", "o"); // Remplace ô par o
+            departementArray[i] = cleanedName;
+        }
+        diagPrixMoyen.legender(departementArray);
+
+        String[] colors = { "Blue", "Green", "Red", "Orange", "Purple", "Yellow", "Cyan", "Magenta" };
+        String[] coloriage = new String[departementArray.length];
+
+        // Attribution cyclique des couleurs à chaque département
+        for (int i = 0; i < departementArray.length; i++) {
+            coloriage[i] = colors[i % colors.length];
+        }
+
+        diagPrixMoyen.colorier(coloriage);
+        System.out.println("abcdsd");
+        FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMedian.svg");
+        writer01.write(diagPrixMoyen.agencer().enSVG());
+        writer01.close();
+    }
+
+    private static void diagBarreMinPrice() throws IOException {
+        List<Double> listePrix = getMinPrices();
+        int nbre = minPrices.size();
+
+        // Créez le diagramme avec le titre approprié
+        DiagColonnes diagPrixMoyen = new DiagColonnes("Prix minimum en fonction de plusieurs departements", nbre);
+
+        // Construisez dynamiquement la liste des prix
+        double[] prixArray = new double[listePrix.size()];
+        for (int i = 0; i < listePrix.size(); i++) {
+            prixArray[i] = listePrix.get(i); // Ajoutez chaque prix à la liste des prix
+        }
+
+        int maxIndex = 0;
+        for (int i = 0; i < prixArray.length; i++) {
+            if (prixArray[i] > prixArray[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+
+        double temp = prixArray[0];
+        prixArray[0] = prixArray[maxIndex];
+        prixArray[maxIndex] = temp;
+
+        // Appelez la méthode ajouterDonnees() avec la liste de prix construite
+        // dynamiquement
+        diagPrixMoyen.ajouterDonnees("", prixArray);
+
+        String[] departementArray = new String[selectedDepartementNames.size()];
+        for (int i = 0; i < selectedDepartementNames.size(); i++) {
+            String cleanedName = selectedDepartementNames.get(i)
+                    .replaceAll("[éè]", "e") // Remplace é et è par e
+                    .replaceAll("ô", "o"); // Remplace ô par o
+            departementArray[i] = cleanedName;
+        }
+        diagPrixMoyen.legender(departementArray);
+
+        String[] colors = { "Blue", "Green", "Red", "Orange", "Purple", "Yellow", "Cyan", "Magenta" };
+        String[] coloriage = new String[departementArray.length];
+
+        // Attribution cyclique des couleurs à chaque département
+        for (int i = 0; i < departementArray.length; i++) {
+            coloriage[i] = colors[i % colors.length];
+        }
+
+        diagPrixMoyen.colorier(coloriage);
+        FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMin.svg");
+        writer01.write(diagPrixMoyen.agencer().enSVG());
+        writer01.close();
+    }
+
     /**
-     * Compte le nombre total de stations sans valeurs nulles à partir de l'URL de l'API donnée
+     * Compte le nombre total de stations sans valeurs nulles à partir de l'URL de
+     * l'API donnée
      *
      * @param apiUrlWithoutNotNull l'URL de l'API sans valeurs nulles
      * @return le nombre total de stations sans valeurs nulles

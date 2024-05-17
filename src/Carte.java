@@ -389,6 +389,7 @@ public class Carte {
         return ui;
     }
 
+    
     /**
      * Méthode principale pour tester la classe Map
      */

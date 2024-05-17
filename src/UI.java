@@ -602,12 +602,15 @@ public class UI implements ActionListener {
                     if (comboFiltres.getSelectedItems().contains("Nombre de stations qui proposent des services spécifiques")){
                         writer.write(
                                 "<iframe src=\"DiagrammeCammembertServices.svg\" width=\"1200\" height=\"600\" sandbox></iframe>");
+                                htmlContentFiltres.append("<li>").append("Nombre de stations qui proposent des services spécifiques  : ").append(API.getNombreTotalStationServices());
+
                     }else if (comboFiltres.getSelectedItems()
                             .contains("Nombre de stations qui proposent chaque type de carburant")){
                                 writer.write(
-                                "<img src=\"DiagrammeCammembertCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
+                                "<iframe src=\"DiagrammeCammembertCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
                                 writer.write(
                                 "<iframe src=\"DiagrammeCammembertAllCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
+                                htmlContentFiltres.append("<li>").append("Nombre de stations qui proposent chaque type de carburant  : ").append(API.getNombreTotalStationCarburants());
                             }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");

@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import org.json.JSONArray;
@@ -39,7 +38,7 @@ public class API extends UI{
         API.nombreTotalStationCarburants = nombreTotalStationCarburants;
     }
 
-    private static int nombreTotalStations0Carbs =0;
+    private static int nombreTotalStations0Carbs = 0;
     private static List<String> departements = new ArrayList<String>();
     private static ArrayList<Integer> nombreTotalStationsCabrs = new ArrayList<>();
     private static final String API_URL = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?";

@@ -904,7 +904,7 @@ public class API extends UI {
         writer01.write(diagPrixMin.agencer().enSVG());
         writer01.close();
     }
-    
+
     /**
      * Crée un diagramme en barre
      *
@@ -1123,7 +1123,6 @@ public class API extends UI {
         writer01.write(diagPrixMoyen.agencer().enSVG());
         writer01.close();
     }
-
 
     /**
      * Compte le nombre total de stations sans valeurs nulles à partir de l'URL de

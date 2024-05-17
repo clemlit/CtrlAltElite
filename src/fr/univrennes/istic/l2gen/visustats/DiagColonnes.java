@@ -12,6 +12,8 @@ import fr.univrennes.istic.l2gen.geometrie.Texte;
 
 public class DiagColonnes implements IDataVisualiseur {
 
+    private boolean titreAjoute = false;
+
     private double xmax = 0.0;
 
     /**
@@ -108,16 +110,50 @@ public class DiagColonnes implements IDataVisualiseur {
         throw new UnsupportedOperationException("Unimplemented method 'redimensionner'");
     }
 
-    @Override
     public IForme deplacer(double dx, double dy) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deplacer'");
+        // Déplacer tous les faisceaux
+        for (Faisceau faisceau : faisceaux) {
+            faisceau.deplacer(dx, dy);
+        }
+
+        // Déplacer tous les textes de la légende
+        for (Texte texte : LegendeTexte) {
+            texte.deplacer(dx, dy);
+        }
+        return this;
     }
 
     @Override
     public IForme dupliquer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dupliquer'");
+        DiagColonnes clone = new DiagColonnes(this.titre, 0);
+
+        // Copier les faisceaux
+        for (Faisceau faisceau : this.faisceaux) {
+            Faisceau newFaisceau = (Faisceau) faisceau.dupliquer();
+            clone.faisceaux.add(newFaisceau);
+        }
+
+        // Copier les rectangles de légende
+        for (Rectangle rect : this.Rec) {
+            Rectangle newRect = (Rectangle) rect.dupliquer();
+            clone.Rec.add(newRect);
+        }
+
+        // Copier les textes de légende
+        for (Texte texte : this.LegendeTexte) {
+            Texte newTexte = (Texte) texte.dupliquer();
+            clone.LegendeTexte.add(newTexte);
+        }
+
+        // Copier d'autres propriétés si nécessaire
+        clone.xmax = this.xmax;
+        clone.legendeSVG = new StringBuilder(this.legendeSVG.toString());
+
+        // Déplacer le clone de dx, dy (ici 50, 50 par exemple, vous pouvez choisir une
+        // autre valeur)
+        clone.deplacer(50, 50);
+
+        return clone;
     }
 
     @Override
@@ -192,10 +228,7 @@ public class DiagColonnes implements IDataVisualiseur {
      */
     @Override
     public IDataVisualiseur agencer() {
-
         if (faisceaux != null && !faisceaux.isEmpty()) {
-
-            
             // Origine du repère (coin inférieur gauche du premier faisceau)
             double pointX1 = faisceaux.get(0).centre().x() - faisceaux.get(0).largeur() / 2;
             double pointY1 = faisceaux.get(0).centre().y() + faisceaux.get(0).hauteur() / 2;
@@ -216,8 +249,8 @@ public class DiagColonnes implements IDataVisualiseur {
 
             // Placer l'axe des y (vers le bas, donc à la hauteur minimale des faisceaux)
             double pointY2 = faisceaux.get(0).centre().y() - faisceaux.get(0).hauteur() / 2;
-            Ligne axeOrdonee = new Ligne(pointX1, pointY1, pointX1, pointY2);
-            this.legendeSVG.append(axeOrdonee.enSVG());
+            Ligne axeOrdonnee = new Ligne(pointX1, pointY1, pointX1, pointY2);
+            this.legendeSVG.append(axeOrdonnee.enSVG());
 
             // Ajouter des marques et des valeurs sur les axes
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -231,6 +264,13 @@ public class DiagColonnes implements IDataVisualiseur {
                 Ligne segment = new Ligne(pointX1 - 3, y, pointX1 + 3, y);
                 this.legendeSVG.append(legende.enSVG());
                 this.legendeSVG.append(segment.enSVG());
+            }
+            if (!titreAjoute) {
+                // Ajouter le texte du titre
+                Texte texteTitre = new Texte(pointX1 + 100, pointY1 - faisceaux.get(0).hauteur() - 50, 20, getTitre());
+                this.legendeSVG.append(texteTitre.enSVG());
+                // Marquer le titre comme ajouté
+                titreAjoute = true;
             }
         }
         return this;
@@ -250,7 +290,7 @@ public class DiagColonnes implements IDataVisualiseur {
         faisceaux.add(nvfaisceau);
 
         Texte texte = new Texte((int) nvfaisceau.centre().x(),
-                (int) (nvfaisceau.centre().y() - 85 + nvfaisceau.largeur() + 20), 15, donnees);
+                (int) (nvfaisceau.centre().y() - 2 * nvfaisceau.largeur() / 2 - 15), 15, donnees);
         LegendeTexte.add(texte);
 
         for (int i = 0; i < x.length; i++) {
@@ -282,7 +322,7 @@ public class DiagColonnes implements IDataVisualiseur {
                 startX = 404 + (150 * faisceaux.size() - taille_legendes) / 2;
             } else { // ici on se positionne au milieu du rectangle à la position faisceaux.size/2+1
                 // car impair
-                startX = 404 + (150 * faisceaux.size() -taille_legendes-50) / 2;
+                startX = 404 + (150 * faisceaux.size() - taille_legendes - 50) / 2;
             }
             int startY = 350;
             // Ajoutons la légende pour chaque carré de couleur

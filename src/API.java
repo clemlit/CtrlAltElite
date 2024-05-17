@@ -686,34 +686,49 @@ public class API extends UI {
     }
 
     private static void diagBarreAvgPrice() throws IOException {
-
         List<Double> listePrix = getAveragePrices();
-        int nbre = averagePrices.size();
+        List<String> carburants = getSelectedCarburantNames();
+        int nbre = listePrix.size() / carburants.size();
 
         // Créez le diagramme avec le titre approprié
         DiagColonnes diagPrixMoyen = new DiagColonnes("Prix moyen en fonction de plusieurs departements", nbre);
 
-        // Construisez dynamiquement la liste des prix
-        double[] prixArray = new double[listePrix.size()];
+        // Organisez les prix par type de carburant
+        HashMap<String, List<Double>> prixParCarburant = new HashMap<>();
         for (int i = 0; i < listePrix.size(); i++) {
-            prixArray[i] = listePrix.get(i); // Ajoutez chaque prix à la liste des prix
+            String carburant = carburants.get(i % carburants.size());
+            prixParCarburant.putIfAbsent(carburant, new ArrayList<>());
+            prixParCarburant.get(carburant).add(listePrix.get(i));
         }
 
-        int maxIndex = 0;
-        for (int i = 0; i < prixArray.length; i++) {
-            if (prixArray[i] > prixArray[maxIndex]) {
-                maxIndex = i;
+        // Affiche les prix par carburant pour vérification
+        for (String carburant : prixParCarburant.keySet()) {
+            List<Double> prixList = prixParCarburant.get(carburant);
+            // Trouver l'indice de la valeur maximale
+            int maxIndex = 0;
+            for (int i = 1; i < prixList.size(); i++) {
+                if (prixList.get(i) > prixList.get(maxIndex)) {
+                    maxIndex = i;
+                }
             }
+            // Mettre la valeur maximale en première position
+            double maxValue = prixList.get(maxIndex);
+            prixList.remove(maxIndex);
+            prixList.add(0, maxValue);
+
+            // Convertir la liste en tableau
+            double[] prixArray = new double[prixList.size()];
+            for (int i = 0; i < prixList.size(); i++) {
+                prixArray[i] = prixList.get(i);
+            }
+
+            // Appelez la méthode ajouterDonnees() pour chaque carburant
+            diagPrixMoyen.ajouterDonnees(carburant, prixArray);
+            diagPrixMoyen.deplacer(200, 0);
+            diagPrixMoyen.agencer();
         }
 
-        double temp = prixArray[0];
-        prixArray[0] = prixArray[maxIndex];
-        prixArray[maxIndex] = temp;
-
-        // Appelez la méthode ajouterDonnees() avec la liste de prix construite
-        // dynamiquement
-        diagPrixMoyen.ajouterDonnees("", prixArray);
-
+        // Construire les noms des départements
         String[] departementArray = new String[selectedDepartementNames.size()];
         for (int i = 0; i < selectedDepartementNames.size(); i++) {
             String cleanedName = selectedDepartementNames.get(i)
@@ -783,7 +798,6 @@ public class API extends UI {
         }
 
         diagPrixMoyen.colorier(coloriage);
-        System.out.println("abcdsd");
         FileWriter writer01 = new FileWriter("DiagrammeBarresPrixMedian.svg");
         writer01.write(diagPrixMoyen.agencer().enSVG());
         writer01.close();

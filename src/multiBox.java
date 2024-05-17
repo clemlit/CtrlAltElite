@@ -16,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicComboBoxEditor; 
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.plaf.basic.ComboPopup;
@@ -31,6 +32,11 @@ public class multiBox<E> extends JComboBox<E> {
     private final List<Object> selectedItems = new ArrayList<>();
     private final ComboBoxMultiCellEditor comboBoxMultiCellEditor;
     private Component comboList;
+    private Timer checkTimer;
+    private boolean lastCheckState;
+    private boolean check; // Add this field
+
+
 
     /**
      * Obtient les éléments sélectionnés dans la liste déroulante
@@ -98,7 +104,7 @@ public class multiBox<E> extends JComboBox<E> {
     /**
      * Constructeur par défaut de la classe multiBox
      */
-    public multiBox() {
+    public multiBox(String nb_dep,boolean check) {
         setUI(new ComboBoxMultiUI());
         comboBoxMultiCellEditor = new ComboBoxMultiCellEditor();
         setRenderer(new ComboBoxMultiCellRenderer());
@@ -116,6 +122,14 @@ public class multiBox<E> extends JComboBox<E> {
             }
         });
         
+    }
+
+    public void addDepartement(String nb_dep){
+        if (selectedItems.contains(nb_dep)) {
+            removeItemObject(nb_dep);
+        } else {
+            addItemObject(nb_dep);
+        }
     }
 
     @Override
@@ -257,4 +271,3 @@ public class multiBox<E> extends JComboBox<E> {
         }
         
 }
-

@@ -31,8 +31,9 @@ public class UI implements ActionListener {
     protected static List<String> selectedRegionNames = new ArrayList<>();
     protected static List<String> selectedDepartementNames = new ArrayList<>();
     protected static List<String> selectedCarburantNames = new ArrayList<>();
+    public static String val_dep;
+    public static boolean check = false;
 
- 
     public static List<String> getSelectedRegionNames() {
         return selectedRegionNames;
     }
@@ -55,7 +56,7 @@ public class UI implements ActionListener {
      * interactions
      */
     public UI() {
-        
+
         FlatLightLaf.setup();
         choix_carburants = new ArrayList<>();
 
@@ -77,25 +78,33 @@ public class UI implements ActionListener {
         panelFiltres.setBackground(new Color(245, 247, 250));
         panelFiltres.setPreferredSize(new Dimension(500, f.getHeight() - 100));
 
-
         JPanel mapPanel = new JPanel();
         mapPanel.setLayout(new BorderLayout());
-
+        mapPanel.setPreferredSize(new Dimension(660,660));
+        mapPanel.setMaximumSize(new Dimension(660,660));
+        mapPanel.setMinimumSize(new Dimension(660,660));
         mapPanel.setBackground(new Color(245, 247, 250));
         mapPanel.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
+
+        JPanel spacer = new JPanel();
+        spacer.setPreferredSize(new Dimension(100,100)); 
+        JPanel carteMap = new JPanel();
+        mapPanel.add(spacer, BorderLayout.NORTH);
+        mapPanel.add(carteMap, BorderLayout.CENTER);
+
 
         JPanel panelBanniere = new JPanel();
         panelBanniere.setBackground(new Color(255, 255, 255));
         panelBanniere.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
-        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 10));
+        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 100));
 
         // Crée les ComboBox multi-sélection pour les régions, départements et
         // carburants
-        multiBox<String> comboFiltres = new multiBox<>();
-        multiBox<String> comboRegion = new multiBox<>();
-        multiBox<String> comboDepart = new multiBox<>();
-        multiBox<String> comboCarbu = new multiBox<>();
-        multiBox<String> comboOptions = new multiBox<>();
+        multiBox<String> comboFiltres = new multiBox<>("", false);
+        multiBox<String> comboRegion = new multiBox<>("", false);
+        multiBox<String> comboDepart = new multiBox<>(val_dep, check);
+        multiBox<String> comboCarbu = new multiBox<>("", false);
+        multiBox<String> comboOptions = new multiBox<>("", false);
 
         String[] filtres = { "Prix moyen", "Prix median", "Prix minimum",
                 "Nombre de stations qui proposent chaque type de carburant",
@@ -214,8 +223,8 @@ public class UI implements ActionListener {
         f.setVisible(true);
 
         JButton boutonResultat = new JButton("Resultat");
-        boutonResultat.addActionListener(new ActionListener() {
 
+        boutonResultat.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 Map<String, List<String>> criteria = new HashMap<>();
@@ -228,15 +237,10 @@ public class UI implements ActionListener {
                 StringBuilder htmlContentAucuneRegion = new StringBuilder(); // Ca contourne un problème d'esthétique et surtout si on voulait prendre les données dans les autre StringBuilder,
                 StringBuilder htmlContentAucunDepartement = new StringBuilder(); // Ici, on aurait une erreur car il y aurait "Aucune ... selectionnée" en plus des données.
                 StringBuilder htmlContentAucunCarburant = new StringBuilder();
-                
+
                 averagePrices.clear();
                 medianPrices.clear();
                 minPrices.clear();
-                selectedRegionNames.clear(); 
-                selectedDepartementNames.clear();
-                selectedCarburantNames.clear();
-                
-
 
                 List<Object> selectedOptions = comboOptions.getSelectedItems();
                 List<String> selectedOptionsNames = new ArrayList<>();
@@ -266,7 +270,7 @@ public class UI implements ActionListener {
                         htmlContentRegion.append("<p>").append(region.toString()).append("</p>");
                     }
                 }
-                
+
                 else {
                     htmlContentAucuneRegion.append("<p>").append("Aucune région sélectionnée").append("</p>");
                 }
@@ -303,11 +307,10 @@ public class UI implements ActionListener {
                         htmlContentCarb.append("<p>").append(carburant.toString()).append("</p>");
                     }
                 }
-                    
+
                 else {
                     htmlContentAucunCarburant.append("<p>").append("Aucun carburant sélectionné").append("</p>");
                 }
-
 
                 if (comboFiltres.getSelectedItems().contains("Prix moyen")) {
                     List<String> prixMoyenOption = new ArrayList<>();
@@ -339,16 +342,16 @@ public class UI implements ActionListener {
                     criteria.put("filtre", NbreStationServices);
 
                 }
-                
+
                 averagePrices = API.getAveragePrices();
                 medianPrices = API.getMedianPrices();
-                minPrices = API.getMinPrices(); 
-                
+                minPrices = API.getMinPrices();
+
                 // Vérifier si des critères ont été sélectionnés
                 if (!criteria.isEmpty()) {
                     API.retrieveFuelDataByLocation(criteria);
                 }
-                
+
                 choix_carburants.clear();
                 List<Object> selectedItems = comboCarbu.getSelectedItems();
                 for (Object item : selectedItems) {
@@ -364,6 +367,7 @@ public class UI implements ActionListener {
                 if (API.getAveragePrices().size() > 0){
 
                     if (nbRegions > 0) {
+                        htmlContentFiltres.append("<h4>Prix moyens :</h4>");
                         htmlContentFiltres.append("<ul>");
 
                         // Boucle sur les régions
@@ -395,6 +399,7 @@ public class UI implements ActionListener {
                     }
 
                     if (nbDepartements > 0) {
+                        htmlContentFiltres.append("<h4>Prix moyens :</h4>");
                         htmlContentFiltres.append("<ul>");
 
                         // Boucle sur les départements
@@ -430,6 +435,7 @@ public class UI implements ActionListener {
 
                 if (API.getMedianPrices().size() > 0) {
 
+                    htmlContentFiltres.append("<h4>Prix médian :</h4>");
                     htmlContentFiltres.append("<ul>");
 
                     if (nbRegions > 0) {
@@ -474,9 +480,8 @@ public class UI implements ActionListener {
                     htmlContentFiltres.append("</ul>");
                 }
 
-
-
                 if (API.getMinPrices().size() > 0) {
+                    htmlContentFiltres.append("<h4>Prix minimum :</h4>");
                     htmlContentFiltres.append("<ul>");
 
                     if (nbRegions > 0) {
@@ -567,8 +572,12 @@ public class UI implements ActionListener {
                     writer.write("color: #4F4F4F; padding-left: 16px; margin-top: 24px; position: relative; font-size: 16px; line-height: 20px; ");
                     writer.write("}");
                     writer.write("strong { color:#000000; }");
-                    
 
+                    writer.write("#graphiques h4 {");
+                    writer.write("    padding-left: 200px;");
+                    writer.write("    text-align: center;");
+                    writer.write("    margin: auto;");
+                    writer.write("}");
 
                     writer.write("</style>");
                     writer.write("</head><body>");
@@ -598,12 +607,12 @@ public class UI implements ActionListener {
 
                     }else if (comboFiltres.getSelectedItems()
                             .contains("Nombre de stations qui proposent chaque type de carburant")){
-                                writer.write(
+                        writer.write(
                                 "<iframe src=\"DiagrammeCammembertCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
-                                writer.write(
+                        writer.write(
                                 "<iframe src=\"DiagrammeCammembertAllCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
                                 htmlContentFiltres.append("<li>").append("Nombre de stations qui proposent chaque type de carburant  : ").append(API.getNombreTotalStationCarburants());
-                            }
+                    }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");
                     writer.write("</body></html>");
@@ -617,10 +626,30 @@ public class UI implements ActionListener {
             }
         });
         panelFiltres.add(boutonResultat);
-        String i = "0";
-        Carte map = new Carte(i);
+        Carte map = new Carte();
         mapPanel.add(map.getUI(), BorderLayout.CENTER);
-
+        String old_val = "0";
+        String CTRL_ALT_ELITE = "goat";
+        while (CTRL_ALT_ELITE == "goat") {
+            System.out.print("");
+            if (map.getvaleur_dep_reg() != old_val) {
+                System.out.print("");
+                for (int i = 0; i < departements.length; i++) {
+                    if (departements[i].startsWith(map.getvaleur_dep_reg())) {
+                        old_val = map.getvaleur_dep_reg();
+                        comboDepart.addDepartement(departements[i]);
+                        break; // On arrête la boucle dès qu'on trouve un élément correspondant
+                    }
+                }
+                for (int i =0;i<regions.length;i++){
+                    if (regions[i].equals(map.getvaleur_dep_reg())){
+                        old_val=map.getvaleur_dep_reg();
+                        comboRegion.addDepartement(regions[i]);
+                        break;
+                    }
+                }
+            }
+        }
 
     }
 
@@ -636,9 +665,7 @@ public class UI implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
-
 
     public void actionPerformed(ActionEvent event) {
         panelFiltres.revalidate();

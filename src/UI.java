@@ -69,7 +69,7 @@ public class UI implements ActionListener {
         JFrame f = new JFrame("ma fenetre");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.getContentPane().setBackground(new Color(223, 226, 232));
-        f.setMinimumSize(new Dimension(1600, 800));
+        f.setMinimumSize(new Dimension(900, 400));
 
         panelFiltres = new JPanel();
         panelFiltres.setLayout(new BoxLayout(panelFiltres, BoxLayout.PAGE_AXIS));
@@ -87,7 +87,7 @@ public class UI implements ActionListener {
         JPanel panelBanniere = new JPanel();
         panelBanniere.setBackground(new Color(255, 255, 255));
         panelBanniere.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
-        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 100));
+        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 10));
 
         // Crée les ComboBox multi-sélection pour les régions, départements et
         // carburants
@@ -523,7 +523,7 @@ public class UI implements ActionListener {
 
                 // Écrire les données dans un fichier HTML
                 try {
-                    FileWriter writer = new FileWriter("src/page_Web/resultat.html");
+                    FileWriter writer = new FileWriter("src" + File.separator + "page_Web" + File.separator + "resultat.html");
                     writer.write("<html><head>");
                     writer.write("<meta charset='UTF-8'>");
                     writer.write("<title>Résultats</title>");
@@ -600,19 +600,14 @@ public class UI implements ActionListener {
                     writer.write("<div id=\"graphiques\"><b><u><h2>Graphiques et filtres</h2></u></b>");
 
                     if (comboFiltres.getSelectedItems().contains("Nombre de stations qui proposent des services spécifiques")){
-                        writer.write("<iframe src=\"DiagrammeCammembertServices.svg\" width=\"1200\" height=\"600\" sandbox></iframe>");
-                        htmlContentFiltres.append("<li>").append("Nombre totale de station ayant tous les services : ")
-                                .append(API.getNombreTotalStationServices())
-                                .append("</li>");
+                        writer.write(
+                                "<iframe src=\"DiagrammeCammembertServices.svg\" width=\"1200\" height=\"600\" sandbox></iframe>");
                     }else if (comboFiltres.getSelectedItems()
                             .contains("Nombre de stations qui proposent chaque type de carburant")){
                                 writer.write(
                                 "<img src=\"DiagrammeCammembertCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
                                 writer.write(
                                 "<iframe src=\"DiagrammeCammembertAllCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
-                                htmlContentFiltres.append("<li>").append("Nombre totale de station ayant tous les carburants : ")
-                                .append(API.getNombreTotalStationCarburants())
-                                .append("</li>");
                             }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");
@@ -623,7 +618,8 @@ public class UI implements ActionListener {
                 }
 
                 // Ouvrir le fichier HTML dans le navigateur
-                openWebPage("src/page_Web/resultat.html");
+                openWebPage("src" + File.separator + "page_Web" + File.separator + "resultat.html");
+
             }
         });
         panelFiltres.add(boutonResultat);

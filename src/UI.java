@@ -600,14 +600,19 @@ public class UI implements ActionListener {
                     writer.write("<div id=\"graphiques\"><b><u><h2>Graphiques et filtres</h2></u></b>");
 
                     if (comboFiltres.getSelectedItems().contains("Nombre de stations qui proposent des services spécifiques")){
-                        writer.write(
-                                "<iframe src=\"DiagrammeCammembertServices.svg\" width=\"1200\" height=\"600\" sandbox></iframe>");
+                        writer.write("<iframe src=\"DiagrammeCammembertServices.svg\" width=\"1200\" height=\"600\" sandbox></iframe>");
+                        htmlContentFiltres.append("<li>").append("Nombre totale de station ayant tous les services : ")
+                                .append(API.getNombreTotalStationServices())
+                                .append("</li>");
                     }else if (comboFiltres.getSelectedItems()
                             .contains("Nombre de stations qui proposent chaque type de carburant")){
                                 writer.write(
                                 "<img src=\"DiagrammeCammembertCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
                                 writer.write(
                                 "<iframe src=\"DiagrammeCammembertAllCarburants.svg\" width=\"1200\" height=\"600\"></iframe>");
+                                htmlContentFiltres.append("<li>").append("Nombre totale de station ayant tous les carburants : ")
+                                .append(API.getNombreTotalStationCarburants())
+                                .append("</li>");
                             }
                     writer.write(htmlContentFiltres.toString());
                     writer.write("</div>");

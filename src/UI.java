@@ -80,14 +80,23 @@ public class UI implements ActionListener {
 
         JPanel mapPanel = new JPanel();
         mapPanel.setLayout(new BorderLayout());
-
+        mapPanel.setPreferredSize(new Dimension(660,660));
+        mapPanel.setMaximumSize(new Dimension(660,660));
+        mapPanel.setMinimumSize(new Dimension(660,660));
         mapPanel.setBackground(new Color(245, 247, 250));
         mapPanel.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
 
+        JPanel spacer = new JPanel();
+        spacer.setPreferredSize(new Dimension(100,100)); 
+        JPanel carteMap = new JPanel();
+        mapPanel.add(spacer, BorderLayout.NORTH);
+        mapPanel.add(carteMap, BorderLayout.CENTER);
+
+        
         JPanel panelBanniere = new JPanel();
         panelBanniere.setBackground(new Color(255, 255, 255));
         panelBanniere.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
-        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 10));
+        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 100));
 
         // Crée les ComboBox multi-sélection pour les régions, départements et
         // carburants
@@ -232,10 +241,6 @@ public class UI implements ActionListener {
                 averagePrices.clear();
                 medianPrices.clear();
                 minPrices.clear();
-                selectedRegionNames.clear(); 
-                selectedDepartementNames.clear();
-                selectedCarburantNames.clear();
-                
 
 
                 List<Object> selectedOptions = comboOptions.getSelectedItems();
@@ -619,7 +624,7 @@ public class UI implements ActionListener {
         panelFiltres.add(boutonResultat);
         String i = "0";
         Carte map = new Carte(i);
-        mapPanel.add(map.getUI(), BorderLayout.CENTER);
+        carteMap.add(map.getUI(), BorderLayout.CENTER);
 
 
     }

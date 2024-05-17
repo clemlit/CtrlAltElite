@@ -165,9 +165,20 @@ public class Carte {
         shapeList = separateShapeIntoRegions(area);
         ui = new JPanel(new BorderLayout(4, 4));
         ui.setBorder(new EmptyBorder(4, 4, 4, 4));
+        ui.setPreferredSize(new Dimension(640, 640));
+        ui.setMinimumSize(new Dimension(640, 640));
+        ui.setMaximumSize(new Dimension(640, 640));
+    
         output.addMouseListener(new MouseClickListener());
         output.addMouseMotionListener(new MouseListen());
-        ui.add(output);
+        output.setHorizontalAlignment(JLabel.CENTER);
+        output.setVerticalAlignment(JLabel.CENTER);
+
+        JPanel spacer = new JPanel();
+        spacer.setPreferredSize(new Dimension(500, 500)); 
+        ui.add(output, BorderLayout.WEST);
+        ui.add(spacer, BorderLayout.EAST);
+        
         refresh();
     }
 
@@ -364,7 +375,7 @@ public class Carte {
             Point p = MouseInfo.getPointerInfo().getLocation();
             Point p1 = output.getLocationOnScreen();
             int x = p.x - p1.x;
-            int y = p.y-100 - p1.y;
+            int y = p.y - p1.y;
             Point pointOnImage = new Point(x, y);
             int i = 0;
             for (Shape shape : shapeList) {
@@ -389,7 +400,8 @@ public class Carte {
         return ui;
     }
 
-    
+     
+
     /**
      * Méthode principale pour tester la classe Map
      */
@@ -405,7 +417,7 @@ public class Carte {
             f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             f.setLocationByPlatform(true);
             f.setContentPane(o.getUI());
-            f.setResizable(false);
+            f.setResizable(false);  
             f.pack();
             f.setVisible(true);
         };

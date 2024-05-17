@@ -7,4 +7,5 @@
 <text x="85" y="505">Stations ayant tous les carburants </text><rect x="430.0" y="495.0" width="20.0" height="10.0" fill="White" stroke="black" />
 <text x="455" y="505">Station n'ayant pas tous les carburants</text><rect x="60.0" y="495.0" width="20.0" height="10.0" fill="Green" stroke="black" />
 <rect x="430.0" y="495.0" width="20.0" height="10.0" fill="Orange" stroke="black" />
+<text x="656.0" y="50.0" font-size="20.0" text-anchor="middle" fill="Black" stroke="Black">Nombre de stations ayant tous les carburants</text>
 </svg>

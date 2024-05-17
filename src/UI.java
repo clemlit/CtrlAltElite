@@ -87,7 +87,7 @@ public class UI implements ActionListener {
         JPanel panelBanniere = new JPanel();
         panelBanniere.setBackground(new Color(255, 255, 255));
         panelBanniere.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
-        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 100));
+        panelBanniere.setPreferredSize(new Dimension(f.getWidth() - 500, 10));
 
         // Crée les ComboBox multi-sélection pour les régions, départements et
         // carburants
@@ -232,6 +232,10 @@ public class UI implements ActionListener {
                 averagePrices.clear();
                 medianPrices.clear();
                 minPrices.clear();
+                selectedRegionNames.clear(); 
+                selectedDepartementNames.clear();
+                selectedCarburantNames.clear();
+                
 
 
                 List<Object> selectedOptions = comboOptions.getSelectedItems();

@@ -248,6 +248,10 @@ public class UI implements ActionListener {
                 averagePrices.clear();
                 medianPrices.clear();
                 minPrices.clear();
+                selectedRegionNames.clear(); 
+                selectedDepartementNames.clear();
+                selectedCarburantNames.clear();
+
 
                 List<Object> selectedOptions = comboOptions.getSelectedItems();
                 List<String> selectedOptionsNames = new ArrayList<>();

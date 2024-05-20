@@ -87,9 +87,11 @@ public class UI implements ActionListener {
         mapPanel.setBorder(new LineBorder(new Color(223, 226, 232))); // Ajout de la bordure grise
 
         JPanel spacer = new JPanel();
-        spacer.setPreferredSize(new Dimension(100,100)); 
+        spacer.setPreferredSize(new Dimension(300,100)); 
         JPanel carteMap = new JPanel();
         mapPanel.add(spacer, BorderLayout.NORTH);
+        mapPanel.add(spacer, BorderLayout.WEST);
+
         mapPanel.add(carteMap, BorderLayout.CENTER);
 
 
@@ -171,8 +173,12 @@ public class UI implements ActionListener {
         comboCarbu.setPreferredSize(new Dimension(250, 40));
         comboOptions.setPreferredSize(new Dimension(250, 40));
 
-        JLabel labeltitre1 = new JLabel("<html><b><h1>FILTRES</h1></b></html>");
-        labeltitre1.setBorder(BorderFactory.createEmptyBorder(10, 120, 50, 10));
+        JLabel equipe = new JLabel("<html><b style='letter-spacing: 10px;'> <h1> C&nbsp;&nbsp;T&nbsp;&nbsp;R&nbsp;&nbsp;L&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;&nbsp;L&nbsp;&nbsp;T&nbsp;&nbsp;&nbsp;&nbsp;'&nbsp;&nbsp;C&nbsp;&nbsp;A&nbsp;&nbsp;R&nbsp;&nbsp;B </h1> </b></html>");
+        equipe.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelBanniere.add(equipe);
+
+        JLabel labeltitre1 = new JLabel("<html><b><h2>FILTRES</h2></b></html>");
+        labeltitre1.setBorder(BorderFactory.createEmptyBorder(30, 130, 30, 10));
         JLabel labelFiltres = new JLabel("<html><b>Sélectionnez des filtres</b></html>");
         labelFiltres.setBorder(BorderFactory.createEmptyBorder(10, 95, 20, 10));
         JLabel labelRegions = new JLabel("<html><b>Sélectionnez des régions</b></html>");
@@ -188,6 +194,7 @@ public class UI implements ActionListener {
 
         // Pour l'alignement
         Box boxCombos = Box.createVerticalBox();
+
         boxCombos.add(labeltitre1);
         boxCombos.add(labelFiltres);
         boxCombos.add(comboFiltres);

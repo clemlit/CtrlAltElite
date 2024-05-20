@@ -316,7 +316,7 @@ public class Carte {
         @Override
         public void mouseClicked(MouseEvent e) {
             int x = e.getX(); // Coordonnée X du clic de la souris
-            int y = e.getY(); // Coordonnée Y du clic de la souris
+            int y = e.getY()-100; // Coordonnée Y du clic de la souris
             int i = 0;
                 for (Shape s : shapeList) {
                     if (s.contains(x, y)) {
@@ -400,19 +400,25 @@ public class Carte {
 
     private BufferedImage getImage() {
         BufferedImage bi = new BufferedImage(
-                2 * SIZE, SIZE, BufferedImage.TYPE_INT_RGB);
-
+                2 * SIZE, SIZE, BufferedImage.TYPE_INT_ARGB); 
+    
         Graphics2D g = bi.createGraphics();
+        
+        // Fill the background with transparent color
+        g.setComposite(AlphaComposite.Clear);
+        g.fillRect(0, 0, bi.getWidth(), bi.getHeight());
+        g.setComposite(AlphaComposite.SrcOver);
+    
+        // Draw the image
         g.drawImage(image, 0, 0, output);
-        g.setColor(Color.WHITE);
-        g.fill(area);
         g.setColor(Color.BLACK);
         g.draw(area);
+        
         try {
             Point p = MouseInfo.getPointerInfo().getLocation();
             Point p1 = output.getLocationOnScreen();
             int x = p.x - p1.x;
-            int y = p.y - p1.y;
+            int y = p.y - 100 - p1.y;
             Point pointOnImage = new Point(x, y);
             int i = 0;
             for (Shape shape : shapeList) {
@@ -427,11 +433,12 @@ public class Carte {
             }
         } catch (Exception doNothing) {
         }
-
+    
         g.dispose();
-
+    
         return bi;
     }
+    
 
     public JComponent getUI() {
         return ui;
